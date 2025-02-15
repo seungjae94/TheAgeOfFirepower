@@ -1,0 +1,84 @@
+﻿using Mathlife.ProjectL.Gameplay.Battle;
+using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEditor.Experimental;
+using UnityEngine;
+
+namespace Mathlife.ProjectL.Gameplay
+{
+    public enum EArtifactId
+    {
+        None = 0,
+
+        // 무기
+        DullLongsword = 1000,
+        TatteredSpellBook,
+        Bloodstain,
+        Executioner,
+        OrbOfTheSealedSpirit,
+
+        // 방어구
+        LeatherVest = 2000,
+        ChainMail,
+        MagicianHat,
+
+        // 아티팩트
+        CrimsonRose = 3000,
+        GiftBox,
+        ChainLetter,
+        RussianRoulette,
+        FourLeafProphecy,
+    }
+
+    public class ArtifactStat
+    {
+        public int maxHp;
+        public int atk;
+        public int def;
+        public int mag;
+        public int maxEnergy;
+        public int speed;
+
+        public int energyRecovery;
+        public float hpAbsorbtionPercentage;
+    }
+
+    public class ArtifactDataAsset : SerializedScriptableObject
+    {
+        [Title("기본 정보")]
+        [LabelWidth(100)]
+        public EArtifactId artifactId;
+
+        [LabelWidth(100)]
+        [LabelText("레벨 제한")]
+        public int reqLevel;
+
+        [LabelWidth(100)]
+        [LabelText("가격")]
+        public long goldPrice = 0;
+
+        [LabelWidth(100)]
+        [LabelText("이름")]
+        public string displayName = "";
+
+        [LabelWidth(100)]
+        [LabelText("설명")]
+        public string description = "";
+
+        [LabelWidth(75)]
+        [PreviewField(50, ObjectFieldAlignment.Left)]
+        [AssetSelector(Paths = "Assets/Arts/UI/Icons", FlattenTreeView = true)]
+        public Sprite icon = null;
+
+        [Title("스탯")]
+        public ArtifactStat stat = new();
+
+        [Title("부가 효과")]
+        [TableList(AlwaysExpanded = true, ShowPaging = true, ShowIndexLabels = false, DrawScrollView = false, NumberOfItemsPerPage = 2)]
+        public List<BattleEffect> effects = new();
+    }
+}

@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Event Object Manager
+  - Map
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Terrains
+    uniqueID: 3429142313
+    locked: 0
+  - name: BelowPlayer
+    uniqueID: 1379748521
+    locked: 0
+  - name: Player
+    uniqueID: 580798691
+    locked: 0
+  - name: AbovePlayer
+    uniqueID: 3999036135
+    locked: 0
+  - name: Collisions
+    uniqueID: 454791103
+    locked: 0
+  - name: Events
+    uniqueID: 2457728221
+    locked: 0
+  - name: UI
+    uniqueID: 4267854281
+    locked: 0
+  m_RenderingLayers:
+  - Default
