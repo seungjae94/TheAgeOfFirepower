@@ -11,28 +11,28 @@ namespace Mathlife.ProjectL.Gameplay
         [TabGroup("Starter", "멤버")]
         [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true)]
 #endif
-        public List<CharacterSlot> starterMembers = new List<CharacterSlot>();
+        public List<CharacterState> starterMembers = new List<CharacterState>();
 
 #if UNITY_EDITOR
         [TabGroup("Starter", "멤버가 아닌 캐릭터")]
 #endif
-        public List<CharacterSlot> starterNonMemberCharacters = new List<CharacterSlot>();
+        public List<CharacterState> starterNonMemberCharacters = new List<CharacterState>();
 
 #if UNITY_EDITOR
         [TabGroup("Starter", "장착하지 않은 장비")]
 #endif
-        public List<EquipmentSlot> starterUnequippedEquipments = new List<EquipmentSlot>();
+        public List<EquipmentStack> starterUnequippedEquipments = new List<EquipmentStack>();
 
 #if UNITY_EDITOR
         [TabGroup("Editor Starter", "멤버")]
         [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true)]
-        public List<CharacterSlot> editorStarterMembers = new List<CharacterSlot>();
+        public List<CharacterState> editorStarterMembers = new List<CharacterState>();
 
         [TabGroup("Editor Starter", "멤버가 아닌 캐릭터")]
-        public List<CharacterSlot> editorStarterNonMemberCharacters = new List<CharacterSlot>();
+        public List<CharacterState> editorStarterNonMemberCharacters = new List<CharacterState>();
 
         [TabGroup("Editor Starter", "장착하지 않은 장비")]
-        public List<EquipmentSlot> editorStarterUnequippedEquipments = new List<EquipmentSlot>();
+        public List<EquipmentStack> editorStarterUnequippedEquipments = new List<EquipmentStack>();
 
         [OnInspectorInit]
         public void OnInspectorInit()
@@ -41,14 +41,14 @@ namespace Mathlife.ProjectL.Gameplay
             InitializeMemberSlots(editorStarterMembers);
         }
 
-        public void InitializeMemberSlots(List<CharacterSlot> members)
+        public void InitializeMemberSlots(List<CharacterState> members)
         {
             if (members.Count < 4)
             {
                 int addCount = 4 - members.Count;
                 for (int i = 0; i < addCount; ++i)
                 {
-                    members.Add(new CharacterSlot());
+                    members.Add(new CharacterState());
                 }
             }
         }

@@ -7,25 +7,24 @@ using VContainer;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class EquipmentSlotPresenter : Presenter
+    public class CharacterEquipmentSlotPresenter : Presenter
     {
-        [SerializeField] EEquipmentType m_slotType;
-
         [Inject] CharacterRepository m_characterRepository;
 
-        Button m_button;
-        CanvasGroup m_iconAreaCanvasGroup;
-        Image m_iconImage;
+        [SerializeField] EEquipmentType m_slotType;
+        [SerializeField] Button m_button;
+        [SerializeField] CanvasGroup m_iconAreaCanvasGroup;
+        [SerializeField] Image m_iconImage;
 
-        EquipmentModel m_artifact;
-        IDisposable selectedCharacterSubscription;
+        EquipmentModel m_equipment;
+        IDisposable m_selectedCharacterSub;
 
         void Awake()
         {
             // Views
-            m_button = GetComponent<Button>();
-            m_iconAreaCanvasGroup = transform.FindRecursiveByName<CanvasGroup>("Icon Area");
-            m_iconImage = transform.FindRecursiveByName<Image>("Icon Image");
+            //m_button = GetComponent<Button>();
+            //m_iconAreaCanvasGroup = transform.FindRecursiveByName<CanvasGroup>("Icon Area");
+            //m_iconImage = transform.FindRecursiveByName<Image>("Icon Image");
         }
 
         void OnDestroy()
@@ -54,14 +53,14 @@ namespace Mathlife.ProjectL.Gameplay
             if (selected == null)
                 return;
 
-            selectedCharacterSubscription = selected.SubscribeEquipmentChangeEvent(m_slotType, OnArtifactChanged);
+            m_selectedCharacterSub = selected.SubscribeEquipmentChangeEvent(m_slotType, OnEquipmentChange);
 
-            OnArtifactChanged(selected.GetEquipment(m_slotType));
+            OnEquipmentChange(selected.GetEquipment(m_slotType));
         }
 
-        void OnArtifactChanged(EquipmentModel artifact)
+        void OnEquipmentChange(EquipmentModel artifact)
         {
-            m_artifact = artifact;
+            m_equipment = artifact;
 
             if (artifact == null)
             {
@@ -77,14 +76,13 @@ namespace Mathlife.ProjectL.Gameplay
 
         async void OnClick(Unit _)
         {
-            m_worldSceneManager.GetPage<CharacterPage>().artifactChangeModal.slotType = m_slotType;
-            await m_worldSceneManager.GetPage<CharacterPage>().artifactChangeModal.Show();
+            await m_worldSceneManager.GetPage<CharacterPage>().equipmentChangeModal.Show(m_slotType);
         }
 
         void UnsubscribeSelectedCharacter()
         {
-            if (selectedCharacterSubscription != null)
-                selectedCharacterSubscription.Dispose();
+            if (m_selectedCharacterSub != null)
+                m_selectedCharacterSub.Dispose();
         }
     }
 }

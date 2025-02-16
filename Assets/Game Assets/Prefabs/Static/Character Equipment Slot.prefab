@@ -236,10 +236,10 @@ GameObject:
   - component: {fileID: 6654255044645656543}
   - component: {fileID: 5409921146976901618}
   - component: {fileID: 6729105494194564055}
-  - component: {fileID: 4137567722697009210}
   - component: {fileID: 4647477404285134296}
+  - component: {fileID: 4137567722697009210}
   m_Layer: 5
-  m_Name: Character Artfact Slot
+  m_Name: Character Equipment Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -304,19 +304,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4137567722697009210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6692466780878066826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5595dfccf1a9d4da44542440b7bf06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotType: 1
 --- !u!114 &4647477404285134296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,6 +348,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4137567722697009210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6692466780878066826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5595dfccf1a9d4da44542440b7bf06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_slotType: 0
+  m_button: {fileID: 4647477404285134296}
+  m_iconAreaCanvasGroup: {fileID: 2158247774550311724}
+  m_iconImage: {fileID: 8346377369878930842}
 --- !u!1 &9099766026865273355
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,11 +1,8 @@
-using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
 using Mathlife.ProjectL.Utils;
 using UniRx;
-using TMPro;
 using System.Collections.Generic;
-using System;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -17,9 +14,9 @@ namespace Mathlife.ProjectL.Gameplay
 
         CharacterBasicInfoPresenter m_basicInfoPresenter;
         CharacterStatPresenter m_statPresenter;
-        List<EquipmentSlotPresenter> m_artifactSlotPresenters;
+        List<CharacterEquipmentSlotPresenter> m_artifactSlotPresenters;
         
-        public ArtifactChangeModal artifactChangeModal { get; private set; }
+        public EquipmentChangeModal equipmentChangeModal { get; private set; }
 
         // Fields
         public override EPageId pageId => EPageId.CharacterPage;
@@ -33,8 +30,8 @@ namespace Mathlife.ProjectL.Gameplay
 
             m_basicInfoPresenter = GetComponent<CharacterBasicInfoPresenter>();
             m_statPresenter = transform.FindRecursive<CharacterStatPresenter>();
-            m_artifactSlotPresenters = transform.FindAllRecursive<EquipmentSlotPresenter>();
-            artifactChangeModal = transform.FindRecursive<ArtifactChangeModal>();
+            m_artifactSlotPresenters = transform.FindAllRecursive<CharacterEquipmentSlotPresenter>();
+            equipmentChangeModal = transform.FindRecursive<EquipmentChangeModal>();
         }
 
         public override void Initialize()
@@ -66,7 +63,7 @@ namespace Mathlife.ProjectL.Gameplay
                 artifactSlot.Initialize();
             }
 
-            artifactChangeModal.Initialize();
+            equipmentChangeModal.Initialize();
         }
     }
 }

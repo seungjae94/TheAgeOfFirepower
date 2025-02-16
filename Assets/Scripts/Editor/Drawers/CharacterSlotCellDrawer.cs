@@ -14,7 +14,7 @@ using DG.DemiEditor;
 
 namespace Mathlife.ProjectL.Editor
 {
-    internal sealed class CharacterSlotCellDrawer<TArray> : TwoDimensionalArrayDrawer<TArray, CharacterSlot> where TArray : System.Collections.IList
+    internal sealed class CharacterSlotCellDrawer<TArray> : TwoDimensionalArrayDrawer<TArray, CharacterState> where TArray : System.Collections.IList
     {
         protected override TableMatrixAttribute GetDefaultTableMatrixAttributeSettings()
         {
@@ -27,7 +27,7 @@ namespace Mathlife.ProjectL.Editor
             };
         }
 
-        protected override CharacterSlot DrawElement(Rect rect, CharacterSlot value)
+        protected override CharacterState DrawElement(Rect rect, CharacterState value)
         {
             var id = DragAndDropUtilities.GetDragAndDropId(rect);
 
@@ -70,7 +70,7 @@ namespace Mathlife.ProjectL.Editor
             var rect = GUILayoutUtility.GetRect(0, 40).Padding(2);
             var id = DragAndDropUtilities.GetDragAndDropId(rect);
             DragAndDropUtilities.DrawDropZone(rect, null as UnityEngine.Object, null, id);
-            DragAndDropUtilities.DropZone<CharacterSlot>(rect, new CharacterSlot(), false, id);
+            DragAndDropUtilities.DropZone<CharacterState>(rect, new CharacterState(), false, id);
         }
     }
 }

@@ -10,12 +10,12 @@ using ObjectFieldAlignment = Sirenix.OdinInspector.ObjectFieldAlignment;
 namespace Mathlife.ProjectL.Gameplay
 {
     [Serializable]
-    public class EquipmentSlot
+    public class EquipmentStack
     {
 #if UNITY_EDITOR
         [LabelText("아티팩트")]
         [LabelWidth(125)]
-        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetArtifactPreview))]
+        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetEquipmentPreview))]
         [HorizontalGroup(group: "Row")]
 #endif
         public EquipmentSO equipment;
@@ -28,24 +28,24 @@ namespace Mathlife.ProjectL.Gameplay
         public int count;
 
 #if UNITY_EDITOR
-        EquipmentSO cachedArtifact;
+        EquipmentSO cachedEquipment;
         Texture2D cachedTexture;
 
         [OnInspectorInit]
         public void OnInspectorInit()
         {
-            cachedArtifact = null; 
+            cachedEquipment = null; 
             cachedTexture = null;
         }
 
-        public Texture2D GetArtifactPreview()
+        public Texture2D GetEquipmentPreview()
         {
-            if (cachedArtifact == equipment)
+            if (cachedEquipment == equipment)
             {
                 return cachedTexture;
             }
 
-            cachedArtifact = equipment;
+            cachedEquipment = equipment;
 
             if (equipment == null)
             {

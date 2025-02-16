@@ -18,7 +18,7 @@ using ObjectFieldAlignment = Sirenix.OdinInspector.ObjectFieldAlignment;
 namespace Mathlife.ProjectL.Gameplay
 {
     [Serializable]
-    public class CharacterSlot
+    public class CharacterState
     {
 #if UNITY_EDITOR
         [LabelText("캐릭터")]

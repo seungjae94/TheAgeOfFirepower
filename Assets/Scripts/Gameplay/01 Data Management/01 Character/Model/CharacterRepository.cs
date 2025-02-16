@@ -107,15 +107,15 @@ namespace Mathlife.ProjectL.Gameplay
             ExpDataAsset expData = m_gameDataDB.GetExpData();
 
 #if UNITY_EDITOR
-            List<CharacterSlot> starterMembers = starterData.editorStarterMembers;
-            List<CharacterSlot> starterNonMemberCharacters = starterData.editorStarterNonMemberCharacters;
+            List<CharacterState> starterMembers = starterData.editorStarterMembers;
+            List<CharacterState> starterNonMemberCharacters = starterData.editorStarterNonMemberCharacters;
 
 #else
             List<CharacterSlot> starterMembers = starterData.starterMembers;
             List<CharacterSlot> starterNonMemberCharacters = starterData.starterNonMemberCharacters;
 #endif
 
-            List<CharacterSlot> starterCharacters = new();
+            List<CharacterState> starterCharacters = new();
             starterCharacters.AddRange(starterMembers);
             starterCharacters.AddRange(starterNonMemberCharacters);
 

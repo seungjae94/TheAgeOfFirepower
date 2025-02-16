@@ -19,7 +19,7 @@ namespace Mathlife.ProjectL.Gameplay
         None = 0,
         CharacterCard = 1,
         DragCharacterCard = 2,
-        ArtifactChangeModalSlot = 3,
+        EquipmentSlot = 3,
     }
 
     public enum EBattleTarget
