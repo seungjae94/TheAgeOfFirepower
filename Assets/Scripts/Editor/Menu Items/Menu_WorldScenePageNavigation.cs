@@ -11,7 +11,6 @@ namespace Mathlife.ProjectL.Editor
 {
     public static class Menu_WorldScenePageNavigation
     {
-        const string pageNavPath = "Project L/World Scene/Page Navigation/Toggle Blur Effect";
         const int wordSceneBuildIndex = 1;
 
         [MenuItem("Project L/World Scene/Page Navigation", isValidateFunction: true)]
@@ -38,7 +37,13 @@ namespace Mathlife.ProjectL.Editor
             Navigate<CharacterPage>();
         }
 
-        [MenuItem("Project L/World Scene/Page Navigation/Battle Page", priority = 14)]
+        [MenuItem("Project L/World Scene/Page Navigation/Inventory Page", priority = 14)]
+        static void GoToInventoryPage()
+        {
+            Navigate<InventoryPage>();
+        }
+
+        [MenuItem("Project L/World Scene/Page Navigation/Battle Page", priority = 15)]
         static void GoToBattlePage()
         {
             Navigate<BattlePage>();
