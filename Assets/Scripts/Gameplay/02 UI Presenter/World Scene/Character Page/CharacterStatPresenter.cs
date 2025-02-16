@@ -18,8 +18,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         // View
         TMP_Text m_maxHpText;
-        TMP_Text m_energyText;
-        TMP_Text m_cardDrawText;
+        TMP_Text m_maxEnergyText;
+        TMP_Text m_energyRecoveryText;
         TMP_Text m_atkText;
         TMP_Text m_defText;
         TMP_Text m_magText;
@@ -33,7 +33,8 @@ namespace Mathlife.ProjectL.Gameplay
         void Awake()
         {
             m_maxHpText = transform.FindRecursiveByName<TMP_Text>("Max HP Text");
-            m_energyText = transform.FindRecursiveByName<TMP_Text>("Energy Text");
+            m_maxEnergyText = transform.FindRecursiveByName<TMP_Text>("Max Energy Text");
+            m_energyRecoveryText = transform.FindRecursiveByName<TMP_Text>("Energy Recovery Text");
             m_spdText = transform.FindRecursiveByName<TMP_Text>("Spd Text");
             m_atkText = transform.FindRecursiveByName<TMP_Text>("Atk Text");
             m_defText = transform.FindRecursiveByName<TMP_Text>("Def Text");
@@ -66,7 +67,13 @@ namespace Mathlife.ProjectL.Gameplay
 
             character?
                 .ObserveEveryValueChanged(character => character.GetMaxEnergy())
-                .Subscribe(v => m_energyText.text = v.ToString())
+                .Subscribe(v => m_maxEnergyText.text = v.ToString())
+                .AddTo(m_characterDataSubscriptions);
+
+
+            character?
+                .ObserveEveryValueChanged(character => character.GetEnergyRecovery())
+                .Subscribe(v => m_energyRecoveryText.text = v.ToString())
                 .AddTo(m_characterDataSubscriptions);
 
             character?
@@ -98,7 +105,8 @@ namespace Mathlife.ProjectL.Gameplay
                 return;
 
             m_maxHpText.text = m_character.GetMaxHp().ToString();
-            m_energyText.text = m_character.GetMaxEnergy().ToString();
+            m_maxEnergyText.text = m_character.GetMaxEnergy().ToString();
+            m_energyRecoveryText.text = m_character.GetEnergyRecovery().ToString();
             m_atkText.text = m_character.GetAtk().ToString();
             m_defText.text = m_character.GetDef().ToString();
             m_magText.text = m_character.GetMag().ToString();
