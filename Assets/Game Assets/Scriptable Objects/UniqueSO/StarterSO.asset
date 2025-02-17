@@ -49,7 +49,7 @@ MonoBehaviour:
     artifact: {fileID: 0}
   starterCharactersNotInParty: []
   starterEquipmentsNotOwned: []
-  editorStarterGold: 1000
+  editorStarterGold: 100000
   editorStarterParty:
   - character: {fileID: 11400000, guid: 9a3b331ca5977a84ab9be371c0aedb79, type: 2}
     level: 5

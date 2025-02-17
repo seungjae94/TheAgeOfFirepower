@@ -55,8 +55,8 @@ MonoBehaviour:
   id: 5
   type: 0
   description: "\uB9C8\uB825 + 20"
-  shopPrice: 0
   icon: {fileID: -2438950493339126330, guid: 885269cdf2aa378498f41adc4f9ed288, type: 3}
+  shopPrice: 500
   battleEffect:
     rid: -2
   references:

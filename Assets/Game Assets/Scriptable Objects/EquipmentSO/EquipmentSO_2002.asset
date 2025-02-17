@@ -58,7 +58,7 @@ MonoBehaviour:
     + 1\n\uBB34\uBC29\uBE44 \uB514\uBC84\uD504 3\uC744 \uAC00\uC9C4 \uCC44\uB85C
     \uC804\uD22C\uB97C \uC2DC\uC791\uD569\uB2C8\uB2E4."
   icon: {fileID: -236075689066233278, guid: 885269cdf2aa378498f41adc4f9ed288, type: 3}
-  shopPrice: 0
+  shopPrice: 1000
   battleEffect:
     rid: 3336615758153121876
   references:
