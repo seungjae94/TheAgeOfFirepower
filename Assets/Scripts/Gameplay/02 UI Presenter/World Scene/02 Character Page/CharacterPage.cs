@@ -51,7 +51,7 @@ namespace Mathlife.ProjectL.Gameplay
         // 유저 상호 작용
         void OnClickBackButton()
         {
-            m_worldSceneManager.GetPage<TeamPage>().selectedCharacter = null;
+            m_worldSceneManager.GetPage<PartyPage>().selectedCharacter = null;
             m_worldSceneManager.NavigateBack();
         }
     }

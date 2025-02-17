@@ -48,7 +48,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void Initialize()
         {
-            m_worldSceneManager.GetPage<TeamPage>()
+            m_worldSceneManager.GetPage<PartyPage>()
                 .SubscribeSelectedCharacterChangeEvent(OnSelectedCharacterChanged)
                 .AddTo(gameObject);
         }

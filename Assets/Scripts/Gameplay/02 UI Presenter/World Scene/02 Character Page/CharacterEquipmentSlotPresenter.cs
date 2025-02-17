@@ -34,7 +34,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void Initialize()
         {
-            TeamPage teamPage = m_worldSceneManager.GetPage<TeamPage>();
+            PartyPage teamPage = m_worldSceneManager.GetPage<PartyPage>();
 
             m_button.OnClickAsObservable()
                 .Subscribe(OnClick);

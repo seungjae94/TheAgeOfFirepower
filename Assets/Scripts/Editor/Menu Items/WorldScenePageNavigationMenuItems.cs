@@ -28,7 +28,7 @@ namespace Mathlife.ProjectL.Editor
         [MenuItem("Project L/World Scene/Page Navigation/Team Page", priority = 12)]
         static void GoToTeamPage()
         {
-            Navigate<TeamPage>();
+            Navigate<PartyPage>();
         }
 
         [MenuItem("Project L/World Scene/Page Navigation/Character Page", priority = 13)]

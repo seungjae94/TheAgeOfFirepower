@@ -36,7 +36,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void Initialize()
         {
-            TeamPage teamPage = m_worldSceneManager.GetPage<TeamPage>();
+            PartyPage teamPage = m_worldSceneManager.GetPage<PartyPage>();
 
             // Subscribe user interactions
             m_dropTrigger.OnDropAsObservable()
@@ -56,7 +56,7 @@ namespace Mathlife.ProjectL.Gameplay
                 .AddTo(gameObject);
 
             m_worldSceneManager
-                .GetPage<TeamPage>()
+                .GetPage<PartyPage>()
                 .SubscribeDragMemberCardEvent(() => m_removeMemberGuide.Show(), () => m_removeMemberGuide.Hide())
                 .AddTo(gameObject);
 
@@ -101,7 +101,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         void OnPointerClick(PointerEventData eventData)
         {
-            m_worldSceneManager.GetPage<TeamPage>().selectedCharacter = null;
+            m_worldSceneManager.GetPage<PartyPage>().selectedCharacter = null;
         }
     }
 }

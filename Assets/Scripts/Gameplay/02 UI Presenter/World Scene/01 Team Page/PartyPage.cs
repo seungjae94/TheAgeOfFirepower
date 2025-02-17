@@ -7,22 +7,23 @@ using UniRx.Triggers;
 using VContainer;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class TeamPage : Page
+    public class PartyPage : Page
     {
-        Button m_backButton;
-        Image m_background;
-        Button m_buildBestTeamButton;
-        Button m_excludeAllButton;
-
-        List<CharacterSlotPresenter> m_slots;
-        CharacterScrollViewPresenter m_scrollView;
-        TeamValidationModal m_teamValidationModal;
-
-        [Inject] CharacterRepository m_characterRepository;
         public override EPageId pageId => EPageId.TeamPage;
+        [Inject] CharacterRepository m_characterRepository;
+
+        [SerializeField] NavigateBackBarView m_navigateBackBar;
+        [SerializeField] Image m_background;
+        [SerializeField] Button m_buildBestTeamButton;
+        [SerializeField] Button m_excludeAllButton;
+        [SerializeField] List<CharacterSlotPresenter> m_slots;
+        [SerializeField] CharacterScrollViewPresenter m_scrollView;
+        [SerializeField] TeamValidationModal m_teamValidationModal;
+
 
         #region State - Selected Character
         ReactiveProperty<CharacterModel> m_selectedCharacter = new(null);
@@ -59,27 +60,17 @@ namespace Mathlife.ProjectL.Gameplay
         }
         #endregion
 
-        protected override void Awake()
-        {
-            base.Awake();
-
-            m_backButton = transform.FindRecursiveByName<Button>("Back Button");
-            m_background = transform.FindRecursiveByName<Image>("Background");
-            m_buildBestTeamButton = transform.FindRecursiveByName<Button>("Build Best Team Button");
-            m_excludeAllButton = transform.FindRecursiveByName<Button>("Exclude All Button");
-
-            m_slots = transform.FindAllRecursive<CharacterSlotPresenter>();
-            m_scrollView = transform.FindRecursive<CharacterScrollViewPresenter>();
-            m_teamValidationModal = transform.FindRecursive<TeamValidationModal>();
-        }
-
+        // 초기화
         public override void Initialize()
         {
-            // Subscribe Event Triggers
-            m_backButton
-                .OnClickAsObservable()
-                .Subscribe(OnClickBackButton)
-                .AddTo(gameObject);
+            InitializeChildren();
+
+            Close();
+        }
+
+        protected override void InitializeChildren()
+        {
+            m_navigateBackBar.Initialize(OnClickBackButton);
 
             m_background
                 .OnPointerClickAsObservable()
@@ -96,12 +87,18 @@ namespace Mathlife.ProjectL.Gameplay
                 .Subscribe(OnClickExcludeAllButton)
                 .AddTo(gameObject);
 
-            InitializeChildren();
+            for (int i = 0; i < Constants.TeamMemberMaxCount; ++i)
+            {
+                m_slots[i].Initialize();
+            }
 
-            Close();
+            m_scrollView.Initialize();
+
+            m_teamValidationModal.Initialize();
         }
 
-        async void OnClickBackButton(Unit _)
+        // 유저 상호 작용
+        async void OnClickBackButton()
         {
             if (m_characterRepository.team.Validate())
                 m_worldSceneManager.NavigateBack();
@@ -122,18 +119,6 @@ namespace Mathlife.ProjectL.Gameplay
         void OnClickBuildBestTeamButton(Unit _)
         {
             m_characterRepository.BuildBestTeam();
-        }
-
-        protected override void InitializeChildren()
-        {
-            for (int i = 0; i < Constants.TeamMemberMaxCount; ++i)
-            {
-                m_slots[i].Initialize();
-            }
-
-            m_scrollView.Initialize();
-
-            m_teamValidationModal.Initialize();
         }
     }
 }

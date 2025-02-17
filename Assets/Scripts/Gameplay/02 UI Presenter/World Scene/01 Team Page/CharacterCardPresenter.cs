@@ -44,7 +44,7 @@ namespace Mathlife.ProjectL.Gameplay
             m_leaderAppointmentButton = transform.FindRecursiveByName<Button>("Leader Appointment Button");
 
             m_leaderMark = transform.FindRecursiveByName<CanvasGroup>("Leader Mark");
-            m_dragArea = transform.root.FindRecursive<TeamPage>()
+            m_dragArea = transform.root.FindRecursive<PartyPage>()
                 .transform.FindRecursiveByName<RectTransform>("Drag Area");
 
             // Event Triggers
@@ -98,7 +98,7 @@ namespace Mathlife.ProjectL.Gameplay
                 .AddTo(gameObject);
 
             m_worldSceneManager
-                .GetPage<TeamPage>()
+                .GetPage<PartyPage>()
                 .SubscribeSelectedCharacterChangeEvent(OnSelectedCharacterChanged)
                 .AddTo(gameObject);
 
@@ -147,7 +147,7 @@ namespace Mathlife.ProjectL.Gameplay
             m_canvasGroup.interactable = false;
 
             if (m_characterRepository.team.Contains(m_character))
-                m_worldSceneManager.GetPage<TeamPage>().isDraggingMemberCard = true;
+                m_worldSceneManager.GetPage<PartyPage>().isDraggingMemberCard = true;
         }
 
         void OnDrag(PointerEventData eventData)
@@ -157,8 +157,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         void OnEndDrag(PointerEventData eventData)
         {
-            if (m_worldSceneManager.GetPage<TeamPage>().isDraggingMemberCard)
-                m_worldSceneManager.GetPage<TeamPage>().isDraggingMemberCard = false;
+            if (m_worldSceneManager.GetPage<PartyPage>().isDraggingMemberCard)
+                m_worldSceneManager.GetPage<PartyPage>().isDraggingMemberCard = false;
 
             Destroy(m_dragCard.gameObject);
             m_canvasGroup.alpha = 1.0f;
@@ -168,7 +168,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         void OnPointerClick(PointerEventData eventData)
         {
-            m_worldSceneManager.GetPage<TeamPage>().selectedCharacter = m_character;
+            m_worldSceneManager.GetPage<PartyPage>().selectedCharacter = m_character;
         }
 
         void OnClickDetailInfoButton()
@@ -179,7 +179,7 @@ namespace Mathlife.ProjectL.Gameplay
         void OnClickLeaderAppointmentButton()
         {
             m_characterRepository.team.AppointLeader(m_character);
-            m_worldSceneManager.GetPage<TeamPage>().selectedCharacter = null;
+            m_worldSceneManager.GetPage<PartyPage>().selectedCharacter = null;
         }
 
         void OnLevelChanged(int value)

@@ -52,7 +52,7 @@ namespace Mathlife.ProjectL.Gameplay
         // 유저 상호작용
         async void OnClickOKButton(Unit _)
         {
-            m_worldSceneManager.GetPage<TeamPage>()
+            m_worldSceneManager.GetPage<PartyPage>()
                 .selectedCharacter.Equip(m_slotType, m_selectedEquipment);
 
             await m_canvasGroup.Hide(k_fadeTime);
@@ -75,7 +75,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             m_slotType = slotType;
 
-            EquipmentModel currentEquipment = m_worldSceneManager.GetPage<TeamPage>().selectedCharacter.GetEquipment(slotType);
+            EquipmentModel currentEquipment = m_worldSceneManager.GetPage<PartyPage>().selectedCharacter.GetEquipment(slotType);
             m_selectedEquipment = currentEquipment;
 
             UpdateCurrentEquipmentView(currentEquipment);
