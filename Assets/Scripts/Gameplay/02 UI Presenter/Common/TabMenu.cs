@@ -13,18 +13,10 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] CanvasGroup m_defaultView;
         [SerializeField] CanvasGroup m_selectedView;
 
-        int m_index = 0;
-
-        void Awake()
-        {
-            m_index = transform.parent.GetSiblingIndex();
-        }
-
-
-        public void BindSelectAction(Action<int> selectAction)
+        public void BindSelectAction(int index, Action<int> selectAction)
         {
             m_button.OnClickAsObservable()
-                .Subscribe(_ => selectAction(m_index))
+                .Subscribe(_ => selectAction(index))
                 .AddTo(gameObject);
         }
 
