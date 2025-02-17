@@ -15,6 +15,9 @@ namespace Mathlife.ProjectL.Gameplay
         {
             m_inventoryRepository
                 .SubscribeGoldChange(gold => m_goldText.text = gold.ToString());
+
+            m_goldText.text = m_inventoryRepository.gold.ToString();
+            m_diamondText.text = 0.ToString();
         }
     }
 }
