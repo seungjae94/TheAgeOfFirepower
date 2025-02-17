@@ -1,6 +1,10 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using Sirenix.OdinInspector.Editor;
+#endif
+
 namespace Mathlife.ProjectL.Gameplay
 {
     public enum ESkillId
@@ -16,7 +20,7 @@ namespace Mathlife.ProjectL.Gameplay
         
     }
 
-    public class SkillDataAsset : NamedSO
+    public class SkillSO : NamedSO
     {
         public override int intId => (int) cardId;
 
@@ -41,5 +45,12 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("스킬 설명 템플릿")]
         [Multiline(10)]
         public string descriptionTemplate = "";
+
+#if UNITY_EDITOR
+        public override void ToMenuItem(ref OdinMenuItem menuItem)
+        {
+            throw new System.NotImplementedException();
+        }
+#endif
     }
 }

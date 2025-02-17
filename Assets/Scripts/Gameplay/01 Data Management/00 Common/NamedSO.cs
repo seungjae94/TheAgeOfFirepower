@@ -1,9 +1,8 @@
 ﻿using Sirenix.OdinInspector;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+#if UNITY_EDITOR
+using Sirenix.OdinInspector.Editor;
+#endif
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -15,5 +14,9 @@ namespace Mathlife.ProjectL.Gameplay
         public string displayName = "";
 
         public abstract int intId { get; }
+
+#if UNITY_EDITOR
+        public abstract void ToMenuItem(ref OdinMenuItem menuItem);
+#endif
     }
 }

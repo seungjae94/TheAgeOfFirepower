@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b96ee918180ee64e8a3b117f54f0fe7, type: 3}
-  m_Name: EquipmentSO_1
+  m_Name: EquipmentSO_0002
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -35,7 +35,7 @@ MonoBehaviour:
       Data: 0
     - Name: atk
       Entry: 3
-      Data: 10
+      Data: 20
     - Name: def
       Entry: 3
       Data: 0
@@ -51,12 +51,12 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  displayName: "\uB871\uC18C\uB4DC"
-  id: 1
+  displayName: "\uD669\uAE08 \uC1A1\uACF3\uB2C8"
+  id: 2
   type: 0
-  description: "\uACF5\uACA9\uB825 + 10"
-  shopPrice: 100
-  icon: {fileID: -5213216060618843423, guid: 885269cdf2aa378498f41adc4f9ed288, type: 3}
+  description: "\uACF5\uACA9\uB825 + 20"
+  shopPrice: 500
+  icon: {fileID: 3471736019636376757, guid: 885269cdf2aa378498f41adc4f9ed288, type: 3}
   battleEffect:
     rid: -2
   references:

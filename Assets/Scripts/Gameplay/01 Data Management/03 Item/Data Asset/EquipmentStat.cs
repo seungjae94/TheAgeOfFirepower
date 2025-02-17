@@ -14,7 +14,7 @@ namespace Mathlife.ProjectL.Gameplay
         public int maxHp;
 
         [LabelWidth(100)]
-        [LabelText("최대 체력")]
+        [LabelText("최대 에너지")]
         public int maxEnergy;
 
         [LabelWidth(100)]

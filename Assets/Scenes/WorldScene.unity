@@ -11564,6 +11564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_backButton: {fileID: 1457094789}
   m_tabMenuBar: {fileID: 1968148361}
+  m_gridView: {fileID: 1957922498}
 --- !u!114 &1350207542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14817,13 +14818,13 @@ MonoBehaviour:
     m_Right: 25
     m_Top: 30
     m_Bottom: 30
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 135, y: 135}
-  m_Spacing: {x: 20, y: 20}
+  m_CellSize: {x: 175, y: 175}
+  m_Spacing: {x: 50, y: 50}
   m_Constraint: 1
-  m_ConstraintCount: 4
+  m_ConstraintCount: 6
 --- !u!1 &1732643436
 GameObject:
   m_ObjectHideFlags: 0

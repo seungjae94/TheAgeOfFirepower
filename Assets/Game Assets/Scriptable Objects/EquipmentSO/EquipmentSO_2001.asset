@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b96ee918180ee64e8a3b117f54f0fe7, type: 3}
+  m_Name: EquipmentSO_2001
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: stat
+      Entry: 7
+      Data: Mathlife.ProjectL.Gameplay.EquipmentStat, ProjectL-Gameplay
+    - Name: maxHp
+      Entry: 3
+      Data: 0
+    - Name: maxEnergy
+      Entry: 3
+      Data: 0
+    - Name: energyRecovery
+      Entry: 3
+      Data: 0
+    - Name: atk
+      Entry: 3
+      Data: 0
+    - Name: def
+      Entry: 3
+      Data: 0
+    - Name: mag
+      Entry: 3
+      Data: 0
+    - Name: spd
+      Entry: 3
+      Data: 0
+    - Name: criticalPer
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+  displayName: "\uB2E4\uC774\uB108\uB9C8\uC774\uD2B8"
+  id: 2001
+  type: 2
+  description: "\uCCAB \uD134\uC5D0 \uBAA8\uB4E0 \uC801\uC5D0\uAC8C 10\uC758 \uB370\uBBF8\uC9C0\uB97C
+    \uC90D\uB2C8\uB2E4."
+  shopPrice: 0
+  icon: {fileID: 6658038789875605731, guid: 58fca586647c1834080ed0dcc9aa54a2, type: 3}
+  battleEffect:
+    rid: 3336615758153121875
+  references:
+    version: 2
+    RefIds:
+    - rid: 3336615758153121875
+      type: {class: ConditionalDamage, ns: Mathlife.ProjectL.Gameplay, asm: ProjectL-Gameplay}
+      data:
+        condition: 2
+        turn: 1
+        target: 4
+        value: 10

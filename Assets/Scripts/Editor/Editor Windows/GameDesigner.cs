@@ -12,6 +12,8 @@ using System.Net;
 using System.Collections.Generic;
 using UnityEngine.TextCore.Text;
 using DG.Tweening.Plugins.Core.PathCore;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using System;
 
 namespace Mathlife.ProjectL.Editor
 {
@@ -24,7 +26,7 @@ namespace Mathlife.ProjectL.Editor
 
         internal class ScriptableObjectAssetCreator<SOType> : IScriptableObjectAssetCreator where SOType : NamedSO
         {
-            [SerializeReference]
+            [ShowInInspector]
             [InlineEditor(ObjectFieldMode = InlineEditorObjectFieldModes.Hidden)]
             SOType _so;
 
@@ -44,7 +46,9 @@ namespace Mathlife.ProjectL.Editor
                 string typeName = _so.GetType().Name;
 
                 string directory = $"Assets/Game Assets/Scriptable Objects/{typeName}";
-                string assetPath = $"{directory}/{typeName}_{_so.intId}.asset";
+
+                string idString = (_so.intId).ToString().PadLeft(4, '0');
+                string assetPath = $"{directory}/{typeName}_{idString}.asset";
 
                 if (false == AssetDatabase.AssetPathExists(directory))
                 {
@@ -97,6 +101,8 @@ namespace Mathlife.ProjectL.Editor
             {
                 creator.DestroySOInstance();
             }
+
+            _soAssetCreators.Clear();
         }
 
         protected override void OnBeginDrawEditors()
@@ -125,7 +131,7 @@ namespace Mathlife.ProjectL.Editor
 
             if (asset is not CharacterSO 
                 && asset is not EquipmentSO 
-                && asset is not SkillDataAsset)
+                && asset is not SkillSO)
                 return;
 
             GUILayout.Label(selection.FirstOrDefault().Name);
@@ -163,57 +169,37 @@ namespace Mathlife.ProjectL.Editor
                 typeof(ExpDataAsset)
             );
 
-            // 캐릭터
-            IScriptableObjectAssetCreator creator = new ScriptableObjectAssetCreator<CharacterSO>();
-            _soAssetCreators.Add(creator);
-            tree.Add("캐릭터", creator);
+            // 메뉴 아이템 추가
+            AddMenuItems<CharacterSO>(tree, "캐릭터");
+            AddMenuItems<EquipmentSO>(tree, "장비");
 
-            tree.AddAllAssetsAtPath(
-                "캐릭터",
-                $"Assets/Game Assets/Scriptable Objects/{nameof(CharacterSO)}",
-                typeof(CharacterSO)
-            )
-            .ForEach(AddDragHandles);
-
-            // 장비
-            creator = new ScriptableObjectAssetCreator<EquipmentSO>();
-            _soAssetCreators.Add(creator);
-            tree.Add("장비", creator);
-
-            tree.AddAllAssetsAtPath(
-                "장비",
-                $"Assets/Game Assets/Scriptable Objects/{nameof(EquipmentSO)}",
-                typeof(EquipmentSO)
-            )
-            .ForEach(AddDragHandles);
-
+            // 메뉴 아이템 세팅
             tree.EnumerateTree()
-                .ForEach(menuItem =>
+                .Where(menuItem => menuItem.Value is NamedSO)
+                .Select(menuItem => (menuItem: menuItem, namedSO: (NamedSO)menuItem.Value))
+                .ForEach(tuple =>
                 {
-                    if (menuItem.Value is CharacterSO character)
-                    {
-                        menuItem.Name = character.displayName;
-                        menuItem.Icon = character.portrait?.texture;
-                    }
-                    else if (menuItem.Value is EquipmentSO equipment)
-                    {
-                        menuItem.Name = equipment.displayName;
-
-                        if (equipment.icon != null)
-                        {
-                            Rect texRect = equipment.icon.textureRect;
-                            menuItem.Icon = equipment.icon.texture.CropTexture(texRect);
-                        }
-                    }
-                    else
-                    {
-                        return;
-                    }
-
+                    (OdinMenuItem menuItem, NamedSO namedSO) = tuple;
+                    namedSO.ToMenuItem(ref menuItem);
                     AddDragHandles(menuItem);
                 });
 
             return tree;
+        }
+
+        void AddMenuItems<SOType>(OdinMenuTree tree, string menuDirectoryName) where SOType : NamedSO
+        {
+            Type soType = typeof(SOType);
+
+            IScriptableObjectAssetCreator creator = new ScriptableObjectAssetCreator<SOType>();
+            _soAssetCreators.Add(creator);
+            tree.Add(menuDirectoryName, creator);
+
+            tree.AddAllAssetsAtPath(
+                menuDirectoryName,
+                $"Assets/Game Assets/Scriptable Objects/{soType.Name}",
+                typeof(SOType)
+            );
         }
 
         void AddDragHandles(OdinMenuItem menuItem)

@@ -17,7 +17,7 @@ namespace Mathlife.ProjectL.Gameplay
     [Serializable]
     public class ConditionalBlock : ConditionalBattleEffect
     {
-        [HideIf("@type==EConditionalBlockType.Never")]
+        [HideIf("@condition==EBattleEventCondition.Never")]
         [LabelWidth(100)]
         [LabelText("보호막 수치")]
         public int value;
@@ -26,7 +26,7 @@ namespace Mathlife.ProjectL.Gameplay
     [Serializable]
     public class ConditionalHeal : ConditionalBattleEffect
     {
-        [HideIf("@type==EConditionalBlockType.Never")]
+        [HideIf("@condition==EBattleEventCondition.Never")]
         [LabelWidth(100)]
         [LabelText("힐 수치")]
         public int value;
@@ -39,7 +39,7 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("데미지 대상")]
         public EBattleTarget target;
 
-        [HideIf("@type==EConditionalBlockType.Never")]
+        [HideIf("@condition==EBattleEventCondition.Never")]
         [LabelWidth(100)]
         [LabelText("데미지 수치")]
         public int value;
@@ -52,7 +52,7 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("디버프 종류")]
         public EDebuff debuff;
 
-        [HideIf("@type==EConditionalBlockType.Never")]
+        [HideIf("@condition==EBattleEventCondition.Never")]
         [LabelWidth(100)]
         [LabelText("디버프 수치")]
         public int value;
@@ -65,7 +65,7 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("발동 조건")]
         public EBattleEventCondition condition;
 
-        [ShowIf("@type==EConditionalBlockType.OnSpecificTurn")]
+        [ShowIf("@condition==EBattleEventCondition.OnSpecificTurn")]
         [LabelWidth(100)]
         [LabelText("발동 턴")]
         public int turn;

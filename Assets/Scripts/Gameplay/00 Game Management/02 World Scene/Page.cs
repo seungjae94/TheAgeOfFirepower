@@ -24,12 +24,12 @@ namespace Mathlife.ProjectL.Gameplay
         public abstract void Initialize();
         protected abstract void InitializeChildren();
 
-        public void Open()
+        public virtual void Open()
         {
             canvasGroup.Show();
         }
 
-        public void Close()
+        public virtual void Close()
         {
             canvasGroup.Hide();
         }

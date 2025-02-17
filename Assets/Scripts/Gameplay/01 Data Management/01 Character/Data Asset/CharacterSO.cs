@@ -1,9 +1,11 @@
 using Sirenix.OdinInspector;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.U2D.Animation;
+
+#if UNITY_EDITOR
+using Sirenix.OdinInspector.Editor;
+#endif
+
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -90,5 +92,15 @@ namespace Mathlife.ProjectL.Gameplay
         [Range(0, 10), GUIColor(0.65f, 0.65f, 1.0f)]
         [SuffixLabel("per level")]
         public float magGrowth = 3.0f;
+
+#if UNITY_EDITOR
+        public override void ToMenuItem(ref OdinMenuItem menuItem)
+        {
+            menuItem.Name = displayName;
+
+            if (portrait != null)
+                menuItem.Icon = portrait.texture;
+        }
+#endif
     }
 }

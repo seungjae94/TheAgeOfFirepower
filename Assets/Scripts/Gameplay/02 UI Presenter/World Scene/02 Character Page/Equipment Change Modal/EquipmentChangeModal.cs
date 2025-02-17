@@ -68,7 +68,7 @@ namespace Mathlife.ProjectL.Gameplay
             m_selectedEquipment = null;
 
             UpdateSelectedEquipmentView();
-            UpdateSlotGridView();
+            UpdateGridView();
         }
 
         public async UniTask Show(EEquipmentType slotType)
@@ -80,7 +80,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             UpdateCurrentEquipmentView(currentEquipment);
             UpdateSelectedEquipmentView();
-            UpdateSlotGridView();
+            UpdateGridView();
 
             await m_canvasGroup.Show(k_fadeTime);
         }
@@ -94,7 +94,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             m_selectedEquipment = equipment;
             UpdateSelectedEquipmentView();
-            UpdateSlotGridView();
+            UpdateGridView();
         }
 
         // 뷰 업데이트 로직
@@ -146,7 +146,7 @@ namespace Mathlife.ProjectL.Gameplay
             }
         }
 
-        void UpdateSlotGridView()
+        void UpdateGridView()
         {
             m_slotGridView.Render(
                 m_inventoryRepository.GetSortedEquipmentList(m_slotType),

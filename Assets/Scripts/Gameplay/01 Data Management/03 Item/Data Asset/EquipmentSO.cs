@@ -1,6 +1,11 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using Sirenix.OdinInspector.Editor;
+using Sirenix.Utilities.Editor;
+#endif
+
 namespace Mathlife.ProjectL.Gameplay
 {
     public enum EEquipmentType
@@ -25,13 +30,13 @@ namespace Mathlife.ProjectL.Gameplay
         // 방어구
         LeatherVest = 1000,
         ChainMail,
-        KnightsArmor,
+        GeneralsPlate,
 
         // 아티팩트
         PackageOfHurbs = 2000,
         Dynamite,
+        CursedNecklace,
         LampOfEternity,
-        CursedNeckless,
     }
 
     public class EquipmentSO : NamedSO
@@ -57,7 +62,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         [LabelWidth(75)]
         [LabelText("아이콘")]
-        [PreviewField(50, ObjectFieldAlignment.Left)]
+        [PreviewField(50, Sirenix.OdinInspector.ObjectFieldAlignment.Left)]
         [AssetSelector(Paths = "Assets/Arts/UI/Icons", FlattenTreeView = true)]
         public Sprite icon = null;
 
@@ -66,10 +71,22 @@ namespace Mathlife.ProjectL.Gameplay
         public EquipmentStat stat;
 
         [SerializeReference]
-        [ShowInInspector]
         [LabelWidth(100)]
         [LabelText("조건부 배틀 이펙트")]
         [PolymorphicDrawerSettings(ShowBaseType = true)]
         public ConditionalBattleEffect battleEffect;
+
+#if UNITY_EDITOR
+        public override void ToMenuItem(ref OdinMenuItem menuItem)
+        {
+            menuItem.Name = displayName;
+
+            if (icon != null)
+            {
+                Rect texRect = icon.textureRect;
+                menuItem.Icon = icon.texture.CropTexture(texRect);
+            }
+        }
+#endif
     }
 }
