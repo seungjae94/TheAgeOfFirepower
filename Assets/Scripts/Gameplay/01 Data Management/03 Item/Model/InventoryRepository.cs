@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UniRx;
-using UnityEditor.Experimental;
-using UnityEditor.Overlays;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -37,31 +33,25 @@ namespace Mathlife.ProjectL.Gameplay
         {
             StarterDataAsset starter = m_gameDataDB.GetStarterData();
 
-#if UNITY_EDITOR
-            var starterMembers = starter.editorStarterMembers;
-            var starterNonMemberCharacters = starter.editorStarterNonMemberCharacters;
-            var starterUnequippedEquipments = starter.editorStarterUnequippedEquipments;
-#else
-            var starterUnequippedEquipments = starter.starterUnequippedEquipments;
-            var starterMembers = starter.starterMembers;
-            var starterNonMemberCharacters = starter.starterNonMemberCharacters;
-#endif
+            var starterParty = starter.GetStarterParty();
+            var starterCharactersNotInParty = starter.GetStarterCharactersNotInParty();
+            var starterEquipmentsNotOwned = starter.GetStarterEquipmentsNotOwned();
 
-            foreach (var characterSlot in starterMembers)
+            foreach (var characterSlot in starterParty)
             {
                 AddEquipment(characterSlot.weapon?.id ?? EEquipmentId.None);
                 AddEquipment(characterSlot.armor?.id ?? EEquipmentId.None);
                 AddEquipment(characterSlot.artifact?.id ?? EEquipmentId.None);
             }
 
-            foreach (var characterSlot in starterNonMemberCharacters)
+            foreach (var characterSlot in starterCharactersNotInParty)
             {
                 AddEquipment(characterSlot.weapon?.id ?? EEquipmentId.None);
                 AddEquipment(characterSlot.armor?.id ?? EEquipmentId.None);
                 AddEquipment(characterSlot.artifact?.id ?? EEquipmentId.None);
             }
 
-            foreach (var equipSlot in starterUnequippedEquipments)
+            foreach (var equipSlot in starterEquipmentsNotOwned)
             {
                 for (int i = 0; i < equipSlot.count; ++i)
                 {
@@ -70,6 +60,32 @@ namespace Mathlife.ProjectL.Gameplay
             }
         }
 
+        // 골드
+        LongReactiveProperty m_gold = new(0L);
+        public long gold { get => m_gold.Value; private set => m_gold.Value = value; }
+
+        public void GainGold(int gain)
+        {
+            if (gain <= 0L)
+                return;
+
+            gold += gain;
+        }
+
+        public void LoseGold(int lose)
+        {
+            if (lose <= 0L)
+                return;
+
+            gold -= lose;
+        }
+
+        public IDisposable SubscribeGoldChange(Action<long> action)
+        {
+            return m_gold.Subscribe(action);
+        }
+
+        // 장비
         ReactiveDictionary<EEquipmentType, List<EquipmentModel>> m_equipments = new();
 
         void InitEquipmentDictionary()
@@ -115,11 +131,7 @@ namespace Mathlife.ProjectL.Gameplay
                 })
                 .ThenBy(equip => equip.id)
                 .ToList();
-
-            //m_equipments[type].Sort((eq1, eq2) => eq1.id - eq2.id);
         }
-
-        
 
         //public bool RemoveArtifact(EEquipmentId id)
         //{

@@ -7,6 +7,7 @@ namespace Mathlife.ProjectL.Gameplay
     [Serializable]
     public class InventorySaveFile : SaveFile
     {
+        public long gold = 0L;
         public List<EEquipmentId> equipments = new();
     }
 }

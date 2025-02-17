@@ -59,6 +59,7 @@ namespace Mathlife.ProjectL.Gameplay
     }
 
     [Serializable]
+    [InlineProperty]
     public abstract class ConditionalBattleEffect
     {
         [LabelWidth(100)]

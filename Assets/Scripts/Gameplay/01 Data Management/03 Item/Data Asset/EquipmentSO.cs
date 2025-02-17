@@ -56,10 +56,6 @@ namespace Mathlife.ProjectL.Gameplay
         [Multiline(10)]
         public string description = "";
 
-        [LabelWidth(100)]
-        [LabelText("상점 판매가")]
-        public long shopPrice = 0;
-
         [LabelWidth(75)]
         [LabelText("아이콘")]
         [PreviewField(50, Sirenix.OdinInspector.ObjectFieldAlignment.Left)]
@@ -67,12 +63,16 @@ namespace Mathlife.ProjectL.Gameplay
         public Sprite icon = null;
 
         [LabelWidth(100)]
+        [LabelText("상점 판매가")]
+        public long shopPrice = 0;
+
+        [LabelWidth(100)]
         [LabelText("스탯")]
         public EquipmentStat stat;
 
         [SerializeReference]
         [LabelWidth(100)]
-        [LabelText("조건부 배틀 이펙트")]
+        [LabelText("배틀 효과")]
         [PolymorphicDrawerSettings(ShowBaseType = true)]
         public ConditionalBattleEffect battleEffect;
 

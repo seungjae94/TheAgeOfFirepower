@@ -20,50 +20,46 @@ namespace Mathlife.ProjectL.Gameplay
     [Serializable]
     public class CharacterState
     {
-#if UNITY_EDITOR
         [LabelText("캐릭터")]
         [LabelWidth(125)]
+#if UNITY_EDITOR
         [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetCharacterPreview))]
 #endif
         public CharacterSO character;
 
-#if UNITY_EDITOR
         [LabelText("레벨")]
         [LabelWidth(125)]
         [HorizontalGroup(group: "Level and Exp")]
-#endif
         public int level;
 
-#if UNITY_EDITOR
         [LabelText("경험치")]
         [LabelWidth(125)]
         [HorizontalGroup(group: "Level and Exp")]
-#endif
         public long currentLevelExp;
 
-#if UNITY_EDITOR
         [LabelText("무기")]
         [LabelWidth(125)]
         [HorizontalGroup(group: "Equipments")]
         [ValidateInput(nameof(IsWeapon), "무기가 아닙니다.")]
+#if UNITY_EDITOR
         [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetWeaponPreview))]
 #endif
         public EquipmentSO weapon;
 
-#if UNITY_EDITOR
         [LabelText("방어구")]
         [LabelWidth(125)]
         [HorizontalGroup(group: "Equipments")]
         [ValidateInput(nameof(IsArmor), "방어구가 아닙니다.")]
+#if UNITY_EDITOR
         [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetArmorPreview))]
 #endif
         public EquipmentSO armor;
 
-#if UNITY_EDITOR
         [LabelText("아티팩트")]
         [LabelWidth(125)]
         [HorizontalGroup(group: "Equipments")]
         [ValidateInput(nameof(IsArtifact), "아티팩트가 아닙니다.")]
+#if UNITY_EDITOR
         [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetArtifactPreview))]
 #endif
         public EquipmentSO artifact;

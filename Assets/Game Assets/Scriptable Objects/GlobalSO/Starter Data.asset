@@ -21,7 +21,8 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  starterMembers:
+  starterGold: 0
+  starterParty:
   - character: {fileID: 11400000, guid: 9a3b331ca5977a84ab9be371c0aedb79, type: 2}
     level: 1
     currentLevelExp: 0
@@ -46,23 +47,18 @@ MonoBehaviour:
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  starterNonMemberCharacters: []
-  starterUnequippedEquipments: []
-  editorStarterMembers:
+  starterCharactersNotInParty: []
+  starterEquipmentsNotOwned: []
+  editorStarterGold: 1000
+  editorStarterParty:
   - character: {fileID: 11400000, guid: 9a3b331ca5977a84ab9be371c0aedb79, type: 2}
-    level: 3
-    currentLevelExp: 30
+    level: 5
+    currentLevelExp: 25
     weapon: {fileID: 11400000, guid: bbc8e17a69eefd149a1b608ed34dfc0f, type: 2}
     armor: {fileID: 0}
     artifact: {fileID: 0}
   - character: {fileID: 11400000, guid: 62fbf364b2ae71440825e98d53902474, type: 2}
-    level: 2
-    currentLevelExp: 0
-    weapon: {fileID: 11400000, guid: a6bbfc5aa7259e6428ae98bc828b5035, type: 2}
-    armor: {fileID: 0}
-    artifact: {fileID: 0}
-  - character: {fileID: 0}
-    level: 0
+    level: 3
     currentLevelExp: 0
     weapon: {fileID: 0}
     armor: {fileID: 0}
@@ -73,23 +69,19 @@ MonoBehaviour:
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  editorStarterNonMemberCharacters: []
-  editorStarterUnequippedEquipments:
-  - equipment: {fileID: 11400000, guid: a6bbfc5aa7259e6428ae98bc828b5035, type: 2}
-    count: 3
+  - character: {fileID: 0}
+    level: 0
+    currentLevelExp: 0
+    weapon: {fileID: 0}
+    armor: {fileID: 0}
+    artifact: {fileID: 0}
+  editorStarterCharactersNotInParty: []
+  editorStarterEquipmentsNotOwned:
   - equipment: {fileID: 11400000, guid: 10b0f9e32eb0f4f4c990d3e77e944f4b, type: 2}
-    count: 5
+    count: 3
+  - equipment: {fileID: 11400000, guid: a6bbfc5aa7259e6428ae98bc828b5035, type: 2}
+    count: 35
   - equipment: {fileID: 11400000, guid: 6ad42f14964ad7a4f8dc0d1e9643490b, type: 2}
-    count: 3
-  - equipment: {fileID: 11400000, guid: b3a5280999a44b6449f3a978f1a3972f, type: 2}
-    count: 2
-  - equipment: {fileID: 11400000, guid: 6c1c0bffdeeb2124b9be9fb9e20dee75, type: 2}
-    count: 5
-  - equipment: {fileID: 11400000, guid: 5f8762e95c2c5474f8a9e108cd0adc08, type: 2}
-    count: 3
+    count: 150
   - equipment: {fileID: 11400000, guid: a0f8ff0d199627343826e6f177ee129d, type: 2}
-    count: 3
-  - equipment: {fileID: 11400000, guid: 9138a48f634d687498d5c30d26b5c10b, type: 2}
-    count: 2
-  - equipment: {fileID: 11400000, guid: c3f82f9e243bb31409e8146104b28777, type: 2}
-    count: 1
+    count: 300

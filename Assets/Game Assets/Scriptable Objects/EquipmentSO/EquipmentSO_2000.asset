@@ -54,9 +54,9 @@ MonoBehaviour:
   displayName: "\uC57D\uCD08 \uAFB8\uB7EC\uBBF8"
   id: 2000
   type: 2
-  description: "\uB9E4 \uD134 \uB9C8\uB2E4 \uCCB4\uB825 10 \uD68C\uBCF5"
-  shopPrice: 0
+  description: "\uB9E4 \uD134 \uB9C8\uB2E4 \uCCB4\uB825\uC744 10 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
   icon: {fileID: -9073277260564266562, guid: 58fca586647c1834080ed0dcc9aa54a2, type: 3}
+  shopPrice: 0
   battleEffect:
     rid: 3336615758153121874
   references:

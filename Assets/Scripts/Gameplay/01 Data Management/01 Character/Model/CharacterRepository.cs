@@ -106,18 +106,12 @@ namespace Mathlife.ProjectL.Gameplay
             StarterDataAsset starterData = m_gameDataDB.GetStarterData();
             ExpDataAsset expData = m_gameDataDB.GetExpData();
 
-#if UNITY_EDITOR
-            List<CharacterState> starterMembers = starterData.editorStarterMembers;
-            List<CharacterState> starterNonMemberCharacters = starterData.editorStarterNonMemberCharacters;
-
-#else
-            List<CharacterSlot> starterMembers = starterData.starterMembers;
-            List<CharacterSlot> starterNonMemberCharacters = starterData.starterNonMemberCharacters;
-#endif
+            var starterParty = starterData.GetStarterParty();
+            var starterCharactersNotInParty = starterData.GetStarterCharactersNotInParty();
 
             List<CharacterState> starterCharacters = new();
-            starterCharacters.AddRange(starterMembers);
-            starterCharacters.AddRange(starterNonMemberCharacters);
+            starterCharacters.AddRange(starterParty);
+            starterCharacters.AddRange(starterCharactersNotInParty);
 
             foreach (var starterCharacter in starterCharacters)
             {
@@ -137,7 +131,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             CharacterModel leader = null;
             List<CharacterModel> teamMembers = new();
-            foreach (var starterMember in starterMembers)
+            foreach (var starterMember in starterParty)
             {
                 if (starterMember.character == null)
                 {

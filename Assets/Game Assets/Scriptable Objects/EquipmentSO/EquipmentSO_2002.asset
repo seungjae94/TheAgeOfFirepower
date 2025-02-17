@@ -55,10 +55,10 @@ MonoBehaviour:
   id: 2002
   type: 2
   description: "\uCD5C\uB300 \uC5D0\uB108\uC9C0 + 1\n\uC5D0\uB108\uC9C0 \uD68C\uBCF5\uB7C9
-    + 1\n\uBB34\uBC29\uBE44 \uB514\uBC84\uD504 3\uC744 \uD68D\uB4DD\uD55C \uCC44\uB85C
+    + 1\n\uBB34\uBC29\uBE44 \uB514\uBC84\uD504 3\uC744 \uAC00\uC9C4 \uCC44\uB85C
     \uC804\uD22C\uB97C \uC2DC\uC791\uD569\uB2C8\uB2E4."
-  shopPrice: 0
   icon: {fileID: -236075689066233278, guid: 885269cdf2aa378498f41adc4f9ed288, type: 3}
+  shopPrice: 0
   battleEffect:
     rid: 3336615758153121876
   references:

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mathlife.ProjectL.Gameplay
 {
+    [InlineProperty]
     public struct EquipmentStat
     {
         [LabelWidth(100)]
