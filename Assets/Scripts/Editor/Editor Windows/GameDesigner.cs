@@ -14,6 +14,7 @@ using UnityEngine.TextCore.Text;
 using DG.Tweening.Plugins.Core.PathCore;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using System;
+using System.IO;
 
 namespace Mathlife.ProjectL.Editor
 {
@@ -195,11 +196,11 @@ namespace Mathlife.ProjectL.Editor
             _soAssetCreators.Add(creator);
             tree.Add(menuDirectoryName, creator);
 
-            tree.AddAllAssetsAtPath(
-                menuDirectoryName,
-                $"Assets/Game Assets/Scriptable Objects/{soType.Name}",
-                typeof(SOType)
-            );
+            foreach (string guid in AssetDatabase.FindAssets("", new[] { $"Assets/Game Assets/Scriptable Objects/{soType.Name}" }))
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                tree.AddAssetAtPath($"{menuDirectoryName}/{guid}", assetPath, typeof(SOType));
+            }
         }
 
         void AddDragHandles(OdinMenuItem menuItem)
