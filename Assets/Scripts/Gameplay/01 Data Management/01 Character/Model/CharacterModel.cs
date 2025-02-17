@@ -9,7 +9,7 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public CharacterModel(
             CharacterSO dataAsset,
-            ExpDataAsset expSO,
+            ExpSO expSO,
             int level, long totalExp
         )
         {
@@ -24,7 +24,7 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         CharacterSO m_so;
-        ExpDataAsset m_expSO;
+        ExpSO m_expSO;
 
         public ECharacterId characterId => m_so.id;
         public string displayName => m_so.displayName;

@@ -64,7 +64,7 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 CharacterModel model = new CharacterModel(
                     m_gameDataDB.GetCharacterData(characterSaveData.id),
-                    m_gameDataDB.GetExpData(),
+                    m_gameDataDB.GetExpSO(),
                     characterSaveData.level,
                     characterSaveData.totalExp
                 );
@@ -103,8 +103,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         void ConstructFromStarterData()
         {
-            StarterDataAsset starterData = m_gameDataDB.GetStarterData();
-            ExpDataAsset expData = m_gameDataDB.GetExpData();
+            StarterSO starterData = m_gameDataDB.GetStarterSO();
+            ExpSO expData = m_gameDataDB.GetExpSO();
 
             var starterParty = starterData.GetStarterParty();
             var starterCharactersNotInParty = starterData.GetStarterCharactersNotInParty();
@@ -205,7 +205,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             CharacterModel character = new(
                 m_gameDataDB.GetCharacterData(id),
-                m_gameDataDB.GetExpData(),
+                m_gameDataDB.GetExpSO(),
                 level, totalExp);
             m_characters.Add(id, character);
 

@@ -34,6 +34,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5eb9d6815587dc94cbf9b21db7cb2b68
+    m_Address: Assets/Game Assets/Scriptable Objects/UniqueSO/PrefabSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5f8762e95c2c5474f8a9e108cd0adc08
     m_Address: Assets/Game Assets/Scriptable Objects/EquipmentSO/EquipmentSO_2003.asset
     m_ReadOnly: 0

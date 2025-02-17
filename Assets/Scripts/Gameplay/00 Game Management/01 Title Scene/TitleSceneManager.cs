@@ -14,8 +14,6 @@ using VContainer;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    
-
     public class TitleSceneManager : MonoBehaviour
     {
         [SerializeField] Button m_gameStartButton;
@@ -54,7 +52,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void OnClickGameStartButton()
         {
-            SceneManager.LoadScene("WorldScene");
+            SceneManager.LoadScene("Main Scene");
         }
 
         async UniTask LoadGame()

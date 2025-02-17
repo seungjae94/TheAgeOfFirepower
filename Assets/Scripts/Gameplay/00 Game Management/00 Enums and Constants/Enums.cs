@@ -19,9 +19,10 @@ namespace Mathlife.ProjectL.Gameplay
     public enum EPrefabId
     {
         None = 0,
-        CharacterCard = 1,
-        DragCharacterCard = 2,
-        EquipmentSlot = 3,
+        CharacterCard,
+        DragCharacterCard,
+        EquipmentSlot,
+        ShopItemCard,
     }
 
     public enum EBattleTarget

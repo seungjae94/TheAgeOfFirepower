@@ -8,13 +8,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
-using System.Net;
 using System.Collections.Generic;
-using UnityEngine.TextCore.Text;
-using DG.Tweening.Plugins.Core.PathCore;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using System;
-using System.IO;
 
 namespace Mathlife.ProjectL.Editor
 {
@@ -154,20 +149,26 @@ namespace Mathlife.ProjectL.Editor
 
             tree.AddAssetAtPath(
                 "스타터 세팅",
-                "Assets/Game Assets/Scriptable Objects/GlobalSO/Starter Data.asset",
-                typeof(StarterDataAsset)
-            );
-
-            tree.AddAssetAtPath(
-                "상수",
-                "Assets/Game Assets/Scriptable Objects/GlobalSO/Constant Data.asset",
-                typeof(GlobalDataAsset)
+                "Assets/Game Assets/Scriptable Objects/UniqueSO/StarterSO.asset",
+                typeof(StarterSO)
             );
 
             tree.AddAssetAtPath(
                 "경험치 테이블",
-                "Assets/Game Assets/Scriptable Objects/GlobalSO/Exp Data.asset",
-                typeof(ExpDataAsset)
+                "Assets/Game Assets/Scriptable Objects/UniqueSO/ExpSO.asset",
+                typeof(ExpSO)
+            );
+
+            tree.AddAssetAtPath(
+                "상점",
+                "Assets/Game Assets/Scriptable Objects/UniqueSO/ShopSO.asset",
+                typeof(ShopSO)
+            );
+
+            tree.AddAssetAtPath(
+                "프리팹 등록",
+                "Assets/Game Assets/Scriptable Objects/UniqueSO/PrefabSO.asset",
+                typeof(PrefabSO)
             );
 
             // 메뉴 아이템 추가

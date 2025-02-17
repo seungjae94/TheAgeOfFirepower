@@ -13,9 +13,10 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class GameDataDB : IDisposable
     {
-        ExpDataAsset m_expData;
-        GlobalDataAsset m_globalData;
-        StarterDataAsset m_starterData;
+        StarterSO m_starterSO;
+        ExpSO m_expSO;
+        ShopSO m_shopSO;
+        PrefabSO m_prafabSO;
         Dictionary<ECharacterId, CharacterSO> m_characters = new();
         Dictionary<EEquipmentId, EquipmentSO> m_equipments = new();
 
@@ -25,26 +26,18 @@ namespace Mathlife.ProjectL.Gameplay
 
             foreach (var dataAsset in dataAssets)
             {
-                if (dataAsset is ExpDataAsset expData)
-                {
-                    m_expData = expData;
-                }
-                else if (dataAsset is GlobalDataAsset globalData)
-                {
-                    m_globalData = globalData;
-                }
-                else if (dataAsset is StarterDataAsset starterData)
-                {
-                    m_starterData = starterData;
-                }
-                else if (dataAsset is CharacterSO character)
-                {
-                    m_characters.Add(character.id, character);
-                }
-                else if (dataAsset is EquipmentSO equipment)
-                {
-                    m_equipments.Add(equipment.id, equipment);
-                }
+                if (dataAsset is ExpSO expSO)
+                    m_expSO = expSO;
+                else if (dataAsset is ShopSO shopSO)
+                    m_shopSO = shopSO;
+                else if (dataAsset is PrefabSO prefabSO)
+                    m_prafabSO = prefabSO;
+                else if (dataAsset is StarterSO starterSO)
+                    m_starterSO = starterSO;
+                else if (dataAsset is CharacterSO characterSO)
+                    m_characters.Add(characterSO.id, characterSO);
+                else if (dataAsset is EquipmentSO equipmentSO)
+                    m_equipments.Add(equipmentSO.id, equipmentSO);
             }
         }
 
@@ -55,13 +48,13 @@ namespace Mathlife.ProjectL.Gameplay
 
         public T Instantiate<T>(EPrefabId prefabId, Transform parent) where T : Component
         {
-            if (false == m_globalData.prefabs.ContainsKey(prefabId))
+            if (false == m_prafabSO.prefabs.ContainsKey(prefabId))
             {
                 Debug.LogError($"Tried to instantiate undefined prefab {prefabId}");
                 return null;
             }
 
-            return GameObject.Instantiate(m_globalData.prefabs[prefabId], parent).GetComponent<T>();
+            return GameObject.Instantiate(m_prafabSO.prefabs[prefabId], parent).GetComponent<T>();
         }
 
         public CharacterSO GetCharacterData(ECharacterId id)
@@ -80,24 +73,29 @@ namespace Mathlife.ProjectL.Gameplay
             return m_equipments[id];
         }
 
-        public StarterDataAsset GetStarterData()
+        public StarterSO GetStarterSO()
         {
-            return m_starterData;
+            return m_starterSO;
         }
 
-        public GlobalDataAsset GetGlobalData()
+        public ShopSO GetShopSO()
         {
-            return m_globalData;
+            return m_shopSO;
         }
 
-        public ExpDataAsset GetExpData()
+        public PrefabSO GetPrefabSO()
         {
-            return m_expData;
+            return m_prafabSO;
+        }
+
+        public ExpSO GetExpSO()
+        {
+            return m_expSO;
         }
 
         public void Dispose()
         {
-            Addressables.Release(m_expData);
+            Addressables.Release(m_expSO);
             
             foreach(var character in m_characters.Values)
             {

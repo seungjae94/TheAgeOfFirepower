@@ -1,13 +1,12 @@
 using Mathlife.ProjectL.Utils;
 using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor.Drawers;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    [CreateAssetMenu(fileName = "Starter Data Asset", menuName = "Data Asset/Starter Data")]
-    public class StarterDataAsset : SerializedScriptableObject
+    [CreateAssetMenu(fileName = "StarterSO", menuName = "SO/Starter SO")]
+    public class StarterSO : SerializedScriptableObject
     {
         [SerializeField]
         [TitleGroup("실제 게임 세팅", GroupID = "Starter", Indent = true, HorizontalLine = true)]

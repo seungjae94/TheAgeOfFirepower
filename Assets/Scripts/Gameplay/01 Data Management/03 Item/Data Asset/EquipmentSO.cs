@@ -1,5 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
+using System;
+
 
 #if UNITY_EDITOR
 using Sirenix.OdinInspector.Editor;
@@ -39,6 +41,7 @@ namespace Mathlife.ProjectL.Gameplay
         LampOfEternity,
     }
 
+    [Serializable]
     public class EquipmentSO : NamedSO
     {
         public override int intId => (int)id;

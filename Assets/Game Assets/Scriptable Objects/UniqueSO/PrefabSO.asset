@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaeac84a34bdea84a98a5cb05aa0e4ed, type: 3}
-  m_Name: Constant Data
+  m_Script: {fileID: 11500000, guid: 42a95fbe2a803514facb73fc11d86ee5, type: 3}
+  m_Name: PrefabSO
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -19,6 +19,7 @@ MonoBehaviour:
     - {fileID: 6961125363360188540, guid: 0d1a80954a6921644bd2ed2f701fe60a, type: 3}
     - {fileID: 6961125363360188540, guid: 2e293b05cafeb5c46bdbf5fd9e171d59, type: 3}
     - {fileID: 7851466314636929522, guid: 072a39538b8ce3c4faf98f55a8c2e745, type: 3}
+    - {fileID: 1362617673376378294, guid: cf0991522359e414681a8419a1499c16, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -43,7 +44,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 4
     - Name: 
       Entry: 7
       Data: 
@@ -81,10 +82,20 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
-  maxLevel: 100
-  teamSize: 4

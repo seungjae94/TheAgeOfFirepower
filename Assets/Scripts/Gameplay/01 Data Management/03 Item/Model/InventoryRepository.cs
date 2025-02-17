@@ -33,7 +33,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         void ConstructFromStarterData()
         {
-            StarterDataAsset starter = m_gameDataDB.GetStarterData();
+            StarterSO starter = m_gameDataDB.GetStarterSO();
 
             gold = starter.GetStarterGold();
 

@@ -1,3 +1,4 @@
+using Mathlife.ProjectL.Utils;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using System.Collections.Generic;
@@ -10,36 +11,32 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    [CreateAssetMenu(fileName = "Exp Data Asset", menuName = "Data Asset/Exp Data")]
-    public class ExpDataAsset : SerializedScriptableObject
+    [CreateAssetMenu(fileName = "ExpSO", menuName = "SO/Exp SO")]
+    public class ExpSO : SerializedScriptableObject
     {
-
-#if UNITY_EDITOR
-        [TitleGroup("경험치 테이블", GroupID = "Exp")]
         [Delayed]
-        [TabGroup("Exp/tab", "캐릭터 필요 경험치")] // 그룹 이름, 탭 이름
-        [HorizontalGroup("Exp/tab/캐릭터 필요 경험치/hortest")]
+        [HorizontalGroup("Character Exp", Title = "캐릭터 경험치")]
         [LabelText("다음 레벨까지 필요 경험치")]
         [ListDrawerSettings(DraggableItems = false, ShowFoldout = false, ShowIndexLabels = true)]
+#if UNITY_EDITOR
         [OnValueChanged(nameof(OnCharacterNeedExpListChanged), includeChildren: true)]
 #endif
         public List<long> characterNeedExpAtLevelList = new();
 
-#if UNITY_EDITOR
         [ReadOnly]
-        [TabGroup("Exp/tab", "캐릭터 필요 경험치")]
+        [HorizontalGroup("Character Exp")]
         [LabelText("이 레벨까지 누적 경험치")]
-        [HorizontalGroup("Exp/tab/캐릭터 필요 경험치/hortest")]
         [ListDrawerSettings(DraggableItems = false, ShowFoldout = false, ShowIndexLabels = true)]
-#endif
         public List<long> characterTotalExpAtLevelList = new();
 
-#if UNITY_EDITOR
+        [ShowInInspector]
+        [SpaceOnly(25)]
+        bool _dummySpacing;
+
         [Delayed]
-        [TabGroup("Exp/tab", "몬스터 기준 경험치")]
-        [LabelText("몬스터 기준 경험치")]
+        [Title("몬스터 경험치", horizontalLine: false)]
+        [LabelText("레벨별 몬스터 기초 경험치")]
         [ListDrawerSettings(DraggableItems = false, ShowFoldout = false, ShowIndexLabels = true)]
-#endif
         public List<long> monsterBaseExpAtLevelList = new();
 
 #if UNITY_EDITOR
