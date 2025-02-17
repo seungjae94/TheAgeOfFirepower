@@ -88,6 +88,18 @@ namespace Mathlife.ProjectL.Gameplay
             return m_gold.Subscribe(action);
         }
 
+        // 거래
+
+        public bool BuyItem(EEquipmentId equipmentId)
+        {
+            return true;
+        }
+
+        public bool SellItem(EEquipmentId equipmentId)
+        {
+            return true;
+        }
+
         // 장비
         ReactiveDictionary<EEquipmentType, List<EquipmentModel>> m_equipments = new();
 

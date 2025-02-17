@@ -78,6 +78,7 @@ namespace Mathlife.ProjectL.Gameplay
             UpdateGridView();
             UpdateSelectedEquipmentView();
         }
+
         void OnSelectTabMenu(int index)
         {
             m_tabMenus[m_selectedTab].Default();

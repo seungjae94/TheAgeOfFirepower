@@ -40,5 +40,20 @@ namespace Mathlife.ProjectL.Gameplay
             return equipment.icon;
         }
 #endif
+
+        public List<EquipmentSO> GetItemCatalog(EEquipmentType type)
+        {
+            switch (type)
+            {
+                case EEquipmentType.Weapon:
+                    return shopWeapons;
+                case EEquipmentType.Armor:
+                    return shopArmors;
+                case EEquipmentType.Artifact:
+                    return shopArtifacts;
+                default:
+                    return null;
+            }
+        }
     }
 }
