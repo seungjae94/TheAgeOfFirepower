@@ -54,7 +54,7 @@ MonoBehaviour:
   - character: {fileID: 11400000, guid: 9a3b331ca5977a84ab9be371c0aedb79, type: 2}
     level: 5
     currentLevelExp: 25
-    weapon: {fileID: 11400000, guid: bbc8e17a69eefd149a1b608ed34dfc0f, type: 2}
+    weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
   - character: {fileID: 11400000, guid: 62fbf364b2ae71440825e98d53902474, type: 2}
@@ -76,12 +76,4 @@ MonoBehaviour:
     armor: {fileID: 0}
     artifact: {fileID: 0}
   editorStarterCharactersNotInParty: []
-  editorStarterEquipmentsNotOwned:
-  - equipment: {fileID: 11400000, guid: 10b0f9e32eb0f4f4c990d3e77e944f4b, type: 2}
-    count: 3
-  - equipment: {fileID: 11400000, guid: a6bbfc5aa7259e6428ae98bc828b5035, type: 2}
-    count: 20
-  - equipment: {fileID: 11400000, guid: 6ad42f14964ad7a4f8dc0d1e9643490b, type: 2}
-    count: 20
-  - equipment: {fileID: 11400000, guid: a0f8ff0d199627343826e6f177ee129d, type: 2}
-    count: 20
+  editorStarterEquipmentsNotOwned: []

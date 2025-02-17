@@ -67,7 +67,7 @@ namespace Mathlife.ProjectL.Gameplay
         LongReactiveProperty m_gold = new(0L);
         public long gold { get => m_gold.Value; private set => m_gold.Value = value; }
 
-        public void GainGold(int gain)
+        public void GainGold(long gain)
         {
             if (gain <= 0L)
                 return;
@@ -75,7 +75,7 @@ namespace Mathlife.ProjectL.Gameplay
             gold += gain;
         }
 
-        public void LoseGold(int lose)
+        public void LoseGold(long lose)
         {
             if (lose <= 0L)
                 return;
@@ -92,6 +92,15 @@ namespace Mathlife.ProjectL.Gameplay
 
         public bool BuyItem(EEquipmentId equipmentId)
         {
+            EquipmentSO equipmentSO = m_gameDataDB.GetEquipmentSO(equipmentId);
+
+            if (gold < equipmentSO.shopPrice)
+            {
+                return false;
+            }
+
+            AddEquipment(equipmentId);
+            LoseGold(equipmentSO.shopPrice);
             return true;
         }
 
