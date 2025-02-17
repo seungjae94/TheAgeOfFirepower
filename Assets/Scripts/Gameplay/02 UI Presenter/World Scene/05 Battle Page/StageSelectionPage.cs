@@ -11,7 +11,7 @@ using VContainer;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class BattlePage : Page
+    public class StageSelectionPage : Page
     {
         Image m_portrait;
         TMP_Text m_battleNameText;
@@ -21,7 +21,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         CompositeDisposable m_subscriptions_page = new();
 
-        public override EPageId pageId => EPageId.BattlePage;
+        public override EPageId pageId => EPageId.StageSelectionPage;
 
         protected override void Awake()
         {

@@ -12,7 +12,8 @@ namespace Mathlife.ProjectL.Gameplay
         TeamPage,
         CharacterPage,
         InventoryPage,
-        BattlePage
+        ShopPage,
+        StageSelectionPage
     }
 
     public enum EPrefabId

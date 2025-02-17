@@ -43,10 +43,16 @@ namespace Mathlife.ProjectL.Editor
             Navigate<InventoryPage>();
         }
 
-        [MenuItem("Project L/World Scene/Page Navigation/Battle Page", priority = 15)]
-        static void GoToBattlePage()
+        [MenuItem("Project L/World Scene/Page Navigation/Shop Page", priority = 15)]
+        static void GoToShopPage()
         {
-            Navigate<BattlePage>();
+            Navigate<ShopPage>();
+        }
+
+        [MenuItem("Project L/World Scene/Page Navigation/Stage Selection Page", priority = 15)]
+        static void GoToStageSelectionPage()
+        {
+            Navigate<StageSelectionPage>();
         }
 
         static List<Page> FindPages()
