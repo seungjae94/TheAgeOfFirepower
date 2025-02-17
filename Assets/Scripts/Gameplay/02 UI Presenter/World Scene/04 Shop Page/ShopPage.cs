@@ -63,6 +63,13 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // 유저 상호작용
+        public override void Open()
+        {
+            base.Open();
+
+            UpdateFlexView();
+        }
+
         void OnClickNavigateBackButton()
         {
             m_worldSceneManager.NavigateBack();
