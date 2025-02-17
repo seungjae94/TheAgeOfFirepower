@@ -9,6 +9,8 @@ namespace Mathlife.ProjectL.Gameplay
     {
         [SerializeField] Button m_partyButton;
         [SerializeField] Button m_inventoryButton;
+        [SerializeField] Button m_shopButton;
+        [SerializeField] Button m_battleButton;
 
         public override EPageId pageId => EPageId.HomePage;
 
@@ -19,6 +21,12 @@ namespace Mathlife.ProjectL.Gameplay
 
             m_inventoryButton.OnClickAsObservable()
                 .Subscribe(_ => m_worldSceneManager.Navigate(EPageId.InventoryPage));
+
+            m_shopButton.OnClickAsObservable()
+                .Subscribe(_ => m_worldSceneManager.Navigate(EPageId.ShopPage));
+
+            m_battleButton.OnClickAsObservable()
+                .Subscribe(_ => m_worldSceneManager.Navigate(EPageId.StageSelectionPage));
         }
 
         protected override void InitializeChildren()

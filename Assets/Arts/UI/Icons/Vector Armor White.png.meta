@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 54a400297c917994086b7a6de7cc76c3
+guid: c8ce483a07db8874c9b77a297d5dc452
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3398723980145159412
-    second: Contraction Artifact Slot_0
+      213: -8277995844793726885
+    second: Vector Armor White_0
+  - first:
+      213: 8944526706311400112
+    second: Vector Armor White_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -52,7 +55,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 10, y: 10, z: 10, w: 10}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -126,23 +129,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Contraction Artifact Slot_0
+      name: Vector Armor White_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 200
-        height: 200
+        x: 14
+        y: 30
+        width: 68
+        height: 60
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c0398d91c8e45d0d0800000000000000
-      internalID: -3398723980145159412
+      spriteID: b5809ea43a6ae1d80800000000000000
+      internalID: -8277995844793726885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vector Armor White_1
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 6
+        width: 61
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ba8fa536a7512c70800000000000000
+      internalID: 8944526706311400112
       vertices: []
       indices: 
       edges: []
@@ -152,7 +177,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -161,7 +186,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Contraction Artifact Slot_0: -3398723980145159412
+      Vector Armor White_0: -8277995844793726885
+      Vector Armor White_1: 8944526706311400112
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
