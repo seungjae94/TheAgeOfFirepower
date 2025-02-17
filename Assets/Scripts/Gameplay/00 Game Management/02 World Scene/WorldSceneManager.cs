@@ -13,8 +13,6 @@ namespace Mathlife.ProjectL.Gameplay
 
         PageNavigator m_pageNavigator = new();
 
-        [Inject] GameDataDB m_gameDataDB;
-
         async void Start()
         {
             // 1. 로딩 스크린 띄우기

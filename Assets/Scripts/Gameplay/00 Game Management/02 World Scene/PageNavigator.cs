@@ -61,11 +61,13 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 Back();
             }
+
+            Navigate(EPageId.HomePage);
         }
 
         public bool IsHome()
         {
-            return m_stack.Any() == false;
+            return m_stack.Count == 1;
         }
     }
 }

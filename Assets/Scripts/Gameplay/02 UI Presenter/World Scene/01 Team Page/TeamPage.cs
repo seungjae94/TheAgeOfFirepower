@@ -12,7 +12,6 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class TeamPage : Page
     {
-        #region View
         Button m_backButton;
         Image m_background;
         Button m_buildBestTeamButton;
@@ -21,7 +20,6 @@ namespace Mathlife.ProjectL.Gameplay
         List<CharacterSlotPresenter> m_slots;
         CharacterScrollViewPresenter m_scrollView;
         TeamValidationModal m_teamValidationModal;
-        #endregion
 
         [Inject] CharacterRepository m_characterRepository;
         public override EPageId pageId => EPageId.TeamPage;

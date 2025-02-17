@@ -9,7 +9,7 @@ using UnityEngine.Rendering;
 
 namespace Mathlife.ProjectL.Editor
 {
-    public static class Menu_WorldScenePageNavigation
+    public static class WorldScenePageNavigationMenuItems
     {
         const int wordSceneBuildIndex = 1;
 
@@ -19,7 +19,7 @@ namespace Mathlife.ProjectL.Editor
             return EditorSceneManager.GetActiveScene().buildIndex == wordSceneBuildIndex;
         }
 
-        [MenuItem("Project L/World Scene/Page Navigation/Home", priority = 11)]
+        [MenuItem("Project L/World Scene/Page Navigation/Home Page", priority = 11)]
         static void GoToHome()
         {
             Home();
@@ -66,6 +66,9 @@ namespace Mathlife.ProjectL.Editor
         {
             foreach (Page page in FindPages())
             {
+                if (page is HomePage)
+                    continue;
+
                 CanvasGroup group = page.GetComponent<CanvasGroup>();
                 group.Hide();
             }
@@ -75,6 +78,9 @@ namespace Mathlife.ProjectL.Editor
         {
             foreach (Page page in FindPages())
             {
+                if (page is HomePage)
+                    continue;
+
                 CanvasGroup group = page.GetComponent<CanvasGroup>();
                 if (group.alpha > 0.0f)
                     return false;
@@ -93,7 +99,7 @@ namespace Mathlife.ProjectL.Editor
                 {
                     group.Show();
                 }
-                else
+                else if (page is not HomePage)
                 {
                     group.Hide();
                 }
