@@ -15,7 +15,10 @@ namespace Mathlife.ProjectL.Gameplay
         [Inject] InventoryRepository m_inventoryRepository;
 
         // 뒤로 가기 기능
-        [SerializeField] Button m_backButton;
+        [SerializeField] NavigateBackBarView m_navigateBackBar;
+
+        // 인게임 재화 표시 기능
+        [SerializeField] IngameCurrencyBarPresenter m_ingameCurrencyBar;
 
         // 탭 선택 기능
         [SerializeField] Transform m_tabMenuBar;
@@ -44,16 +47,14 @@ namespace Mathlife.ProjectL.Gameplay
 
         public override void Initialize()
         {
-            m_backButton.OnClickAsObservable()
-                .Subscribe(OnClickBackButton)
-                .AddTo(gameObject);
-
             InitializeChildren();
             Close();
         }
 
         protected override void InitializeChildren()
         {
+            m_navigateBackBar.Initialize(OnClickBackButton);
+            m_ingameCurrencyBar.Initilize();
             InitializeTabMenu();
         }
 
@@ -77,12 +78,6 @@ namespace Mathlife.ProjectL.Gameplay
             UpdateGridView();
             UpdateSelectedEquipmentView();
         }
-
-        void OnClickBackButton(Unit _)
-        {
-            m_worldSceneManager.NavigateBack();
-        }
-
         void OnSelectTabMenu(int index)
         {
             m_tabMenus[m_selectedTab].Default();
@@ -101,6 +96,12 @@ namespace Mathlife.ProjectL.Gameplay
 
             UpdateSelectedEquipmentView();
             UpdateGridView();
+        }
+
+        void OnClickBackButton()
+        {
+            m_selectedTab = 0;
+            m_worldSceneManager.NavigateBack();
         }
 
         // 뷰 업데이트

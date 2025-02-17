@@ -23,6 +23,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         void ConstructFromSaveFile()
         {
+            gold = m_saveDataDB.inventory.gold;
+
             foreach (EEquipmentId equipmentId in m_saveDataDB.inventory.equipments)
             {
                 AddEquipment(equipmentId);
@@ -33,10 +35,9 @@ namespace Mathlife.ProjectL.Gameplay
         {
             StarterDataAsset starter = m_gameDataDB.GetStarterData();
 
-            var starterParty = starter.GetStarterParty();
-            var starterCharactersNotInParty = starter.GetStarterCharactersNotInParty();
-            var starterEquipmentsNotOwned = starter.GetStarterEquipmentsNotOwned();
+            gold = starter.GetStarterGold();
 
+            var starterParty = starter.GetStarterParty();
             foreach (var characterSlot in starterParty)
             {
                 AddEquipment(characterSlot.weapon?.id ?? EEquipmentId.None);
@@ -44,6 +45,7 @@ namespace Mathlife.ProjectL.Gameplay
                 AddEquipment(characterSlot.artifact?.id ?? EEquipmentId.None);
             }
 
+            var starterCharactersNotInParty = starter.GetStarterCharactersNotInParty();
             foreach (var characterSlot in starterCharactersNotInParty)
             {
                 AddEquipment(characterSlot.weapon?.id ?? EEquipmentId.None);
@@ -51,6 +53,7 @@ namespace Mathlife.ProjectL.Gameplay
                 AddEquipment(characterSlot.artifact?.id ?? EEquipmentId.None);
             }
 
+            var starterEquipmentsNotOwned = starter.GetStarterEquipmentsNotOwned();
             foreach (var equipSlot in starterEquipmentsNotOwned)
             {
                 for (int i = 0; i < equipSlot.count; ++i)
