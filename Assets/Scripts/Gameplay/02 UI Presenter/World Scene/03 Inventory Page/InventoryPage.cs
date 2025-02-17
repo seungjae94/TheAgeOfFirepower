@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UniRx;
 using UnityEditor.Graphs;
 using UnityEngine;
@@ -23,8 +24,12 @@ namespace Mathlife.ProjectL.Gameplay
 
         // 그리드 표시 기능
         [SerializeField] EquipmentSlotGridView m_gridView;
+
+        // 선택한 장비 정보
+        [SerializeField] Image m_selectedEquipmentIcon;
+        [SerializeField] TMP_Text m_selectedEquipmentName;
+        [SerializeField] TMP_Text m_selectedEquipmentDescription;
         EquipmentModel m_selectedEquipment = null;
-        
 
         // 초기화
         protected override void Awake()
@@ -70,6 +75,7 @@ namespace Mathlife.ProjectL.Gameplay
             base.Open();
 
             UpdateGridView();
+            UpdateSelectedEquipmentView();
         }
 
         void OnClickBackButton(Unit _)
@@ -83,11 +89,21 @@ namespace Mathlife.ProjectL.Gameplay
             m_tabMenus[index].Select();
             
             m_selectedTab = index;
+            m_selectedEquipment = null;
 
             UpdateGridView();
             UpdateSelectedEquipmentView();
         }
 
+        void OnClickSlot(EquipmentModel equipment)
+        {
+            m_selectedEquipment = equipment;
+
+            UpdateSelectedEquipmentView();
+            UpdateGridView();
+        }
+
+        // 뷰 업데이트
         void UpdateGridView()
         {
             m_gridView.Render(
@@ -97,7 +113,28 @@ namespace Mathlife.ProjectL.Gameplay
 
         void UpdateSelectedEquipmentView()
         {
+            if (m_selectedEquipment == null)
+            {
+                m_selectedEquipmentIcon.enabled = false;
+                m_selectedEquipmentIcon.sprite = null;
 
+                m_selectedEquipmentName.text = "";
+
+                m_selectedEquipmentDescription.text = $"<style=\"WarningPrimaryColor\">아이템을 선택하지 않았습니다.</style>";
+            }
+            else
+            {
+                m_selectedEquipmentIcon.enabled = true;
+                m_selectedEquipmentIcon.sprite = m_selectedEquipment.icon;
+
+                m_selectedEquipmentName.text = m_selectedEquipment.displayName;
+
+                if (m_selectedEquipment.owner != null)
+                    m_selectedEquipmentDescription.text = $"<style=\"NoticePrimaryColor\">{m_selectedEquipment.owner.displayName} 장착 중</style>\n";
+                else
+                    m_selectedEquipmentDescription.text = "";
+                m_selectedEquipmentDescription.text += m_selectedEquipment.description;
+            }
         }
 
         // 유틸리티
@@ -106,14 +143,6 @@ namespace Mathlife.ProjectL.Gameplay
             EquipmentSlotView slot = m_gameDataDB.Instantiate<EquipmentSlotView>(EPrefabId.EquipmentSlot, parent);
             slot.Render(equipment, equipment == m_selectedEquipment, OnClickSlot);
             return slot;
-        }
-
-        void OnClickSlot(EquipmentModel equipment)
-        {
-            m_selectedEquipment = equipment;
-
-            UpdateSelectedEquipmentView();
-            UpdateGridView();
         }
     }
 }
