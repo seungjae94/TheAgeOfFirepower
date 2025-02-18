@@ -340,6 +340,9 @@ MonoBehaviour:
   m_itemDescriptionText: {fileID: 8335985805444867872}
   m_itemPriceText: {fileID: 6579683823669897796}
   m_buyButton: {fileID: 7895087158140243757}
+  m_onClickEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2161761607900409963
 GameObject:
   m_ObjectHideFlags: 0

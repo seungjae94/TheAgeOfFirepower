@@ -16,13 +16,17 @@ namespace Mathlife.ProjectL.Gameplay
 
         public abstract EPageId pageId { get; }
 
+
         protected virtual void Awake()
         {
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
-        public abstract void Initialize();
-        protected abstract void InitializeChildren();
+        public override void Initialize()
+        {
+            base.Initialize();
+            Close();
+        }
 
         public virtual void Open()
         {

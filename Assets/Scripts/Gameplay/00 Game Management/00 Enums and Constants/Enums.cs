@@ -21,7 +21,7 @@ namespace Mathlife.ProjectL.Gameplay
         None = 0,
         CharacterCard,
         DragCharacterCard,
-        EquipmentSlot,
+        InventorySlot,
         ShopItemCard,
         MiniCharacterCard
     }
