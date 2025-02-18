@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bde55e507db285d43b04b9f6c3c86942
+guid: 1da37bfaa583cc54ca64c1fa7feb6f54
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1850350166619479234
-    second: Card Deck Button_0
+      213: 7474992156132854705
+    second: Character Card 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,13 +46,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 140, y: 0, z: 74, w: 0}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Card Deck Button_0
+      name: Character Card 1_0
       rect:
         serializedVersion: 2
-        x: 13
+        x: 0
         y: 0
-        width: 376
-        height: 117
+        width: 480
+        height: 720
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 18, y: 18, z: 18, w: 18}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e33af88b35c3256e0800000000000000
-      internalID: -1850350166619479234
+      spriteID: 1bb412503c18cb760800000000000000
+      internalID: 7474992156132854705
       vertices: []
       indices: 
       edges: []
@@ -151,8 +151,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: a377c4cf0f3594246843caf3306b081a
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Card Deck Button_0: -1850350166619479234
+      Character Card 1_0: 7474992156132854705
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

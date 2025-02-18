@@ -24,8 +24,7 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] CharacterScrollViewPresenter m_scrollView;
         [SerializeField] TeamValidationModal m_teamValidationModal;
 
-
-        #region State - Selected Character
+        // 상태 - 선택한 캐릭터
         ReactiveProperty<CharacterModel> m_selectedCharacter = new(null);
         public CharacterModel selectedCharacter { get => m_selectedCharacter.Value; set => m_selectedCharacter.Value = value; }
 
@@ -33,9 +32,8 @@ namespace Mathlife.ProjectL.Gameplay
         {
             return m_selectedCharacter.Subscribe(action);
         }
-        #endregion
 
-        #region State - isDraggingMemberCard
+        // 상태 - 드래그 상태
         BoolReactiveProperty m_isDraggingMemberCard = new(false);
         public bool isDraggingMemberCard
         {
@@ -58,7 +56,6 @@ namespace Mathlife.ProjectL.Gameplay
             subscriptions.Add(endDragSubscription);
             return subscriptions;
         }
-        #endregion
 
         // 초기화
         public override void Initialize()
@@ -100,7 +97,7 @@ namespace Mathlife.ProjectL.Gameplay
         // 유저 상호 작용
         async void OnClickBackButton()
         {
-            if (m_characterRepository.team.Validate())
+            if (m_characterRepository.party.Validate())
                 m_worldSceneManager.NavigateBack();
             else
                 await m_teamValidationModal.Show();
@@ -113,7 +110,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         void OnClickExcludeAllButton(Unit _)
         {
-            m_characterRepository.team.Clear();
+            m_characterRepository.party.Clear();
         }
 
         void OnClickBuildBestTeamButton(Unit _)

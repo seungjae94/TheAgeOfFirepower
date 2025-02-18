@@ -1,11 +1,8 @@
-using Sirenix.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
-using UnityEditor.Overlays;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -83,7 +80,7 @@ namespace Mathlife.ProjectL.Gameplay
                 return;
             }
 
-            TeamSaveData teamSaveData = characterSaveFile.team;
+            PartySaveData teamSaveData = characterSaveFile.party;
 
             // 팀 데이터가 잘못 설정되어 있다. 리더 혹은 멤버가 없다.
             if (false == teamSaveData.IsHealthy())
@@ -93,12 +90,11 @@ namespace Mathlife.ProjectL.Gameplay
             }
 
             // Construct team by data.
-            CharacterModel leader = m_characters[teamSaveData.leader];
             List<CharacterModel> members = teamSaveData.members
                 .Select((memberId) => (memberId == ECharacterId.None) ? null : m_characters[memberId])
                 .ToList();
 
-            team = new(leader, members);
+            party = new(members);
         }
 
         void ConstructFromStarterData()
@@ -129,7 +125,6 @@ namespace Mathlife.ProjectL.Gameplay
                 m_characters.Add(starterCharacter.character.id, model);
             }
 
-            CharacterModel leader = null;
             List<CharacterModel> teamMembers = new();
             foreach (var starterMember in starterParty)
             {
@@ -148,29 +143,23 @@ namespace Mathlife.ProjectL.Gameplay
                 }
 
                 teamMembers.Add(m_characters[id]);
-
-                if (null == leader)
-                {
-                    leader = m_characters[id];
-                }
             }
 
-            team = new(leader, teamMembers);
+            party = new(teamMembers);
         }
 
         void ConstructBestTeam()
         {
-            CharacterModel leader = null;
             List<CharacterModel> members = new();
             for (int i = 0; i < Constants.TeamMemberMaxCount; ++i)
                 members.Add(null);
 
-            team = new(leader, members);
+            party = new(members);
 
             BuildBestTeam();
         }
 
-        public TeamModel team { get; private set; }
+        public PartyModel party { get; private set; }
 
         public void BuildBestTeam()
         {
@@ -183,14 +172,12 @@ namespace Mathlife.ProjectL.Gameplay
                 .Select(kv => kv.Value)
                 .ToList();
 
-            CharacterModel leader = members[0];
-
             for (int i = memberCount; i < Constants.TeamMemberMaxCount; ++i)
             {
                 members.Add(null);
             }
 
-            team.Rebuild(leader, members);
+            party.Rebuild(members);
         }
 
         ReactiveDictionary<ECharacterId, CharacterModel> m_characters = new();
@@ -218,7 +205,7 @@ namespace Mathlife.ProjectL.Gameplay
                 return false;
 
             m_characters.Remove(id);
-            team.Remove(m_characters[id]);
+            party.Remove(m_characters[id]);
 
             return true;
         }

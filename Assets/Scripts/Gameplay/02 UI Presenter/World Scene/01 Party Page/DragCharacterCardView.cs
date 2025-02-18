@@ -9,25 +9,14 @@ using VContainer;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class DragCharacterCardPresenter : Presenter
+    public class DragCharacterCardView : MonoBehaviour
     {
-        #region View
-        CanvasGroup m_canvasGroup;
-        Image m_portraitImage;
-        TMP_Text m_levelText;
-        #endregion
+        [SerializeField] CanvasGroup m_canvasGroup;
+        [SerializeField] Image m_portraitImage;
+        //[SerializeField] TMP_Text m_levelText;
+        //[SerializeField] TMP_Text m_nameText;
 
-        #region Field
         CharacterModel m_character = null;
-        #endregion
-
-        void Awake()
-        {
-            // Views
-            m_canvasGroup = GetComponent<CanvasGroup>();
-            m_portraitImage = transform.FindRecursiveByName<Image>("Portrait");
-            m_levelText = transform.FindRecursiveByName<TMP_Text>("Level Text");
-        }
 
         public void Initialize(CharacterModel character)
         {
@@ -40,7 +29,7 @@ namespace Mathlife.ProjectL.Gameplay
         new void InitializeView()
         {
             m_portraitImage.sprite = m_character.portrait;
-            m_levelText.text = m_character.level.ToString();
+            //m_levelText.text = m_character.level.ToString();
         }
 
         public CharacterModel GetCharacterModel()

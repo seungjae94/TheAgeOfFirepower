@@ -6,71 +6,13 @@ using System.Linq;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class TeamModel
+    public class PartyModel
     {
-        #region Constructors
-        public TeamModel(CharacterModel leader, List<CharacterModel> members)
+        public PartyModel(List<CharacterModel> members)
         {
-            m_leader = new(leader);
             m_members = new(members);
         }
-        #endregion
 
-        #region Leader
-        ReactiveProperty<CharacterModel> m_leader;
-        public CharacterModel leader { get => m_leader.Value; private set => m_leader.Value = value; }
-
-        public IDisposable SubscribeLeaderChangeEvent(Action<CharacterModel> onLeaderChangedAction)
-        {
-            return m_leader.Subscribe(onLeaderChangedAction);
-        }
-
-        public IDisposable SubscribeLeaderNotNullChangeEvent(Action<CharacterModel> onLeaderChangedAction)
-        {
-            return m_leader
-                .Where(leader => leader != null)
-                .Subscribe(onLeaderChangedAction);
-        }
-
-        public void AppointLeader(CharacterModel character)
-        {
-            if (null == character || Contains(character) == false)
-                throw new ArgumentException($"Failed to appoint leader. Given character is null or not a member.");
-
-            leader = character;
-        }
-
-        public void AppointLeaderAuto()
-        {
-            leader = null;
-
-            for (int i = 0; i < m_members.Count; i++)
-            {
-                if (m_members[i] == null)
-                    continue;
-
-                if (leader == null)
-                {
-                    leader = m_members[i];
-                    continue;
-                }
-
-                if (m_members[i].level > leader.level)
-                {
-                    leader = m_members[i];
-                    continue;
-                }
-
-                if (m_members[i].level == leader.level && m_members[i].characterId < leader.characterId)
-                {
-                    leader = m_members[i];
-                    continue;
-                }
-            }
-        }
-        #endregion
-
-        #region Members
         ReactiveCollection<CharacterModel> m_members;
 
         public CharacterModel this[int i] => m_members[i];
@@ -122,9 +64,6 @@ namespace Mathlife.ProjectL.Gameplay
             var oldCharacter = m_members[index];
 
             m_members[index] = character;
-
-            if (oldCharacter == leader)
-                AppointLeaderAuto();
         }
 
         // 멤버 -> 보유 캐릭터
@@ -143,9 +82,6 @@ namespace Mathlife.ProjectL.Gameplay
                 throw new ArgumentException("Failed to remove a member. Given character was not a member.");
 
             m_members[m_members.IndexOf(character)] = null;
-
-            if (leader == character)
-                AppointLeaderAuto();
         }
 
         public void Clear()
@@ -154,8 +90,6 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 m_members[i] = null;
             }
-
-            leader = null;
         }
 
         public bool IsEmpty()
@@ -163,10 +97,10 @@ namespace Mathlife.ProjectL.Gameplay
             return memberCount == 0;
         }
 
-        public void Rebuild(CharacterModel leader, List<CharacterModel> members)
+        public void Rebuild(List<CharacterModel> members)
         {
             Clear();
-            this.leader = leader;
+
             for (int i = 0; i < m_members.Count; ++i)
             {
                 m_members[i] = members[i];
@@ -187,11 +121,10 @@ namespace Mathlife.ProjectL.Gameplay
                 return count;
             }
         }
-        #endregion
 
         public bool Validate()
         {
-            return m_members.Count > 0 && leader != null && m_members.Contains(leader);
+            return m_members.Count > 0;
         }
     }
 }

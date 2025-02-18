@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 0fc23400f9cb52e42884c9c5f312be33
+guid: 825d39ae078e207429101c190ec0d724
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2052350213407150930
-    second: card deck icon_0
-  - first:
-      213: 284029885208811530
-    second: card deck icon_1
+      213: -399352419614864694
+    second: No Border Slot - L Sky_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,7 +52,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 20, y: 20, z: 20, w: 20}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -129,45 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: card deck icon_0
+      name: No Border Slot - L Sky_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 9
-        width: 9
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 25394d035a96b7c10800000000000000
-      internalID: 2052350213407150930
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: card deck icon_1
-      rect:
-        serializedVersion: 2
-        x: 15
         y: 0
-        width: 65
-        height: 80
+        width: 200
+        height: 200
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a08577dfca311f300800000000000000
-      internalID: 284029885208811530
+      spriteID: acac9a81717357af0800000000000000
+      internalID: -399352419614864694
       vertices: []
       indices: 
       edges: []
@@ -177,7 +152,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -186,8 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      card deck icon_0: 2052350213407150930
-      card deck icon_1: 284029885208811530
+      No Border Slot - L Sky_0: -399352419614864694
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

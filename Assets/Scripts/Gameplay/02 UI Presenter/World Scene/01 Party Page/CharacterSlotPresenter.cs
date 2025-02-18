@@ -10,17 +10,9 @@ namespace Mathlife.ProjectL.Gameplay
     public class CharacterSlotPresenter : Presenter
     {
         [Inject] CharacterRepository m_characterRepository;
-        ObservableDropTrigger m_dropTrigger;
 
-        int m_index = 0;
-
-        void Awake()
-        {
-            m_index = transform.GetSiblingIndex();
-
-            // Event Triggers
-            m_dropTrigger = GetComponent<ObservableDropTrigger>();
-        }
+        [SerializeField] int m_index = 0;
+        [SerializeField] ObservableDropTrigger m_dropTrigger;
 
         public void Initialize()
         {
@@ -30,8 +22,8 @@ namespace Mathlife.ProjectL.Gameplay
                 .Subscribe(OnDrop);
 
             // Subscribe Models
-            m_characterRepository.team
-                .ObserveEveryValueChanged(team => team[m_index])
+            m_characterRepository.party
+                .ObserveEveryValueChanged(party => party[m_index])
                 .Subscribe(_ => UpdateView())
                 .AddTo(gameObject);
 
@@ -42,17 +34,17 @@ namespace Mathlife.ProjectL.Gameplay
         new void UpdateView()
         {
             // Destroy old card
-            foreach (var oldCard in transform.FindAllRecursive<CharacterCardPresenter>())
+            foreach (var oldCard in transform.FindAllRecursive<CharacterCardView>())
             {
                 Destroy(oldCard.gameObject);
             }
 
-            CharacterModel member = m_characterRepository.team[m_index];
+            CharacterModel member = m_characterRepository.party[m_index];
 
             if (member != null)
             {
                 // Instantiate new card
-                CharacterCardPresenter card = InstantiateWithInjection<CharacterCardPresenter>(EPrefabId.CharacterCard, transform);
+                CharacterCardView card = InstantiateWithInjection<CharacterCardView>(EPrefabId.CharacterCard, transform);
                 card.Initialize(member);
             }
         }
@@ -60,27 +52,27 @@ namespace Mathlife.ProjectL.Gameplay
         void OnDrop(PointerEventData eventData)
         {
             var newCharacter = eventData.pointerDrag?
-                .GetComponent<CharacterCardPresenter>()?
+                .GetComponent<CharacterCardView>()?
                 .GetCharacterModel();
             
             if (null == newCharacter)
                 return;
 
 
-            var oldCharacter = m_characterRepository.team[m_index];
+            var oldCharacter = m_characterRepository.party[m_index];
 
             if (oldCharacter == newCharacter)
                 return;
 
             // 멤버 <-> 멤버 스왑
-            if (m_characterRepository.team.Contains(newCharacter))
+            if (m_characterRepository.party.Contains(newCharacter))
             {
-                int otherIndex = m_characterRepository.team.IndexOf(newCharacter);
-                m_characterRepository.team.Swap(m_index, otherIndex);
+                int otherIndex = m_characterRepository.party.IndexOf(newCharacter);
+                m_characterRepository.party.Swap(m_index, otherIndex);
             }
             // 보유 캐릭터 <-> 멤버 스왑
             else
-                m_characterRepository.team.Add(m_index, newCharacter);
+                m_characterRepository.party.Add(m_index, newCharacter);
         }
     }
 }

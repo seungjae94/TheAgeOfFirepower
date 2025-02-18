@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 76862fd06d4126f4f816184f24accd1a
+guid: 7c983217663d4d646965e8bfd9662056
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1280530839094193139
-    second: Life Artifact Slot_0
+      213: -6930386306172592379
+    second: Character Card Description Field 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,13 +46,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 10, y: 10, z: 10, w: 10}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Life Artifact Slot_0
+      name: Character Card Description Field 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 200
-        height: 200
+        width: 480
+        height: 170
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 18, y: 18, z: 18, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d049bd38cf3aa3ee0800000000000000
-      internalID: -1280530839094193139
+      spriteID: 50fd9509f5252df90800000000000000
+      internalID: -6930386306172592379
       vertices: []
       indices: 
       edges: []
@@ -151,8 +151,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: 10d65507d64df82448c664466e1f539a
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Life Artifact Slot_0: -1280530839094193139
+      Character Card Description Field 1_0: -6930386306172592379
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

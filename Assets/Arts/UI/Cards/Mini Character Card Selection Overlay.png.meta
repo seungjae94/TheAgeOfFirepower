@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 825d39ae078e207429101c190ec0d724
+guid: bc5287a5d2ade16419eb4437ff970078
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -399352419614864694
-    second: No Border Slot - L Sky_0
+      213: 4074809395365701790
+    second: Mini Character Card Selection Overlay_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: No Border Slot - L Sky_0
+      name: Mini Character Card Selection Overlay_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 200
-        height: 200
+        width: 180
+        height: 240
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 18, y: 18, z: 18, w: 18}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: acac9a81717357af0800000000000000
-      internalID: -399352419614864694
+      spriteID: e98623a4e81ac8830800000000000000
+      internalID: 4074809395365701790
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 2f39f0206bdeffa468f0db9d21690ccc
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      No Border Slot - L Sky_0: -399352419614864694
+      Mini Character Card Selection Overlay_0: 4074809395365701790
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

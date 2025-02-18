@@ -17,9 +17,8 @@ namespace Mathlife.ProjectL.Gameplay
     }
 
     [Serializable]
-    public class TeamSaveData : IHealthCheckable
+    public class PartySaveData : IHealthCheckable
     {
-        public ECharacterId leader = ECharacterId.None;
         public List<ECharacterId> members = new();
 
         public bool IsHealthy()
@@ -35,9 +34,6 @@ namespace Mathlife.ProjectL.Gameplay
             if (memberCount == 0)
                 return false;
 
-            if (leader == ECharacterId.None)
-                return false;
-
             return true;
         }
     }
@@ -45,7 +41,7 @@ namespace Mathlife.ProjectL.Gameplay
     [Serializable]
     public class CharacterSaveFile : SaveFile
     {
-        public TeamSaveData team = new();
+        public PartySaveData party = new();
         public List<CharacterSaveData> characters = new();
     }
 }

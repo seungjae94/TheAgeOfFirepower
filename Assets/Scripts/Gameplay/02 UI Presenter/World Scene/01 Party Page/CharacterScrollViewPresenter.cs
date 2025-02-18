@@ -52,7 +52,7 @@ namespace Mathlife.ProjectL.Gameplay
                .SubscribeSortedCharacterList(UpdateView);
 
             m_characterRepository
-                .team.SubscribeMemberChange(_ => UpdateView())
+                .party.SubscribeMemberChange(_ => UpdateView())
                 .AddTo(gameObject);
 
             m_worldSceneManager
@@ -75,10 +75,10 @@ namespace Mathlife.ProjectL.Gameplay
 
             foreach (CharacterModel character in m_characterRepository.GetSortedList())
             {
-                if (m_characterRepository.team.Contains(character))
+                if (m_characterRepository.party.Contains(character))
                     continue;
 
-                CharacterCardPresenter card = InstantiateWithInjection<CharacterCardPresenter>(EPrefabId.CharacterCard, m_content);
+                CharacterCardView card = InstantiateWithInjection<CharacterCardView>(EPrefabId.CharacterCard, m_content);
                 card.Initialize(character);
             }
         }
@@ -86,16 +86,16 @@ namespace Mathlife.ProjectL.Gameplay
         void OnDrop(PointerEventData eventData)
         {
             var newCharacter = eventData.pointerDrag?
-                .GetComponent<CharacterCardPresenter>()?
+                .GetComponent<CharacterCardView>()?
                 .GetCharacterModel();
 
             if (null == newCharacter)
                 return;
 
             // 멤버를 스크롤 뷰에 놓는 경우만 처리
-            if (m_characterRepository.team.Contains(newCharacter))
+            if (m_characterRepository.party.Contains(newCharacter))
             {
-                m_characterRepository.team.Remove(newCharacter);
+                m_characterRepository.party.Remove(newCharacter);
             }
         }
 

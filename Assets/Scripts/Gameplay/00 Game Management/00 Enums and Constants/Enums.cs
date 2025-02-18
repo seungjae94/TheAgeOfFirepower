@@ -23,6 +23,7 @@ namespace Mathlife.ProjectL.Gameplay
         DragCharacterCard,
         EquipmentSlot,
         ShopItemCard,
+        MiniCharacterCard
     }
 
     public enum EBattleTarget
