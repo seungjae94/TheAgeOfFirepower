@@ -75,7 +75,19 @@ MonoBehaviour:
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  editorStarterCharactersNotInParty: []
+  editorStarterCharactersNotInParty:
+  - character: {fileID: 11400000, guid: 2912933a3d57cd84b896925f896fcd39, type: 2}
+    level: 5
+    currentLevelExp: 0
+    weapon: {fileID: 0}
+    armor: {fileID: 0}
+    artifact: {fileID: 0}
+  - character: {fileID: 11400000, guid: 91deb0429e3c11f45a234f5d76c75859, type: 2}
+    level: 3
+    currentLevelExp: 0
+    weapon: {fileID: 0}
+    armor: {fileID: 0}
+    artifact: {fileID: 0}
   editorStarterEquipmentsNotOwned:
   - equipment: {fileID: 11400000, guid: bbc8e17a69eefd149a1b608ed34dfc0f, type: 2}
     count: 5
