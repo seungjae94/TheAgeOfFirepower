@@ -109,7 +109,7 @@ namespace Mathlife.ProjectL.Gameplay
         void OnSelectedCharacterChange(CharacterModel selectedCharacter)
         {
             // This character is selected.
-            if (m_character == selectedCharacter)
+            if (selectedCharacter != null && m_character == selectedCharacter)
             {
                 m_selectionOverlayCanvasGroup.Show();
             }
@@ -132,8 +132,7 @@ namespace Mathlife.ProjectL.Gameplay
             m_dragItem.Initialize(m_character);
             m_dragItem.transform.position = transform.position;
 
-            //m_canvasGroup.HideWithAlpha(0.25f);
-            m_canvasGroup.Hide();
+            m_canvasGroup.HideWithAlpha(0.25f);
 
             m_partyPage.isDraggingSlotItem.SetState(true);
         }

@@ -752,7 +752,9 @@ GameObject:
   - component: {fileID: 8598202052241498069}
   - component: {fileID: 2403761501533209638}
   - component: {fileID: 8578828047042030244}
+  - component: {fileID: 3339258229156257473}
   - component: {fileID: 4036551330846741774}
+  - component: {fileID: 3836901872645768144}
   m_Layer: 5
   m_Name: Party Member Slot Drag Item
   m_TagString: Untagged
@@ -819,6 +821,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &3339258229156257473
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6961125363360188540}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!114 &4036551330846741774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -834,3 +848,15 @@ MonoBehaviour:
   m_portraitImage: {fileID: 4243521938767717549}
   m_levelText: {fileID: 6688120341071852739}
   m_nameText: {fileID: 378701366762575561}
+--- !u!114 &3836901872645768144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6961125363360188540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79db090dc9e4db245821e8b89b0e208e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

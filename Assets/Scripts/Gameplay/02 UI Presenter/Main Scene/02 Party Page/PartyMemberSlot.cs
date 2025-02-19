@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using VContainer;
 using Mathlife.ProjectL.Utils;
-using UnityEngine.TextCore.Text;
 
 namespace Mathlife.ProjectL.Gameplay
 {
     public class PartyMemberSlot : Presenter
     {
+        [Inject] PartyPage m_partyPage;
         [Inject] CharacterRepository m_characterRepository;
 
         ObservableDropTrigger m_dropTrigger;
@@ -83,8 +83,6 @@ namespace Mathlife.ProjectL.Gameplay
             var newCharacter = eventData.pointerDrag?
                 .GetComponent<PartyMemberSlotItem>()?
                 .GetCharacterModel();
-
-            Debug.Log($"슬롯 {m_index}에 캐릭터 {newCharacter?.displayName} 드롭");
             
             // 파티 멤버 슬롯 아이템을 드래그하는 경우만 처리
             if (null == newCharacter)
@@ -102,6 +100,9 @@ namespace Mathlife.ProjectL.Gameplay
                 int otherIndex = m_characterRepository.party.IndexOf(newCharacter);
                 m_characterRepository.party.Swap(m_index, otherIndex);
             }
+
+            // 선택된 슬롯 초기화
+            m_partyPage.selectedCharacter.SetState(null);
         }
     }
 }
