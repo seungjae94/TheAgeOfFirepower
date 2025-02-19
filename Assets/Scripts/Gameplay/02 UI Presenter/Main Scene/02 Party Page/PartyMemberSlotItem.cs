@@ -86,13 +86,6 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void InitializeView()
         {
-            if (m_character == null)
-            {
-                Hide();
-                return;
-            }
-
-            Show();
             UpdateView();
         }
 
@@ -105,13 +98,10 @@ namespace Mathlife.ProjectL.Gameplay
             if (m_characterSubscription != null)
                 m_characterSubscription.Dispose();
 
-            if (m_character == null)
+            if (m_character != null)
             {
-                Hide();
-                return;
+                m_characterSubscription = character.SubscribeLevelChangeEvent(OnLevelChanged);
             }
-
-            m_characterSubscription = character.SubscribeLevelChangeEvent(OnLevelChanged);
 
             UpdateView();
         }
@@ -143,6 +133,13 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void UpdateView()
         {
+            if (m_character == null)
+            {
+                Hide();
+                return;
+            }
+
+            Show();
             m_portraitImage.sprite = m_character.portrait;
             m_levelText.text = m_character.level.ToString();
             m_nameText.text = m_character.displayName;
