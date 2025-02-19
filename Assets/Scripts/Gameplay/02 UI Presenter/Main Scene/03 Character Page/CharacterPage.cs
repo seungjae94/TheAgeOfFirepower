@@ -8,7 +8,10 @@ namespace Mathlife.ProjectL.Gameplay
     public class CharacterPage : Page
     {
         public override EPageId pageId => EPageId.CharacterPage;
-        [Inject] MainSceneManager m_mainSceneManager; 
+
+        [Inject] MainSceneManager m_mainSceneManager;
+
+        [SerializeField] PartyPage m_partyPage; 
 
         [SerializeField] SimpleActionButton m_navigateBackBar;
         [SerializeField] Image m_background;     // TODO: 월드 맵에 따라 배경 이미지 변경
@@ -18,18 +21,6 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] List<CharacterEquipmentSlotPresenter> m_artifactSlotPresenters;
 
         [field: SerializeField] public EquipmentChangeModal equipmentChangeModal { get; private set; }
-
-        protected override void SubscribeDataChange()
-        {
-        }
-
-        protected override void SubscribeUserInteractions()
-        {
-        }
-
-        protected override void InitializeView()
-        {
-        }
 
         protected override void InitializeChildren()
         {
@@ -48,7 +39,7 @@ namespace Mathlife.ProjectL.Gameplay
         // 유저 상호 작용
         void OnClickBackButton()
         {
-            m_mainSceneManager.GetPage<PartyPage>().selectedCharacter = null;
+            m_partyPage.selectedCharacter.SetState(null);
             m_mainSceneManager.NavigateBack();
         }
     }

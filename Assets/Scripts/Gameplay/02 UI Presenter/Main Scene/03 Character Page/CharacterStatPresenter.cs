@@ -9,7 +9,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class CharacterStatPresenter : Presenter
     {
-        [Inject] MainSceneManager m_mainSceneManager;
+        [SerializeField] PartyPage m_partyPage; 
 
         TMP_Text m_maxHpText;
         TMP_Text m_maxEnergyText;
@@ -40,13 +40,16 @@ namespace Mathlife.ProjectL.Gameplay
             m_characterDataSubscriptions.Dispose();
         }
 
-        public override void Initialize()
+        protected override void SubscribeDataChange()
         {
-            base.Initialize();
-
-            m_mainSceneManager.GetPage<PartyPage>()
-                .SubscribeSelectedCharacterChangeEvent(OnSelectedCharacterChanged)
+            m_partyPage.selectedCharacter
+                .SubscribeChangeEvent(OnSelectedCharacterChanged)
                 .AddTo(gameObject);
+        }
+
+        protected override void InitializeView()
+        {
+            UpdateView();
         }
 
         void OnSelectedCharacterChanged(CharacterModel character)
@@ -107,18 +110,6 @@ namespace Mathlife.ProjectL.Gameplay
             m_defText.text = m_character.GetDef().ToString();
             m_magText.text = m_character.GetMag().ToString();
             m_spdText.text = m_character.GetSpd().ToString();
-        }
-
-        protected override void SubscribeDataChange()
-        {
-        }
-
-        protected override void SubscribeUserInteractions()
-        {
-        }
-
-        protected override void InitializeView()
-        {
         }
     }
 }

@@ -13,7 +13,8 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public const float k_fadeTime = 0.25f;
 
-        [Inject] MainSceneManager m_mainSceneManager;
+        [SerializeField] PartyPage m_partyPage;
+        //[Inject] MainSceneManager m_mainSceneManager;
         [Inject] InventoryRepository m_inventoryRepository;
 
         [SerializeField] CanvasGroup m_canvasGroup;
@@ -61,8 +62,8 @@ namespace Mathlife.ProjectL.Gameplay
         // 유저 상호작용
         async void OnClickOKButton(Unit _)
         {
-            m_mainSceneManager.GetPage<PartyPage>()
-                .selectedCharacter.Equip(m_slotType, m_selectedEquipment);
+            m_partyPage.selectedCharacter.GetState()
+                .Equip(m_slotType, m_selectedEquipment);
 
             await m_canvasGroup.Hide(k_fadeTime);
         }
@@ -84,7 +85,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             m_slotType = slotType;
 
-            EquipmentModel currentEquipment = m_mainSceneManager.GetPage<PartyPage>().selectedCharacter.GetEquipment(slotType);
+            EquipmentModel currentEquipment = m_partyPage.selectedCharacter.GetState().GetEquipment(slotType);
             m_selectedEquipment = currentEquipment;
 
             UpdateCurrentEquipmentView(currentEquipment);

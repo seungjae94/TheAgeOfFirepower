@@ -18,37 +18,31 @@ namespace Mathlife.ProjectL.Gameplay
         [Inject] MainSceneManager m_mainSceneManager;
         [Inject] CharacterRepository m_characterRepository;
 
-        [SerializeField] SimpleActionButton m_navigateBackBar;
-        [SerializeField] List<CharacterSlotPresenter> m_slots;
-        [SerializeField] PartyPageSelectedCharacterView m_selectedCharacterView;
+        [SerializeField] SimpleActionButton m_navigateBackButton;
+        [SerializeField] List<PartyMemberSlot> m_slots;
+        [SerializeField] PartySelectedCharacter m_selectedCharacterView;
         [SerializeField] PartyMemberChangeModal m_partyMemberChangeModal;
         [SerializeField] PartyValidationModal m_partyValidationModal;
 
         // 상태 - 선택한 캐릭터
-        ReactiveProperty<CharacterModel> m_selectedCharacter = new(null);
-        public CharacterModel selectedCharacter { get => m_selectedCharacter.Value; set => m_selectedCharacter.Value = value; }
-
-        public IDisposable SubscribeSelectedCharacterChangeEvent(Action<CharacterModel> action)
-        {
-            return m_selectedCharacter.Subscribe(action);
-        }
+        public State<CharacterModel> selectedCharacter { get; private set; } = new();
 
         // 상태 - 드래그 상태
-        BoolReactiveProperty m_isDraggingMemberCard = new(false);
-        public bool isDraggingMemberCard
+        BoolReactiveProperty m_isDraggingPartyMemberSlotItem = new(false);
+        public bool isDraggingMemberSlotItem
         {
-            get => m_isDraggingMemberCard.Value;
-            set => m_isDraggingMemberCard.Value = value;
+            get => m_isDraggingPartyMemberSlotItem.Value;
+            set => m_isDraggingPartyMemberSlotItem.Value = value;
         }
-        public CompositeDisposable SubscribeDragMemberCardEvent(Action beginDragAction, Action endDragAction)
+        public CompositeDisposable SubscribePartyMemberSlotItemDragEvent(Action beginDragAction, Action endDragAction)
         {
             CompositeDisposable subscriptions = new();
 
-            IDisposable beginDragSubscription = m_isDraggingMemberCard
+            IDisposable beginDragSubscription = m_isDraggingPartyMemberSlotItem
                 .Where(v => v)
                 .Subscribe(_ => beginDragAction?.Invoke());
 
-            IDisposable endDragSubscription = m_isDraggingMemberCard
+            IDisposable endDragSubscription = m_isDraggingPartyMemberSlotItem
                 .Where(v => !v)
                 .Subscribe(_ => endDragAction?.Invoke());
 
@@ -58,36 +52,36 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // 초기화
-        public override void Initialize()
-        {
-            InitializeChildren();
-
-            Close();
-        }
-
         protected override void InitializeChildren()
         {
-            m_navigateBackBar.Initialize(OnClickBackButton);
+            m_navigateBackButton.Initialize(OnClickBackButton);
 
-            for (int i = 0; i < Constants.TeamMemberMaxCount; ++i)
+            for (int i = 0; i < m_slots.Count; ++i)
             {
                 m_slots[i].Initialize();
             }
 
-            SubscribeSelectedCharacterChangeEvent(selected => m_selectedCharacterView.Render(selected))
-                .AddTo(gameObject);
-
-            m_selectedCharacterView.BindEvents(OnClickDetailInfoButton, OnClickPartyMemberChangeButton);
+            m_selectedCharacterView.Initialize();
             //m_characterSelectionModal.Initialize();
             m_partyValidationModal.Initialize();
+        }
+
+        protected override void SubscribeDataChange()
+        {
+        }
+
+        protected override void SubscribeUserInteractions()
+        {
+        }
+
+        protected override void InitializeView()
+        {
         }
 
         // 유저 상호 작용
         public override void Open()
         {
-            m_selectedCharacter = null;
-            m_selectedCharacterView.Render(null);
-
+            selectedCharacter.SetState(null);
             base.Open();
         }
 
@@ -99,29 +93,14 @@ namespace Mathlife.ProjectL.Gameplay
                 await m_partyValidationModal.Show();
         }
 
-        void OnClickDetailInfoButton()
+        public void OnClickDetailInfoButton(Unit _)
         {
             m_mainSceneManager.Navigate(EPageId.CharacterPage);
         }
 
-        void OnClickPartyMemberChangeButton()
+        public void OnClickPartyMemberChangeButton(Unit _)
         {
-
-        }
-
-        protected override void SubscribeDataChange()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SubscribeUserInteractions()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void InitializeView()
-        {
-            throw new NotImplementedException();
+            Debug.Log("파티 멤버 교체 버튼 눌렀음");
         }
     }
 }

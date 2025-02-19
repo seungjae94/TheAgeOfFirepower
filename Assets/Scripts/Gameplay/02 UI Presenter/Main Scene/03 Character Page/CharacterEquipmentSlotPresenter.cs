@@ -9,8 +9,10 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class CharacterEquipmentSlotPresenter : Presenter
     {
-        [Inject] MainSceneManager m_mainSceneManager;
         [Inject] CharacterRepository m_characterRepository;
+
+        [SerializeField] PartyPage m_partyPage;
+        [SerializeField] CharacterPage m_characterPage;
 
         [SerializeField] EEquipmentType m_slotType;
         [SerializeField] Button m_button;
@@ -20,29 +22,26 @@ namespace Mathlife.ProjectL.Gameplay
         EquipmentModel m_equipment;
         IDisposable m_selectedCharacterSub;
 
-        void Awake()
-        {
-            // Views
-            //m_button = GetComponent<Button>();
-            //m_iconAreaCanvasGroup = transform.FindRecursiveByName<CanvasGroup>("Icon Area");
-            //m_iconImage = transform.FindRecursiveByName<Image>("Icon Image");
-        }
-
         void OnDestroy()
         {
             UnsubscribeSelectedCharacter();
         }
 
-        public void Initialize()
+        protected override void SubscribeDataChange()
         {
-            PartyPage teamPage = m_mainSceneManager.GetPage<PartyPage>();
+            m_partyPage.selectedCharacter.SubscribeChangeEvent(OnSelectedCharacterChanged);
+        }
 
+        protected override void SubscribeUserInteractions()
+        {
             m_button.OnClickAsObservable()
-                .Subscribe(OnClick);
+                .Subscribe(OnClick)
+                .AddTo(gameObject);
+        }
 
-            teamPage.SubscribeSelectedCharacterChangeEvent(OnSelectedCharacterChanged);
-
-            OnSelectedCharacterChanged(teamPage.selectedCharacter);
+        protected override void InitializeView()
+        {
+            OnSelectedCharacterChanged(m_partyPage.selectedCharacter.GetState());
 
             m_iconAreaCanvasGroup.Hide();
         }
@@ -77,28 +76,13 @@ namespace Mathlife.ProjectL.Gameplay
 
         async void OnClick(Unit _)
         {
-            //await m_mainSceneManager.GetPage<CharacterPage>().equipmentChangeModal.Show(m_slotType);
+            await m_characterPage.equipmentChangeModal.Show(m_slotType);
         }
 
         void UnsubscribeSelectedCharacter()
         {
             if (m_selectedCharacterSub != null)
                 m_selectedCharacterSub.Dispose();
-        }
-
-        protected override void SubscribeDataChange()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SubscribeUserInteractions()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void InitializeView()
-        {
-            throw new NotImplementedException();
         }
     }
 }

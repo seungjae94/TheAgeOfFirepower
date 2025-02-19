@@ -8,6 +8,7 @@ using System;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -16,12 +17,13 @@ namespace Mathlife.ProjectL.Gameplay
     {
         Transform m_content;
         CanvasGroup m_removeMemberGuide;
-
         ObservableDropTrigger m_dropTrigger;
         ObservablePointerClickTrigger m_pointerClickTrigger;
 
         [Inject] MainSceneManager m_mainSceneManager;
         [Inject] CharacterRepository m_characterRepository;
+
+        [SerializeField] PartyPage m_partyPage;
 
         SortedCharacterListSubscription m_subscription;
 
@@ -39,20 +41,8 @@ namespace Mathlife.ProjectL.Gameplay
             m_subscription?.Dispose();
         }
 
-        public void Initialize()
+        protected override void SubscribeDataChange()
         {
-            PartyPage teamPage = m_mainSceneManager.GetPage<PartyPage>();
-
-            // Subscribe user interactions
-            m_dropTrigger.OnDropAsObservable()
-                .Subscribe(OnDrop)
-                .AddTo(gameObject);
-
-            m_pointerClickTrigger.OnPointerClickAsObservable()
-                .Subscribe(OnPointerClick)
-                .AddTo(gameObject);
-
-            // Subscribe model change events
             m_subscription = m_characterRepository
                .SubscribeSortedCharacterList(UpdateView);
 
@@ -62,36 +52,39 @@ namespace Mathlife.ProjectL.Gameplay
 
             m_mainSceneManager
                 .GetPage<PartyPage>()
-                .SubscribeDragMemberCardEvent(() => m_removeMemberGuide.Show(), () => m_removeMemberGuide.Hide())
+                .SubscribePartyMemberSlotItemDragEvent(() => m_removeMemberGuide.Show(), () => m_removeMemberGuide.Hide())
+                .AddTo(gameObject);
+        }
+
+        protected override void SubscribeUserInteractions()
+        {
+            m_dropTrigger.OnDropAsObservable()
+                .Subscribe(OnDrop)
                 .AddTo(gameObject);
 
-            // Render
+            m_pointerClickTrigger.OnPointerClickAsObservable()
+                .Subscribe(OnPointerClick)
+                .AddTo(gameObject);
+        }
+
+        protected override void InitializeView()
+        {
             UpdateView();
         }
 
-        new void UpdateView()
+        void UpdateView()
         {
-            //m_removeMemberGuide.Hide();
+            m_removeMemberGuide.Hide();
 
-            //foreach (Transform cardTrans in m_content)
-            //{
-            //    Destroy(cardTrans.gameObject);
-            //}
-
-            //foreach (CharacterModel character in m_characterRepository.GetSortedList())
-            //{
-            //    if (m_characterRepository.party.Contains(character))
-            //        continue;
-
-            //    CharacterCardView card = InstantiateWithInjection<CharacterCardView>(EPrefabId.CharacterCard, m_content);
-            //    card.Initialize(character);
-            //}
+            Draw(m_characterRepository.GetSortedList()
+                .Where(character => m_characterRepository.party.Contains(character) == false)
+                .ToList());
         }
 
         void OnDrop(PointerEventData eventData)
         {
             var newCharacter = eventData.pointerDrag?
-                .GetComponent<CharacterCardView>()?
+                .GetComponent<PartyMemberSlotItem>()?
                 .GetCharacterModel();
 
             if (null == newCharacter)
@@ -106,22 +99,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         void OnPointerClick(PointerEventData eventData)
         {
-            m_mainSceneManager.GetPage<PartyPage>().selectedCharacter = null;
-        }
-
-        protected override void SubscribeDataChange()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SubscribeUserInteractions()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void InitializeView()
-        {
-            throw new NotImplementedException();
+            m_partyPage.selectedCharacter.SetState(null);
         }
     }
 }

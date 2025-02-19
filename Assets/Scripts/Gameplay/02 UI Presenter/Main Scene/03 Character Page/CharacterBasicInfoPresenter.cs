@@ -10,7 +10,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class CharacterBasicInfoPresenter : Presenter
     {
-        [Inject] MainSceneManager m_mainSceneManager;
+        [SerializeField] PartyPage m_partyPage;
 
         // View
         Image m_portrait;
@@ -40,11 +40,16 @@ namespace Mathlife.ProjectL.Gameplay
             m_characterDataSubscriptions.Dispose();
         }
 
-        public void Initialize()
+        protected override void SubscribeDataChange()
         {
-            m_mainSceneManager.GetPage<PartyPage>()
-                .SubscribeSelectedCharacterChangeEvent(OnSelectedCharacterChanged)
+            m_partyPage.selectedCharacter
+                .SubscribeChangeEvent(OnSelectedCharacterChanged)
                 .AddTo(gameObject);
+        }
+
+        protected override void InitializeView()
+        {
+            UpdateView();
         }
 
         void OnSelectedCharacterChanged(CharacterModel character)
@@ -72,7 +77,7 @@ namespace Mathlife.ProjectL.Gameplay
             m_needExpText.text = m_character.needExp.ToString();
         }
 
-        new void UpdateView()
+        void UpdateView()
         {
             if (m_character == null)
             {
@@ -83,21 +88,6 @@ namespace Mathlife.ProjectL.Gameplay
 
             m_portrait.sprite = m_character.portrait;
             m_nameText.text = m_character.displayName;
-        }
-
-        protected override void SubscribeDataChange()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected override void SubscribeUserInteractions()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected override void InitializeView()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

@@ -76,9 +76,9 @@ GameObject:
   - component: {fileID: 8213209489318178593}
   - component: {fileID: 7650465295004450496}
   - component: {fileID: -3903724638418733930}
-  - component: {fileID: 5446570569865998631}
+  - component: {fileID: 7436371734163488411}
   m_Layer: 5
-  m_Name: Character Slot
+  m_Name: Party Member Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ffa8b5af3474446a310bb6aa0b180a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5446570569865998631
+--- !u!114 &7436371734163488411
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,11 +164,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1825287656223730873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65a6114c8c69fde469cfacb6bc2fe8fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 243985c4d692c0a4da9fe214e849aa1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_index: 0
-  m_dropTrigger: {fileID: -3903724638418733930}
+  m_slotItem: {fileID: 6855905819245894071}
 --- !u!1 &3713936076720914168
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,10 +427,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -177.67
       objectReference: {fileID: 0}
-    - target: {fileID: 3175815122078141168, guid: 0d1a80954a6921644bd2ed2f701fe60a, type: 3}
-      propertyPath: m_Alpha
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3586065001316839239, guid: 0d1a80954a6921644bd2ed2f701fe60a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -497,11 +493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6961125363360188540, guid: 0d1a80954a6921644bd2ed2f701fe60a, type: 3}
       propertyPath: m_Name
-      value: Character Card
-      objectReference: {fileID: 0}
-    - target: {fileID: 6961125363360188540, guid: 0d1a80954a6921644bd2ed2f701fe60a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: Party Member Slot Item
       objectReference: {fileID: 0}
     - target: {fileID: 8598202052241498069, guid: 0d1a80954a6921644bd2ed2f701fe60a, type: 3}
       propertyPath: m_Pivot.x
@@ -593,3 +585,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8598202052241498069, guid: 0d1a80954a6921644bd2ed2f701fe60a, type: 3}
   m_PrefabInstance: {fileID: 2805483046980172765}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6855905819245894071 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8775828967862919786, guid: 0d1a80954a6921644bd2ed2f701fe60a, type: 3}
+  m_PrefabInstance: {fileID: 2805483046980172765}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 011619dbcdad3c944aaf207275ee51e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

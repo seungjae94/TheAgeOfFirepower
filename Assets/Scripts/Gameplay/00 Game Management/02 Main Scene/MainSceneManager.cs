@@ -19,7 +19,7 @@ namespace Mathlife.ProjectL.Gameplay
             m_loadingScreen.Show();
 
             // 2. UI √ ±‚»≠
-            foreach (var presenter in FindObjectsByType<Presenter>(FindObjectsSortMode.None))
+            foreach (var presenter in FindObjectsByType<PresenterBase>(FindObjectsSortMode.None))
             {
                 LifetimeScope.Find<MainSceneLifetimeScope>().Container.Inject(presenter);
             }

@@ -36,6 +36,7 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         protected abstract void Store(T param);
+        protected virtual void Rebind(T param) { }
     }
 
     public abstract class Presenter<T0, T1> : PresenterBase
@@ -50,6 +51,8 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         protected abstract void Store(T0 param0, T1 param1);
+
+        protected virtual void Rebind(T0 param0, T1 param1) { }
     }
 
     public abstract class Presenter<T0, T1, T2> : PresenterBase
@@ -64,5 +67,7 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         protected abstract void Store(T0 param0, T1 param1, T2 param2);
+
+        protected virtual void Rebind(T0 param0, T1 param1, T2 param2) { }
     }
 }
