@@ -15,21 +15,18 @@ namespace Mathlife.ProjectL.Gameplay
     class CharacterSelectionFlex
         : AbstractFlex<CharacterModel, CharacterSelectionFlexItem>
     {
-        Transform m_content;
         CanvasGroup m_removeMemberGuide;
         ObservableDropTrigger m_dropTrigger;
         ObservablePointerClickTrigger m_pointerClickTrigger;
 
-        [Inject] MainSceneManager m_mainSceneManager;
+        [Inject] PartyPage m_partyPage;
         [Inject] CharacterRepository m_characterRepository;
 
-        [SerializeField] PartyPage m_partyPage;
 
         SortedCharacterListSubscription m_subscription;
 
         void Awake()
         {
-            m_content = transform.FindRecursiveByName<Transform>("Content");
             m_removeMemberGuide = transform.FindRecursiveByName<CanvasGroup>("Remove Member Guide");
 
             m_dropTrigger = GetComponent<ObservableDropTrigger>();
@@ -50,8 +47,7 @@ namespace Mathlife.ProjectL.Gameplay
                 .party.SubscribeMemberChange(_ => UpdateView())
                 .AddTo(gameObject);
 
-            m_mainSceneManager
-                .GetPage<PartyPage>()
+            m_partyPage
                 .SubscribePartyMemberSlotItemDragEvent(() => m_removeMemberGuide.Show(), () => m_removeMemberGuide.Hide())
                 .AddTo(gameObject);
         }

@@ -10,9 +10,8 @@ namespace Mathlife.ProjectL.Gameplay
     public class CharacterEquipmentSlotPresenter : Presenter
     {
         [Inject] CharacterRepository m_characterRepository;
-
-        [SerializeField] PartyPage m_partyPage;
-        [SerializeField] CharacterPage m_characterPage;
+        [Inject] PartyPage m_partyPage;
+        [Inject] CharacterPage m_characterPage;
 
         [SerializeField] EEquipmentType m_slotType;
         [SerializeField] Button m_button;

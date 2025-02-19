@@ -10,8 +10,8 @@ namespace Mathlife.ProjectL.Gameplay
         public override EPageId pageId => EPageId.CharacterPage;
 
         [Inject] MainSceneManager m_mainSceneManager;
+        [Inject] PartyPage m_partyPage; 
 
-        [SerializeField] PartyPage m_partyPage; 
 
         [SerializeField] SimpleActionButton m_navigateBackBar;
         [SerializeField] Image m_background;     // TODO: 월드 맵에 따라 배경 이미지 변경

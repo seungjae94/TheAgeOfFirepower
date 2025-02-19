@@ -33,12 +33,6 @@ namespace Mathlife.ProjectL.Gameplay
             await UniTask.Delay(100);
             m_loadingScreen.Hide();
         }
-
-        public T GetPage<T>() where T : Page
-        {
-            return m_pageNavigator.GetPage<T>();
-        }
-
         public void NavigateHome()
         {
             m_pageNavigator.Home();

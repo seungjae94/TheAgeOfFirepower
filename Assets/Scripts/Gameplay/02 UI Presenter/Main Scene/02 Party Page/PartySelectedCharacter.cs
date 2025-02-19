@@ -5,11 +5,14 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
+using VContainer;
 
 namespace Mathlife.ProjectL.Gameplay
 {
     internal class PartySelectedCharacter : Presenter
     {
+        [Inject] PartyPage m_partyPage;
+
         [SerializeField] CanvasGroup m_canvasGroup;
         [SerializeField] Image m_portraitImage;
         [SerializeField] TMP_Text m_levelText;
@@ -17,7 +20,6 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] Button m_detailInfoButton;
         [SerializeField] Button m_memberChangeButton;
 
-        [SerializeField] PartyPage m_partyPage;
 
         protected override void InitializeView()
         {

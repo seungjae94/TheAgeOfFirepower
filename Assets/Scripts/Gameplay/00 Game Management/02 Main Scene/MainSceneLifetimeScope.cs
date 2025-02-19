@@ -11,10 +11,16 @@ namespace Mathlife.ProjectL.Gameplay
             base.Configure(builder);
 
             builder.RegisterComponentInHierarchy<MainSceneManager>();
+            builder.RegisterComponentInHierarchy<HomePage>();
+            builder.RegisterComponentInHierarchy<PartyPage>();
+            builder.RegisterComponentInHierarchy<CharacterPage>();
+            builder.RegisterComponentInHierarchy<InventoryPage>();
+            builder.RegisterComponentInHierarchy<ShopPage>();
 
             builder.Register<CharacterSelectionFlexItemFactory>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<ShopFlexItemFactory>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<InventorySlotFlexItemFactory>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+
         }
     }
 }

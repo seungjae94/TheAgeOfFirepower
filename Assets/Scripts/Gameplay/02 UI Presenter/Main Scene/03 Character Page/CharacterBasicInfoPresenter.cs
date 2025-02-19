@@ -10,7 +10,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class CharacterBasicInfoPresenter : Presenter
     {
-        [SerializeField] PartyPage m_partyPage;
+        [Inject] PartyPage m_partyPage;
 
         // View
         Image m_portrait;

@@ -9,7 +9,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class CharacterStatPresenter : Presenter
     {
-        [SerializeField] PartyPage m_partyPage; 
+        [Inject] PartyPage m_partyPage; 
 
         TMP_Text m_maxHpText;
         TMP_Text m_maxEnergyText;

@@ -13,9 +13,7 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public const float k_fadeTime = 0.25f;
 
-        [SerializeField] PartyPage m_partyPage;
-        //[Inject] MainSceneManager m_mainSceneManager;
-        [Inject] InventoryRepository m_inventoryRepository;
+        [Inject] PartyPage m_partyPage;
 
         [SerializeField] CanvasGroup m_canvasGroup;
         [SerializeField] Button m_okButton;

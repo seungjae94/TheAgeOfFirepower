@@ -14,6 +14,7 @@ namespace Mathlife.ProjectL.Gameplay
     public class PartyMemberSlotItem : Presenter<int>
     {
         [Inject] CharacterRepository m_characterRepository;
+        [Inject] PartyPage m_partyPage;
 
         CanvasGroup m_canvasGroup;
         ObservableBeginDragTrigger m_beginDragTrigger;
@@ -26,7 +27,6 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] TMP_Text m_levelText;
         [SerializeField] CanvasGroup m_selectionOverlayCanvasGroup;
 
-        [SerializeField] PartyPage m_partyPage;
         [SerializeField] RectTransform m_dragItemParent;
 
         int m_slotIndex;
