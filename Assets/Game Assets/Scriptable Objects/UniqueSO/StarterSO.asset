@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes: []
   starterGold: 0
   starterParty:
-  - character: {fileID: 11400000, guid: 9a3b331ca5977a84ab9be371c0aedb79, type: 2}
+  - character: {fileID: 11400000, guid: 2912933a3d57cd84b896925f896fcd39, type: 2}
     level: 1
     currentLevelExp: 0
     weapon: {fileID: 0}

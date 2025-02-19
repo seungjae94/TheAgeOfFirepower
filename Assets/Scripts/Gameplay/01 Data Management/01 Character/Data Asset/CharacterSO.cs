@@ -12,8 +12,12 @@ namespace Mathlife.ProjectL.Gameplay
     public enum ECharacterId
     {
         None = 0,
-        Emily = 1,
-        Aiden = 2,
+        Emily,
+        Aiden,
+        Chloe,
+        Leah,
+        Noah,
+        Tristan,
         Max
     }
 

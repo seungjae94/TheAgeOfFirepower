@@ -1,8 +1,6 @@
 using Mathlife.ProjectL.Utils;
 using TMPro;
 using UniRx;
-using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using VContainer;
 

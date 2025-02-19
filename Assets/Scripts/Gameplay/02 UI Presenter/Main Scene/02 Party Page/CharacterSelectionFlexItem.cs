@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using VContainer;
 
@@ -31,17 +33,21 @@ namespace Mathlife.ProjectL.Gameplay
         }
     }
 
+    [RequireComponent(typeof(ObservablePointerClickTrigger))]
     class CharacterSelectionFlexItem : Presenter<CharacterModel>
     {
+        [Inject] PartyPage m_partyPage;
+
+        ObservablePointerClickTrigger m_clickTrigger;
         [SerializeField] Image m_portraitImage;
         [SerializeField] TMP_Text m_levelText;
-        [SerializeField] Button m_button;
-        [SerializeField] CanvasGroup m_overlayCanvasGroup;
-
-        [SerializeField] Button m_detailButton;
-        [SerializeField] Button m_includeButton;
 
         CharacterModel m_character;
+
+        void Awake()
+        {
+            m_clickTrigger = GetComponent<ObservablePointerClickTrigger>(); 
+        }
 
         protected override void Store(CharacterModel character)
         {
@@ -56,17 +62,21 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void SubscribeUserInteractions()
         {
-            m_button.OnClickAsObservable()
-                .Subscribe(_ => m_overlayCanvasGroup.Show())
+            m_clickTrigger.OnPointerClickAsObservable()
+                .Subscribe(OnClick)
                 .AddTo(gameObject);
-
-            // On Select <-- 얘는 바깥에서 입력받아서...
         }
 
         protected override void InitializeView()
         {
             m_portraitImage.sprite = m_character.portrait;
             UpdateLevelText(m_character.level);
+        }
+
+        // 상호작용
+        void OnClick(PointerEventData ev)
+        {
+            m_partyPage.selectedCharacter.SetState(m_character);
         }
 
         // 뷰 업데이트

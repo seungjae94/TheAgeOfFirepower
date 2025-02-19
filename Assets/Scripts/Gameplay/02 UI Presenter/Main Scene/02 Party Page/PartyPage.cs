@@ -1,13 +1,9 @@
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using UnityEngine.UI;
-using Mathlife.ProjectL.Utils;
 using UniRx;
-using UniRx.Triggers;
 using VContainer;
-using UnityEngine.EventSystems;
 using System;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -28,22 +24,17 @@ namespace Mathlife.ProjectL.Gameplay
 
         // 상태 - 선택한 캐릭터
         public State<CharacterModel> selectedCharacter { get; private set; } = new();
+        
+        public int GetSelectedSlotIndex()
+        {
+            if (selectedCharacter.GetState() == null)
+                return -1;
+
+            return m_characterRepository.party.IndexOf(selectedCharacter.GetState());
+        }
 
         // 상태 - 드래그 상태
         public State<bool> isDraggingSlotItem { get; private set; } = new();
-
-        public IDisposable SubscribePartyMemberSlotItemDragEvent(Action beginDragAction, Action endDragAction)
-        {
-            return isDraggingSlotItem.GetProperty()
-                .DistinctUntilChanged()
-                .Subscribe(isDragging =>
-                {
-                    if (isDragging)
-                        beginDragAction();
-                    else
-                        endDragAction();
-                });
-        }
 
         // 초기화
         protected override void Awake()
@@ -66,20 +57,8 @@ namespace Mathlife.ProjectL.Gameplay
             }
 
             m_selectedCharacterView.Initialize();
-            //m_characterSelectionModal.Initialize();
+            m_partyMemberChangeModal.Initialize();
             m_partyValidationModal.Initialize();
-        }
-
-        protected override void SubscribeDataChange()
-        {
-        }
-
-        protected override void SubscribeUserInteractions()
-        {
-        }
-
-        protected override void InitializeView()
-        {
         }
 
         // 유저 상호 작용
@@ -102,9 +81,9 @@ namespace Mathlife.ProjectL.Gameplay
             m_mainSceneManager.Navigate(EPageId.CharacterPage);
         }
 
-        public void OnClickPartyMemberChangeButton(Unit _)
+        public async void OnClickPartyMemberChangeButton(Unit _)
         {
-            Debug.Log("파티 멤버 교체 버튼 눌렀음");
+            await m_partyMemberChangeModal.Show();
         }
     }
 }

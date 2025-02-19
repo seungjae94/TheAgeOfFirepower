@@ -28,6 +28,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2912933a3d57cd84b896925f896fcd39
+    m_Address: Assets/Game Assets/Scriptable Objects/CharacterSO/CharacterSO_0003.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3b9d678ce80b53c478670761b8997901
     m_Address: Assets/Game Assets/Scriptable Objects/EquipmentSO/EquipmentSO_4.asset
     m_ReadOnly: 0
@@ -72,6 +78,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9138a48f634d687498d5c30d26b5c10b
     m_Address: Assets/Game Assets/Scriptable Objects/EquipmentSO/EquipmentSO_2001.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91deb0429e3c11f45a234f5d76c75859
+    m_Address: Assets/Game Assets/Scriptable Objects/CharacterSO/CharacterSO_0004.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
