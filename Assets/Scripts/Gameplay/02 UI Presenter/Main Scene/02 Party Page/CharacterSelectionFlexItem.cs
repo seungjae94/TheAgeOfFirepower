@@ -74,9 +74,10 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // 상호작용
-        void OnClick(PointerEventData ev)
+        async void OnClick(PointerEventData ev)
         {
-            m_partyPage.selectedCharacter.SetState(m_character);
+            m_partyPage.ChangePartyMemberAtSelectedSlot(m_character);
+            await m_partyPage.partyMemberChangeModal.Hide();
         }
 
         // 뷰 업데이트

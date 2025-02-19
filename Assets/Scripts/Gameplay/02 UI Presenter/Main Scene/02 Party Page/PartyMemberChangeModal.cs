@@ -14,7 +14,7 @@ using VContainer;
 namespace Mathlife.ProjectL.Gameplay
 {
     [RequireComponent(typeof(CanvasGroup))]
-    internal class PartyMemberChangeModal : Presenter
+    public class PartyMemberChangeModal : Presenter
     {
         const float k_fadeTime = 0.25f;
 

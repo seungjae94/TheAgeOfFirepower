@@ -22,6 +22,10 @@ namespace Mathlife.ProjectL.Gameplay
 
         List<PartyMemberSlot> m_partySlots = new();
 
+        // 뷰 접근 편의 기능
+        public PartyMemberChangeModal partyMemberChangeModal => m_partyMemberChangeModal;
+
+
         // 상태 - 선택한 캐릭터
         public State<CharacterModel> selectedCharacter { get; private set; } = new();
         
@@ -31,6 +35,12 @@ namespace Mathlife.ProjectL.Gameplay
                 return -1;
 
             return m_characterRepository.party.IndexOf(selectedCharacter.GetState());
+        }
+
+        public void ChangePartyMemberAtSelectedSlot(CharacterModel character)
+        {
+            int selectedSlotIndex = GetSelectedSlotIndex();
+            m_characterRepository.party.Add(selectedSlotIndex, character);
         }
 
         // 상태 - 드래그 상태
