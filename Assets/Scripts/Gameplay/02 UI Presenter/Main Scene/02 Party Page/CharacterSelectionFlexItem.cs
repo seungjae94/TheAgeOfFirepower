@@ -77,6 +77,7 @@ namespace Mathlife.ProjectL.Gameplay
         async void OnClick(PointerEventData ev)
         {
             m_partyPage.ChangePartyMemberAtSelectedSlot(m_character);
+            m_partyPage.selectedCharacter.SetState(null);
             await m_partyPage.partyMemberChangeModal.Hide();
         }
 
