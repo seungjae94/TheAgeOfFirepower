@@ -14,13 +14,16 @@ namespace Mathlife.ProjectL.Gameplay
 
         ObservableDropTrigger m_dropTrigger;
         ObservablePointerClickTrigger m_clickTrigger;
+        int m_slotIndex = 0;
 
-        [SerializeField] int m_index = 0;
         [SerializeField] PartyMemberSlotItem m_slotItem;
         [SerializeField] CanvasGroup m_addMemberGuideCanvasGroup;
 
+        
+
         void Awake()
         {
+            m_slotIndex = transform.GetSiblingIndex();
             m_dropTrigger = GetComponent<ObservableDropTrigger>();
             m_clickTrigger = GetComponent<ObservablePointerClickTrigger>();
         }
@@ -28,7 +31,8 @@ namespace Mathlife.ProjectL.Gameplay
         protected override void SubscribeDataChange()
         {
             m_characterRepository.party
-                .SubscribeMemberChange(OnSlotMemberChange)
+                .ObserveEveryValueChanged(party => party[m_slotIndex])
+                .Subscribe(OnSlotMemberChange)
                 .AddTo(gameObject);
         }
 
@@ -47,7 +51,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void InitializeView()
         {
-            CharacterModel character = m_characterRepository.party[m_index];
+            CharacterModel character = m_characterRepository.party[m_slotIndex];
 
             if (character != null)
             {
@@ -61,7 +65,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void InitializeChildren()
         {
-            m_slotItem.Initialize(m_index);
+            m_slotItem.Initialize(m_slotIndex);
         }
 
         // 데이터 변경 구독 메서드
@@ -88,7 +92,7 @@ namespace Mathlife.ProjectL.Gameplay
             if (null == newCharacter)
                 return;
 
-            var oldCharacter = m_characterRepository.party[m_index];
+            var oldCharacter = m_characterRepository.party[m_slotIndex];
 
             // i번 슬롯에서 i번 슬롯으로 드래그 한 경우 무시
             if (oldCharacter == newCharacter)
@@ -98,7 +102,7 @@ namespace Mathlife.ProjectL.Gameplay
             if (m_characterRepository.party.Contains(newCharacter))
             {
                 int otherIndex = m_characterRepository.party.IndexOf(newCharacter);
-                m_characterRepository.party.Swap(m_index, otherIndex);
+                m_characterRepository.party.Swap(m_slotIndex, otherIndex);
             }
 
             // 선택된 슬롯 초기화
