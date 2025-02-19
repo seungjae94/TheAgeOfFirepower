@@ -26,7 +26,7 @@ namespace Mathlife.ProjectL.Gameplay
         int m_selectedTab = 0;
 
         // 그리드 표시 기능
-        [SerializeField] InventorySlotFlex m_gridView;
+        [SerializeField] InventoryFlex m_flex;
 
         // 선택한 장비 정보
         [SerializeField] Image m_selectedEquipmentIcon;
@@ -94,10 +94,10 @@ namespace Mathlife.ProjectL.Gameplay
         {
             var itemDatas = m_inventoryRepository
                     .GetSortedEquipmentList((EEquipmentType)m_selectedTab)
-                    .Select(item => new InventorySlotFlexItemData(item, item == m_selectedEquipment))
+                    .Select(item => new InventoryFlexItemData(item, item == m_selectedEquipment))
                     .ToList();
 
-            m_gridView.Draw(itemDatas, OnClickSlot);
+            m_flex.Draw(itemDatas, OnClickSlot);
         }
 
         void UpdateSelectedEquipmentView()

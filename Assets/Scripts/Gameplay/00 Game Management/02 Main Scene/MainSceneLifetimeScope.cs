@@ -19,7 +19,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             builder.Register<CharacterSelectionFlexItemFactory>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<ShopFlexItemFactory>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-            builder.Register<InventorySlotFlexItemFactory>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<InventoryFlexItemFactory>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         }
     }

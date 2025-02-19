@@ -25,7 +25,7 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] Image m_selectedEquipmentIcon;
         [SerializeField] TMP_Text m_selectedEquipmentName;
         [SerializeField] TMP_Text m_selectedEquipmentDescription;
-        [SerializeField] InventorySlotFlex m_slotGridView;
+        [SerializeField] InventoryFlex m_flex;
         [SerializeField] Button m_unequipButton;
 
         EEquipmentType m_slotType = EEquipmentType.Weapon;

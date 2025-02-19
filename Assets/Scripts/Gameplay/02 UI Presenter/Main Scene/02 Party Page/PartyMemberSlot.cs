@@ -40,23 +40,22 @@ namespace Mathlife.ProjectL.Gameplay
                 .GetComponent<PartyMemberSlotItem>()?
                 .GetCharacterModel();
             
+            // 파티 멤버 슬롯 아이템을 드래그하는 경우만 처리
             if (null == newCharacter)
                 return;
 
             var oldCharacter = m_characterRepository.party[m_index];
 
+            // i번 슬롯에서 i번 슬롯으로 드래그 한 경우 무시
             if (oldCharacter == newCharacter)
                 return;
 
-            // 멤버 <-> 멤버 스왑
+            // 멤버 스왑
             if (m_characterRepository.party.Contains(newCharacter))
             {
                 int otherIndex = m_characterRepository.party.IndexOf(newCharacter);
                 m_characterRepository.party.Swap(m_index, otherIndex);
             }
-            // 보유 캐릭터 <-> 멤버 스왑
-            else
-                m_characterRepository.party.Add(m_index, newCharacter);
         }
     }
 }

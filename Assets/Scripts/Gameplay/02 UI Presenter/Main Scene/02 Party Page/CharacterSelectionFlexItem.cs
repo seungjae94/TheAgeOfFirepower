@@ -21,7 +21,7 @@ namespace Mathlife.ProjectL.Gameplay
         public CharacterSelectionFlexItem Create(Transform parent, CharacterModel character)
         {
             CharacterSelectionFlexItem flexItem
-                = m_gameDataDB.Instantiate<CharacterSelectionFlexItem>(EPrefabId.MiniCharacterCard, parent);
+                = m_gameDataDB.Instantiate<CharacterSelectionFlexItem>(EPrefabId.CharacterSelectionFlexItem, parent);
 
             flexItem.Initialize(character);
 

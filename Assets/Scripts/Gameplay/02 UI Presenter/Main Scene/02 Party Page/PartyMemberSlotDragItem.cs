@@ -9,27 +9,24 @@ using VContainer;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class DragCharacterCardView : MonoBehaviour
+    public class PartyMemberSlotDragItem : Presenter<CharacterModel>
     {
-        [SerializeField] CanvasGroup m_canvasGroup;
         [SerializeField] Image m_portraitImage;
-        //[SerializeField] TMP_Text m_levelText;
-        //[SerializeField] TMP_Text m_nameText;
+        [SerializeField] TMP_Text m_levelText;
+        [SerializeField] TMP_Text m_nameText;
 
         CharacterModel m_character = null;
 
-        public void Initialize(CharacterModel character)
+        protected override void Store(CharacterModel character)
         {
             m_character = character;
-
-            // Initialize View
-            InitializeView();
         }
 
-        new void InitializeView()
+        protected override void InitializeView()
         {
             m_portraitImage.sprite = m_character.portrait;
-            //m_levelText.text = m_character.level.ToString();
+            m_levelText.text = m_character.level.ToString();
+            m_nameText.text = m_character.displayName;
         }
 
         public CharacterModel GetCharacterModel()

@@ -5,7 +5,6 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using VContainer;
 
@@ -13,6 +12,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class PartyMemberSlotItem : Presenter<int>
     {
+        [Inject] GameDataDB m_gameDataDB;
         [Inject] CharacterRepository m_characterRepository;
         [Inject] PartyPage m_partyPage;
 
@@ -27,13 +27,13 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] TMP_Text m_levelText;
         [SerializeField] CanvasGroup m_selectionOverlayCanvasGroup;
 
-        [SerializeField] RectTransform m_dragItemParent;
-
         int m_slotIndex;
 
         CharacterModel m_character = null;
         IDisposable m_characterSubscription = null;
-        DragCharacterCardView m_dragCard = null;
+
+        [SerializeField] RectTransform m_dragItemParent;
+        PartyMemberSlotDragItem m_dragItem = null;
 
         void Awake()
         {
@@ -100,7 +100,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             if (m_character != null)
             {
-                m_characterSubscription = character.SubscribeLevelChangeEvent(OnLevelChanged);
+                m_characterSubscription = character.SubscribeLevelChangeEvent(UpdateLevelText);
             }
 
             UpdateView();
@@ -121,30 +121,6 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // 유저 상호 작용
-        public void Hide()
-        {
-            m_canvasGroup.Hide();
-        }
-
-        public void Show()
-        {
-            m_canvasGroup.Show();
-        }
-
-        public void UpdateView()
-        {
-            if (m_character == null)
-            {
-                Hide();
-                return;
-            }
-
-            Show();
-            m_portraitImage.sprite = m_character.portrait;
-            m_levelText.text = m_character.level.ToString();
-            m_nameText.text = m_character.displayName;
-        }
-
         public CharacterModel GetCharacterModel()
         {
             return m_character;
@@ -152,32 +128,27 @@ namespace Mathlife.ProjectL.Gameplay
 
         void OnBeginDrag(PointerEventData eventData)
         {
-            //m_dragCard = InstantiateWithInjection<DragCharacterCardPresenter>(EPrefabId.DragCharacterCard, m_dragArea);
-            //m_dragCard.Initialize(m_character);
-            //m_dragCard.transform.position = transform.position;
+            m_dragItem = m_gameDataDB.Instantiate<PartyMemberSlotDragItem>(EPrefabId.PartyMemberSlotDragItem, m_dragItemParent);
+            m_dragItem.Initialize(m_character);
+            m_dragItem.transform.position = transform.position;
 
-            //m_canvasGroup.alpha = 0.25f;
-            //m_canvasGroup.blocksRaycasts = false;
-            //m_canvasGroup.interactable = false;
+            m_canvasGroup.HideWithAlpha(0.25f);
 
-            //if (m_characterRepository.team.Contains(m_character))
-            //    m_worldSceneManager.GetPage<PartyPage>().isDraggingMemberCard = true;
+            //if (m_characterRepository.party.Contains(m_character) == false)
+            m_partyPage.isDraggingSlotItem.SetState(true);
         }
 
         void OnDrag(PointerEventData eventData)
         {
-            m_dragCard.GetComponent<RectTransform>().position = eventData.position;
+            m_dragItem.GetComponent<RectTransform>().position = eventData.position;
         }
 
         void OnEndDrag(PointerEventData eventData)
         {
-            //if (m_worldSceneManager.GetPage<PartyPage>().isDraggingMemberCard)
-            //    m_worldSceneManager.GetPage<PartyPage>().isDraggingMemberCard = false;
+            m_partyPage.isDraggingSlotItem.SetState(false);
 
-            //Destroy(m_dragCard.gameObject);
-            //m_canvasGroup.alpha = 1.0f;
-            //m_canvasGroup.blocksRaycasts = true;
-            //m_canvasGroup.interactable = true;
+            Destroy(m_dragItem.gameObject);
+            m_canvasGroup.Show();
         }
 
         void OnPointerClick(PointerEventData eventData)
@@ -185,7 +156,22 @@ namespace Mathlife.ProjectL.Gameplay
             m_partyPage.selectedCharacter.SetState(m_character);
         }
 
-        void OnLevelChanged(int value)
+        // 뷰 업데이트
+        public void UpdateView()
+        {
+            if (m_character == null)
+            {
+                m_canvasGroup.Hide();
+                return;
+            }
+
+            m_canvasGroup.Show();
+            m_portraitImage.sprite = m_character.portrait;
+            m_levelText.text = m_character.level.ToString();
+            m_nameText.text = m_character.displayName;
+        }
+
+        void UpdateLevelText(int value)
         {
             m_levelText.text = value.ToString();
         }

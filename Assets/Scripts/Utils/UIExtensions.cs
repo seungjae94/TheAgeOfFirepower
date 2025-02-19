@@ -56,5 +56,12 @@ namespace Mathlife.ProjectL.Utils
             group.interactable = false;
             group.blocksRaycasts = false;
         }
+
+        public static void HideWithAlpha(this CanvasGroup group, float alpha)
+        {
+            group.alpha = alpha;
+            group.interactable = false;
+            group.blocksRaycasts = false;
+        }
     }
 }

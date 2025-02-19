@@ -14,6 +14,11 @@ namespace Mathlife.ProjectL.Gameplay
         public DataType GetState() { return _property.Value; }
         public DataType SetState(DataType value) { return _property.Value = value; }
 
+        public ReactiveProperty<DataType> GetProperty()
+        {
+            return _property;
+        }
+
         public IDisposable SubscribeChangeEvent(Action<DataType> onChange)
         {
             return _property.Subscribe(onChange);

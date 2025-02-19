@@ -13663,9 +13663,8 @@ GameObject:
   - component: {fileID: 1165248133}
   - component: {fileID: 1165248132}
   - component: {fileID: 1165248131}
-  - component: {fileID: 1165248134}
   m_Layer: 5
-  m_Name: Equipment Slot Grid View
+  m_Name: Inventory Flex Scroll View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13760,18 +13759,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165248129}
   m_CullTransparentMesh: 1
---- !u!114 &1165248134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1165248129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5ec500d94105b489bfbd8f57b7ca5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1186594772
 GameObject:
   m_ObjectHideFlags: 0
@@ -14174,8 +14161,9 @@ GameObject:
   - component: {fileID: 1238478749}
   - component: {fileID: 1238478751}
   - component: {fileID: 1238478750}
+  - component: {fileID: 1238478752}
   m_Layer: 5
-  m_Name: Content
+  m_Name: Inventory Flex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14239,6 +14227,18 @@ MonoBehaviour:
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
   m_ConstraintCount: 4
+--- !u!114 &1238478752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238478748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae96f34281a4a03409ac963d01046a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1253237931
 GameObject:
   m_ObjectHideFlags: 0
@@ -15812,7 +15812,7 @@ MonoBehaviour:
   m_navigateBackButton: {fileID: 7080106812078402535}
   m_ingameCurrencyBar: {fileID: 7116776874462959109}
   m_tabMenuBar: {fileID: 1968148361}
-  m_gridView: {fileID: 1718998403}
+  m_flex: {fileID: 1718998403}
   m_selectedEquipmentIcon: {fileID: 385815414}
   m_selectedEquipmentName: {fileID: 1955520150}
   m_selectedEquipmentDescription: {fileID: 579148703}
@@ -19697,7 +19697,7 @@ GameObject:
   - component: {fileID: 1718998401}
   - component: {fileID: 1718998403}
   m_Layer: 5
-  m_Name: Inventory Slot Flex
+  m_Name: Inventory Flex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19769,7 +19769,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1718998399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5ec500d94105b489bfbd8f57b7ca5f, type: 3}
+  m_Script: {fileID: 11500000, guid: ae96f34281a4a03409ac963d01046a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1722821156
@@ -23323,7 +23323,7 @@ GameObject:
   - component: {fileID: 1957922500}
   - component: {fileID: 1957922499}
   m_Layer: 5
-  m_Name: Inventory Slot Flex Scroll View
+  m_Name: Inventory Flex Scroll View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27759,7 +27759,7 @@ MonoBehaviour:
   m_selectedEquipmentIcon: {fileID: 68551224}
   m_selectedEquipmentName: {fileID: 104468130}
   m_selectedEquipmentDescription: {fileID: 1334655419}
-  m_slotGridView: {fileID: 1165248134}
+  m_flex: {fileID: 1238478752}
   m_unequipButton: {fileID: 2022274655}
 --- !u!1 &8684925600005707778
 GameObject:

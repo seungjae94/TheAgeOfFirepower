@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    class InventorySlotFlexItemData
+    class InventoryFlexItemData
     {
-        public InventorySlotFlexItemData(EquipmentModel equipment, bool isSelected)
+        public InventoryFlexItemData(EquipmentModel equipment, bool isSelected)
         {
             this.equipment = equipment;
             this.isSelected = isSelected;
@@ -16,7 +16,7 @@ namespace Mathlife.ProjectL.Gameplay
         public bool isSelected;
     }
 
-    internal class InventorySlotFlex : AbstractFlex<InventorySlotFlexItemData, Action<EquipmentModel>, InventorySlotFlexItem>
+    internal class InventoryFlex : AbstractFlex<InventoryFlexItemData, Action<EquipmentModel>, InventoryFlexItem>
     {
     }
 }

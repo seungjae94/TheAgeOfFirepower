@@ -13,7 +13,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public ShopFlexItem Create(Transform parent, EquipmentSO flexItemData, Action<EquipmentSO> flexItemAction)
         {
-            ShopFlexItem item = m_gameDataDB.Instantiate<ShopFlexItem>(EPrefabId.ShopItemCard, parent);
+            ShopFlexItem item = m_gameDataDB.Instantiate<ShopFlexItem>(EPrefabId.ShopFlexItem, parent);
             item.Initialize(flexItemData, flexItemAction);
             return item;
         }

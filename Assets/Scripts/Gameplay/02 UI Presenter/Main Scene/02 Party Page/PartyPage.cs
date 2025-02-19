@@ -28,27 +28,19 @@ namespace Mathlife.ProjectL.Gameplay
         public State<CharacterModel> selectedCharacter { get; private set; } = new();
 
         // 상태 - 드래그 상태
-        BoolReactiveProperty m_isDraggingPartyMemberSlotItem = new(false);
-        public bool isDraggingMemberSlotItem
+        public State<bool> isDraggingSlotItem { get; private set; } = new();
+
+        public IDisposable SubscribePartyMemberSlotItemDragEvent(Action beginDragAction, Action endDragAction)
         {
-            get => m_isDraggingPartyMemberSlotItem.Value;
-            set => m_isDraggingPartyMemberSlotItem.Value = value;
-        }
-        public CompositeDisposable SubscribePartyMemberSlotItemDragEvent(Action beginDragAction, Action endDragAction)
-        {
-            CompositeDisposable subscriptions = new();
-
-            IDisposable beginDragSubscription = m_isDraggingPartyMemberSlotItem
-                .Where(v => v)
-                .Subscribe(_ => beginDragAction?.Invoke());
-
-            IDisposable endDragSubscription = m_isDraggingPartyMemberSlotItem
-                .Where(v => !v)
-                .Subscribe(_ => endDragAction?.Invoke());
-
-            subscriptions.Add(beginDragSubscription);
-            subscriptions.Add(endDragSubscription);
-            return subscriptions;
+            return isDraggingSlotItem.GetProperty()
+                .DistinctUntilChanged()
+                .Subscribe(isDragging =>
+                {
+                    if (isDragging)
+                        beginDragAction();
+                    else
+                        endDragAction();
+                });
         }
 
         // 초기화

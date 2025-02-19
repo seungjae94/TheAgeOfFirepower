@@ -7,19 +7,19 @@ using VContainer;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    class InventorySlotFlexItemFactory : IFlexItemFactory<InventorySlotFlexItemData, Action<EquipmentModel>, InventorySlotFlexItem>
+    class InventoryFlexItemFactory : IFlexItemFactory<InventoryFlexItemData, Action<EquipmentModel>, InventoryFlexItem>
     {
         [Inject] GameDataDB m_gameDataDB;
 
-        public InventorySlotFlexItem Create(Transform parent, InventorySlotFlexItemData flexItemData, Action<EquipmentModel> flexItemAction)
+        public InventoryFlexItem Create(Transform parent, InventoryFlexItemData flexItemData, Action<EquipmentModel> flexItemAction)
         {
-            InventorySlotFlexItem item = m_gameDataDB.Instantiate<InventorySlotFlexItem>(EPrefabId.InventorySlot, parent);
+            InventoryFlexItem item = m_gameDataDB.Instantiate<InventoryFlexItem>(EPrefabId.InventoryFlexItem, parent);
             item.Initialize(flexItemData, flexItemAction);
             return item;
         }
     }
 
-    class InventorySlotFlexItem : Presenter<InventorySlotFlexItemData, Action<EquipmentModel>>
+    class InventoryFlexItem : Presenter<InventoryFlexItemData, Action<EquipmentModel>>
     {
         [SerializeField] Button m_button;
         [SerializeField] Image m_iconImage;
@@ -28,10 +28,10 @@ namespace Mathlife.ProjectL.Gameplay
 
         IDisposable m_onClickSub;
 
-        InventorySlotFlexItemData m_itemData;
+        InventoryFlexItemData m_itemData;
         Action<EquipmentModel> m_onClick;
 
-        protected override void Store(InventorySlotFlexItemData itemData, Action<EquipmentModel> onClick)
+        protected override void Store(InventoryFlexItemData itemData, Action<EquipmentModel> onClick)
         {
             m_itemData = itemData;
             m_onClick = onClick;
