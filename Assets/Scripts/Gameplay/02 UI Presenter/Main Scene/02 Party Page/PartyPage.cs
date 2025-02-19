@@ -19,10 +19,12 @@ namespace Mathlife.ProjectL.Gameplay
         [Inject] CharacterRepository m_characterRepository;
 
         [SerializeField] SimpleActionButton m_navigateBackButton;
-        [SerializeField] List<PartyMemberSlot> m_slots;
+        [SerializeField] Transform m_partySlotsParent;
         [SerializeField] PartySelectedCharacter m_selectedCharacterView;
         [SerializeField] PartyMemberChangeModal m_partyMemberChangeModal;
         [SerializeField] PartyValidationModal m_partyValidationModal;
+
+        List<PartyMemberSlot> m_partySlots = new();
 
         // 상태 - 선택한 캐릭터
         public State<CharacterModel> selectedCharacter { get; private set; } = new();
@@ -44,13 +46,23 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // 초기화
+        protected override void Awake()
+        {
+            base.Awake();
+
+            foreach(Transform m_partySlotTrans in m_partySlotsParent)
+            {
+                m_partySlots.Add(m_partySlotTrans.GetComponent<PartyMemberSlot>());
+            }
+        }
+
         protected override void InitializeChildren()
         {
             m_navigateBackButton.Initialize(OnClickBackButton);
 
-            for (int i = 0; i < m_slots.Count; ++i)
+            for (int i = 0; i < m_partySlots.Count; ++i)
             {
-                m_slots[i].Initialize();
+                m_partySlots[i].Initialize();
             }
 
             m_selectedCharacterView.Initialize();

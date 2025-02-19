@@ -15,19 +15,17 @@ namespace Mathlife.ProjectL.Gameplay
         [Inject] CharacterRepository m_characterRepository;
 
         CanvasGroup m_canvasGroup;
-        Button m_okButton;
-        Button m_cancelButton;
+        [SerializeField] Button m_okButton;
+        [SerializeField] Button m_cancelButton;
 
         const float k_fadeTime = 0.25f;
 
         void Awake()
         {
             m_canvasGroup = GetComponent<CanvasGroup>();
-            m_okButton = transform.FindRecursiveByName<Button>("OK Button");
-            m_cancelButton = transform.FindRecursiveByName<Button>("Cancel Button");
         }
 
-        public void Initialize()
+        protected override void SubscribeUserInteractions()
         {
             m_okButton.OnClickAsObservable()
                 .Subscribe(OnClickOKButton)
@@ -36,9 +34,13 @@ namespace Mathlife.ProjectL.Gameplay
             m_cancelButton.OnClickAsObservable()
                 .Subscribe(OnClickCancelButton)
                 .AddTo(gameObject);
+        }
 
+        protected override void InitializeView()
+        {
             m_canvasGroup.Hide();
         }
+
 
         async void OnClickOKButton(Unit _)
         {
@@ -57,21 +59,6 @@ namespace Mathlife.ProjectL.Gameplay
         public async UniTask Show()
         {
             await m_canvasGroup.Show(k_fadeTime);
-        }
-
-        protected override void SubscribeDataChange()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SubscribeUserInteractions()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void InitializeView()
-        {
-            throw new NotImplementedException();
         }
     }
 }

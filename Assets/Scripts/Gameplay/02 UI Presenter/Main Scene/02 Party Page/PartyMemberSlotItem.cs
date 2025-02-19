@@ -132,9 +132,9 @@ namespace Mathlife.ProjectL.Gameplay
             m_dragItem.Initialize(m_character);
             m_dragItem.transform.position = transform.position;
 
-            m_canvasGroup.HideWithAlpha(0.25f);
+            //m_canvasGroup.HideWithAlpha(0.25f);
+            m_canvasGroup.Hide();
 
-            //if (m_characterRepository.party.Contains(m_character) == false)
             m_partyPage.isDraggingSlotItem.SetState(true);
         }
 
