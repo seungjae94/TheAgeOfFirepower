@@ -71,7 +71,7 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         public EquipmentModel armor { 
-            get => m_equipments[EEquipmentType.Weapon];
+            get => m_equipments[EEquipmentType.Armor];
             private set
             {
                 if (value != null && value.type != EEquipmentType.Armor)

@@ -11,29 +11,19 @@ namespace Mathlife.ProjectL.Gameplay
     {
         [Inject] CharacterPage m_characterPage; 
 
-        TMP_Text m_maxHpText;
-        TMP_Text m_maxEnergyText;
-        TMP_Text m_energyRecoveryText;
-        TMP_Text m_atkText;
-        TMP_Text m_defText;
-        TMP_Text m_magText;
-        TMP_Text m_spdText;
+        [SerializeField] TMP_Text m_maxHpText;
+        [SerializeField] TMP_Text m_maxEnergyText;
+        [SerializeField] TMP_Text m_energyRecoveryText;
+        [SerializeField] TMP_Text m_atkText;
+        [SerializeField] TMP_Text m_defText;
+        [SerializeField] TMP_Text m_magText;
+        [SerializeField] TMP_Text m_spdText;
 
         // Fields
         CharacterModel m_character;
         CompositeDisposable m_characterDataSubscriptions = new();
 
         // Methods
-        void Awake()
-        {
-            m_maxHpText = transform.FindRecursiveByName<TMP_Text>("Max HP Text");
-            m_maxEnergyText = transform.FindRecursiveByName<TMP_Text>("Max Energy Text");
-            m_energyRecoveryText = transform.FindRecursiveByName<TMP_Text>("Energy Recovery Text");
-            m_spdText = transform.FindRecursiveByName<TMP_Text>("Spd Text");
-            m_atkText = transform.FindRecursiveByName<TMP_Text>("Atk Text");
-            m_defText = transform.FindRecursiveByName<TMP_Text>("Def Text");
-            m_magText = transform.FindRecursiveByName<TMP_Text>("Mag Text");
-        }
 
         void OnDestroy()
         {
@@ -66,7 +56,6 @@ namespace Mathlife.ProjectL.Gameplay
                 .ObserveEveryValueChanged(character => character.GetMaxEnergy())
                 .Subscribe(v => m_maxEnergyText.text = v.ToString())
                 .AddTo(m_characterDataSubscriptions);
-
 
             character?
                 .ObserveEveryValueChanged(character => character.GetEnergyRecovery())

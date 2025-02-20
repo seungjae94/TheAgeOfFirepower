@@ -19,7 +19,7 @@ namespace Mathlife.ProjectL.Gameplay
         public int maxEnergy;
 
         [LabelWidth(100)]
-        [LabelText("에너지 회복량")]
+        [LabelText("에너지 충전")]
         public int energyRecovery;
 
         [LabelWidth(100)]
