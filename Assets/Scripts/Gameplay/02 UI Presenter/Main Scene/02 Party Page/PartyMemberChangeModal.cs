@@ -1,13 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Utils;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UniRx;
 using UniRx.Triggers;
-using UnityEditor.Graphs;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -30,11 +25,50 @@ namespace Mathlife.ProjectL.Gameplay
 
         int m_selectedSlotIndex;
 
+        SortedCharacterListSubscription m_sortedCharacterListChangeSubs;
+
         void Awake()
         {
-            m_canvasGroup = GetComponent<CanvasGroup>();    
+            m_canvasGroup = GetComponent<CanvasGroup>();
         }
 
+        void OnDestroy()
+        {
+            m_sortedCharacterListChangeSubs?.Dispose();
+        }
+
+        protected override void InitializeView()
+        {
+            m_canvasGroup.Hide();
+        }
+
+        protected override void InitializeChildren()
+        {
+            m_flex.Initialize();
+        }
+
+        protected override void SubscribeDataChange()
+        {
+            m_sortedCharacterListChangeSubs = m_characterRepository
+               .SubscribeSortedCharacterList(UpdateView);
+
+            m_characterRepository.party
+                .SubscribeMemberChange(_ => UpdateView())
+                .AddTo(gameObject);
+        }
+
+        protected override void SubscribeUserInteractions()
+        {
+            m_closeButton.OnClickAsObservable()
+                .Subscribe(async _ => await Hide())
+                .AddTo(gameObject);
+
+            m_excludeButton.OnPointerClickAsObservable()
+                .Subscribe(OnClickExcludeButton)
+                .AddTo(gameObject);
+        }
+
+        // 유저 상호작용
         public async UniTask Show()
         {
             // TODO: 이동식으로 구현
@@ -50,6 +84,7 @@ namespace Mathlife.ProjectL.Gameplay
                 m_excludeButton.gameObject.SetActive(false);
             }
 
+            UpdateFlex();
             await m_canvasGroup.Show(k_fadeTime);
         }
 
@@ -60,32 +95,36 @@ namespace Mathlife.ProjectL.Gameplay
             await m_canvasGroup.Hide(k_fadeTime);
         }
 
-        protected override void InitializeView()
-        {
-            m_canvasGroup.Hide();
-        }
-
-        protected override void InitializeChildren()
-        {
-            m_flex.Initialize();
-        }
-
-        protected override void SubscribeUserInteractions()
-        {
-            m_closeButton.OnClickAsObservable()
-                .Subscribe(async _ => await Hide())
-                .AddTo(gameObject);
-
-            m_excludeButton.OnPointerClickAsObservable()
-                .Subscribe(OnClickExcludeButton)
-                .AddTo(gameObject);
-        }
-
         async void OnClickExcludeButton(PointerEventData ev)
         {
             m_partyPage.selectedSlotIndex.SetState(m_selectedSlotIndex);
             m_characterRepository.party.RemoveAt(m_selectedSlotIndex);
             await m_partyPage.partyMemberChangeModal.Hide();
+        }
+
+        async void OnClickFlexItem(CharacterModel character)
+        {
+            m_characterRepository.party.Add(m_partyPage.selectedSlotIndex.GetState(), character);
+            m_partyPage.selectedSlotIndex.SetState(-1);
+
+            await Hide();
+        }
+
+        // 뷰 업데이트
+        void UpdateView()
+        {
+            UpdateFlex();
+        }
+
+        void UpdateFlex()
+        {
+            var itemDatas = m_characterRepository
+                .GetSortedList()
+                .Where(character =>
+                    m_characterRepository.party.Contains(character) == false)
+                .ToList();
+
+            m_flex.Draw(itemDatas, OnClickFlexItem);
         }
     }
 }

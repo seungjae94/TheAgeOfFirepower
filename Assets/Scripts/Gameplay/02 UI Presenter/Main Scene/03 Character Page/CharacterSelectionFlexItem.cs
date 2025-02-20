@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -9,17 +10,17 @@ using VContainer;
 namespace Mathlife.ProjectL.Gameplay
 {
     class CharacterSelectionFlexItemFactory
-    : IFlexItemFactory<CharacterModel, CharacterSelectionFlexItem>
+    : IFlexItemFactory<CharacterModel, Action<CharacterModel>, CharacterSelectionFlexItem>
     {
         [Inject] IObjectResolver m_container;
         [Inject] GameDataDB m_gameDataDB;
 
-        public CharacterSelectionFlexItem Create(Transform parent, CharacterModel character)
+        public CharacterSelectionFlexItem Create(Transform parent, CharacterModel character, Action<CharacterModel> onClick)
         {
             CharacterSelectionFlexItem flexItem
                 = m_gameDataDB.Instantiate<CharacterSelectionFlexItem>(EPrefabId.CharacterSelectionFlexItem, parent);
 
-            flexItem.Initialize(character);
+            flexItem.Initialize(character, onClick);
 
             m_container.Inject(flexItem);
 
@@ -27,26 +28,27 @@ namespace Mathlife.ProjectL.Gameplay
         }
     }
 
-    [RequireComponent(typeof(ObservablePointerClickTrigger))]
-    class CharacterSelectionFlexItem : Presenter<CharacterModel>
-    {
-        [Inject] PartyPage m_partyPage;
-        [Inject] CharacterRepository m_characterRepository;
 
+    [RequireComponent(typeof(ObservablePointerClickTrigger))]
+    class CharacterSelectionFlexItem : Presenter<CharacterModel, Action<CharacterModel>>
+    {
         ObservablePointerClickTrigger m_clickTrigger;
         [SerializeField] Image m_portraitImage;
         [SerializeField] TMP_Text m_levelText;
+        [SerializeField] TMP_Text m_nameText;
 
         CharacterModel m_character;
+        Action<CharacterModel> m_onClick;
 
         void Awake()
         {
             m_clickTrigger = GetComponent<ObservablePointerClickTrigger>(); 
         }
 
-        protected override void Store(CharacterModel character)
+        protected override void Store(CharacterModel character, Action<CharacterModel> onClick)
         {
             m_character = character;
+            m_onClick = onClick;
         }
 
         protected override void SubscribeDataChange()
@@ -58,23 +60,15 @@ namespace Mathlife.ProjectL.Gameplay
         protected override void SubscribeUserInteractions()
         {
             m_clickTrigger.OnPointerClickAsObservable()
-                .Subscribe(OnClick)
+                .Subscribe(ev => m_onClick(m_character))
                 .AddTo(gameObject);
         }
 
         protected override void InitializeView()
         {
             m_portraitImage.sprite = m_character.portrait;
+            m_nameText.text = m_character.displayName;
             UpdateLevelText(m_character.level);
-        }
-
-        // 상호작용
-        async void OnClick(PointerEventData ev)
-        {
-            m_characterRepository.party.Add(m_partyPage.selectedSlotIndex.GetState(), m_character);
-            m_partyPage.selectedSlotIndex.SetState(-1);
-
-            await m_partyPage.partyMemberChangeModal.Hide();
         }
 
         // 뷰 업데이트
