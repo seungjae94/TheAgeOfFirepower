@@ -8,7 +8,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class CharacterBasicInfoPresenter : Presenter
     {
-        [Inject] CharacterPage m_characterPage;
+        [Inject] CharacterDetailPage m_characterDetailPage;
 
         // View
         Image m_portrait;
@@ -40,7 +40,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void SubscribeDataChange()
         {
-            m_characterPage.character
+            m_characterDetailPage.character
                 .SubscribeChangeEvent(OnSelectedCharacterChange)
                 .AddTo(gameObject);
         }

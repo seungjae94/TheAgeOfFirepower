@@ -1,15 +1,13 @@
 ﻿using Mathlife.ProjectL.Gameplay;
 using Mathlife.ProjectL.Utils;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Mathlife.ProjectL.Editor
 {
-    public static class WorldScenePageNavigationMenuItems
+    public static class MainScenePageNavigationMenuItems
     {
         const int wordSceneBuildIndex = 1;
 
@@ -25,8 +23,8 @@ namespace Mathlife.ProjectL.Editor
             Home();
         }
 
-        [MenuItem("Project L/World Scene/Page Navigation/Team Page", priority = 12)]
-        static void GoToTeamPage()
+        [MenuItem("Project L/World Scene/Page Navigation/Party Page", priority = 12)]
+        static void GoToPartyPage()
         {
             Navigate<PartyPage>();
         }
@@ -37,19 +35,25 @@ namespace Mathlife.ProjectL.Editor
             Navigate<CharacterPage>();
         }
 
-        [MenuItem("Project L/World Scene/Page Navigation/Inventory Page", priority = 14)]
+        [MenuItem("Project L/World Scene/Page Navigation/Character Detail Page", priority = 14)]
+        static void GoToCharacterDetailPage()
+        {
+            Navigate<CharacterDetailPage>();
+        }
+
+        [MenuItem("Project L/World Scene/Page Navigation/Inventory Page", priority = 15)]
         static void GoToInventoryPage()
         {
             Navigate<InventoryPage>();
         }
 
-        [MenuItem("Project L/World Scene/Page Navigation/Shop Page", priority = 15)]
+        [MenuItem("Project L/World Scene/Page Navigation/Shop Page", priority = 16)]
         static void GoToShopPage()
         {
             Navigate<ShopPage>();
         }
 
-        [MenuItem("Project L/World Scene/Page Navigation/Stage Selection Page", priority = 15)]
+        [MenuItem("Project L/World Scene/Page Navigation/Stage Selection Page", priority = 17)]
         static void GoToStageSelectionPage()
         {
             Navigate<StageSelectionPage>();

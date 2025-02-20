@@ -4,17 +4,18 @@ using VContainer;
 using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay
 {
     public class PartyPage : Page
     {
-        public override EPageId pageId => EPageId.TeamPage;
+        public override EPageId pageId => EPageId.PartyPage;
 
         [Inject] MainSceneManager m_mainSceneManager;
         [Inject] CharacterRepository m_characterRepository;
 
-        [SerializeField] SimpleActionButton m_navigateBackButton;
+        [SerializeField] Button m_navBackButton;
         [SerializeField] Transform m_partySlotsParent;
         [SerializeField] PartySelectedCharacter m_selectedCharacterView;
         [SerializeField] PartyMemberChangeModal m_partyMemberChangeModal;
@@ -58,8 +59,6 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void InitializeChildren()
         {
-            m_navigateBackButton.Initialize(OnClickBackButton);
-
             for (int i = 0; i < m_partySlots.Count; ++i)
             {
                 m_partySlots[i].Initialize();
@@ -68,6 +67,13 @@ namespace Mathlife.ProjectL.Gameplay
             m_selectedCharacterView.Initialize();
             m_partyMemberChangeModal.Initialize();
             m_partyValidationModal.Initialize();
+        }
+
+        protected override void SubscribeUserInteractions()
+        {
+            m_navBackButton.OnClickAsObservable()
+                 .Subscribe(_ => OnClickBackButton())
+                 .AddTo(gameObject);
         }
 
         // 유저 상호 작용
@@ -87,7 +93,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void OnClickDetailInfoButton(Unit _)
         {
-            m_mainSceneManager.Navigate(EPageId.CharacterPage);
+            m_mainSceneManager.Navigate(EPageId.CharacterDetailPage);
         }
 
         public async void OnClickPartyMemberChangeButton(Unit _)

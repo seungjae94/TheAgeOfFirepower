@@ -9,7 +9,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class CharacterStatPresenter : Presenter
     {
-        [Inject] CharacterPage m_characterPage; 
+        [Inject] CharacterDetailPage m_characterDetailPage; 
 
         [SerializeField] TMP_Text m_maxHpText;
         [SerializeField] TMP_Text m_maxEnergyText;
@@ -32,7 +32,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void SubscribeDataChange()
         {
-            m_characterPage.character
+            m_characterDetailPage.character
                 .SubscribeChangeEvent(OnSelectedCharacterChange)
                 .AddTo(gameObject);
         }

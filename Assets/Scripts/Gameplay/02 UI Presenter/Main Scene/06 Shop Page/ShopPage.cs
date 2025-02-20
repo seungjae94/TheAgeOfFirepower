@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 using VContainer;
 
 namespace Mathlife.ProjectL.Gameplay
@@ -16,7 +18,7 @@ namespace Mathlife.ProjectL.Gameplay
         [Inject] InventoryRepository m_inventoryRepository;
         [Inject] GameDataDB m_gameDataDB;
 
-        [SerializeField] SimpleActionButton m_navigateBackButton;
+        [SerializeField] Button m_navBackButton;
         [SerializeField] IngameCurrencyBar m_ingameCurrencyBar;
 
         // 탭 선택 기능
@@ -50,8 +52,14 @@ namespace Mathlife.ProjectL.Gameplay
                 m_tabMenus[i].Default();
             }
 
-            m_navigateBackButton.Initialize(m_mainSceneManager.NavigateBack);
             m_ingameCurrencyBar.Initialize();
+        }
+
+        protected override void SubscribeUserInteractions()
+        {
+            m_navBackButton.OnClickAsObservable()
+                .Subscribe(_ => m_mainSceneManager.NavigateBack())
+                .AddTo(gameObject);
         }
 
         // 유저 상호작용

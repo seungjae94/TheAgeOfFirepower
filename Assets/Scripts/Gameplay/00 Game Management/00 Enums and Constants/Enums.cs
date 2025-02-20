@@ -9,8 +9,9 @@ namespace Mathlife.ProjectL.Gameplay
     public enum EPageId
     {
         HomePage,
-        TeamPage,
+        PartyPage,
         CharacterPage,
+        CharacterDetailPage,
         InventoryPage,
         ShopPage,
         StageSelectionPage

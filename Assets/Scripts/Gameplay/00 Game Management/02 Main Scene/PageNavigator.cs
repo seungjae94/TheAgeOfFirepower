@@ -69,5 +69,13 @@ namespace Mathlife.ProjectL.Gameplay
         {
             return m_stack.Count == 1;
         }
+
+        public Page GetPreviousPage()
+        {
+            if (IsHome())
+                return null;
+
+            return m_stack.Skip(1).First();
+        }
     }
 }

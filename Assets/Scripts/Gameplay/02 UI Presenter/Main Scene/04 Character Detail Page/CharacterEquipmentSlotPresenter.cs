@@ -9,7 +9,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class CharacterEquipmentSlotPresenter : Presenter
     {
-        [Inject] CharacterPage m_characterPage;
+        [Inject] CharacterDetailPage m_characterDetailPage;
 
         [SerializeField] EEquipmentType m_slotType;
         [SerializeField] Button m_button;
@@ -25,7 +25,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void SubscribeDataChange()
         {
-            m_characterPage.character
+            m_characterDetailPage.character
                 .SubscribeChangeEvent(OnCharacterChange);
         }
 
@@ -69,7 +69,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         async void OnClick(Unit _)
         {
-            await m_characterPage.equipmentChangeModal.Show(m_slotType);
+            await m_characterDetailPage.equipmentChangeModal.Show(m_slotType);
         }
 
         void UnsubscribeCharacter()

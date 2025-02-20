@@ -11,6 +11,7 @@ namespace Mathlife.ProjectL.Gameplay
         [Inject] MainSceneManager m_mainSceneManager;
 
         [SerializeField] Button m_partyButton;
+        [SerializeField] Button m_characterButton;
         [SerializeField] Button m_inventoryButton;
         [SerializeField] Button m_shopButton;
         [SerializeField] Button m_battleButton;
@@ -23,31 +24,27 @@ namespace Mathlife.ProjectL.Gameplay
             Open();
         }
 
-        protected override void InitializeChildren()
-        {
-        }
-
-        protected override void InitializeView()
-        {
-        }
-
-        protected override void SubscribeDataChange()
-        {
-        }
-
         protected override void SubscribeUserInteractions()
         {
             m_partyButton.OnClickAsObservable()
-                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.TeamPage));
+                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.PartyPage))
+                .AddTo(gameObject);
+
+            m_characterButton.OnClickAsObservable()
+                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.CharacterPage))
+                .AddTo(gameObject);
 
             m_inventoryButton.OnClickAsObservable()
-                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.InventoryPage));
+                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.InventoryPage))
+                .AddTo(gameObject);
 
             m_shopButton.OnClickAsObservable()
-                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.ShopPage));
+                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.ShopPage))
+                .AddTo(gameObject);
 
             m_battleButton.OnClickAsObservable()
-                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.StageSelectionPage));
+                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.StageSelectionPage))
+                .AddTo(gameObject);
         }
     }
 }

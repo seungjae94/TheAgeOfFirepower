@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -15,7 +16,7 @@ namespace Mathlife.ProjectL.Gameplay
         [Inject] InventoryRepository m_inventoryRepository;
 
         // 뒤로 가기 기능
-        [SerializeField] SimpleActionButton m_navigateBackButton;
+        [SerializeField] Button m_navBackButton;
 
         // 인게임 재화 표시 기능
         [SerializeField] IngameCurrencyBar m_ingameCurrencyBar;
@@ -56,8 +57,14 @@ namespace Mathlife.ProjectL.Gameplay
                 m_tabMenus[i].Default();
             }
 
-            m_navigateBackButton.Initialize(m_mainSceneManager.NavigateBack);
             m_ingameCurrencyBar.Initialize();
+        }
+
+        protected override void SubscribeUserInteractions()
+        {
+            m_navBackButton.OnClickAsObservable()
+                .Subscribe(_ => m_mainSceneManager.NavigateBack())
+                .AddTo(gameObject);
         }
 
         // 유저 상호작용

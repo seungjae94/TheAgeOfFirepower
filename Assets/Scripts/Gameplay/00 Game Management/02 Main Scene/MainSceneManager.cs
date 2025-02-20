@@ -33,6 +33,7 @@ namespace Mathlife.ProjectL.Gameplay
             await UniTask.Delay(100);
             m_loadingScreen.Hide();
         }
+
         public void NavigateHome()
         {
             m_pageNavigator.Home();
@@ -46,6 +47,11 @@ namespace Mathlife.ProjectL.Gameplay
         public void Navigate(EPageId pageId)
         {
             m_pageNavigator.Navigate(pageId);
+        }
+
+        public Page GetPreviousPage()
+        {
+            return m_pageNavigator.GetPreviousPage();
         }
     }
 }
