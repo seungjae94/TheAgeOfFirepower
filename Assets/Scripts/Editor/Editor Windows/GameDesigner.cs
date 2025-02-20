@@ -174,6 +174,7 @@ namespace Mathlife.ProjectL.Editor
             // 메뉴 아이템 추가
             AddMenuItems<CharacterSO>(tree, "캐릭터");
             AddMenuItems<EquipmentSO>(tree, "장비");
+            AddMenuItems<SkillSO>(tree, "스킬");
 
             // 메뉴 아이템 세팅
             tree.EnumerateTree()

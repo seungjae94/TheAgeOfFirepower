@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: stat
       Entry: 7
-      Data: Mathlife.ProjectL.Gameplay.EquipmentStat, ProjectL-Gameplay
+      Data: Mathlife.ProjectL.Gameplay.BasicStat, ProjectL-Gameplay
     - Name: maxHp
       Entry: 3
       Data: 0
@@ -55,8 +55,8 @@ MonoBehaviour:
   id: 1
   type: 0
   description: "\uACF5\uACA9\uB825 + 10"
-  shopPrice: 100
   icon: {fileID: -5213216060618843423, guid: 885269cdf2aa378498f41adc4f9ed288, type: 3}
+  shopPrice: 100
   battleEffect:
     rid: -2
   references:

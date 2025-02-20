@@ -20,7 +20,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public string description => m_so.description;
 
-        public EquipmentStat stat => m_so.stat;
+        public BasicStat stat => m_so.stat;
 
 
         public ConditionalBattleEffect battleEffect => m_so.battleEffect;

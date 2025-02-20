@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: stat
       Entry: 7
-      Data: Mathlife.ProjectL.Gameplay.EquipmentStat, ProjectL-Gameplay
+      Data: Mathlife.ProjectL.Gameplay.BasicStat, ProjectL-Gameplay
     - Name: maxHp
       Entry: 3
       Data: 0
@@ -69,4 +69,4 @@ MonoBehaviour:
         condition: 2
         turn: 3
         target: 4
-        value: 10
+        value: 30

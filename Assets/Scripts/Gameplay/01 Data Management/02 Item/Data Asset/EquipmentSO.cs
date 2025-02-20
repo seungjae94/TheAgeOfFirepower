@@ -71,7 +71,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         [LabelWidth(100)]
         [LabelText("스탯")]
-        public EquipmentStat stat;
+        public BasicStat stat;
 
         [SerializeReference]
         [LabelWidth(100)]

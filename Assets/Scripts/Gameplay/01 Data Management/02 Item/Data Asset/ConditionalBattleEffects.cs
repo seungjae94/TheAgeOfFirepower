@@ -54,8 +54,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         [HideIf("@condition==EBattleEventCondition.Never")]
         [LabelWidth(100)]
-        [LabelText("디버프 수치")]
-        public int value;
+        [LabelText("스택")]
+        public int stack;
     }
 
     [Serializable]
