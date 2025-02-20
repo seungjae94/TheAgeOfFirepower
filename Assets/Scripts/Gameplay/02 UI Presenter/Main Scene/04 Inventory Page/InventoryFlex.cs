@@ -16,7 +16,9 @@ namespace Mathlife.ProjectL.Gameplay
         public bool isSelected;
     }
 
-    internal class InventoryFlex : AbstractFlex<InventoryFlexItemData, Action<EquipmentModel>, InventoryFlexItem>
+    class InventoryFlex 
+        : AbstractFlex<InventoryFlexItemData, Action<EquipmentModel>, InventoryFlexItem>
     {
+        
     }
 }

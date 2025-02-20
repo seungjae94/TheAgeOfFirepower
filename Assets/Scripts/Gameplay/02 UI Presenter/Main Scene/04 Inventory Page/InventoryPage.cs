@@ -66,7 +66,7 @@ namespace Mathlife.ProjectL.Gameplay
             base.Open();
 
             OnSelectTabMenu(0);
-            OnClickSlot(null);
+            OnClickFlexItem(null);
         }
 
         void OnSelectTabMenu(int index)
@@ -77,27 +77,27 @@ namespace Mathlife.ProjectL.Gameplay
             m_selectedTab = index;
             m_selectedEquipment = null;
 
-            UpdateGridView();
+            UpdateFlex();
             UpdateSelectedEquipmentView();
         }
 
-        void OnClickSlot(EquipmentModel equipment)
+        void OnClickFlexItem(EquipmentModel equipment)
         {
             m_selectedEquipment = equipment;
 
             UpdateSelectedEquipmentView();
-            UpdateGridView();
+            UpdateFlex();
         }
 
         // ºä ¾÷µ¥ÀÌÆ®
-        void UpdateGridView()
+        void UpdateFlex()
         {
             var itemDatas = m_inventoryRepository
                     .GetSortedEquipmentList((EEquipmentType)m_selectedTab)
                     .Select(item => new InventoryFlexItemData(item, item == m_selectedEquipment))
                     .ToList();
 
-            m_flex.Draw(itemDatas, OnClickSlot);
+            m_flex.Draw(itemDatas, OnClickFlexItem);
         }
 
         void UpdateSelectedEquipmentView()

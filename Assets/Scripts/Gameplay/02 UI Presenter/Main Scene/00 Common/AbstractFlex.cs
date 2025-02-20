@@ -11,16 +11,10 @@ namespace Mathlife.ProjectL.Gameplay
         FlexItemView Create(Transform parent, FlexItemData flexItemData);
     }
 
-    interface IFlexItemFactory<FlexItemData, FlexItemAction, FlexItemView>
-        where FlexItemView : Presenter<FlexItemData, FlexItemAction>
+    interface IFlexItemFactory<FlexItemData, FlexItemActions, FlexItemView>
+        where FlexItemView : Presenter<FlexItemData, FlexItemActions>
     {
-        FlexItemView Create(Transform parent, FlexItemData flexItemData, FlexItemAction flexItemAction);
-    }
-
-    interface IFlexItemFactory<FlexItemData, FlexItemAction0, FlexItemAction1, FlexItemView>
-        where FlexItemView : Presenter<FlexItemData, FlexItemAction0, FlexItemAction1>
-    {
-        FlexItemView Create(Transform parent, FlexItemData flexItemData, FlexItemAction0 flexItemAction0, FlexItemAction1 flexItemAction1);
+        FlexItemView Create(Transform parent, FlexItemData flexItemData, FlexItemActions flexItemAction);
     }
 
     abstract class AbstractFlexBase<FlexItemData, FlexItemView> : Presenter
@@ -55,35 +49,18 @@ namespace Mathlife.ProjectL.Gameplay
         }
     }
 
-    abstract class AbstractFlex<FlexItemData, FlexItemAction, FlexItemView> : AbstractFlexBase<FlexItemData, FlexItemView>
-        where FlexItemView : Presenter<FlexItemData, FlexItemAction>
+    abstract class AbstractFlex<FlexItemData, FlexItemActions, FlexItemView> : AbstractFlexBase<FlexItemData, FlexItemView>
+        where FlexItemView : Presenter<FlexItemData, FlexItemActions>
     {
-        [Inject] protected IFlexItemFactory<FlexItemData, FlexItemAction, FlexItemView> m_factory;
+        [Inject] protected IFlexItemFactory<FlexItemData, FlexItemActions, FlexItemView> m_factory;
 
-        public virtual void Draw(List<FlexItemData> itemDatas, FlexItemAction itemAction)
+        public virtual void Draw(List<FlexItemData> itemDatas, FlexItemActions itemAction)
         {
             ClearItemViews();
 
             foreach (FlexItemData itemData in itemDatas)
             {
                 FlexItemView itemView = m_factory.Create(transform, itemData, itemAction);
-                m_itemViews.Add(itemView);
-            }
-        }
-    }
-
-    abstract class AbstractFlex<FlexItemData, FlexItemAction0, FlexItemAction1, FlexItemView> : AbstractFlexBase<FlexItemData, FlexItemView>
-        where FlexItemView : Presenter<FlexItemData, FlexItemAction0, FlexItemAction1>
-    {
-        [Inject] protected IFlexItemFactory<FlexItemData, FlexItemAction0, FlexItemAction1, FlexItemView> m_factory;
-
-        public virtual void Draw(List<FlexItemData> itemDatas, FlexItemAction0 itemAction0, FlexItemAction1 itemAction1)
-        {
-            ClearItemViews();
-
-            foreach (FlexItemData itemData in itemDatas)
-            {
-                FlexItemView itemView = m_factory.Create(transform, itemData, itemAction0, itemAction1);
                 m_itemViews.Add(itemView);
             }
         }

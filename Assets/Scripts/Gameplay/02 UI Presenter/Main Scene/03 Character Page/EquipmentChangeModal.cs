@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
+using System.Linq;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -14,6 +15,7 @@ namespace Mathlife.ProjectL.Gameplay
         public const float k_fadeTime = 0.25f;
 
         [Inject] PartyPage m_partyPage;
+        [Inject] InventoryRepository m_inventoryRepository;
 
         [SerializeField] CanvasGroup m_canvasGroup;
         [SerializeField] Button m_okButton;
@@ -33,9 +35,6 @@ namespace Mathlife.ProjectL.Gameplay
         EquipmentModel m_selectedEquipment = null;
 
         // 초기화
-        protected override void SubscribeDataChange()
-        {
-        }
 
         protected override void SubscribeUserInteractions()
         {
@@ -68,7 +67,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         async void OnClickCancelButton(Unit _)
         {
-           await m_canvasGroup.Hide(k_fadeTime);
+            await m_canvasGroup.Hide(k_fadeTime);
         }
 
         void OnClickUnequipButton(Unit _)
@@ -76,7 +75,7 @@ namespace Mathlife.ProjectL.Gameplay
             m_selectedEquipment = null;
 
             UpdateSelectedEquipmentView();
-            //UpdateGridView();
+            UpdateFlex();
         }
 
         public async UniTask Show(EEquipmentType slotType)
@@ -88,7 +87,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             UpdateCurrentEquipmentView(currentEquipment);
             UpdateSelectedEquipmentView();
-            //UpdateGridView();
+            UpdateFlex();
 
             await m_canvasGroup.Show(k_fadeTime);
         }
@@ -98,11 +97,11 @@ namespace Mathlife.ProjectL.Gameplay
             await m_canvasGroup.Hide(k_fadeTime);
         }
 
-        void OnClickSlot(EquipmentModel equipment)
+        void OnClickFlexItem(EquipmentModel equipment)
         {
             m_selectedEquipment = equipment;
             UpdateSelectedEquipmentView();
-            //UpdateGridView();
+            UpdateFlex();
         }
 
         // 뷰 업데이트
@@ -154,20 +153,15 @@ namespace Mathlife.ProjectL.Gameplay
             }
         }
 
-        //void UpdateGridView()
-        //{
-        //    m_slotGridView.Render(
-        //        m_inventoryRepository.GetSortedEquipmentList(m_slotType),
-        //        EquipmentSlotViewFactoryMethod);
-        //}
+        void UpdateFlex()
+        {
+            var itemDatas = m_inventoryRepository
+                    .GetSortedEquipmentList(m_slotType)
+                    .Select(item => new InventoryFlexItemData(item, item == m_selectedEquipment))
+                    .ToList();
 
-        //// 유틸리티
-        //EquipmentSlotView EquipmentSlotViewFactoryMethod(Transform parent, EquipmentModel equipment)
-        //{
-        //    EquipmentSlotView slot = m_gameDataDB.Instantiate<EquipmentSlotView>(EPrefabId.EquipmentSlot, parent);
-        //    slot.Render(equipment, equipment == m_selectedEquipment, OnClickSlot);
-        //    return slot;
-        //}
+            m_flex.Draw(itemDatas, OnClickFlexItem);
+        }
 
         string EquipmentTypeToString(EEquipmentType type)
         {
