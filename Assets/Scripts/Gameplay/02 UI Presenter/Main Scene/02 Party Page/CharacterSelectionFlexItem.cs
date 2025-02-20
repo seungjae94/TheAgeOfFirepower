@@ -1,10 +1,4 @@
-﻿using Mathlife.ProjectL.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TMPro;
+﻿using TMPro;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -37,6 +31,7 @@ namespace Mathlife.ProjectL.Gameplay
     class CharacterSelectionFlexItem : Presenter<CharacterModel>
     {
         [Inject] PartyPage m_partyPage;
+        [Inject] CharacterRepository m_characterRepository;
 
         ObservablePointerClickTrigger m_clickTrigger;
         [SerializeField] Image m_portraitImage;
@@ -76,8 +71,9 @@ namespace Mathlife.ProjectL.Gameplay
         // 상호작용
         async void OnClick(PointerEventData ev)
         {
-            m_partyPage.ChangePartyMemberAtSelectedSlot(m_character);
-            m_partyPage.selectedCharacter.SetState(null);
+            m_characterRepository.party.Add(m_partyPage.selectedSlotIndex.GetState(), m_character);
+            m_partyPage.selectedSlotIndex.SetState(-1);
+
             await m_partyPage.partyMemberChangeModal.Hide();
         }
 

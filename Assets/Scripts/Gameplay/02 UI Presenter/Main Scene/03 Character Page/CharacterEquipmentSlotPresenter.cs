@@ -9,8 +9,6 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class CharacterEquipmentSlotPresenter : Presenter
     {
-        [Inject] CharacterRepository m_characterRepository;
-        [Inject] PartyPage m_partyPage;
         [Inject] CharacterPage m_characterPage;
 
         [SerializeField] EEquipmentType m_slotType;
@@ -18,17 +16,17 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] CanvasGroup m_iconAreaCanvasGroup;
         [SerializeField] Image m_iconImage;
 
-        EquipmentModel m_equipment;
         IDisposable m_selectedCharacterSub;
 
         void OnDestroy()
         {
-            UnsubscribeSelectedCharacter();
+            UnsubscribeCharacter();
         }
 
         protected override void SubscribeDataChange()
         {
-            m_partyPage.selectedCharacter.SubscribeChangeEvent(OnSelectedCharacterChanged);
+            m_characterPage.character
+                .SubscribeChangeEvent(OnCharacterChange);
         }
 
         protected override void SubscribeUserInteractions()
@@ -40,27 +38,23 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void InitializeView()
         {
-            OnSelectedCharacterChanged(m_partyPage.selectedCharacter.GetState());
-
             m_iconAreaCanvasGroup.Hide();
         }
 
-        void OnSelectedCharacterChanged(CharacterModel selected)
+        void OnCharacterChange(CharacterModel character)
         {
-            UnsubscribeSelectedCharacter();
+            UnsubscribeCharacter();
 
-            if (selected == null)
+            if (character == null)
                 return;
 
-            m_selectedCharacterSub = selected.SubscribeEquipmentChangeEvent(m_slotType, OnEquipmentChange);
+            m_selectedCharacterSub = character.SubscribeEquipmentChangeEvent(m_slotType, OnEquipmentChange);
 
-            OnEquipmentChange(selected.GetEquipment(m_slotType));
+            OnEquipmentChange(character.GetEquipment(m_slotType));
         }
 
         void OnEquipmentChange(EquipmentModel artifact)
         {
-            m_equipment = artifact;
-
             if (artifact == null)
             {
                 m_iconAreaCanvasGroup.Hide();
@@ -78,7 +72,7 @@ namespace Mathlife.ProjectL.Gameplay
             await m_characterPage.equipmentChangeModal.Show(m_slotType);
         }
 
-        void UnsubscribeSelectedCharacter()
+        void UnsubscribeCharacter()
         {
             if (m_selectedCharacterSub != null)
                 m_selectedCharacterSub.Dispose();

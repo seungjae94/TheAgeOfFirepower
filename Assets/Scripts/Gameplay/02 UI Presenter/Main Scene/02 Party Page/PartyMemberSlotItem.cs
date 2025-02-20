@@ -56,8 +56,8 @@ namespace Mathlife.ProjectL.Gameplay
                 .Subscribe(OnSlotMemberChange)
                 .AddTo(gameObject);
 
-            m_partyPage.selectedCharacter
-                .SubscribeChangeEvent(OnSelectedCharacterChange)
+            m_partyPage.selectedSlotIndex
+                .SubscribeChangeEvent(OnSelectedSlotIndexChange)
                 .AddTo(gameObject);
         }
 
@@ -106,10 +106,10 @@ namespace Mathlife.ProjectL.Gameplay
             UpdateView();
         }
 
-        void OnSelectedCharacterChange(CharacterModel selectedCharacter)
+        void OnSelectedSlotIndexChange(int selectedSlotIndex)
         {
             // This character is selected.
-            if (selectedCharacter != null && m_character == selectedCharacter)
+            if (selectedSlotIndex == m_slotIndex)
             {
                 m_selectionOverlayCanvasGroup.Show();
             }
@@ -152,7 +152,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         void OnPointerClick(PointerEventData eventData)
         {
-            m_partyPage.selectedCharacter.SetState(m_character);
+            m_partyPage.selectedSlotIndex.SetState(m_slotIndex);
         }
 
         // ºä ¾÷µ¥ÀÌÆ®

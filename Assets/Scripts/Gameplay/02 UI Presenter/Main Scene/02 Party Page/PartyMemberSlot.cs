@@ -19,8 +19,6 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] PartyMemberSlotItem m_slotItem;
         [SerializeField] CanvasGroup m_addMemberGuideCanvasGroup;
 
-        
-
         void Awake()
         {
             m_slotIndex = transform.GetSiblingIndex();
@@ -45,7 +43,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             m_clickTrigger
                 .OnPointerClickAsObservable()
-                .Subscribe(_ => Debug.Log("Click!"))
+                .Subscribe(OnClickSlot)
                 .AddTo(gameObject);
         }
 
@@ -106,7 +104,13 @@ namespace Mathlife.ProjectL.Gameplay
             }
 
             // 선택된 슬롯 초기화
-            m_partyPage.selectedCharacter.SetState(null);
+            m_partyPage.selectedSlotIndex.SetState(-1);
+        }
+
+        async void OnClickSlot(PointerEventData ev)
+        {
+            m_partyPage.selectedSlotIndex.SetState(m_slotIndex);
+            await m_partyPage.partyMemberChangeModal.Show();
         }
     }
 }

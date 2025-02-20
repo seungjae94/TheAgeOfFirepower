@@ -8,7 +8,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class CharacterBasicInfoPresenter : Presenter
     {
-        [Inject] PartyPage m_partyPage;
+        [Inject] CharacterPage m_characterPage;
 
         // View
         Image m_portrait;
@@ -40,8 +40,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void SubscribeDataChange()
         {
-            m_partyPage.selectedCharacter
-                .SubscribeChangeEvent(OnSelectedCharacterChanged)
+            m_characterPage.character
+                .SubscribeChangeEvent(OnSelectedCharacterChange)
                 .AddTo(gameObject);
         }
 
@@ -50,11 +50,11 @@ namespace Mathlife.ProjectL.Gameplay
             UpdateView();
         }
 
-        void OnSelectedCharacterChanged(CharacterModel character)
+        void OnSelectedCharacterChange(CharacterModel character)
         {
             m_character = character;
 
-            // Subscribe selected character basic info change events.
+            // Subscribe character basic info change events.
             m_characterDataSubscriptions.Clear();
 
             character?
@@ -70,7 +70,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         void OnTotalExpChange(long totalExp)
         {
-            m_expSlider.value = (float) m_character.currentLevelExp / m_character.needExp;
+            m_expSlider.value = (float)m_character.currentLevelExp / m_character.needExp;
             m_currentLevelExpText.text = m_character.currentLevelExp.ToString();
             m_needExpText.text = m_character.needExp.ToString();
         }

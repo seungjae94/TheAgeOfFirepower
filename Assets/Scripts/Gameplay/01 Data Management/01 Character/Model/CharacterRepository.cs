@@ -151,7 +151,7 @@ namespace Mathlife.ProjectL.Gameplay
         void ConstructBestTeam()
         {
             List<CharacterModel> members = new();
-            for (int i = 0; i < Constants.TeamMemberMaxCount; ++i)
+            for (int i = 0; i < Constants.PartyMemberCount; ++i)
                 members.Add(null);
 
             party = new(members);
@@ -163,7 +163,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void BuildBestTeam()
         {
-            int memberCount = Mathf.Min(m_characters.Count, Constants.TeamMemberMaxCount);
+            int memberCount = Mathf.Min(m_characters.Count, Constants.PartyMemberCount);
 
             List<CharacterModel> members = m_characters
                 .OrderByDescending(kv => kv.Value.level)
@@ -172,7 +172,7 @@ namespace Mathlife.ProjectL.Gameplay
                 .Select(kv => kv.Value)
                 .ToList();
 
-            for (int i = memberCount; i < Constants.TeamMemberMaxCount; ++i)
+            for (int i = memberCount; i < Constants.PartyMemberCount; ++i)
             {
                 members.Add(null);
             }

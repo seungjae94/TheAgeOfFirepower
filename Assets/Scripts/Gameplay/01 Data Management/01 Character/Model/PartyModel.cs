@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UniRx;
 using Mathlife.ProjectL.Utils;
 using System.Linq;
+using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -56,7 +57,10 @@ namespace Mathlife.ProjectL.Gameplay
         public void Add(int index, CharacterModel character)
         {
             if (null == character)
-                throw new ArgumentNullException("Failed to add a member. Given character was null.");
+            {
+                RemoveAt(index);
+                return;
+            }
 
             if (Contains(character))
                 throw new ArgumentException("Failed to add a member. Given character was already in the team.");

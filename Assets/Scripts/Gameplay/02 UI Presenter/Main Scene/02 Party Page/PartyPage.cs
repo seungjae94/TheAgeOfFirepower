@@ -27,20 +27,19 @@ namespace Mathlife.ProjectL.Gameplay
 
 
         // 상태 - 선택한 캐릭터
-        public State<CharacterModel> selectedCharacter { get; private set; } = new();
-        
-        public int GetSelectedSlotIndex()
-        {
-            if (selectedCharacter.GetState() == null)
-                return -1;
+        public State<int> selectedSlotIndex { get; private set; } = new();
 
-            return m_characterRepository.party.IndexOf(selectedCharacter.GetState());
+        public bool IsSelectedSlotIndexInRange()
+        {
+            return selectedSlotIndex.GetState() >= 0 && selectedSlotIndex.GetState() < m_partySlots.Count;
         }
 
-        public void ChangePartyMemberAtSelectedSlot(CharacterModel character)
+        public CharacterModel GetSelectedCharacter()
         {
-            int selectedSlotIndex = GetSelectedSlotIndex();
-            m_characterRepository.party.Add(selectedSlotIndex, character);
+            if (IsSelectedSlotIndexInRange() == false)
+                return null;
+
+            return m_characterRepository.party[selectedSlotIndex.GetState()];
         }
 
         // 상태 - 드래그 상태
@@ -74,7 +73,7 @@ namespace Mathlife.ProjectL.Gameplay
         // 유저 상호 작용
         public override void Open()
         {
-            selectedCharacter.SetState(null);
+            selectedSlotIndex.SetState(-1);
             base.Open();
         }
 

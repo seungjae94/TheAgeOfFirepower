@@ -12,6 +12,7 @@ namespace Mathlife.ProjectL.Gameplay
     internal class PartySelectedCharacter : Presenter
     {
         [Inject] PartyPage m_partyPage;
+        [Inject] CharacterRepository m_characterRepository;
 
         [SerializeField] CanvasGroup m_canvasGroup;
         [SerializeField] Image m_portraitImage;
@@ -29,8 +30,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void SubscribeDataChange()
         {
-            m_partyPage.selectedCharacter
-                .SubscribeChangeEvent(OnSelectedCharacterChange)
+            m_partyPage.selectedSlotIndex
+                .SubscribeChangeEvent(OnSelectedSlotIndexChange)
                 .AddTo(gameObject);
         }
 
@@ -46,15 +47,15 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // 데이터 변경 구독 메서드
-        void OnSelectedCharacterChange(CharacterModel selectedCharacter)
+        void OnSelectedSlotIndexChange(int selectedSlotIndex)
         {
             if (m_characterSub != null)
                 m_characterSub.Dispose();
 
-            if (selectedCharacter != null)
+            if (m_partyPage.IsSelectedSlotIndexInRange() == true && m_partyPage.GetSelectedCharacter() != null)
             {
-                m_characterSub = selectedCharacter
-                    .SubscribeLevelChangeEvent(level => m_levelText.text = selectedCharacter.level.ToString());
+                m_characterSub = m_partyPage.GetSelectedCharacter()
+                    .SubscribeLevelChangeEvent(level => m_levelText.text = level.ToString());
             }
 
             UpdateView();
@@ -63,16 +64,16 @@ namespace Mathlife.ProjectL.Gameplay
         // 뷰 업데이트
         void UpdateView()
         {
-            if (m_partyPage.selectedCharacter.GetState() == null)
+            if (m_partyPage.IsSelectedSlotIndexInRange() == false || m_partyPage.GetSelectedCharacter() == null)
             {
                 m_canvasGroup.Hide();
                 return;
             }
             m_canvasGroup.Show();
 
-            m_portraitImage.sprite = m_partyPage.selectedCharacter.GetState().portrait;
-            m_levelText.text = m_partyPage.selectedCharacter.GetState().level.ToString();
-            m_nameText.text = m_partyPage.selectedCharacter.GetState().displayName;
+            m_portraitImage.sprite = m_partyPage.GetSelectedCharacter().portrait;
+            m_levelText.text = m_partyPage.GetSelectedCharacter().level.ToString();
+            m_nameText.text = m_partyPage.GetSelectedCharacter().displayName;
         }
     }
 }

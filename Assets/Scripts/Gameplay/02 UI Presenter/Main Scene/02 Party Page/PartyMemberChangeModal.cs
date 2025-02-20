@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniRx;
+using UniRx.Triggers;
 using UnityEditor.Graphs;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using VContainer;
 
@@ -19,9 +21,11 @@ namespace Mathlife.ProjectL.Gameplay
         const float k_fadeTime = 0.25f;
 
         [Inject] PartyPage m_partyPage;
+        [Inject] CharacterRepository m_characterRepository;
 
         CanvasGroup m_canvasGroup;
         [SerializeField] Button m_closeButton;
+        [SerializeField] ObservablePointerClickTrigger m_excludeButton;
         [SerializeField] CharacterSelectionFlex m_flex;
 
         int m_selectedSlotIndex;
@@ -35,7 +39,17 @@ namespace Mathlife.ProjectL.Gameplay
         {
             // TODO: 이동식으로 구현
 
-            m_selectedSlotIndex = m_partyPage.GetSelectedSlotIndex();
+            m_selectedSlotIndex = m_partyPage.selectedSlotIndex.GetState();
+
+            if (m_partyPage.IsSelectedSlotIndexInRange() == false || m_characterRepository.party[m_selectedSlotIndex] != null)
+            {
+                m_excludeButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                m_excludeButton.gameObject.SetActive(false);
+            }
+
             await m_canvasGroup.Show(k_fadeTime);
         }
 
@@ -61,6 +75,17 @@ namespace Mathlife.ProjectL.Gameplay
             m_closeButton.OnClickAsObservable()
                 .Subscribe(async _ => await Hide())
                 .AddTo(gameObject);
+
+            m_excludeButton.OnPointerClickAsObservable()
+                .Subscribe(OnClickExcludeButton)
+                .AddTo(gameObject);
+        }
+
+        async void OnClickExcludeButton(PointerEventData ev)
+        {
+            m_partyPage.selectedSlotIndex.SetState(m_selectedSlotIndex);
+            m_characterRepository.party.RemoveAt(m_selectedSlotIndex);
+            await m_partyPage.partyMemberChangeModal.Hide();
         }
     }
 }

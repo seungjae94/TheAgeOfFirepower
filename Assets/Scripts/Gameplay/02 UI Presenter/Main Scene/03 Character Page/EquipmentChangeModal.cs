@@ -60,7 +60,7 @@ namespace Mathlife.ProjectL.Gameplay
         // 유저 상호작용
         async void OnClickOKButton(Unit _)
         {
-            m_partyPage.selectedCharacter.GetState()
+            m_partyPage.GetSelectedCharacter()
                 .Equip(m_slotType, m_selectedEquipment);
 
             await m_canvasGroup.Hide(k_fadeTime);
@@ -83,7 +83,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             m_slotType = slotType;
 
-            EquipmentModel currentEquipment = m_partyPage.selectedCharacter.GetState().GetEquipment(slotType);
+            EquipmentModel currentEquipment = m_partyPage.GetSelectedCharacter().GetEquipment(slotType);
             m_selectedEquipment = currentEquipment;
 
             UpdateCurrentEquipmentView(currentEquipment);

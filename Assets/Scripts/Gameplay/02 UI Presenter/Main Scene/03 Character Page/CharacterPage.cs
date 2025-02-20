@@ -22,6 +22,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         [field: SerializeField] public EquipmentChangeModal equipmentChangeModal { get; private set; }
 
+        public State<CharacterModel> character { get; private set; } = new();
+
         protected override void InitializeChildren()
         {
             m_navigateBackBar.Initialize(OnClickBackButton);
@@ -39,8 +41,14 @@ namespace Mathlife.ProjectL.Gameplay
         // 유저 상호 작용
         void OnClickBackButton()
         {
-            m_partyPage.selectedCharacter.SetState(null);
+            m_partyPage.selectedSlotIndex.SetState(-1);
             m_mainSceneManager.NavigateBack();
+        }
+
+        public override void Open()
+        {
+            character.SetState(m_partyPage.GetSelectedCharacter());
+            base.Open();
         }
     }
 }

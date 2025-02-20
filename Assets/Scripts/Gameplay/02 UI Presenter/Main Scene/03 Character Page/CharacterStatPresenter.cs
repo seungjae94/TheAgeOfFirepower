@@ -9,7 +9,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class CharacterStatPresenter : Presenter
     {
-        [Inject] PartyPage m_partyPage; 
+        [Inject] CharacterPage m_characterPage; 
 
         TMP_Text m_maxHpText;
         TMP_Text m_maxEnergyText;
@@ -42,8 +42,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void SubscribeDataChange()
         {
-            m_partyPage.selectedCharacter
-                .SubscribeChangeEvent(OnSelectedCharacterChanged)
+            m_characterPage.character
+                .SubscribeChangeEvent(OnSelectedCharacterChange)
                 .AddTo(gameObject);
         }
 
@@ -52,10 +52,8 @@ namespace Mathlife.ProjectL.Gameplay
             UpdateView();
         }
 
-        void OnSelectedCharacterChanged(CharacterModel character)
+        void OnSelectedCharacterChange(CharacterModel character)
         {
-            m_character = character;
-
             // Subscribe selected character stat change events.
             m_characterDataSubscriptions.Clear();
 
