@@ -13,6 +13,7 @@ namespace Mathlife.ProjectL.Gameplay
             builder.RegisterComponentInHierarchy<MainSceneManager>();
             builder.RegisterComponentInHierarchy<HomePage>();
             builder.RegisterComponentInHierarchy<PartyPage>();
+            builder.RegisterComponentInHierarchy<CharacterPage>();
             builder.RegisterComponentInHierarchy<CharacterDetailPage>();
             builder.RegisterComponentInHierarchy<InventoryPage>();
             builder.RegisterComponentInHierarchy<ShopPage>();

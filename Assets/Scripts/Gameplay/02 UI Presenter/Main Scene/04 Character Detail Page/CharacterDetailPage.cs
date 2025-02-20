@@ -11,8 +11,8 @@ namespace Mathlife.ProjectL.Gameplay
         public override EPageId pageId => EPageId.CharacterDetailPage;
 
         [Inject] MainSceneManager m_mainSceneManager;
-        [Inject] PartyPage m_partyPage; 
-
+        [Inject] PartyPage m_partyPage;
+        [Inject] CharacterPage m_characterPage;
 
         [SerializeField] Button m_navBackButton;
         [SerializeField] Image m_background;     // TODO: 월드 맵에 따라 배경 이미지 변경
@@ -53,7 +53,7 @@ namespace Mathlife.ProjectL.Gameplay
             if (prevPage is PartyPage)
                 m_partyPage.selectedSlotIndex.SetState(-1);
             else if (prevPage is CharacterPage)
-                Debug.Log("TODO");
+                m_characterPage.selectedCharacter.SetState(null);
 
             m_mainSceneManager.NavigateBack();
         }
@@ -65,7 +65,7 @@ namespace Mathlife.ProjectL.Gameplay
             if (prevPage is PartyPage)
                 character.SetState(m_partyPage.GetSelectedCharacter());
             else if (prevPage is CharacterPage)
-                Debug.Log("TODO");
+                character.SetState(m_characterPage.selectedCharacter.GetState());
 
             base.Open();
         }
