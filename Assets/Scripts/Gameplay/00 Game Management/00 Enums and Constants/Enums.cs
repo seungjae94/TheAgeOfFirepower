@@ -30,14 +30,15 @@ namespace Mathlife.ProjectL.Gameplay
     public enum EBattleTarget
     {
         None = 0,
-        Self = 1,
-        AllyAll = 2,
-        Enemy = 3,
-        EnemyAll = 4,
-        SelfZone = 11,
-        AllyAllZone = 12,
-        EnemyZone = 13,
-        EnemyAllZone = 14
+        Self,
+        Ally,
+        AllyAll,
+        Enemy,
+        EnemyAll,
+        SelfZone,
+        AllyAllZone,
+        EnemyZone,
+        EnemyAllZone
     }
 
     public enum EDebuff
@@ -50,7 +51,16 @@ namespace Mathlife.ProjectL.Gameplay
         Exhausted,
         Poisoned,
         Burning,
+        All = 100
     }
+
+    public enum EBuff
+    {
+        None = 0,
+        Regeneration = 1,
+        All = 100
+    }
+
 
     public enum EComparisonOperator
     {

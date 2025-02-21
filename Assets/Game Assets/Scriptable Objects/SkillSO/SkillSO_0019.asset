@@ -36,13 +36,13 @@ MonoBehaviour:
     - rid: 3336615825034444901
       type: {class: DamageByDebuffSkillEffect, ns: Mathlife.ProjectL.Gameplay, asm: ProjectL-Gameplay}
       data:
-        target: 4
+        target: 5
         debuffType: 7
         multiplier: 2
     - rid: 3336615825034444902
       type: {class: DebuffSkillEffect, ns: Mathlife.ProjectL.Gameplay, asm: ProjectL-Gameplay}
       data:
-        target: 4
+        target: 5
         debuffType: 7
         stack: 0
         multiplier: 0

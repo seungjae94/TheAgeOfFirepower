@@ -35,7 +35,7 @@ MonoBehaviour:
     - rid: 3336615825034444887
       type: {class: DamageSkillEffect, ns: Mathlife.ProjectL.Gameplay, asm: ProjectL-Gameplay}
       data:
-        target: 3
+        target: 4
         baseDamage: 10
         atkCoeff: 1
         magCoeff: 0

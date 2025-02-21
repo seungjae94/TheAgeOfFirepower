@@ -36,14 +36,14 @@ MonoBehaviour:
     - rid: 3336615825034444882
       type: {class: DamageSkillEffect, ns: Mathlife.ProjectL.Gameplay, asm: ProjectL-Gameplay}
       data:
-        target: 3
+        target: 4
         baseDamage: 40
         atkCoeff: 1.5
         magCoeff: 0
     - rid: 3336615825034444883
       type: {class: DebuffSkillEffect, ns: Mathlife.ProjectL.Gameplay, asm: ProjectL-Gameplay}
       data:
-        target: 3
+        target: 4
         debuffType: 1
         stack: 1
         multiplier: 0

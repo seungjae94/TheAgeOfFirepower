@@ -66,6 +66,39 @@ namespace Mathlife.ProjectL.Gameplay
     }
 
     [Serializable]
+    public class BuffSkillEffect : SkillEffect
+    {
+        [LabelWidth(100)]
+        [LabelText("버프 종류")]
+        public EBuff buffType;
+
+        [LabelWidth(100)]
+        [LabelText("스택")]
+        public int stack;
+
+        [LabelWidth(100)]
+        [LabelText("배수")]
+        public float multiplier;
+    }
+
+    [Serializable]
+    public class CureSkillEffect : SkillEffect
+    {
+        [LabelWidth(100)]
+        [LabelText("디버프 종류")]
+        public EDebuff buffType;
+
+        [LabelWidth(100)]
+        [LabelText("스택")]
+        public int stack;
+
+        [LabelWidth(100)]
+        [Range(0, 1)]
+        [LabelText("배수")]
+        public float multiplier;
+    }
+
+    [Serializable]
     public class DamageByDebuffSkillEffect : SkillEffect
     {
         [LabelWidth(100)]
