@@ -1,8 +1,10 @@
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
+using UnityEditor;
 using Sirenix.OdinInspector.Editor;
 #endif
 
@@ -19,6 +21,49 @@ namespace Mathlife.ProjectL.Gameplay
         Noah,
         Tristan,
         Max
+    }
+
+    [Serializable]
+    public class LearningSkill
+    {
+        [LabelText("레벨")]
+        [LabelWidth(100)]
+        [HorizontalGroup("One Line")]
+        [Min(1)]
+        public int level = 1;
+
+        [ReadOnly]
+        [LabelText("스킬 ID")]
+        [LabelWidth(100)]
+        [HorizontalGroup("One Line")]
+        public ESkillId skillId;
+
+#if UNITY_EDITOR
+        [ShowInInspector]
+        [LabelText("스킬")]
+        [LabelWidth(100)]
+        [OnValueChanged(nameof(OnSkillSOChanged))]
+        [PreviewField(Alignment = ObjectFieldAlignment.Left, Height = 50, PreviewGetter = nameof(GetSkillPreview))]
+        [HorizontalGroup("One Line")]
+        SkillSO m_skillSO;
+
+        void OnSkillSOChanged()
+        {
+            if (m_skillSO == null)
+            {
+                skillId = ESkillId.None;
+                return;
+            }
+
+            skillId = m_skillSO.id;
+        }
+
+        Texture2D GetSkillPreview(SkillSO skillSO)
+        {
+            if (skillSO == null) return null;
+            return skillSO.GetPreview();
+        }
+#endif
     }
 
     public class CharacterSO : NamedSO
@@ -96,6 +141,11 @@ namespace Mathlife.ProjectL.Gameplay
         [Range(0, 10), GUIColor(0.65f, 0.65f, 1.0f)]
         [SuffixLabel("per level")]
         public float magGrowth = 3.0f;
+
+        [PropertySpace(SpaceBefore = 20)]
+        [LabelText("학습 스킬")]
+        [ListDrawerSettings(ShowFoldout = false, ShowPaging = true, NumberOfItemsPerPage = 4)]
+        public List<LearningSkill> learningSkills = new();
 
 #if UNITY_EDITOR
         public override void ToMenuItem(ref OdinMenuItem menuItem)

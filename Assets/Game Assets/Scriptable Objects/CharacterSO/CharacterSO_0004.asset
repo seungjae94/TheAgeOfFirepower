@@ -35,3 +35,20 @@ MonoBehaviour:
   defGrowth: 3
   mag: 20
   magGrowth: 3
+  learningSkills:
+  - level: 1
+    skillId: 20
+  - level: 1
+    skillId: 21
+  - level: 2
+    skillId: 22
+  - level: 3
+    skillId: 5
+  - level: 5
+    skillId: 23
+  - level: 6
+    skillId: 24
+  - level: 8
+    skillId: 25
+  - level: 9
+    skillId: 26

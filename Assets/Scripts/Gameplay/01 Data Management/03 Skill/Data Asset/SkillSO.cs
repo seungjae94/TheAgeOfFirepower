@@ -1,9 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 using System.Collections.Generic;
-using Sirenix.Utilities.Editor;
-
-
 
 #if UNITY_EDITOR
 using Sirenix.OdinInspector.Editor;
@@ -79,12 +76,17 @@ namespace Mathlife.ProjectL.Gameplay
         public override void ToMenuItem(ref OdinMenuItem menuItem)
         {
             menuItem.Name = displayName;
+            menuItem.Icon = GetPreview();
+        }
 
-            if (icon != null)
-            {
-                Rect texRect = icon.textureRect;
-                menuItem.Icon = icon.texture.CropTexture(texRect);
-            }
+        public Texture2D GetPreview()
+        {
+            if (icon == null) return null;
+
+            //Rect texRect = icon.textureRect;
+            //menuItem.Icon = icon.texture.CropTexture(texRect);
+
+            return icon.texture;
         }
 #endif
     }

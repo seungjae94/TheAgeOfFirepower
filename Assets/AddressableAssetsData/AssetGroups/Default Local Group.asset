@@ -106,6 +106,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 63ec05f7e884f0d46b2a0ae4c9c8bed3
+    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0024.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 645db9ed47b26784881ee7d2ef7ac9f1
     m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0008.asset
     m_ReadOnly: 0
