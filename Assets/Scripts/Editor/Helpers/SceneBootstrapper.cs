@@ -8,14 +8,15 @@ namespace Mathlife.ProjectL.Editor
     [InitializeOnLoad]
     public static class SceneBootstrapper
     {
-        const string k_editorKey_previousSceneName = "ProjectL/PreviousSceneName";
-        static bool s_restartingToSwitchScene = false;
+        private const string EditorPrefsKey_PreviousSceneName = "MobileCasualRPG/PreviousSceneName";
+        private static bool _sRestartingToSwitchScene = false;
 
-        static string bootstrapSceneName => EditorBuildSettings.scenes[0].path;
-        static string previousSceneName
+        private static string BootstrapSceneName => EditorBuildSettings.scenes[0].path;
+
+        private static string PreviousSceneName
         {
-            get => EditorPrefs.GetString(k_editorKey_previousSceneName);
-            set => EditorPrefs.SetString(k_editorKey_previousSceneName, value);
+            get => EditorPrefs.GetString(EditorPrefsKey_PreviousSceneName);
+            set => EditorPrefs.SetString(EditorPrefsKey_PreviousSceneName, value);
         }
 
         static SceneBootstrapper()
@@ -25,11 +26,11 @@ namespace Mathlife.ProjectL.Editor
 
         private static void OnPlayModeStateChanged(PlayModeStateChange stateChange)
         {
-            if (s_restartingToSwitchScene)
+            if (_sRestartingToSwitchScene)
             {
                 if (stateChange == PlayModeStateChange.EnteredPlayMode)
                 {
-                    s_restartingToSwitchScene = false;
+                    _sRestartingToSwitchScene = false;
                 }
                 return;
             }
@@ -43,14 +44,14 @@ namespace Mathlife.ProjectL.Editor
                 }
 
                 Scene previousScene = SceneManager.GetActiveScene();
-                previousSceneName = previousScene.path;
-                s_restartingToSwitchScene = previousSceneName != bootstrapSceneName;
+                PreviousSceneName = previousScene.path;
+                _sRestartingToSwitchScene = PreviousSceneName != BootstrapSceneName;
 
-                if (s_restartingToSwitchScene)
+                if (_sRestartingToSwitchScene)
                 {
                     EditorApplication.isPlaying = false;
 
-                    EditorSceneManager.OpenScene(bootstrapSceneName);
+                    EditorSceneManager.OpenScene(BootstrapSceneName);
 
                     EditorApplication.isPlaying = true;
                 }
@@ -58,7 +59,7 @@ namespace Mathlife.ProjectL.Editor
             }
             else if (stateChange == PlayModeStateChange.EnteredEditMode)
             {
-                EditorSceneManager.OpenScene(previousSceneName);
+                EditorSceneManager.OpenScene(PreviousSceneName);
             }
         }
     }
