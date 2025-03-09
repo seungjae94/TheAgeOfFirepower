@@ -13,7 +13,7 @@ namespace Mathlife.ProjectL.Gameplay
     /// </summary>
     public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
     {
-        [field: SerializeField] private SingletonLifeTime LifeTime => SingletonLifeTime.App;
+        [SerializeField] protected SingletonLifeTime lifeTime;
 
         private static readonly string s_typeName = typeof(T).Name;
 
@@ -38,7 +38,7 @@ namespace Mathlife.ProjectL.Gameplay
                 s_inst = this as T;
                 OnRegistered();
 
-                if (LifeTime == SingletonLifeTime.App)
+                if (lifeTime == SingletonLifeTime.App)
                     DontDestroyOnLoad(gameObject);
             }
             else
