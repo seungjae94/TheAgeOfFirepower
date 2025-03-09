@@ -5,12 +5,17 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class SafeArea : MonoBehaviour, IUIArea
+    public class SafeLayer : MonoBehaviour
     {
-        async void OnEnable()
+        private Canvas canvas;
+        
+        void Awake()
         {
-            await UniTask.WaitUntil(() => CanvasUpdateRegistry.IsRebuildingGraphics() == false);
-            await UniTask.SwitchToMainThread();
+            canvas = GetComponentInParent<Canvas>();
+        }
+        
+        void OnEnable()
+        {
             ApplyArea();
         }
 
@@ -18,11 +23,9 @@ namespace Mathlife.ProjectL.Gameplay
         {
             if (CanvasUpdateRegistry.IsRebuildingGraphics())
             {
-                Debug.LogWarning("[SafeArea] CanvasUpdateRegistry.RebuildingGraphics is true. Stop applying ApplyArea.");
+                Debug.LogWarning("[SafeLayer] CanvasUpdateRegistry.RebuildingGraphics is true. Stop applying ApplyArea.");
                 return;
             }
-
-            Canvas canvas = GetComponentInParent<Canvas>();
 
             RenderMode renderMode = canvas.renderMode;
             bool isScreenSpaceCamera = (renderMode == RenderMode.ScreenSpaceCamera);
@@ -62,9 +65,9 @@ namespace Mathlife.ProjectL.Gameplay
             );
 
             Vector2 canvasRefResolution = canvasScaler.referenceResolution;
-            float xScaleFactor = canvasRefResolution.x / cameraRect.width;  // Ä«¸Ş¶ó¸¦ Äµ¹ö½º Å©±â¸¸Å­ È®ÀåÇÏ·Á¸é x ¹æÇâÀ¸·Î ¸î ¹è ´Ã·Á¾ß ÇÏ´Â°¡?
-            float yScaleFactor = canvasRefResolution.y / cameraRect.height; // Ä«¸Ş¶ó¸¦ Äµ¹ö½º ³ôÀÌ¸¸Å­ È®ÀåÇÏ·Á¸é y ¹æÇâÀ¸·Î ¸î ¹è ´Ã·Á¾ß ÇÏ´Â°¡?
-            float scaleFactor = Mathf.Max(xScaleFactor, yScaleFactor);      // ScreenMatchMode°¡ ExpandÀÌ¹Ç·Î Äµ¹ö½º¸¦ ÃÖ´ëÇÑ È®ÀåÇÑ´Ù.
+            float xScaleFactor = canvasRefResolution.x / cameraRect.width;  // ì¹´ë©”ë¼ë¥¼ ìº”ë²„ìŠ¤ í¬ê¸°ë§Œí¼ í™•ì¥í•˜ë ¤ë©´ x ë°©í–¥ìœ¼ë¡œ ëª‡ ë°° ëŠ˜ë ¤ì•¼ í•˜ëŠ”ê°€?
+            float yScaleFactor = canvasRefResolution.y / cameraRect.height; // ì¹´ë©”ë¼ë¥¼ ìº”ë²„ìŠ¤ ë†’ì´ë§Œí¼ í™•ì¥í•˜ë ¤ë©´ y ë°©í–¥ìœ¼ë¡œ ëª‡ ë°° ëŠ˜ë ¤ì•¼ í•˜ëŠ”ê°€?
+            float scaleFactor = Mathf.Max(xScaleFactor, yScaleFactor);      // ScreenMatchModeê°€ Expandì´ë¯€ë¡œ ìº”ë²„ìŠ¤ë¥¼ ìµœëŒ€í•œ í™•ì¥í•œë‹¤.
 
             Rect renderZone = new Rect();
             renderZone.x = Mathf.Max(safeArea.x - cameraRect.x, 0) * scaleFactor;
