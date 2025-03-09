@@ -7,7 +7,7 @@ namespace Mathlife.ProjectL.Gameplay
         App,
         Scene,
     }
-
+    
     /// <summary>
     /// 씬에 배치되어 있는 정적 싱글톤.
     /// </summary>

@@ -20,7 +20,7 @@ namespace Mathlife.ProjectL.Editor
             public void DestroySOInstance();
         }
 
-        internal class ScriptableObjectAssetCreator<SOType> : IScriptableObjectAssetCreator where SOType : NamedSO
+        internal class ScriptableObjectAssetCreator<SOType> : IScriptableObjectAssetCreator where SOType : NamedGameData
         {
             [ShowInInspector]
             [InlineEditor(ObjectFieldMode = InlineEditorObjectFieldModes.Hidden)]
@@ -36,14 +36,14 @@ namespace Mathlife.ProjectL.Editor
                 DestroyImmediate(_so);
             }
 
-            [Button("»ý¼º", ButtonHeight = 40, Icon = SdfIconType.Box)]
+            [Button("ï¿½ï¿½ï¿½ï¿½", ButtonHeight = 40, Icon = SdfIconType.Box)]
             public void CreateButton()
             {
                 string typeName = _so.GetType().Name;
 
                 string directory = $"Assets/Game Assets/Scriptable Objects/{typeName}";
 
-                string idString = (_so.intId).ToString().PadLeft(4, '0');
+                string idString = (_so.id).ToString().PadLeft(4, '0');
                 string assetPath = $"{directory}/{typeName}_{idString}.asset";
 
                 if (false == AssetDatabase.AssetPathExists(directory))
@@ -55,7 +55,7 @@ namespace Mathlife.ProjectL.Editor
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
 
-                // Addressable Ã³¸® ¹× ¶óº§ ¼³Á¤
+                // Addressable Ã³ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.Settings;
                 if (settings == null)
                 {
@@ -69,7 +69,7 @@ namespace Mathlife.ProjectL.Editor
 
                 settings.SetDirty(AddressableAssetSettings.ModificationEvent.EntryModified, entry, true);
 
-                // »õ µ¥ÀÌÅÍ ¾Ö¼Â ÁØºñ
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½Øºï¿½
                 CreateNewInstance();
             }
 
@@ -125,9 +125,9 @@ namespace Mathlife.ProjectL.Editor
             if (asset == null)
                 return;
 
-            if (asset is not CharacterSO 
-                && asset is not EquipmentSO 
-                && asset is not SkillSO)
+            if (asset is not CharacterGameData 
+                && asset is not EquipmentGameData 
+                && asset is not SkillGameData)
                 return;
 
             GUILayout.Label(selection.FirstOrDefault().Name);
@@ -148,41 +148,41 @@ namespace Mathlife.ProjectL.Editor
             //tree.Config.DrawSearchToolbar = true;
 
             tree.AddAssetAtPath(
-                "½ºÅ¸ÅÍ ¼¼ÆÃ",
+                "ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
                 "Assets/Game Assets/Scriptable Objects/UniqueSO/StarterSO.asset",
                 typeof(StarterSO)
             );
 
             tree.AddAssetAtPath(
-                "°æÇèÄ¡ Å×ÀÌºí",
+                "ï¿½ï¿½ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½Ìºï¿½",
                 "Assets/Game Assets/Scriptable Objects/UniqueSO/ExpSO.asset",
                 typeof(ExpSO)
             );
 
             tree.AddAssetAtPath(
-                "»óÁ¡",
+                "ï¿½ï¿½ï¿½ï¿½",
                 "Assets/Game Assets/Scriptable Objects/UniqueSO/ShopSO.asset",
                 typeof(ShopSO)
             );
 
             tree.AddAssetAtPath(
-                "ÇÁ¸®ÆÕ µî·Ï",
+                "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½",
                 "Assets/Game Assets/Scriptable Objects/UniqueSO/PrefabSO.asset",
                 typeof(PrefabSO)
             );
 
-            // ¸Þ´º ¾ÆÀÌÅÛ Ãß°¡
-            AddMenuItems<CharacterSO>(tree, "Ä³¸¯ÅÍ");
-            AddMenuItems<EquipmentSO>(tree, "Àåºñ");
-            AddMenuItems<SkillSO>(tree, "½ºÅ³");
+            // ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+            AddMenuItems<CharacterGameData>(tree, "Ä³ï¿½ï¿½ï¿½ï¿½");
+            AddMenuItems<EquipmentGameData>(tree, "ï¿½ï¿½ï¿½");
+            AddMenuItems<SkillGameData>(tree, "ï¿½ï¿½Å³");
 
-            // ¸Þ´º ¾ÆÀÌÅÛ ¼¼ÆÃ
+            // ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             tree.EnumerateTree()
-                .Where(menuItem => menuItem.Value is NamedSO)
-                .Select(menuItem => (menuItem: menuItem, namedSO: (NamedSO)menuItem.Value))
+                .Where(menuItem => menuItem.Value is NamedGameData)
+                .Select(menuItem => (menuItem: menuItem, namedSO: (NamedGameData)menuItem.Value))
                 .ForEach(tuple =>
                 {
-                    (OdinMenuItem menuItem, NamedSO namedSO) = tuple;
+                    (OdinMenuItem menuItem, NamedGameData namedSO) = tuple;
                     namedSO.ToMenuItem(ref menuItem);
                     AddDragHandles(menuItem);
                 });
@@ -190,7 +190,7 @@ namespace Mathlife.ProjectL.Editor
             return tree;
         }
 
-        void AddMenuItems<SOType>(OdinMenuTree tree, string menuDirectoryName) where SOType : NamedSO
+        void AddMenuItems<SOType>(OdinMenuTree tree, string menuDirectoryName) where SOType : NamedGameData
         {
             Type soType = typeof(SOType);
 

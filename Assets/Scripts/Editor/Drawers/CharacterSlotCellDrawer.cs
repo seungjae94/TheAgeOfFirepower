@@ -14,7 +14,7 @@ using DG.DemiEditor;
 
 namespace Mathlife.ProjectL.Editor
 {
-    internal sealed class CharacterSlotCellDrawer<TArray> : TwoDimensionalArrayDrawer<TArray, CharacterState> where TArray : System.Collections.IList
+    internal sealed class CharacterSlotCellDrawer<TArray> : TwoDimensionalArrayDrawer<TArray, CharacterPreset> where TArray : System.Collections.IList
     {
         protected override TableMatrixAttribute GetDefaultTableMatrixAttributeSettings()
         {
@@ -27,7 +27,7 @@ namespace Mathlife.ProjectL.Editor
             };
         }
 
-        protected override CharacterState DrawElement(Rect rect, CharacterState value)
+        protected override CharacterPreset DrawElement(Rect rect, CharacterPreset value)
         {
             var id = DragAndDropUtilities.GetDragAndDropId(rect);
 
@@ -56,7 +56,7 @@ namespace Mathlife.ProjectL.Editor
             }
 
             value = DragAndDropUtilities.DropZone(rect, value, id);                                             // Drop zone for CharacterSlot structs.
-            value.character = DragAndDropUtilities.DropZone<CharacterSO>(rect, value.character, id);     // Drop zone for CharacterDataAsset types.
+            value.character = DragAndDropUtilities.DropZone<CharacterGameData>(rect, value.character, id);     // Drop zone for CharacterDataAsset types.
             value = DragAndDropUtilities.DragZone(rect, value, true, true, id);                             // Enables dragging of the CharacterSlot
 
             return value;
@@ -70,7 +70,7 @@ namespace Mathlife.ProjectL.Editor
             var rect = GUILayoutUtility.GetRect(0, 40).Padding(2);
             var id = DragAndDropUtilities.GetDragAndDropId(rect);
             DragAndDropUtilities.DrawDropZone(rect, null as UnityEngine.Object, null, id);
-            DragAndDropUtilities.DropZone<CharacterState>(rect, new CharacterState(), false, id);
+            DragAndDropUtilities.DropZone<CharacterPreset>(rect, new CharacterPreset(), false, id);
         }
     }
 }

@@ -9,19 +9,19 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class AppLifetimeScope : LifetimeScope
     {
-        public GameDataDB gameDataDB;
-        public SaveDataDB saveDataDB;
-        public CharacterRepository characterRepository;
-        public InventoryRepository inventoryRepository;
+        public GameDataLoader gameDataLoader;
+        public SaveDataManager saveDataManager;
+        public CharacterRosterState CharacterRosterState;
+        public InventoryState InventoryState;
 
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
 
-            builder.RegisterInstance(gameDataDB);
-            builder.RegisterInstance(saveDataDB);
-            builder.RegisterInstance(characterRepository);
-            builder.RegisterInstance(inventoryRepository);
+            builder.RegisterInstance(gameDataLoader);
+            builder.RegisterInstance(saveDataManager);
+            builder.RegisterInstance(CharacterRosterState);
+            builder.RegisterInstance(InventoryState);
         }
 
         void Start()
