@@ -106,8 +106,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         void LoadFromStarterData()
         {
-            StarterSO starterData = gameDataLoader.GetStarterSO();
-            ExpSO expData = gameDataLoader.GetExpSO();
+            StarterGameData starterData = gameDataLoader.GetStarterSO();
+            ExpGameData expData = gameDataLoader.GetExpSO();
 
             var starterParty = starterData.GetStarterParty();
             var starterCharactersNotInParty = starterData.GetStarterCharactersNotInParty();

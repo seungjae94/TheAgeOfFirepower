@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f7c4b98c582874eb43bb78575f7097, type: 3}
+  m_Name: SkillGameData_0006
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  displayName: "\uAC15\uB825 \uBCA0\uAE30"
+  id: 6
+  description: 
+  icon: {fileID: 21300000, guid: fd88b355e04bd134aa9c9e6f454c04fb, type: 3}
+  count: 3
+  cost: 3
+  skillEffects:
+  - rid: 3336615825034444882
+  - rid: 3336615825034444883
+  references:
+    version: 2
+    RefIds:
+    - rid: 3336615825034444882
+      type: {class: DamageSkillEffect, ns: Mathlife.ProjectL.Gameplay, asm: ProjectL-Gameplay}
+      data:
+        target: 4
+        baseDamage: 40
+        atkCoeff: 1.5
+        magCoeff: 0
+    - rid: 3336615825034444883
+      type: {class: DebuffSkillEffect, ns: Mathlife.ProjectL.Gameplay, asm: ProjectL-Gameplay}
+      data:
+        target: 4
+        debuffType: 1
+        stack: 1
+        multiplier: 0

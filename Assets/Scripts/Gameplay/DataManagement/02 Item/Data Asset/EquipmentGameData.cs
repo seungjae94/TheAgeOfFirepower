@@ -42,12 +42,8 @@ namespace Mathlife.ProjectL.Gameplay
     }
 
     [Serializable]
-    public class EquipmentGameData : NamedGameData
+    public class EquipmentGameData : GameData
     {
-        [LabelWidth(100)]
-        [LabelText("장비 ID")]
-        public int id;
-
         [LabelWidth(100)]
         [LabelText("장비 타입")]
         public EEquipmentType type;

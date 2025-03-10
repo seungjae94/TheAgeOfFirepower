@@ -13,10 +13,10 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class GameDataLoader : IDisposable
     {
-        StarterSO m_starterSO;
-        ExpSO m_expSO;
-        ShopSO m_shopSO;
-        PrefabSO m_prafabSO;
+        StarterGameData mStarterGameData;
+        ExpGameData expGameData;
+        ShopGameData shopGameData;
+        PrefabGameData prafabGameData;
         Dictionary<int, CharacterGameData> m_characters = new();
         Dictionary<int, EquipmentGameData> m_equipments = new();
 
@@ -26,14 +26,14 @@ namespace Mathlife.ProjectL.Gameplay
 
             foreach (var dataAsset in dataAssets)
             {
-                if (dataAsset is ExpSO expSO)
-                    m_expSO = expSO;
-                else if (dataAsset is ShopSO shopSO)
-                    m_shopSO = shopSO;
-                else if (dataAsset is PrefabSO prefabSO)
-                    m_prafabSO = prefabSO;
-                else if (dataAsset is StarterSO starterSO)
-                    m_starterSO = starterSO;
+                if (dataAsset is ExpGameData expSO)
+                    expGameData = expSO;
+                else if (dataAsset is ShopGameData shopSO)
+                    shopGameData = shopSO;
+                else if (dataAsset is PrefabGameData prefabSO)
+                    prafabGameData = prefabSO;
+                else if (dataAsset is StarterGameData starterSO)
+                    mStarterGameData = starterSO;
                 else if (dataAsset is CharacterGameData characterSO)
                     m_characters.Add(characterSO.id, characterSO);
                 else if (dataAsset is EquipmentGameData equipmentSO)
@@ -48,13 +48,13 @@ namespace Mathlife.ProjectL.Gameplay
 
         public T Instantiate<T>(EPrefabId prefabId, Transform parent) where T : Component
         {
-            if (false == m_prafabSO.prefabs.ContainsKey(prefabId))
+            if (false == prafabGameData.prefabs.ContainsKey(prefabId))
             {
                 Debug.LogError($"Tried to instantiate undefined prefab {prefabId}");
                 return null;
             }
 
-            return GameObject.Instantiate(m_prafabSO.prefabs[prefabId], parent).GetComponent<T>();
+            return GameObject.Instantiate(prafabGameData.prefabs[prefabId], parent).GetComponent<T>();
         }
 
         public CharacterGameData GetCharacterData(int id)
@@ -73,29 +73,29 @@ namespace Mathlife.ProjectL.Gameplay
             return m_equipments[id];
         }
 
-        public StarterSO GetStarterSO()
+        public StarterGameData GetStarterSO()
         {
-            return m_starterSO;
+            return mStarterGameData;
         }
 
-        public ShopSO GetShopSO()
+        public ShopGameData GetShopSO()
         {
-            return m_shopSO;
+            return shopGameData;
         }
 
-        public PrefabSO GetPrefabSO()
+        public PrefabGameData GetPrefabSO()
         {
-            return m_prafabSO;
+            return prafabGameData;
         }
 
-        public ExpSO GetExpSO()
+        public ExpGameData GetExpSO()
         {
-            return m_expSO;
+            return expGameData;
         }
 
         public void Dispose()
         {
-            Addressables.Release(m_expSO);
+            Addressables.Release(expGameData);
             
             foreach(var character in m_characters.Values)
             {

@@ -47,13 +47,13 @@ namespace Mathlife.ProjectL.Gameplay
             return m_members.IndexOf(character);
         }
 
-        // ��� <-> ���
+        // ??? <-> ???
         public void Swap(int i, int j)
         {
             m_members.Swap(i, j);
         }
 
-        // ���� ĳ���� -> ���
+        // ???? ĳ???? -> ???
         public void Add(int index, CharacterModel character)
         {
             if (null == character)
@@ -70,13 +70,13 @@ namespace Mathlife.ProjectL.Gameplay
             m_members[index] = character;
         }
 
-        // ��� -> ���� ĳ����
+        // ??? -> ???? ĳ????
         public void RemoveAt(int index)
         {
             Remove(m_members[index]);
         }
 
-        // ��� -> ���� ĳ����
+        // ??? -> ???? ĳ????
         public void Remove(CharacterModel character)
         {
             if (null == character)

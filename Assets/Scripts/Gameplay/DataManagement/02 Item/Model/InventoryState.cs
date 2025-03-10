@@ -48,7 +48,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         void LoadFromStarterData()
         {
-            StarterSO starter = gameDataLoader.GetStarterSO();
+            StarterGameData starter = gameDataLoader.GetStarterSO();
 
             gold = starter.GetStarterGold();
 

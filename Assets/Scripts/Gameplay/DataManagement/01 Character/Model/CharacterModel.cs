@@ -9,12 +9,12 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public CharacterModel(
             CharacterGameData dataAsset,
-            ExpSO expSO,
+            ExpGameData expGameData,
             int level, long totalExp
         )
         {
             gameData = dataAsset;
-            m_expSO = expSO;
+            expGameData = expGameData;
             m_level = new(level);
             m_totalExp = new(totalExp);
 
@@ -24,7 +24,7 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         CharacterGameData gameData;
-        ExpSO m_expSO;
+        ExpGameData expGameData;
 
         public int id => gameData.id;
         public string displayName => gameData.displayName;
@@ -46,13 +46,13 @@ namespace Mathlife.ProjectL.Gameplay
             return m_totalExp.Subscribe(onTotalExpChangedAction);
         }
 
-        public long needExp => m_expSO.characterNeedExpAtLevelList[level];
+        public long needExp => expGameData.characterNeedExpAtLevelList[level];
 
         public long currentLevelExp
         {
             get
             {
-                long totalExpAtCurrentLevel = m_expSO.characterTotalExpAtLevelList[level];
+                long totalExpAtCurrentLevel = expGameData.characterTotalExpAtLevelList[level];
                 return totalExp - totalExpAtCurrentLevel;
             }
         }

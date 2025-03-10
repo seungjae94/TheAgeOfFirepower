@@ -54,7 +54,7 @@ namespace Mathlife.ProjectL.Gameplay
 #endif
     }
 
-    public class CharacterGameData : NamedGameData
+    public class CharacterGameData : GameData
     {
         [Title("캐릭터 데이터", horizontalLine: false)]
         [HorizontalGroup("Sprites")]

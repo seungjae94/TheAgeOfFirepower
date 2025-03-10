@@ -39,7 +39,7 @@ namespace Mathlife.ProjectL.Gameplay
         CelestialSalvation
     }
 
-    public class SkillGameData : NamedGameData
+    public class SkillGameData : GameData
     {
         [Title("스킬 데이터", horizontalLine: false)]
         [LabelWidth(100)]

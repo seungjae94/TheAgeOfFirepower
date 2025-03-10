@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b96ee918180ee64e8a3b117f54f0fe7, type: 3}
+  m_Name: EquipmentGameData_2003
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: stat
+      Entry: 7
+      Data: Mathlife.ProjectL.Gameplay.BasicStat, ProjectL-Gameplay
+    - Name: maxHp
+      Entry: 3
+      Data: 0
+    - Name: maxEnergy
+      Entry: 3
+      Data: 0
+    - Name: energyRecovery
+      Entry: 3
+      Data: 1
+    - Name: atk
+      Entry: 3
+      Data: 0
+    - Name: def
+      Entry: 3
+      Data: 0
+    - Name: mag
+      Entry: 3
+      Data: 0
+    - Name: spd
+      Entry: 3
+      Data: 0
+    - Name: criticalPer
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+  displayName: "\uC601\uC6D0\uD55C \uB4F1\uBD88"
+  id: 2003
+  type: 2
+  description: "\uC5D0\uB108\uC9C0 \uCDA9\uC804 + 1"
+  icon: {fileID: 689115818854599589, guid: 58fca586647c1834080ed0dcc9aa54a2, type: 3}
+  shopPrice: 1000
+  battleEffect:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
