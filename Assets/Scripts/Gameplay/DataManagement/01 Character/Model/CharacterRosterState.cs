@@ -37,11 +37,11 @@ namespace Mathlife.ProjectL.Gameplay
 
             await UniTask.SwitchToThreadPool();
             
-            // Validate that InventoryRepository was created before creating CharacterRepository.
+            // Validate that InventoryState was created before creating CharacterState.
             if (GameState.Inst.InventoryState == null)
             {
-                Debug.LogError("�κ��丮 �������丮�� ���� �����ؾ� �մϴ�.");
-                throw new Exception("�κ��丮 �������丮�� ���� �����ؾ� �մϴ�.");
+                Debug.LogError("[CharacterRosterState] InventoryState is null.");
+                throw new Exception("[CharacterRosterState] InventoryState is null.");
             }
 
             if (GameState.Inst.SaveDataManager.DoesSaveFileExist())
@@ -179,7 +179,7 @@ namespace Mathlife.ProjectL.Gameplay
             int memberCount = Mathf.Min(m_characters.Count, Constants.PartyMemberCount);
 
             List<CharacterModel> members = m_characters
-                .OrderByDescending(kv => kv.Value.level)
+                .OrderByDescending(kv => kv.Value.levelRx)
                 .ThenBy(kv => kv.Key)
                 .Take(memberCount)
                 .Select(kv => kv.Value)
@@ -227,7 +227,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             return m_characters
                 .Select(kv => kv.Value)
-                .OrderByDescending(character => character.level)
+                .OrderByDescending(character => character.levelRx)
                 .ThenBy(character => character.id)
                 .ToList();
         }
@@ -237,7 +237,9 @@ namespace Mathlife.ProjectL.Gameplay
             CompositeDisposable characterLevelChangeSubscriptions = new();
             foreach (var kv in m_characters)
             {
-                IDisposable characterLevelChangeSubscription = kv.Value.SubscribeLevelChangeEvent(level => onCharacterListChangedAction?.Invoke());
+                CharacterModel character = kv.Value;
+                IDisposable characterLevelChangeSubscription = character.levelRx
+                    .Subscribe(level => onCharacterListChangedAction?.Invoke());
                 characterLevelChangeSubscriptions.Add(characterLevelChangeSubscription);
             }
 
@@ -253,7 +255,9 @@ namespace Mathlife.ProjectL.Gameplay
             characterLevelChangeSubscriptions.Clear();
             foreach (var kv in m_characters)
             {
-                IDisposable characterLevelChangeSubscription = kv.Value.SubscribeLevelChangeEvent(level => onCharacterListChangedAction?.Invoke());
+                CharacterModel character = kv.Value;
+                IDisposable characterLevelChangeSubscription = character.levelRx
+                    .Subscribe(level => onCharacterListChangedAction?.Invoke());
                 characterLevelChangeSubscriptions.Add(characterLevelChangeSubscription);
             }
 

@@ -55,7 +55,8 @@ namespace Mathlife.ProjectL.Gameplay
             if (m_partyPage.IsSelectedSlotIndexInRange() == true && m_partyPage.GetSelectedCharacter() != null)
             {
                 m_characterSub = m_partyPage.GetSelectedCharacter()
-                    .SubscribeLevelChangeEvent(level => m_levelText.text = level.ToString());
+                    .levelRx
+                    .Subscribe(level => m_levelText.text = level.ToString());
             }
 
             UpdateView();
@@ -72,7 +73,7 @@ namespace Mathlife.ProjectL.Gameplay
             m_canvasGroup.Show();
 
             m_portraitImage.sprite = m_partyPage.GetSelectedCharacter().portrait;
-            m_levelText.text = m_partyPage.GetSelectedCharacter().level.ToString();
+            m_levelText.text = m_partyPage.GetSelectedCharacter().levelRx.ToString();
             m_nameText.text = m_partyPage.GetSelectedCharacter().displayName;
         }
     }

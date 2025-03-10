@@ -100,7 +100,8 @@ namespace Mathlife.ProjectL.Gameplay
 
             if (m_character != null)
             {
-                m_characterSubscription = character.SubscribeLevelChangeEvent(UpdateLevelText);
+                m_characterSubscription = character.levelRx
+                    .Subscribe(UpdateLevelText);
             }
 
             UpdateView();
@@ -166,7 +167,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             m_canvasGroup.Show();
             m_portraitImage.sprite = m_character.portrait;
-            m_levelText.text = m_character.level.ToString();
+            m_levelText.text = m_character.levelRx.ToString();
             m_nameText.text = m_character.displayName;
         }
 

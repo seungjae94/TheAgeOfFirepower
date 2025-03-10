@@ -37,7 +37,7 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] TMP_Text m_levelText;
         [SerializeField] TMP_Text m_nameText;
 
-        CharacterModel m_character;
+        CharacterModel character;
         Action<CharacterModel> m_onClick;
 
         void Awake()
@@ -47,34 +47,35 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void Store(CharacterModel character, Action<CharacterModel> onClick)
         {
-            m_character = character;
+            this.character = character;
             m_onClick = onClick;
         }
 
         protected override void SubscribeDataChange()
         {
-            m_character.SubscribeLevelChangeEvent(UpdateLevelText)
+            character.levelRx
+                .Subscribe(UpdateLevelText)
                 .AddTo(gameObject);
         }
 
         protected override void SubscribeUserInteractions()
         {
             m_clickTrigger.OnPointerClickAsObservable()
-                .Subscribe(ev => m_onClick(m_character))
+                .Subscribe(ev => m_onClick(character))
                 .AddTo(gameObject);
         }
 
         protected override void InitializeView()
         {
-            m_portraitImage.sprite = m_character.portrait;
-            m_nameText.text = m_character.displayName;
-            UpdateLevelText(m_character.level);
+            m_portraitImage.sprite = character.portrait;
+            m_nameText.text = character.displayName;
+            UpdateLevelText(character.levelRx.Value);
         }
 
         // 뷰 업데이트
         void UpdateLevelText(int level)
         {
-            m_levelText.text = m_character.level.ToString();
+            m_levelText.text = character.levelRx.ToString();
         }
     }
 }

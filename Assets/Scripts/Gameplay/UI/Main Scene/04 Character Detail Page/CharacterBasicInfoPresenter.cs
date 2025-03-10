@@ -58,11 +58,13 @@ namespace Mathlife.ProjectL.Gameplay
             m_characterDataSubscriptions.Clear();
 
             character?
-                .SubscribeLevelChangeEvent(v => m_levelText.text = v.ToString())
+                .levelRx
+                .Subscribe(v => m_levelText.text = v.ToString())
                 .AddTo(m_characterDataSubscriptions);
 
             character?
-                .SubscribeTotalExpChangeEvent(OnTotalExpChange)
+                .totalExpRx
+                .Subscribe(OnTotalExpChange)
                 .AddTo(m_characterDataSubscriptions);
 
             UpdateView();
