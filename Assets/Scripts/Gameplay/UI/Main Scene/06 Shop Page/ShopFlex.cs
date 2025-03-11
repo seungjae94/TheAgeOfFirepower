@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    internal class ShopFlex : AbstractFlex<EquipmentGameData, Action<EquipmentGameData>, ShopFlexItem>
+    internal class ShopFlex : AbstractFlex<MechPartGameData, Action<MechPartGameData>, ShopFlexItem>
     {
     }
 }

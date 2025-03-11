@@ -72,7 +72,7 @@ namespace Mathlife.ProjectL.Gameplay
             }
             m_canvasGroup.Show();
 
-            m_portraitImage.sprite = m_partyPage.GetSelectedCharacter().portrait;
+            m_portraitImage.sprite = m_partyPage.GetSelectedCharacter().Sprite;
             m_levelText.text = m_partyPage.GetSelectedCharacter().levelRx.ToString();
             m_nameText.text = m_partyPage.GetSelectedCharacter().displayName;
         }

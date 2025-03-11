@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/Assets/Scripts/Editor/Editor Windows/GameDesigner.cs" charset="x-windows-949" />
-    <file url="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/DataManagement/01 Character/Data Asset/CharacterGameData.cs" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/DataManagement/01 Character/Model/CharacterRosterState.cs" charset="UTF-16" />
-    <file url="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/DataManagement/01 Character/Model/PartyModel.cs" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/DataManagement/04 Unique/ExpGameData.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Editor/EditorWindows/GameDesigner.cs" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/Data/GameData/Etc/ExpGameData.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/Data/GameData/Vehicle/VehicleGameData.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/Data/State/CharacterRosterState.cs" charset="UTF-16" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/Data/State/Model/PartyModel.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/UI/Canvas/SafeLayer.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/UI/Main Scene/02 Party Page/PartyPage.cs" charset="x-windows-949" />
   </component>

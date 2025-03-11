@@ -80,9 +80,9 @@ namespace Mathlife.ProjectL.Gameplay
             UpdateFlexView();
         }
 
-        public void OnClickBuyButton(EquipmentGameData equipmentGameData)
+        public void OnClickBuyButton(MechPartGameData mechPartGameData)
         {
-            bool buyResult = inventoryState.BuyItem(equipmentGameData.id);
+            bool buyResult = inventoryState.BuyItem(mechPartGameData.id);
 
             if (buyResult)
             {

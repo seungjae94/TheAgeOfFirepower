@@ -166,7 +166,7 @@ namespace Mathlife.ProjectL.Gameplay
             }
 
             m_canvasGroup.Show();
-            m_portraitImage.sprite = m_character.portrait;
+            m_portraitImage.sprite = m_character.Sprite;
             m_levelText.text = m_character.levelRx.ToString();
             m_nameText.text = m_character.displayName;
         }

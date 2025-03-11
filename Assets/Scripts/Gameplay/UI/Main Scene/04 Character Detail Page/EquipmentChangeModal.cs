@@ -30,7 +30,7 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] InventoryFlex m_flex;
         [SerializeField] Button m_unequipButton;
 
-        EEquipmentType m_slotType = EEquipmentType.Weapon;
+        EEquipmentType m_slotType = EEquipmentType.Barrel;
 
         EquipmentModel m_selectedEquipment = null;
 
@@ -167,11 +167,11 @@ namespace Mathlife.ProjectL.Gameplay
         {
             switch (type)
             {
-                case EEquipmentType.Weapon:
+                case EEquipmentType.Barrel:
                     return "����";
                 case EEquipmentType.Armor:
                     return "��";
-                case EEquipmentType.Artifact:
+                case EEquipmentType.Engine:
                     return "��Ƽ��Ʈ";
             }
 

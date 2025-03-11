@@ -12,11 +12,8 @@ namespace Mathlife.ProjectL.Gameplay
         [Inject] CharacterDetailPage m_characterDetailPage; 
 
         [SerializeField] TMP_Text m_maxHpText;
-        [SerializeField] TMP_Text m_maxEnergyText;
-        [SerializeField] TMP_Text m_energyRecoveryText;
         [SerializeField] TMP_Text m_atkText;
         [SerializeField] TMP_Text m_defText;
-        [SerializeField] TMP_Text m_magText;
         [SerializeField] TMP_Text m_spdText;
 
         // Fields
@@ -51,16 +48,7 @@ namespace Mathlife.ProjectL.Gameplay
                 .ObserveEveryValueChanged(character => character.GetMaxHp())
                 .Subscribe(v => m_maxHpText.text = v.ToString())
                 .AddTo(m_characterDataSubscriptions);
-
-            character?
-                .ObserveEveryValueChanged(character => character.GetMaxEnergy())
-                .Subscribe(v => m_maxEnergyText.text = v.ToString())
-                .AddTo(m_characterDataSubscriptions);
-
-            character?
-                .ObserveEveryValueChanged(character => character.GetEnergyRecovery())
-                .Subscribe(v => m_energyRecoveryText.text = v.ToString())
-                .AddTo(m_characterDataSubscriptions);
+            
 
             character?
                 .ObserveEveryValueChanged(character => character.GetSpd())
@@ -76,12 +64,7 @@ namespace Mathlife.ProjectL.Gameplay
                 .ObserveEveryValueChanged(character => character.GetDef())
                 .Subscribe(v => m_defText.text = v.ToString())
                 .AddTo(m_characterDataSubscriptions);
-
-            character?
-                .ObserveEveryValueChanged(character => character.GetMag())
-                .Subscribe(v => m_magText.text = v.ToString())
-                .AddTo(m_characterDataSubscriptions);
-
+            
             UpdateView();
         }
 
@@ -91,11 +74,8 @@ namespace Mathlife.ProjectL.Gameplay
                 return;
 
             m_maxHpText.text = m_character.GetMaxHp().ToString();
-            m_maxEnergyText.text = m_character.GetMaxEnergy().ToString();
-            m_energyRecoveryText.text = m_character.GetEnergyRecovery().ToString();
             m_atkText.text = m_character.GetAtk().ToString();
             m_defText.text = m_character.GetDef().ToString();
-            m_magText.text = m_character.GetMag().ToString();
             m_spdText.text = m_character.GetSpd().ToString();
         }
     }

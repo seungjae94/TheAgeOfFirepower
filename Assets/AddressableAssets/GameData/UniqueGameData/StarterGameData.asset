@@ -23,77 +23,57 @@ MonoBehaviour:
     SerializationNodes: []
   starterGold: 0
   starterParty:
-  - character: {fileID: 11400000, guid: 9a3b331ca5977a84ab9be371c0aedb79, type: 2}
+  - vehicle: {fileID: 0}
     level: 1
     currentLevelExp: 0
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  - character: {fileID: 0}
+  - vehicle: {fileID: 0}
     level: 0
     currentLevelExp: 0
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  - character: {fileID: 0}
+  - vehicle: {fileID: 0}
     level: 0
     currentLevelExp: 0
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  - character: {fileID: 0}
+  - vehicle: {fileID: 0}
     level: 0
     currentLevelExp: 0
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  starterCharactersNotInParty: []
-  starterEquipmentsNotOwned: []
+  starterRoster: []
+  starterMechParts: []
   editorStarterGold: 100000
   editorStarterParty:
-  - character: {fileID: 11400000, guid: 9a3b331ca5977a84ab9be371c0aedb79, type: 2}
+  - vehicle: {fileID: 0}
     level: 4
     currentLevelExp: 25
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  - character: {fileID: 11400000, guid: 62fbf364b2ae71440825e98d53902474, type: 2}
+  - vehicle: {fileID: 0}
     level: 3
     currentLevelExp: 15
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  - character: {fileID: 0}
+  - vehicle: {fileID: 0}
     level: 0
     currentLevelExp: 0
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  - character: {fileID: 0}
+  - vehicle: {fileID: 0}
     level: 0
     currentLevelExp: 0
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  editorStarterCharactersNotInParty:
-  - character: {fileID: 11400000, guid: 2912933a3d57cd84b896925f896fcd39, type: 2}
-    level: 2
-    currentLevelExp: 5
-    weapon: {fileID: 0}
-    armor: {fileID: 0}
-    artifact: {fileID: 0}
-  - character: {fileID: 11400000, guid: 91deb0429e3c11f45a234f5d76c75859, type: 2}
-    level: 1
-    currentLevelExp: 3
-    weapon: {fileID: 0}
-    armor: {fileID: 0}
-    artifact: {fileID: 0}
-  editorStarterEquipmentsNotOwned:
-  - equipment: {fileID: 11400000, guid: bbc8e17a69eefd149a1b608ed34dfc0f, type: 2}
-    count: 5
-  - equipment: {fileID: 11400000, guid: 10b0f9e32eb0f4f4c990d3e77e944f4b, type: 2}
-    count: 10
-  - equipment: {fileID: 11400000, guid: 3b9d678ce80b53c478670761b8997901, type: 2}
-    count: 3
-  - equipment: {fileID: 11400000, guid: b3a5280999a44b6449f3a978f1a3972f, type: 2}
-    count: 3
+  editorStarterRoster: []
+  editorStarterMechParts: []

@@ -7,11 +7,11 @@ using VContainer;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    class ShopFlexItemFactory : IFlexItemFactory<EquipmentGameData, Action<EquipmentGameData>, ShopFlexItem>
+    class ShopFlexItemFactory : IFlexItemFactory<MechPartGameData, Action<MechPartGameData>, ShopFlexItem>
     {
         [Inject] GameDataLoader gameDataLoader;
 
-        public ShopFlexItem Create(Transform parent, EquipmentGameData flexItemData, Action<EquipmentGameData> flexItemAction)
+        public ShopFlexItem Create(Transform parent, MechPartGameData flexItemData, Action<MechPartGameData> flexItemAction)
         {
             ShopFlexItem item = gameDataLoader.Instantiate<ShopFlexItem>(EPrefabId.ShopFlexItem, parent);
             item.Initialize(flexItemData, flexItemAction);
@@ -19,7 +19,7 @@ namespace Mathlife.ProjectL.Gameplay
         }
     }
 
-    class ShopFlexItem : Presenter<EquipmentGameData, Action<EquipmentGameData>>
+    class ShopFlexItem : Presenter<MechPartGameData, Action<MechPartGameData>>
     {
         [SerializeField] Image m_iconImage;
         [SerializeField] TMP_Text m_itemNameText;
@@ -27,21 +27,21 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField] TMP_Text m_itemPriceText;
         [SerializeField] Button m_buyButton;
 
-        EquipmentGameData equipmentGameData;
-        Action<EquipmentGameData> m_buyAction;
+        MechPartGameData mechPartGameData;
+        Action<MechPartGameData> m_buyAction;
 
-        protected override void Store(EquipmentGameData equipmentGameData, Action<EquipmentGameData> buyAction)
+        protected override void Store(MechPartGameData mechPartGameData, Action<MechPartGameData> buyAction)
         {
-            this.equipmentGameData = equipmentGameData;
+            this.mechPartGameData = mechPartGameData;
             m_buyAction = buyAction;
         }
 
         protected override void InitializeView()
         {
-            m_iconImage.sprite = equipmentGameData.icon;
-            m_itemNameText.text = equipmentGameData.displayName;
-            m_itemDescriptionText.text = equipmentGameData.description;
-            m_itemPriceText.text = equipmentGameData.shopPrice.ToString();
+            m_iconImage.sprite = mechPartGameData.icon;
+            m_itemNameText.text = mechPartGameData.displayName;
+            m_itemDescriptionText.text = mechPartGameData.description;
+            m_itemPriceText.text = mechPartGameData.shopPrice.ToString();
         }
 
         protected override void SubscribeDataChange()
@@ -50,7 +50,7 @@ namespace Mathlife.ProjectL.Gameplay
         protected override void SubscribeUserInteractions()
         {
             m_buyButton.OnClickAsObservable()
-                .Subscribe(_ => m_buyAction(equipmentGameData))
+                .Subscribe(_ => m_buyAction(mechPartGameData))
                 .AddTo(gameObject);
         }
     }

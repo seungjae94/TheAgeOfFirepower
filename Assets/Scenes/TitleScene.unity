@@ -145,11 +145,11 @@ Transform:
   m_GameObject: {fileID: 17784033}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1196.4398, y: -690.3795, z: -5.3516784}
+  m_LocalPosition: {x: -6.2559814, y: -2.7947388, z: -89.80092}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 994024328}
+  m_Father: {fileID: 1970063658}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &17784035
 MonoBehaviour:
@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 122009032}
   - component: {fileID: 122009031}
   m_Layer: 5
-  m_Name: Title Canvas
+  m_Name: Main Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -482,8 +482,7 @@ Transform:
   m_LocalPosition: {x: 1190.1838, y: 687.5848, z: 5.5507603}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 17784034}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &994024329
@@ -498,8 +497,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9adf4530daf0db408c868745fa94172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_gameStartButton: {fileID: 1552085359}
-  m_appScope: {fileID: 7715216018450331980}
+  lifeTime: 1
+  gameStartButton: {fileID: 1552085359}
+  gameState: {fileID: 7715216018450331980}
 --- !u!1 &1142803656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,6 +1041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1970063658}
+  - component: {fileID: 1970063659}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -1061,10 +1062,25 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 17784034}
   - {fileID: 1142803657}
   - {fileID: 1680481517}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1970063659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970063657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afece6fc166b4336b8e8a9b75a87b0d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 0
+  <MainCamera>k__BackingField: {fileID: 1680481516}
 --- !u!1 &2042418160
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,13 +1258,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3851758510529570390}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f98840384793eb4db38fd81c17b03e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b8724c7a8f42f24e9840a1c49d3ab4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentReference:
-    TypeName: 
-  autoRun: 0
-  autoInjectGameObjects: []
+  lifeTime: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

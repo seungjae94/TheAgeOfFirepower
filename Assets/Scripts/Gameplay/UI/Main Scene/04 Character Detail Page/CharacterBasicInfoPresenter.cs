@@ -86,7 +86,7 @@ namespace Mathlife.ProjectL.Gameplay
                 return;
             }
 
-            m_portrait.sprite = m_character.portrait;
+            m_portrait.sprite = m_character.Sprite;
             m_nameText.text = m_character.displayName;
         }
     }

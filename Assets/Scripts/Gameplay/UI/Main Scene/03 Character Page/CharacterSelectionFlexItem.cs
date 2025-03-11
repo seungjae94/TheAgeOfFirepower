@@ -67,7 +67,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void InitializeView()
         {
-            m_portraitImage.sprite = character.portrait;
+            m_portraitImage.sprite = character.Sprite;
             m_nameText.text = character.displayName;
             UpdateLevelText(character.levelRx.Value);
         }

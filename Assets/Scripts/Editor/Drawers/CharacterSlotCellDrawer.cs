@@ -14,7 +14,7 @@ using DG.DemiEditor;
 
 namespace Mathlife.ProjectL.Editor
 {
-    internal sealed class CharacterSlotCellDrawer<TArray> : TwoDimensionalArrayDrawer<TArray, CharacterPreset> where TArray : System.Collections.IList
+    internal sealed class CharacterSlotCellDrawer<TArray> : TwoDimensionalArrayDrawer<TArray, VehiclePreset> where TArray : System.Collections.IList
     {
         protected override TableMatrixAttribute GetDefaultTableMatrixAttributeSettings()
         {
@@ -27,20 +27,20 @@ namespace Mathlife.ProjectL.Editor
             };
         }
 
-        protected override CharacterPreset DrawElement(Rect rect, CharacterPreset value)
+        protected override VehiclePreset DrawElement(Rect rect, VehiclePreset value)
         {
             var id = DragAndDropUtilities.GetDragAndDropId(rect);
 
-            if (value.character != null)
+            if (value.vehicle != null)
             {
-                DragAndDropUtilities.DrawDropZone(rect, value.character.portrait, null, id); // Draws the drop-zone using the icon.
+                DragAndDropUtilities.DrawDropZone(rect, value.vehicle.sprite, null, id); // Draws the drop-zone using the icon.
             }
             else
             {
                 DragAndDropUtilities.DrawDropZone(rect, null, null, id); // Draws the drop-zone using the icon.
             }
 
-            if (value.character != null)
+            if (value.vehicle != null)
             {
                 // Draw Character level and exp
                 var levelRect = rect.Padding(2, 2, 2, 18).AlignBottom(16);
@@ -56,7 +56,7 @@ namespace Mathlife.ProjectL.Editor
             }
 
             value = DragAndDropUtilities.DropZone(rect, value, id);                                             // Drop zone for CharacterSlot structs.
-            value.character = DragAndDropUtilities.DropZone<CharacterGameData>(rect, value.character, id);     // Drop zone for CharacterDataAsset types.
+            value.vehicle = DragAndDropUtilities.DropZone<VehicleGameData>(rect, value.vehicle, id);     // Drop zone for CharacterDataAsset types.
             value = DragAndDropUtilities.DragZone(rect, value, true, true, id);                             // Enables dragging of the CharacterSlot
 
             return value;
@@ -70,7 +70,7 @@ namespace Mathlife.ProjectL.Editor
             var rect = GUILayoutUtility.GetRect(0, 40).Padding(2);
             var id = DragAndDropUtilities.GetDragAndDropId(rect);
             DragAndDropUtilities.DrawDropZone(rect, null as UnityEngine.Object, null, id);
-            DragAndDropUtilities.DropZone<CharacterPreset>(rect, new CharacterPreset(), false, id);
+            DragAndDropUtilities.DropZone<VehiclePreset>(rect, new VehiclePreset(), false, id);
         }
     }
 }
