@@ -13,7 +13,7 @@ namespace Mathlife.ProjectL.Gameplay
         
         PageNavigator m_pageNavigator = new();
 
-        protected override async UniTask InitializeScene(IProgress<float> progress)
+        public override async UniTask InitializeScene(IProgress<float> progress)
         {
             // 1. UI Loading
             foreach (var presenter in FindObjectsByType<PresenterBase>(FindObjectsSortMode.None))

@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 255070521}
   - component: {fileID: 255070520}
   - component: {fileID: 255070519}
+  - component: {fileID: 255070523}
   m_Layer: 5
   m_Name: Loading Screen Canvas
   m_TagString: Untagged
@@ -221,6 +222,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &255070523
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255070518}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &686038060
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +243,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 686038061}
-  - component: {fileID: 686038063}
   - component: {fileID: 686038062}
   m_Layer: 0
   m_Name: Loading Screen Manager
@@ -268,18 +280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487b2a17fda5c18498ace09e2923f182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!225 &686038063
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 686038060}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &887764292
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +394,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452869443}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}

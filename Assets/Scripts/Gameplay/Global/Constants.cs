@@ -6,6 +6,14 @@ namespace Mathlife.ProjectL.Gameplay
         public const int PartyMemberCount = 3;
     }
 
+    public static class SceneNames
+    {
+        public const string AppScopeScene = "AppScopeScene";
+        public const string TitleScene = "TitleScene";
+        public const string LobbyScene = "LobbyScene";
+        public const string PlayScene = "PlayScene";
+    }
+
     public enum ETileCollisionType
     {
         Block,

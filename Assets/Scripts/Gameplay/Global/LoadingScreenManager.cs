@@ -9,33 +9,31 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    [RequireComponent(typeof(CanvasGroup))]
     public class LoadingScreenManager : MonoSingleton<LoadingScreenManager>
     {
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.App;
         
         private Camera loadingScreenCamera;
+        private CanvasGroup loadingScreenCanvasGroup;
         private Slider progressBar;
 
         protected override void OnRegistered()
         {
             loadingScreenCamera = transform.FindRecursive<Camera>();
+            loadingScreenCanvasGroup = transform.FindRecursive<CanvasGroup>();
             progressBar = transform.FindRecursive<Slider>();
-        }
-
-        private void Start()
-        {
-            Show();
         }
 
         public void Show()
         {
             loadingScreenCamera.enabled = true;
+            loadingScreenCanvasGroup.Show();
         }
 
         public void Hide()
         {
             loadingScreenCamera.enabled = false;
+            loadingScreenCanvasGroup.Hide();
         }
 
         public void SetProgress(float value)

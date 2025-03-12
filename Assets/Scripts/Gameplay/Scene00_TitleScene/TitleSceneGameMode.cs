@@ -23,19 +23,19 @@ namespace Mathlife.ProjectL.Gameplay
             gameStartButtonCanvasGroup = gameStartButton.GetComponent<CanvasGroup>();
         }
 
-        protected override UniTask PreInitializeGame()
+        public override UniTask PreInitializeGame()
         {
             gameStartButtonCanvasGroup.Hide();
             return UniTask.CompletedTask;
         }
 
-        protected override UniTask PostInitializeGame()
+        public override UniTask PostInitializeGame()
         {
             gameStartButtonCanvasGroup.Show();
             return UniTask.CompletedTask;
         }
 
-        protected override UniTask InitializeScene(IProgress<float> progress)
+        public override UniTask InitializeScene(IProgress<float> progress)
         {
             gameStartButton.OnClickAsObservable()
                 .Subscribe(_ => OnClickGameStartButton())
@@ -45,7 +45,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void OnClickGameStartButton()
         {
-            SceneManager.LoadScene("MainScene");
+            GameManager.Inst.ChangeScene(SceneNames.LobbyScene).Forget();
         }
     }
 }
