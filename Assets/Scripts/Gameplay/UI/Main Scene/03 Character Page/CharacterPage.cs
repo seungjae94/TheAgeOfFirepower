@@ -10,7 +10,7 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public override EPageId pageId => EPageId.CharacterPage;
 
-        [Inject] MainSceneManager m_mainSceneManager;
+        [Inject] LobbySceneGameMode lobbySceneGameMode;
         [Inject] CharacterRosterState characterRosterState;
 
         [SerializeField] Button m_navBackButton;
@@ -34,7 +34,7 @@ namespace Mathlife.ProjectL.Gameplay
         protected override void SubscribeUserInteractions()
         {
             m_navBackButton.OnClickAsObservable()
-                .Subscribe(_ => m_mainSceneManager.NavigateBack())
+                .Subscribe(_ => lobbySceneGameMode.NavigateBack())
                 .AddTo(gameObject);
         }
 
@@ -42,7 +42,7 @@ namespace Mathlife.ProjectL.Gameplay
         void OnClickFlexItem(CharacterModel character)
         {
             selectedCharacterRx.Value = character;
-            m_mainSceneManager.Navigate(EPageId.CharacterDetailPage);
+            lobbySceneGameMode.Navigate(EPageId.CharacterDetailPage);
         }
 
         // 뷰 업데이트

@@ -13,7 +13,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class StageSelectionPage : Page
     {
-        [Inject] MainSceneManager m_mainSceneManager;
+        [Inject] LobbySceneGameMode lobbySceneGameMode;
 
         Image m_portrait;
         TMP_Text m_battleNameText;
@@ -50,7 +50,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         void OnClickBackButton()
         {
-            m_mainSceneManager.NavigateBack();
+            lobbySceneGameMode.NavigateBack();
         }
 
         protected override void InitializeChildren()

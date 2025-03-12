@@ -35,8 +35,6 @@ namespace Mathlife.ProjectL.Gameplay
             saveDataManager = GameState.Inst.SaveDataManager;
             gameDataLoader = GameState.Inst.GameDataLoader;
 
-            await UniTask.SwitchToThreadPool();
-            
             // Validate that InventoryState was created before creating CharacterState.
             if (GameState.Inst.InventoryState == null)
             {

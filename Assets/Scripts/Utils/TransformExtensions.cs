@@ -5,7 +5,7 @@ namespace Mathlife.ProjectL.Utils
 {
     public static class TransformExtensions
     {
-        public static T FindRecursive<T>(this Transform transform)
+        public static T FindRecursive<T>(this Transform transform) where T : Component
         {
             Queue<Transform> queue = new();
             queue.Enqueue(transform);
@@ -13,19 +13,17 @@ namespace Mathlife.ProjectL.Utils
             while (queue.Count > 0)
             {
                 Transform node = queue.Dequeue();
-                T component = node.GetComponent<T>();
-
-                if (component != null)
+                if (node.TryGetComponent<T>(out var component) == true)
                     return component;
 
                 foreach (Transform child in node)
                     queue.Enqueue(child);
             }
 
-            return default;
+            return null;
         }
 
-        public static T FindRecursiveByName<T>(this Transform transform, string n)
+        public static T FindRecursiveByName<T>(this Transform transform, string n) where T : Component
         {
             Queue<Transform> queue = new();
             queue.Enqueue(transform);
@@ -35,16 +33,21 @@ namespace Mathlife.ProjectL.Utils
                 Transform node = queue.Dequeue();
 
                 if (node.name == n)
-                    return node.GetComponent<T>();
+                {
+                    if (node.TryGetComponent<T>(out var component) == true)
+                        return component;
+                    else
+                        throw new System.Exception($"[TrasnformExtensions] GameObject {n} exists but {typeof(T).Name} component not found.");
+                }
 
                 foreach (Transform child in node)
                     queue.Enqueue(child);
             }
 
-            return default;
+            return null;
         }
 
-        public static List<T> FindAllRecursive<T>(this Transform transform)
+        public static List<T> FindAllRecursive<T>(this Transform transform) where T : Component
         {
             List<T> list = new List<T>();
 

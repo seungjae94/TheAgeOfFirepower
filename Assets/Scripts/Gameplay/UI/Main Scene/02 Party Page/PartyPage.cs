@@ -12,7 +12,7 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public override EPageId pageId => EPageId.PartyPage;
 
-        [Inject] MainSceneManager m_mainSceneManager;
+        [Inject] LobbySceneGameMode lobbySceneGameMode;
         [Inject] CharacterRosterState characterRosterState;
 
         [SerializeField] Button m_navBackButton;
@@ -90,14 +90,14 @@ namespace Mathlife.ProjectL.Gameplay
         async void OnClickBackButton()
         {
             if (characterRosterState.party.Validate())
-                m_mainSceneManager.NavigateBack();
+                lobbySceneGameMode.NavigateBack();
             else
                 await m_partyValidationModal.Show();
         }
 
         public void OnClickDetailInfoButton(Unit _)
         {
-            m_mainSceneManager.Navigate(EPageId.CharacterDetailPage);
+            lobbySceneGameMode.Navigate(EPageId.CharacterDetailPage);
         }
 
         public async void OnClickPartyMemberChangeButton(Unit _)

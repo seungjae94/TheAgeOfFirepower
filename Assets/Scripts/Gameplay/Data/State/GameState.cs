@@ -4,6 +4,8 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class GameState : MonoSingleton<GameState>, IState
     {
+        protected override SingletonLifeTime LifeTime => SingletonLifeTime.App;
+        
         public readonly GameDataLoader GameDataLoader = new();
         public readonly SaveDataManager SaveDataManager = new();
 

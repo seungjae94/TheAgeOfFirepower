@@ -8,7 +8,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class HomePage : Page
     {
-        [Inject] MainSceneManager m_mainSceneManager;
+        [Inject] LobbySceneGameMode lobbySceneGameMode;
 
         [SerializeField] Button m_partyButton;
         [SerializeField] Button m_characterButton;
@@ -27,23 +27,23 @@ namespace Mathlife.ProjectL.Gameplay
         protected override void SubscribeUserInteractions()
         {
             m_partyButton.OnClickAsObservable()
-                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.PartyPage))
+                .Subscribe(_ => lobbySceneGameMode.Navigate(EPageId.PartyPage))
                 .AddTo(gameObject);
 
             m_characterButton.OnClickAsObservable()
-                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.CharacterPage))
+                .Subscribe(_ => lobbySceneGameMode.Navigate(EPageId.CharacterPage))
                 .AddTo(gameObject);
 
             m_inventoryButton.OnClickAsObservable()
-                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.InventoryPage))
+                .Subscribe(_ => lobbySceneGameMode.Navigate(EPageId.InventoryPage))
                 .AddTo(gameObject);
 
             m_shopButton.OnClickAsObservable()
-                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.ShopPage))
+                .Subscribe(_ => lobbySceneGameMode.Navigate(EPageId.ShopPage))
                 .AddTo(gameObject);
 
             m_battleButton.OnClickAsObservable()
-                .Subscribe(_ => m_mainSceneManager.Navigate(EPageId.StageSelectionPage))
+                .Subscribe(_ => lobbySceneGameMode.Navigate(EPageId.StageSelectionPage))
                 .AddTo(gameObject);
         }
     }

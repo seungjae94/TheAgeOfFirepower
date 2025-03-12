@@ -9,16 +9,14 @@ namespace Mathlife.ProjectL.Gameplay
         private const float k_minScreenAspect = 16f / 9f;
         private const float k_maxScreenAspect = 21f / 9f;
 
-        private Camera mainCamera;
+        private Camera targetCamera;
         private float prevScreenAspect = -1f;
-
-        [SerializeField] 
 
         #region Unity Event Functions
 
         private void Awake()
         {
-            mainCamera = Camera.main;
+            targetCamera = GetComponent<Camera>();
         }
 
         private void Start()
@@ -64,28 +62,28 @@ namespace Mathlife.ProjectL.Gameplay
         // 스크린 aspect가 16:9 미만일 경우, 위 아래에 레터 박스를 그려서 카메라 aspect를 16:9로 고정한다.
         private void AdaptWithLetterBox(float screenAspect)
         {
-            mainCamera.aspect = k_minScreenAspect;
+            targetCamera.aspect = k_minScreenAspect;
 
             float rectHeight = screenAspect / k_minScreenAspect;
             float rectY = (1f - rectHeight) / 2f;
-            mainCamera.rect = new Rect(0f, rectY, 1f, rectHeight);
+            targetCamera.rect = new Rect(0f, rectY, 1f, rectHeight);
         }
 
         // 스크린 aspect가 16:9 이상 21:9 이하일 경우, 스크린 aspect를 카메라 aspect로 사용한다. 
         private void AdaptToFullScreen(float screenAspect)
         {
-            mainCamera.aspect = screenAspect;
-            mainCamera.rect = new Rect(0, 0, 1, 1);
+            targetCamera.aspect = screenAspect;
+            targetCamera.rect = new Rect(0, 0, 1, 1);
         }
 
         // 스크린 aspect가 21:9를 초과할 경우, 양 옆에 필러 박스를 그려서 카메라 aspect를 21:9로 고정한다.
         private void AdaptWithPillarBox(float screenAspect)
         {
-            mainCamera.aspect = k_maxScreenAspect;
+            targetCamera.aspect = k_maxScreenAspect;
 
             float rectWidth = k_maxScreenAspect / screenAspect;
             float rectX = (1f - rectWidth) / 2f;
-            mainCamera.rect = new Rect(rectX, 0f, rectWidth, 1f);
+            targetCamera.rect = new Rect(rectX, 0f, rectWidth, 1f);
         }
 
         public void ApplySafeArea()

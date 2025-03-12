@@ -12,7 +12,7 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public override EPageId pageId => EPageId.InventoryPage;
 
-        [Inject] MainSceneManager m_mainSceneManager;
+        [Inject] LobbySceneGameMode lobbySceneGameMode;
         [Inject] InventoryState inventoryState;
 
         // �ڷ� ���� ���
@@ -63,7 +63,7 @@ namespace Mathlife.ProjectL.Gameplay
         protected override void SubscribeUserInteractions()
         {
             m_navBackButton.OnClickAsObservable()
-                .Subscribe(_ => m_mainSceneManager.NavigateBack())
+                .Subscribe(_ => lobbySceneGameMode.NavigateBack())
                 .AddTo(gameObject);
         }
 

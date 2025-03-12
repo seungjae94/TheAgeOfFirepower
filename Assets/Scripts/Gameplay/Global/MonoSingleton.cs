@@ -11,9 +11,12 @@ namespace Mathlife.ProjectL.Gameplay
     /// <summary>
     /// 씬에 배치되어 있는 정적 싱글톤.
     /// </summary>
+    /// <remarks>
+    /// 모노 싱글톤은 Awake 대신 OnRegistered 함수를 사용해서 초기화한다.
+    /// </remarks>
     public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
     {
-        [SerializeField] protected SingletonLifeTime lifeTime;
+        protected abstract SingletonLifeTime LifeTime { get; }
 
         private static readonly string s_typeName = typeof(T).Name;
 
@@ -38,7 +41,7 @@ namespace Mathlife.ProjectL.Gameplay
                 s_inst = this as T;
                 OnRegistered();
 
-                if (lifeTime == SingletonLifeTime.App)
+                if (LifeTime == SingletonLifeTime.App)
                     DontDestroyOnLoad(gameObject);
             }
             else
@@ -47,10 +50,7 @@ namespace Mathlife.ProjectL.Gameplay
                 Destroy(gameObject);
             }
         }
-
-        /// <summary>
-        /// 모노 싱글톤은 Awake 대신 OnRegistered 함수를 사용해서 초기화한다.
-        /// </summary>
+        
         protected virtual void OnRegistered()
         {
         }

@@ -11,7 +11,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class PartyValidationModal : Presenter
     {
-        [Inject] MainSceneManager m_mainSceneManager;
+        [Inject] LobbySceneGameMode lobbySceneGameMode;
         [Inject] CharacterRosterState characterRosterState;
 
         CanvasGroup m_canvasGroup;
@@ -48,7 +48,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             await m_canvasGroup.Hide(k_fadeTime);
             
-            m_mainSceneManager.NavigateBack();
+            lobbySceneGameMode.NavigateBack();
         }
 
         void OnClickCancelButton(Unit _)

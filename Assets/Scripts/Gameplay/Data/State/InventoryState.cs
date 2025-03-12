@@ -18,8 +18,6 @@ namespace Mathlife.ProjectL.Gameplay
             saveDataManager = GameState.Inst.SaveDataManager;
             gameDataLoader = GameState.Inst.GameDataLoader;
             
-            await UniTask.SwitchToThreadPool();
-            
             InitEquipmentDictionary();
 
             if (GameState.Inst.SaveDataManager.DoesSaveFileExist())

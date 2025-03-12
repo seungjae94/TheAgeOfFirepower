@@ -10,7 +10,7 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public override EPageId pageId => EPageId.CharacterDetailPage;
 
-        [Inject] MainSceneManager m_mainSceneManager;
+        [Inject] LobbySceneGameMode lobbySceneGameMode;
         [Inject] PartyPage m_partyPage;
         [Inject] CharacterPage m_characterPage;
 
@@ -48,19 +48,19 @@ namespace Mathlife.ProjectL.Gameplay
         // ���� ��ȣ �ۿ�
         void OnClickBackButton()
         {
-            Page prevPage = m_mainSceneManager.GetPreviousPage();
+            Page prevPage = lobbySceneGameMode.GetPreviousPage();
 
             if (prevPage is PartyPage)
                 m_partyPage.selectedSlotIndexRx.Value = -1;
             else if (prevPage is CharacterPage)
                 m_characterPage.selectedCharacterRx.Value = null;
 
-            m_mainSceneManager.NavigateBack();
+            lobbySceneGameMode.NavigateBack();
         }
 
         public override void Open()
         {
-            Page prevPage = m_mainSceneManager.GetPreviousPage();
+            Page prevPage = lobbySceneGameMode.GetPreviousPage();
 
             if (prevPage is PartyPage)
                 characterRx.Value = m_partyPage.GetSelectedCharacter();
