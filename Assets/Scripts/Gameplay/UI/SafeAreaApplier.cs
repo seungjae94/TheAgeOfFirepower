@@ -120,7 +120,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                     offset += margin1.right - margin0.right;
                 }
                 
-                rectTransform.offsetMax = new Vector2(offset, rectTransform.offsetMax.y);
+                rectTransform.offsetMax = new Vector2(-offset, rectTransform.offsetMax.y);
             }
             
             // 위쪽 앵커
@@ -135,7 +135,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                     offset += margin1.top - margin0.top;
                 }
                 
-                rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, offset);
+                rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -offset);
             }
             
             // 아래쪽 앵커
