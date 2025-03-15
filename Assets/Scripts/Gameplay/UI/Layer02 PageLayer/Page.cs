@@ -36,6 +36,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
 
             // 열려있는 프레젠터 전부 비활성화
+            // TODO: 불필요한 비활성화 예방 (다음 페이지로 이동하더라도 계속 열려 있어야 하는 경우)
             GameManager.Inst.CurrentCanvas.DeactivateAllPresenters();
             
             // 이 페이지 활성화
@@ -46,6 +47,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public virtual void Close()
         {
             // 열려있는 프레젠터 전부 비활성화
+            // TODO: 불필요한 비활성화 예방 (이전 페이지로 이동하더라도 계속 열려 있어야 하는 경우)
             GameManager.Inst.CurrentCanvas.DeactivateAllPresenters();
             
             if (s_historyStack.Count == 0)

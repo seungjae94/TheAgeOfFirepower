@@ -11,6 +11,8 @@ using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using DG.DOTweenEditor;
+using UnityEditor.SceneManagement;
+using Mathlife.ProjectL.Gameplay.UI.Editor;
 #endif
 
 namespace Mathlife.ProjectL.Gameplay
@@ -40,6 +42,9 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void CreateTweens()
         {
+            slideInTween?.Kill();
+            slideOutTween?.Kill();
+
             Vector2 outPos = new Vector2(rectTransform.rect.width, 0);
             slideInTween = rectTransform.DOAnchorPos(Vector2.zero, slideDuration, false)
                 .From(outPos)
@@ -110,19 +115,21 @@ namespace Mathlife.ProjectL.Gameplay
         [Button("Preview SlideIn")]
         private void PreviewSlideIn()
         {
-            DOTweenEditorPreview.Stop();
             CreateTweens();
-            DOTweenEditorPreview.PrepareTweenForPreview(slideInTween);
-            DOTweenEditorPreview.Start();
+            MyDOTweenEditorPreview.Start(slideInTween, gameObject);
         }
 
         [Button("Preview SlideOut")]
         private void PreviewSlideOut()
         {
-            DOTweenEditorPreview.Stop();
             CreateTweens();
-            DOTweenEditorPreview.PrepareTweenForPreview(slideOutTween);
-            DOTweenEditorPreview.Start();
+            MyDOTweenEditorPreview.Start(slideOutTween, gameObject);
+        }
+
+        [Button("Stop Preview")]
+        private void StopPreview()
+        {
+            MyDOTweenEditorPreview.Stop(gameObject);
         }
 #endif
 
