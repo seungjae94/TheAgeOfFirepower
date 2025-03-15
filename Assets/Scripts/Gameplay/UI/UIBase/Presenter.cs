@@ -6,8 +6,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public interface IPresenter
     {
-        public void Open();
-        public void Close();
+        public void Activate();
+        public void Deactivate();
     }
 
     public class PresenterNotRegisteredException : Exception
@@ -50,12 +50,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
             throw new PresenterNotRegisteredException(widgetType);
         }
 
-        public virtual void Open()
+        public virtual void Activate()
         {
             gameObject.SetActive(true);
         }
 
-        public virtual void Close()
+        public virtual void Deactivate()
         {
             gameObject.SetActive(false);
         }

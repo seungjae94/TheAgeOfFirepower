@@ -9,6 +9,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class InventoryPage : Page
     {
+        public override string PageName => "인벤토리";
+        
         LobbySceneGameMode lobbySceneGameMode;
         InventoryState inventoryState;
 
@@ -32,7 +34,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
         }
 
-        public override void Open()
+        public override void Activate()
         {
             // base.Open();
             //

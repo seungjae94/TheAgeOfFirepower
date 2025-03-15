@@ -7,6 +7,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class StageSelectionPage : Page
     {
+        public override string PageName => "스테이지 선택";
+        
         LobbySceneGameMode lobbySceneGameMode;
 
         Image m_portrait;
@@ -26,14 +28,14 @@ namespace Mathlife.ProjectL.Gameplay.UI
             m_backButton = transform.FindRecursiveByName<Button>("Back Button");
         }
 
-        public override void Open()
+        public override void Activate()
         {
             m_backButton
                 .OnClickAsObservable()
                 .Subscribe(_ => OnClickBackButton())
                 .AddTo(m_subscriptions_page);
 
-            Close();
+            Deactivate();
         }
 
         void OnClickBackButton()

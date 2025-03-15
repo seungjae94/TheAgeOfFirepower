@@ -16,7 +16,7 @@ namespace Mathlife.ProjectL.Gameplay
             progress.Report(0.1f);
             
             // 1. 모든 UI 닫아놓기
-            CloseAllPresenters();
+            LobbyCanvas.Inst.DeactivateAllPresenters();
             progress.Report(0.3f);
             
             // 2. 홈 페이지 열기
@@ -26,16 +26,6 @@ namespace Mathlife.ProjectL.Gameplay
             // 3. 딜레이
             await UniTask.Delay(100);
             progress.Report(1.0f);
-        }
-
-        private void CloseAllPresenters()
-        {
-            LobbyCanvas.Inst.GetLayer(ECanvasLayer.Background).CloseAllPresenters();
-            LobbyCanvas.Inst.GetLayer(ECanvasLayer.HUD).CloseAllPresenters();
-            LobbyCanvas.Inst.GetLayer(ECanvasLayer.Page).CloseAllPresenters();
-            LobbyCanvas.Inst.GetLayer(ECanvasLayer.Overlay).CloseAllPresenters();
-            LobbyCanvas.Inst.GetLayer(ECanvasLayer.Popup).CloseAllPresenters();
-            LobbyCanvas.Inst.GetLayer(ECanvasLayer.Screen).CloseAllPresenters();
         }
     }
 }

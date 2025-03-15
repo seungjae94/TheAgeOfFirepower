@@ -7,13 +7,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         public virtual UniTask OpenWithAnimation()
         {
-            base.Open();
+            base.Activate();
             return UniTask.CompletedTask;
         }
         
         public virtual UniTask CloseWithAnimation()
         {
-            base.Close();
+            base.Deactivate();
             return UniTask.CompletedTask;
         }
     }

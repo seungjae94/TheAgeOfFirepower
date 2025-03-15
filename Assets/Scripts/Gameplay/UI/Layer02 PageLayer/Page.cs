@@ -5,6 +5,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public abstract class Page : Presenter
     {
+        // History Management
         private class PageHistory
         {
             public Page page; 
@@ -13,51 +14,54 @@ namespace Mathlife.ProjectL.Gameplay.UI
         }
         
         private static readonly Stack<PageHistory> s_historyStack = new();
-        public static Page CurrentPage => s_historyStack.LastOrDefault()?.page;
+        public static Page CurrentPage { get; private set; }
 
         private static IMainCanvas CurrentCanvas => GameManager.Inst.CurrentCanvas; 
-        
-        public static void NavigateBack()
+ 
+        public virtual void Open()
         {
-            CurrentPage.Close();
-        }
-        
-        public override void Open()
-        {
-            base.Open();
-            
-            if (s_historyStack.Count == 0)
-                return;
-            
-            CanvasLayer overlayLayer = CurrentCanvas.GetLayer(ECanvasLayer.Overlay);
-            CanvasLayer popupLayer = CurrentCanvas.GetLayer(ECanvasLayer.Popup);
-            
-            PageHistory history = new()
+            // 히스토리 백업
+            if (CurrentPage != null)
             {
-                page = CurrentPage,
-                overlays = overlayLayer.GetAllPresenters<OverlayPresenter>(),
-                popups = popupLayer.GetAllPresenters<PopupPresenter>()
-            };
-            s_historyStack.Push(history);
+                CanvasLayer overlayLayer = CurrentCanvas.GetLayer(ECanvasLayer.Overlay);
+                CanvasLayer popupLayer = CurrentCanvas.GetLayer(ECanvasLayer.Popup);
+
+                PageHistory history = new()
+                {
+                    page = CurrentPage,
+                    overlays = overlayLayer.GetAllPresenters<OverlayPresenter>(),
+                    popups = popupLayer.GetAllPresenters<PopupPresenter>()
+                };
+                s_historyStack.Push(history);
+            }
+
+            // 열려있는 프레젠터 전부 비활성화
+            GameManager.Inst.CurrentCanvas.DeactivateAllPresenters();
             
-            // 이전 페이지 닫기
-            history.page.Close();
-            history.overlays.ForEach(overlay => overlay.Close());
-            history.popups.ForEach(popup => popup.Close());
+            // 이 페이지 활성화
+            Activate();
+            CurrentPage = this;
         }
 
-        public override void Close()
+        public virtual void Close()
         {
-            base.Close();
-
+            // 열려있는 프레젠터 전부 비활성화
+            GameManager.Inst.CurrentCanvas.DeactivateAllPresenters();
+            
             if (s_historyStack.Count == 0)
                 return;
             
-            // 이전 페이지 열기
+            // 히스토리 복원
             PageHistory history = s_historyStack.Pop();
-            history.page.Open();
-            history.overlays.ForEach(overlay => overlay.Open());
-            history.popups.ForEach(popup => popup.Open());
+            history.page.Activate();
+            history.overlays.ForEach(overlay => overlay.Activate());
+            history.popups.ForEach(popup => popup.Activate());
+            
+            // 현재 페이지 변경
+            CurrentPage = history.page;
         }
+        
+        // 페이지 이름
+        public abstract string PageName { get; }
     }
 }

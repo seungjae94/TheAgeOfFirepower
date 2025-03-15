@@ -7,6 +7,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class ArtySelectionPage : Page
     {
+        public override string PageName => "화포 선택";
+        
         ArtyRosterState artyRosterState;
 
         [SerializeField] Button m_navBackButton;
@@ -16,7 +18,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         SortedCharacterListSubscription m_sortedCharacterListChangeSubs;
         
-        public override void Open()
+        public override void Activate()
         {
             // m_flex.Initialize();
             //

@@ -12,14 +12,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
         Page,
         Overlay,
         Popup,
-        Screen          // Fade Screen
+        Screen // Fade Screen
     }
 
     public interface IMainCanvas
     {
         public CanvasLayer GetLayer(ECanvasLayer layer);
+
+        public void DeactivateAllPresenters(bool ignoreBackground = true);
     }
-    
+
     public class MainCanvas<TMainCanvas> : MonoSingleton<TMainCanvas>, IMainCanvas
         where TMainCanvas : MainCanvas<TMainCanvas>
     {
@@ -39,6 +41,17 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public CanvasLayer GetLayer(ECanvasLayer layer)
         {
             return canvasLayers[(int)layer];
+        }
+
+        public void DeactivateAllPresenters(bool ignoreBackground = true)
+        {
+            for (int i = 0; i < canvasLayers.Count; ++i)
+            {
+                if (ignoreBackground && i == (int)ECanvasLayer.Background)
+                    continue;
+                
+                canvasLayers[i].DeactivateAllPresenters();
+            }
         }
     }
 }

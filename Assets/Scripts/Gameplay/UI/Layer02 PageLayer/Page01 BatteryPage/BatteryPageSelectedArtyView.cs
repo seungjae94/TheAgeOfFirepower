@@ -93,7 +93,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClickArtySlotChangeButton(Unit _)
         {
-            Presenter.Find<BattlePageArtySlotChangePopup>().Open();
+            Presenter.Find<BattlePageArtySlotChangePopup>().Activate();
         }
 
         // 뷰 업데이트

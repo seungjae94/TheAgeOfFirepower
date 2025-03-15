@@ -11,14 +11,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class BatteryPage : Page
     {
+        public override string PageName => "포대 관리";
+
         // Alias
         private ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
-        
+
         // View
         //Transform m_partySlotsParent;
         private List<BatteryPageArtySlot> artySlots;
         private BatteryPageSelectedArtyView selectedArtyView;
-        
+
         // Field - Selected Slot Index
         public readonly ReactiveProperty<int> selectedSlotIndexRx = new(-1);
 
@@ -26,7 +28,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             return selectedSlotIndexRx.Value >= 0 && selectedSlotIndexRx.Value < artySlots.Count;
         }
-        
+
         public ArtyModel SelectedArty
         {
             get
@@ -37,7 +39,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 return ArtyRosterState.Battery[selectedSlotIndexRx.Value];
             }
         }
-        
+
         // Field - Is Dragging Slot Item
         public readonly ReactiveProperty<bool> isDraggingSlotItemRx = new(false);
 
@@ -51,12 +53,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public override void Open()
         {
             base.Open();
-            
+
             // Overlay
             NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
-            navBackOverlay.Open();
+            navBackOverlay.Activate();
             // TODO: navBackOverlay 콜백에 OnNavBack 등록
-            
+
             // 상태 초기화
             selectedSlotIndexRx.Value = -1;
         }
@@ -64,7 +66,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public override void Close()
         {
             base.Close();
-            
+
+            // Overlay
+            NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
             // TODO: navBackOverlay 콜백에서 OnNavBack 제거
         }
 

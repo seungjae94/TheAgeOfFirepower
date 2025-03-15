@@ -9,6 +9,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class HomePage : Page
     {
+        public override string PageName => "홈";
+        
         HomePageMenuBar menuBar;
 
         private void Awake()
@@ -22,12 +24,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             // Page Overlay
             // TODO: UserInfo 구현 및 Open
-            Find<CurrencyBar>().Open();
+            Find<CurrencyBar>().Activate();
             
             // View 초기화
             menuBar.Initialize();
         }
-        
+
         private void Start()
         {
         }

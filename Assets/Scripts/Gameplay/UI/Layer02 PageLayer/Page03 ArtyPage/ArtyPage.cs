@@ -7,6 +7,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class ArtyPage : Page
     {
+        public override string PageName => "화포 관리";
+        
         [SerializeField] Button m_navBackButton;
         [SerializeField] Image m_background; // TODO: ���� �ʿ� ���� ��� �̹��� ����
 
@@ -18,7 +20,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public readonly ReactiveProperty<ArtyModel> characterRx = new();
 
-        public override void Open()
+        public override void Activate()
         {
             // Page prevPage = lobbySceneGameMode.GetPreviousPage();
             //

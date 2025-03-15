@@ -15,9 +15,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [FormerlySerializedAs("m_diamondText")]
         [SerializeField] TextMeshProUGUI diamondText;
 
-        public override void Open()
+        public override void Activate()
         {
-            base.Open();
+            base.Activate();
             
             InventoryState
                 .GoldRx

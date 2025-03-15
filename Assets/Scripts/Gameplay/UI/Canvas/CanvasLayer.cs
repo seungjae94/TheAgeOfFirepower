@@ -11,10 +11,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
             return GetComponentsInChildren<TPresenter>().ToList();
         }
         
-        public void CloseAllPresenters()
+        public void DeactivateAllPresenters()
         {
             GetAllPresenters<Presenter>()
-                .ForEach(presenter => presenter.Close());;
+                .ForEach(presenter => presenter.Deactivate());;
         }
     }
 }

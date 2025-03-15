@@ -7,6 +7,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class ShopPage : Page
     {
+        public override string PageName => "상점";
+        
         [SerializeField] Button m_navBackButton;
         [SerializeField] CurrencyBar m_ingameCurrencyBar;
 
@@ -29,7 +31,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         }
 
         // 유저 상호작용
-        public override void Open()
+        public override void Activate()
         {
             // base.Open();
             //

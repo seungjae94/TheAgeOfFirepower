@@ -66,7 +66,7 @@ namespace Mathlife.ProjectL.Gameplay
         // Open / Close
         public override async UniTask OpenWithAnimation()
         {
-            base.Open();
+            base.Activate();
 
             // 뷰 초기화
             m_excludeButton.gameObject.SetActive(BatteryPage.SelectedArty != null);
@@ -103,7 +103,7 @@ namespace Mathlife.ProjectL.Gameplay
             slideOutTween.Restart();
             await slideOutTween;
 
-            base.Close();
+            base.Deactivate();
         }
 
 #if UNITY_EDITOR
