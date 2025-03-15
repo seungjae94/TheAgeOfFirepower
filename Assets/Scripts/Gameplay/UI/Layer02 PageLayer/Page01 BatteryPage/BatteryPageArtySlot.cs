@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class BatteryPageArtySlot : MonoBehaviour
+    public class BatteryPageArtySlot : MonoBehaviour, IView
     {
         BatteryPage batteryPage;
         ArtyRosterState artyRosterState;
@@ -27,8 +27,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
             m_dropTrigger = GetComponent<ObservableDropTrigger>();
             m_clickTrigger = GetComponent<ObservablePointerClickTrigger>();
         }
+        
+        public void Initialize()
+        {
+            throw new System.NotImplementedException();
+        }
 
-        public void Open()
+        public void Clear()
         {
             // 뷰 초기화
             ArtyModel arty = artyRosterState.Battery[m_slotIndex];
@@ -56,6 +61,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .OnPointerClickAsObservable()
                 .Subscribe(OnClickSlot)
                 .AddTo(gameObject);
+        }
+
+        public void Open()
+        {
+            
         }
         
         // 모델 구독 콜백

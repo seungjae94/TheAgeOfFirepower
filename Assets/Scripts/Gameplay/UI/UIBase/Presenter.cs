@@ -10,9 +10,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public void Close();
     }
 
-    public class WidgetNotRegisteredException : Exception
+    public class PresenterNotRegisteredException : Exception
     {
-        public WidgetNotRegisteredException(Type widgetType) 
+        public PresenterNotRegisteredException(Type widgetType) 
             : base($"Widget of type {widgetType.Name} is not registered.")
         {
         }
@@ -26,11 +26,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         // Alias
         protected RectTransform rectTransform => (transform as RectTransform);
-        
-        private void Awake()
+
+        public static void RegisterAllPresentersInScene()
         {
-            // 씬이 로딩될 때 등록
-            s_widgets.Add(GetType(), this);
+            Presenter[] allPresenters = GameObject.FindObjectsByType<Presenter>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            
+            s_widgets.Clear();
+            foreach (Presenter presenter in allPresenters)
+            {
+                s_widgets.Add(presenter.GetType(), presenter);
+            }
         }
         
         public static TWidget Find<TWidget>() where TWidget : Presenter
@@ -42,7 +47,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 return widget as TWidget;
             }
     
-            throw new WidgetNotRegisteredException(widgetType);
+            throw new PresenterNotRegisteredException(widgetType);
         }
 
         public virtual void Open()

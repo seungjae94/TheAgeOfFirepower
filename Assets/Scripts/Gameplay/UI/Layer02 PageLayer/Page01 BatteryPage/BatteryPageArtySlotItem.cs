@@ -9,9 +9,10 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class BatteryPageArtySlotItem : Presenter
+    public class BatteryPageArtySlotItem : MonoBehaviour, IView
     {
-        GameDataLoader gameDataLoader;
+        // Alias
+        BatteryPage BatteryPage => Presenter.Find<BatteryPage>();
         ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
 
         CanvasGroup m_canvasGroup;
@@ -46,8 +47,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             m_slotIndex = slotIndex;
         }
-
-        public void Open()
+        
+        public void Initialize()
         {
             // 모델 구독
             ArtyRosterState.Battery
@@ -55,7 +56,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .Subscribe(OnSlotMemberChange)
                 .AddTo(gameObject);
 
-            Find<BatteryPage>().selectedSlotIndexRx
+            BatteryPage.selectedSlotIndexRx
                 .Subscribe(OnSelectedSlotIndexChange)
                 .AddTo(gameObject);
             
@@ -82,6 +83,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             // 뷰 초기화
             UpdateView();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Open()
+        {
+            
         }
 
         // 모델 구독 콜백
@@ -123,13 +134,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         void OnBeginDrag(PointerEventData eventData)
         {
-            m_dragItem = gameDataLoader.Instantiate<BatteryPageArtySlotDragItem>(EPrefabId.PartyMemberSlotDragItem, m_dragItemParent);
+            m_dragItem.gameObject.SetActive(true);
             //m_dragItem.Initialize(m_character);
             m_dragItem.transform.position = transform.position;
 
             m_canvasGroup.HideWithAlpha(0.25f);
 
-            Find<BatteryPage>().isDraggingSlotItemRx.Value = true;
+            BatteryPage.isDraggingSlotItemRx.Value = true;
         }
 
         void OnDrag(PointerEventData eventData)
@@ -139,7 +150,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         void OnEndDrag(PointerEventData eventData)
         {
-            Find<BatteryPage>().isDraggingSlotItemRx.Value = false;
+            BatteryPage.isDraggingSlotItemRx.Value = false;
 
             Destroy(m_dragItem.gameObject);
             m_canvasGroup.Show();
@@ -147,7 +158,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         void OnPointerClick(PointerEventData eventData)
         {
-            Find<BatteryPage>().selectedSlotIndexRx.Value = m_slotIndex;
+            BatteryPage.selectedSlotIndexRx.Value = m_slotIndex;
         }
 
         // 뷰 초기화 함수

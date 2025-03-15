@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    internal class BatteryPageSelectedArtyView : MonoBehaviour
+    internal class BatteryPageSelectedArtyView : MonoBehaviour, IView
     {
         // Alias
         ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
@@ -38,8 +38,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private readonly CompositeDisposable disposables = new();
         private IDisposable artyModelSub = null;
         
-        // 이벤트 함수
-        private void OnEnable()
+        // IView
+        public void Initialize()
         {
             BatteryPage.selectedSlotIndexRx
                 .Subscribe(OnSelectedSlotIndexChange)
@@ -56,11 +56,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
             UpdateView();
         }
 
-        private void OnDisable()
+        public void Clear()
         {
             disposables.Clear();
         }
-
+        
+        // 이벤트 함수
         private void OnDestroy()
         {
             disposables.Dispose();

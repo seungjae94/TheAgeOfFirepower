@@ -45,6 +45,7 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
 
         public virtual UniTask InitializeScene(IProgress<float> progress)
         {
+            Presenter.RegisterAllPresentersInScene();
             return UniTask.CompletedTask;
         }
     }

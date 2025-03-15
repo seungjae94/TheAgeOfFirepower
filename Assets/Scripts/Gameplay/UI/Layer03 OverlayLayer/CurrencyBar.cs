@@ -15,8 +15,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [FormerlySerializedAs("m_diamondText")]
         [SerializeField] TextMeshProUGUI diamondText;
 
-        public void Open()
+        public override void Open()
         {
+            base.Open();
+            
             InventoryState
                 .GoldRx
                 .Subscribe(gold => goldText.text = gold.ToString())
