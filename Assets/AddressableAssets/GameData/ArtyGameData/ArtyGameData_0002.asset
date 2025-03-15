@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df45e3d3af9d2804c9d0135324398ee5, type: 3}
+  m_Name: ArtyGameData_0002
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  displayName: "\uB7A9\uD130"
+  id: 2
+  sprite: {fileID: -7810947850561304840, guid: ed9409840a4b861478f59418ac530be2, type: 3}
+  shell: {fileID: 11400000, guid: 38aa331051829944ebb184dc641fa34c, type: 2}
+  maxHp: 425
+  maxHpGrowth: 21
+  atk: 45
+  atkGrowth: 4.5
+  def: 13
+  defGrowth: 1.3
+  spd: 125
+  spdGrowth: 5
