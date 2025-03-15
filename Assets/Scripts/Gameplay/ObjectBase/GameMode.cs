@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.UI;
+using Sirenix.Utilities;
 using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.ObjectBase
@@ -45,7 +48,12 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
 
         public virtual UniTask InitializeScene(IProgress<float> progress)
         {
-            Presenter.RegisterAllPresentersInScene();
+            IEnumerable<IInitializable> initializables = GameObject
+                .FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID)
+                .OfType<IInitializable>();
+
+            initializables.ForEach(initializable => initializable.Initialize());
+            
             return UniTask.CompletedTask;
         }
     }

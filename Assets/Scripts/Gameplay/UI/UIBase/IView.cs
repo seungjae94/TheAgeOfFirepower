@@ -1,10 +1,14 @@
 using System;
+using Mathlife.ProjectL.Gameplay.ObjectBase;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public interface IView
+    public interface IView : IInitializable
     {
-        void Initialize();
+        /// <summary>Presenter가 Open할 때 호출</summary> 
+        void Draw();
+        
+        /// <summary>Presenter가 Close할 때 호출</summary>
         void Clear();
     }
 }

@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Mathlife.ProjectL.Gameplay.ObjectBase;
 using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public interface IPresenter
+    public interface IPresenter : IInitializable
     {
         public void Activate();
         public void Deactivate();
@@ -26,17 +27,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         // Alias
         protected RectTransform rectTransform => (transform as RectTransform);
-
-        public static void RegisterAllPresentersInScene()
-        {
-            Presenter[] allPresenters = GameObject.FindObjectsByType<Presenter>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            
-            s_widgets.Clear();
-            foreach (Presenter presenter in allPresenters)
-            {
-                s_widgets.Add(presenter.GetType(), presenter);
-            }
-        }
         
         public static TWidget Find<TWidget>() where TWidget : Presenter
         {
@@ -48,6 +38,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
     
             throw new PresenterNotRegisteredException(widgetType);
+        }
+        
+        public virtual void Initialize()
+        {
+            s_widgets.Add(GetType(), this);
         }
 
         public virtual void Activate()

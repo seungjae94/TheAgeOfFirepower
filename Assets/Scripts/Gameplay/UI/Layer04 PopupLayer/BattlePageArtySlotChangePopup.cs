@@ -58,7 +58,7 @@ namespace Mathlife.ProjectL.Gameplay
 
 
         // 이벤트 함수
-        void Awake()
+        public override void Initialize()
         {
             CreateTweens();
         }

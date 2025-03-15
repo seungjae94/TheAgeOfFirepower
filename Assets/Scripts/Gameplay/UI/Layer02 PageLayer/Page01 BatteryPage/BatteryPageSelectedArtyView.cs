@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
+    [RequireComponent(typeof(CanvasGroup))]
     internal class BatteryPageSelectedArtyView : MonoBehaviour, IView
     {
         // Alias
@@ -16,7 +17,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private BatteryPage BatteryPage => Presenter.Find<BatteryPage>();
 
         // View
-        [SerializeField]
         private CanvasGroup viewCanvasGroup;
 
         [SerializeField]
@@ -38,8 +38,18 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private readonly CompositeDisposable disposables = new();
         private IDisposable artyModelSub = null;
         
-        // IView
+        // 이벤트 루프
         public void Initialize()
+        {
+            viewCanvasGroup = GetComponent<CanvasGroup>();
+        }
+
+        private void OnDestroy()
+        {
+            disposables.Dispose();
+        }
+        
+        public void Draw()
         {
             BatteryPage.selectedSlotIndexRx
                 .Subscribe(OnSelectedSlotIndexChange)
@@ -59,12 +69,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public void Clear()
         {
             disposables.Clear();
-        }
-        
-        // 이벤트 함수
-        private void OnDestroy()
-        {
-            disposables.Dispose();
         }
 
         // 모델 구독 콜백

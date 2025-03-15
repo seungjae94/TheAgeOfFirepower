@@ -21,19 +21,15 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField] BatteryPageArtySlotItem mSlotItem;
         [SerializeField] CanvasGroup m_addMemberGuideCanvasGroup;
 
-        void Awake()
+        // 이벤트 함수
+        public void Initialize()
         {
             m_slotIndex = transform.GetSiblingIndex();
             m_dropTrigger = GetComponent<ObservableDropTrigger>();
             m_clickTrigger = GetComponent<ObservablePointerClickTrigger>();
         }
         
-        public void Initialize()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Clear()
+        public void Draw()
         {
             // 뷰 초기화
             ArtyModel arty = artyRosterState.Battery[m_slotIndex];
@@ -63,9 +59,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(gameObject);
         }
 
-        public void Open()
+        public void Clear()
         {
-            
+
         }
         
         // 모델 구독 콜백

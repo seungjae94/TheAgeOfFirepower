@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class PartyValidationModal : PopupPresenter
+    public class BatteryPageBatteryValidationModal : PopupPresenter
     {
         ArtyRosterState artyRosterState;
 
@@ -17,7 +17,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         const float k_fadeTime = 0.25f;
 
-        void Awake()
+        public override void Initialize()
         {
             m_canvasGroup = GetComponent<CanvasGroup>();
         }

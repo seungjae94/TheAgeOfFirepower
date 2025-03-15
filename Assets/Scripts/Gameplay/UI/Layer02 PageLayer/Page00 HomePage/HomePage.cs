@@ -13,8 +13,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         HomePageMenuBar menuBar;
 
-        private void Awake()
+        public override void Initialize()
         {
+            base.Initialize();
             menuBar = transform.FindRecursive<HomePageMenuBar>();
         }
 
@@ -27,7 +28,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             Find<CurrencyBar>().Activate();
             
             // View 초기화
-            menuBar.Initialize();
+            menuBar.Draw();
         }
 
         private void Start()

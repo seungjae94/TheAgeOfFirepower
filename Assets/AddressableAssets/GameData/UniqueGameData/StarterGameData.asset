@@ -22,26 +22,26 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   starterGold: 0
-  starterParty:
-  - vehicle: {fileID: 0}
+  starterBattery:
+  - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
     level: 1
     currentLevelExp: 0
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  - vehicle: {fileID: 0}
+  - arty: {fileID: 0}
     level: 0
     currentLevelExp: 0
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  - vehicle: {fileID: 0}
+  - arty: {fileID: 0}
     level: 0
     currentLevelExp: 0
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  - vehicle: {fileID: 0}
+  - arty: {fileID: 0}
     level: 0
     currentLevelExp: 0
     weapon: {fileID: 0}
@@ -50,26 +50,26 @@ MonoBehaviour:
   starterRoster: []
   starterMechParts: []
   editorStarterGold: 100000
-  editorStarterParty:
-  - vehicle: {fileID: 0}
-    level: 4
-    currentLevelExp: 25
-    weapon: {fileID: 0}
-    armor: {fileID: 0}
-    artifact: {fileID: 0}
-  - vehicle: {fileID: 0}
+  editorStarterBattery:
+  - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
     level: 3
-    currentLevelExp: 15
+    currentLevelExp: 10
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  - vehicle: {fileID: 0}
+  - arty: {fileID: 11400000, guid: e858c33d5a0d4e64d9432444f4ef4ba9, type: 2}
+    level: 2
+    currentLevelExp: 10
+    weapon: {fileID: 0}
+    armor: {fileID: 0}
+    artifact: {fileID: 0}
+  - arty: {fileID: 0}
     level: 0
     currentLevelExp: 0
     weapon: {fileID: 0}
     armor: {fileID: 0}
     artifact: {fileID: 0}
-  - vehicle: {fileID: 0}
+  - arty: {fileID: 0}
     level: 0
     currentLevelExp: 0
     weapon: {fileID: 0}

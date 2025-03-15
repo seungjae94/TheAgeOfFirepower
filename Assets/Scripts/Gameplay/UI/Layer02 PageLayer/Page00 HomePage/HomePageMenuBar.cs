@@ -15,7 +15,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private readonly CompositeDisposable disposables = new();
 
-        private void Awake()
+        public void Initialize()
         {
             batteryMenuButton = transform.FindRecursiveByName<Transform>("Battery Menu")
                 .GetComponentInChildren<Button>();
@@ -29,7 +29,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .GetComponentInChildren<Button>();
         }
 
-        public void Initialize()
+        public void Draw()
         {
             batteryMenuButton.OnClickAsObservable()
                 .Subscribe(_ => Presenter.Find<BatteryPage>().Open())

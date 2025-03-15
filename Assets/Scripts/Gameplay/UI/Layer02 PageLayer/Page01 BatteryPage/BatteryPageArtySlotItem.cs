@@ -34,7 +34,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField] RectTransform m_dragItemParent;
         BatteryPageArtySlotDragItem m_dragItem = null;
 
-        void Awake()
+        public void Initialize()
         {
             m_canvasGroup = GetComponent<CanvasGroup>();
             m_beginDragTrigger = GetComponent<ObservableBeginDragTrigger>();
@@ -42,13 +42,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
             m_endDragTrigger = GetComponent<ObservableEndDragTrigger>();
             m_pointerClickTrigger = GetComponent<ObservablePointerClickTrigger>();
         }
-
+        
         public void Setup(int slotIndex)
         {
             m_slotIndex = slotIndex;
         }
         
-        public void Initialize()
+        public void Draw()
         {
             // 모델 구독
             ArtyRosterState.Battery
