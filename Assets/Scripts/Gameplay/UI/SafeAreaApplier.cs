@@ -42,6 +42,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public void Apply()
         {
+            if (rectTransform == null)
+                rectTransform = GetComponent<RectTransform>();
+            
+            if (canvasRectTransform == null)
+                canvasRectTransform = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+            
             float width = rectTransform.rect.width;
             float height = rectTransform.rect.height;
             

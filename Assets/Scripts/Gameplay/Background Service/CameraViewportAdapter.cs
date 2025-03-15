@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.UI;
 using UnityEngine;
 
@@ -11,9 +12,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         private Camera targetCamera;
         private float prevScreenAspect = -1f;
-
-        #region Unity Event Functions
-
+        
         private void Awake()
         {
             targetCamera = GetComponent<Camera>();
@@ -31,19 +30,12 @@ namespace Mathlife.ProjectL.Gameplay
             if (Mathf.Approximately(prevScreenAspect, screenAspect))
                 return;
 
-            Adapt();
+            Adapt().Forget();
         }
 
-        #endregion
-
-        private void Adapt()
+        private async UniTaskVoid Adapt()
         {
             float screenAspect = (float)Screen.width / Screen.height;
-
-            //string deviceInfo = $"[CameraViewportAdapter]\n" +
-            //                    $"해상도: {Screen.width}x{Screen.height}, 가로세로비: {screenAspect}\n" +
-            //                    $"안전 영역: {Screen.safeArea.width}x{Screen.safeArea.height}";
-            //Debug.Log(deviceInfo);
 
             if (screenAspect < k_minScreenAspect)
                 AdaptWithLetterBox(screenAspect);
@@ -55,6 +47,8 @@ namespace Mathlife.ProjectL.Gameplay
             // 스크린 aspect 저장
             prevScreenAspect = screenAspect;
 
+            await UniTask.WaitForEndOfFrame();
+            
             // Safe Area 적용
             ApplySafeArea();
         }
@@ -88,7 +82,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void ApplySafeArea()
         {
-            SafeAreaApplier[] safeMargins = GameObject.FindObjectsByType<SafeAreaApplier>(FindObjectsSortMode.None);
+            SafeAreaApplier[] safeMargins = GameObject.FindObjectsByType<SafeAreaApplier>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             
             foreach (var safeMargin in safeMargins)
             {
