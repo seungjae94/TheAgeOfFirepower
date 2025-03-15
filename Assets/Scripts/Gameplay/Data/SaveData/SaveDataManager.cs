@@ -1,19 +1,17 @@
 using Cysharp.Threading.Tasks;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
-using VContainer;
 
 namespace Mathlife.ProjectL.Gameplay
 {
     public class SaveDataManager
     {
-        Dictionary<FieldInfo, string> saveFileFullPaths = new();
-
-        public CharacterSaveFile character = new();
-        public InventorySaveFile inventory = new();
+        private readonly Dictionary<FieldInfo, string> saveFileFullPaths = new();
+        public readonly ArtyRosterSaveFile artyRoster = new();
+        public readonly InventorySaveFile inventory = new();
+        
         public SaveDataManager()
         {
             foreach (FieldInfo field in typeof(SaveDataManager).GetFields())

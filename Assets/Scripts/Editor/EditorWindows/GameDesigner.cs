@@ -131,7 +131,7 @@ namespace Mathlife.ProjectL.Editor
             if (asset == null)
                 return;
 
-            if (asset is not VehicleGameData 
+            if (asset is not ArtyGameData 
                 && asset is not MechPartGameData 
                 && asset is not SkillGameData)
                 return;
@@ -178,7 +178,7 @@ namespace Mathlife.ProjectL.Editor
             );
 
             // 메뉴 아이템 생성
-            AddMenuItems<VehicleGameData>(tree, "차량");
+            AddMenuItems<ArtyGameData>(tree, "차량");
             AddMenuItems<ShellGameData>(tree, "포탄");
             AddMenuItems<MechPartGameData>(tree, "기계 부품");
             //AddMenuItems<SkillGameData>(tree, "스킬");

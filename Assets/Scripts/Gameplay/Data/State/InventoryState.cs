@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class InventoryState : IState
+    public class InventoryState : IPersistable
     {
         // Access
         private SaveDataManager saveDataManager;
@@ -37,7 +37,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         void LoadFromSaveFile()
         {
-            gold = saveDataManager.inventory.gold;
+            GoldRx.Value = saveDataManager.inventory.gold;
 
             foreach (int equipmentId in saveDataManager.inventory.mechParts)
             {
@@ -49,9 +49,9 @@ namespace Mathlife.ProjectL.Gameplay
         {
             StarterGameData starter = gameDataLoader.GetStarterSO();
 
-            gold = starter.GetStarterGold();
+            GoldRx.Value = starter.GetStarterGold();
 
-            var starterParty = starter.GetStarterParty();
+            var starterParty = starter.GetStarterBattery();
             foreach (var characterSlot in starterParty)
             {
                 AddEquipment(characterSlot.weapon?.id ?? -1);
@@ -78,15 +78,14 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // 골드
-        LongReactiveProperty m_gold = new(0L);
-        public long gold { get => m_gold.Value; private set => m_gold.Value = value; }
+        public readonly ReactiveProperty<long> GoldRx = new(0L);
 
         public void GainGold(long gain)
         {
             if (gain <= 0L)
                 return;
 
-            gold += gain;
+            GoldRx.Value += gain;
         }
 
         public void LoseGold(long lose)
@@ -94,12 +93,7 @@ namespace Mathlife.ProjectL.Gameplay
             if (lose <= 0L)
                 return;
 
-            gold -= lose;
-        }
-
-        public IDisposable SubscribeGoldChange(Action<long> action)
-        {
-            return m_gold.Subscribe(action);
+            GoldRx.Value -= lose;
         }
 
         // 거래
@@ -108,7 +102,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             MechPartGameData mechPartGameData = gameDataLoader.GetEquipmentSO(equipmentId);
         
-            if (gold < mechPartGameData.shopPrice)
+            if (GoldRx.Value < mechPartGameData.shopPrice)
             {
                 return false;
             }
@@ -124,7 +118,7 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // 장비
-        ReactiveDictionary<EEquipmentType, List<EquipmentModel>> m_equipments = new();
+        ReactiveDictionary<EEquipmentType, List<MechPartModel>> m_equipments = new();
 
         void InitEquipmentDictionary()
         {
@@ -134,29 +128,29 @@ namespace Mathlife.ProjectL.Gameplay
             }
         }
 
-        public List<EquipmentModel> GetSortedEquipmentList(EEquipmentType type)
+        public List<MechPartModel> GetSortedEquipmentList(EEquipmentType type)
         {
             SortEquipmentList(type);
             return m_equipments[type];
         }
 
-        public EquipmentModel FindEquipment(EEquipmentType type, int id)
+        public MechPartModel FindEquipment(EEquipmentType type, int id)
         {
-            EquipmentModel equipment = m_equipments[type].FirstOrDefault(eq => eq.id == id);
-            if (equipment == null)
+            MechPartModel mechPart = m_equipments[type].FirstOrDefault(eq => eq.id == id);
+            if (mechPart == null)
                 return AddEquipment(id);
-            return equipment;
+            return mechPart;
         }
 
-        public EquipmentModel AddEquipment(int id)
+        public MechPartModel AddEquipment(int id)
         {
             if (id < 0)
                 return null;
 
             Debug.Log(id);
-            EquipmentModel equipment = new(gameDataLoader.GetEquipmentSO(id));
-            m_equipments[equipment.type].Add(equipment);
-            return equipment;
+            MechPartModel mechPart = new(gameDataLoader.GetEquipmentSO(id));
+            m_equipments[mechPart.type].Add(mechPart);
+            return mechPart;
         }
 
         void SortEquipmentList(EEquipmentType type)

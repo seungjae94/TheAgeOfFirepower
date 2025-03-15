@@ -15,18 +15,18 @@ namespace Mathlife.ProjectL.Gameplay
         long starterGold = 0L;
 
         [SerializeField]
-        [TabGroup("Starter/Tab", "파티")]
+        [TabGroup("Starter/Tab", "포대")]
         [HideReferenceObjectPicker]
-        [LabelText("파티")]
+        [LabelText("포대")]
         [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true, ShowFoldout = false)]
-        List<VehiclePreset> starterParty = new ();
+        List<ArtyPreset> starterBattery = new ();
 
         [SerializeField]
         [TabGroup("Starter/Tab", "로스터")]
         [HideReferenceObjectPicker]
         [LabelText("로스터")]
         [ListDrawerSettings(ShowFoldout = false)]
-        List<VehiclePreset> starterRoster = new();
+        List<ArtyPreset> starterRoster = new();
 
         [SerializeField]
         [Space(10)]
@@ -47,19 +47,20 @@ namespace Mathlife.ProjectL.Gameplay
         [PropertySpace(spaceBefore: 0, spaceAfter: 35)]
         long editorStarterGold = 0L;
 
+        [FormerlySerializedAs("editorStarterParty")]
         [SerializeField]
-        [TabGroup("Editor Starter/Tab", "파티")]
+        [TabGroup("Editor Starter/Tab", "포대")]
         [HideReferenceObjectPicker]
-        [LabelText("파티")]
+        [LabelText("포대")]
         [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true, ShowFoldout = false)]
-        List<VehiclePreset> editorStarterParty = new();
+        List<ArtyPreset> editorStarterBattery = new();
 
         [SerializeField]
         [TabGroup("Editor Starter/Tab", "로스터")]
         [HideReferenceObjectPicker]
         [LabelText("로스터")]
         [ListDrawerSettings(ShowFoldout = false)]
-        List<VehiclePreset> editorStarterRoster = new();
+        List<ArtyPreset> editorStarterRoster = new();
 
         [SerializeField]
         [TabGroup("Editor Starter/Tab", "인벤토리(부품)")]
@@ -71,28 +72,28 @@ namespace Mathlife.ProjectL.Gameplay
         [OnInspectorInit]
         void OnInspectorInit()
         {
-            InitializeMemberSlots(starterParty);
-            InitializeMemberSlots(editorStarterParty);
+            InitializeMemberSlots(starterBattery);
+            InitializeMemberSlots(editorStarterBattery);
         }
 
-        void InitializeMemberSlots(List<VehiclePreset> members)
+        void InitializeMemberSlots(List<ArtyPreset> members)
         {
             if (members.Count < 4)
             {
                 int addCount = 4 - members.Count;
                 for (int i = 0; i < addCount; ++i)
                 {
-                    members.Add(new VehiclePreset());
+                    members.Add(new ArtyPreset());
                 }
             }
         }
 
-        [TabGroup("Editor Starter/Tab", "파티")]
-        [Button("파티 초기화", Stretch = false, ButtonHeight = 30)]
+        [TabGroup("Editor Starter/Tab", "포대")]
+        [Button("포대 초기화", Stretch = false, ButtonHeight = 30)]
         void ResetEditorMembers()
         {
-            editorStarterParty = new();
-            InitializeMemberSlots(editorStarterParty);
+            editorStarterBattery = new();
+            InitializeMemberSlots(editorStarterBattery);
         }
 #endif
 
@@ -105,21 +106,21 @@ namespace Mathlife.ProjectL.Gameplay
 #endif
         }
 
-        public List<VehiclePreset> GetStarterParty()
+        public List<ArtyPreset> GetStarterBattery()
         {
 #if UNITY_EDITOR
-            return editorStarterParty;
+            return editorStarterBattery;
 #else
-            return starterParty;
+            return starterBattery;
 #endif
         }
 
-        public List<VehiclePreset> GetStarterMechParts()
+        public List<ArtyPreset> GetStarterMechParts()
         {
 #if UNITY_EDITOR
             return editorStarterRoster;
 #else
-            return starterPartyNotInParty;
+            return starterRoster;
 #endif
         }
 
@@ -128,7 +129,7 @@ namespace Mathlife.ProjectL.Gameplay
 #if UNITY_EDITOR
             return editorStarterMechParts;
 #else
-            return starterEquipmentsNotOwned;
+            return starterMechParts;
 #endif
         }
     }

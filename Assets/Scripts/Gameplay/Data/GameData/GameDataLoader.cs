@@ -18,7 +18,7 @@ namespace Mathlife.ProjectL.Gameplay
         private ShopGameData shopGameData;
         private PrefabGameData prafabGameData;
         private Dictionary<int, ShellGameData> shells = new();
-        private Dictionary<int, VehicleGameData> vehicles = new();
+        private Dictionary<int, ArtyGameData> vehicles = new();
         private Dictionary<int, MechPartGameData> mechParts = new();
 
         public async UniTask Load()
@@ -35,7 +35,7 @@ namespace Mathlife.ProjectL.Gameplay
                     prafabGameData = prefabSO;
                 else if (dataAsset is StarterGameData starterSO)
                     mStarterGameData = starterSO;
-                else if (dataAsset is VehicleGameData characterSO)
+                else if (dataAsset is ArtyGameData characterSO)
                     vehicles.Add(characterSO.id, characterSO);
                 else if (dataAsset is MechPartGameData equipmentSO)
                     mechParts.Add(equipmentSO.id, equipmentSO);
@@ -58,7 +58,7 @@ namespace Mathlife.ProjectL.Gameplay
             return GameObject.Instantiate(prafabGameData.prefabs[prefabId], parent).GetComponent<T>();
         }
 
-        public VehicleGameData GetCharacterData(int id)
+        public ArtyGameData GetCharacterData(int id)
         {
             if (id < 0)
                 return null;
