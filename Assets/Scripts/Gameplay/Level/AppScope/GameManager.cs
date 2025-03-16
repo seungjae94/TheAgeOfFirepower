@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Mathlife.ProjectL.Gameplay.Gameplay.AppScope;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
 using Mathlife.ProjectL.Gameplay.UI;
 using UnityEngine;

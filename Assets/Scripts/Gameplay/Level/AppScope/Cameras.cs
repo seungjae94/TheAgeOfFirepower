@@ -1,7 +1,7 @@
 using Mathlife.ProjectL.Gameplay.ObjectBase;
 using UnityEngine;
 
-namespace Mathlife.ProjectL.Gameplay.Gameplay.AppScope
+namespace Mathlife.ProjectL.Gameplay
 {
     public class Cameras : MonoSingleton<Cameras>
     {

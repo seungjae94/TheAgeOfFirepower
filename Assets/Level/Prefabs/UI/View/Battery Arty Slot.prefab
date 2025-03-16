@@ -312,7 +312,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 360, y: 480}
+  m_SizeDelta: {x: 300, y: 480}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8213209489318178593
 CanvasRenderer:
@@ -400,8 +400,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243985c4d692c0a4da9fe214e849aa1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSlotItem: {fileID: 0}
-  m_addMemberGuideCanvasGroup: {fileID: 1210958136635031902}
+  addMemberGuideCanvasGroup: {fileID: 1210958136635031902}
+  slotItem: {fileID: 4361397087490917603}
 --- !u!1 &2043767690883651768
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,11 +694,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011619dbcdad3c944aaf207275ee51e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_portraitImage: {fileID: 9198829564804923940}
-  m_nameText: {fileID: 4615521779808088128}
-  m_levelText: {fileID: 1845403256113222218}
-  m_selectionOverlayCanvasGroup: {fileID: 0}
-  m_dragItemParent: {fileID: 0}
+  portraitImage: {fileID: 9198829564804923940}
+  nameText: {fileID: 4615521779808088128}
+  levelText: {fileID: 1845403256113222218}
+  selectionCanvasGroup: {fileID: 3363193051431996680}
 --- !u!1 &3713936076720914168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,13 +1346,14 @@ GameObject:
   - component: {fileID: 9000961639474172017}
   - component: {fileID: 2499921509930354034}
   - component: {fileID: 4923412084868543560}
+  - component: {fileID: 3363193051431996680}
   m_Layer: 5
   m_Name: Selection Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9000961639474172017
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1411,3 +1411,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &3363193051431996680
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5950389498561553174}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

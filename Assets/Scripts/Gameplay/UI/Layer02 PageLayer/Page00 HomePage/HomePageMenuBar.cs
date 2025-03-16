@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class HomePageMenuBar : MonoBehaviour, IView
+    public class HomePageMenuBar : AbstractView
     {
         private Button batteryMenuButton;
         private Button artilleryMenuButton;
@@ -15,7 +15,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private readonly CompositeDisposable disposables = new();
 
-        public void Initialize()
+        public override void Initialize()
         {
             batteryMenuButton = transform.FindRecursiveByName<Transform>("Battery Menu")
                 .GetComponentInChildren<Button>();
@@ -29,7 +29,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .GetComponentInChildren<Button>();
         }
 
-        public void Draw()
+        public override void Draw()
         {
             batteryMenuButton.OnClickAsObservable()
                 .Subscribe(_ => Presenter.Find<BatteryPage>().Open())
@@ -52,7 +52,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(disposables);
         }
 
-        public void Clear()
+        public override void Clear()
         {
             disposables.Clear();
         }

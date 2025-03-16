@@ -18,118 +18,114 @@ namespace Mathlife.ProjectL.Gameplay
     public class ArtyPreset
     {
         [LabelText("화포")]
-        [LabelWidth(125)]
+        [HorizontalGroup(group: "Basic", LabelWidth = 50, Width = 125)]
 #if UNITY_EDITOR
-        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetCharacterPreview))]
+        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetArtyPreview))]
 #endif
         public ArtyGameData arty;
 
         [LabelText("레벨")]
-        [LabelWidth(125)]
-        [HorizontalGroup(group: "Level and Exp")]
+        [HorizontalGroup(GroupID = "Basic", LabelWidth = 50, Width = 125)]
+        [VerticalGroup(GroupID = "Basic/Growth")]
+        [MinValue(0)]
         public int level;
 
         [LabelText("경험치")]
-        [LabelWidth(125)]
-        [HorizontalGroup(group: "Level and Exp")]
-        public long currentLevelExp;
+        [HorizontalGroup(group: "Basic", LabelWidth = 50, Width = 125)]
+        [VerticalGroup(GroupID = "Basic/Growth")]
+        [MinValue(0)]
+        public int currentLevelExp;
 
-        [LabelText("무기")]
-        [LabelWidth(125)]
-        [HorizontalGroup(group: "Equipments")]
-        [ValidateInput(nameof(IsWeapon), "무기가 아닙니다.")]
+        [LabelText("포신")]
+        [HorizontalGroup(group: "MechPart", LabelWidth = 50, Width = 125)]
 #if UNITY_EDITOR
-        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetWeaponPreview))]
+        //[ValidateInput(nameof(IsBarrel), "포신이 아닙니다.")]
+        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetBarrelPreview))]
 #endif
-        public MechPartGameData weapon;
+        public MechPartGameData barrel;
 
-        [LabelText("방어구")]
-        [LabelWidth(125)]
-        [HorizontalGroup(group: "Equipments")]
-        [ValidateInput(nameof(IsArmor), "방어구가 아닙니다.")]
+        [LabelText("장갑")]
+        [HorizontalGroup(group: "MechPart", LabelWidth = 50, Width = 125)]
 #if UNITY_EDITOR
+        //[ValidateInput(nameof(IsArmor), "장갑이 아닙니다.")]
         [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetArmorPreview))]
 #endif
         public MechPartGameData armor;
 
-        [LabelText("아티팩트")]
-        [LabelWidth(125)]
-        [HorizontalGroup(group: "Equipments")]
-        [ValidateInput(nameof(IsArtifact), "아티팩트가 아닙니다.")]
+        [LabelText("엔진")]
+        [HorizontalGroup(group: "MechPart", LabelWidth = 50, Width = 125)]
 #if UNITY_EDITOR
-        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetArtifactPreview))]
+        //[ValidateInput(nameof(IsEngine), "엔진이 아닙니다.")]
+        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetEnginePreview))]
 #endif
-        public MechPartGameData artifact;
+        public MechPartGameData engine;
 
 #if UNITY_EDITOR
-        MechPartGameData[] cachedArtifacts = new MechPartGameData[4]; 
-        Texture2D[] cachedTextures = new Texture2D[4];
+        // MechPartGameData[] cachedMechParts = new MechPartGameData[4]; 
+        // Texture2D[] cachedTextures = new Texture2D[4];
+        //
+        // [OnInspectorInit]
+        // public void OnInspectorInit()
+        // {
+        //     cachedMechParts = new MechPartGameData[4];
+        //     cachedTextures = new Texture2D[4];
+        // }
 
-        [OnInspectorInit]
-        public void OnInspectorInit()
+        public Texture2D GetArtyPreview()
         {
-            cachedArtifacts = new MechPartGameData[4];
-            cachedTextures = new Texture2D[4];
+            return arty?.sprite?.texture;
         }
 
-        public Texture2D GetCharacterPreview()
+        public Texture2D GetBarrelPreview()
         {
-            if (arty != null)
-                return arty.sprite.texture;
-
-            return null;
+            return barrel?.icon?.texture;
         }
 
-        public Texture2D GetWeaponPreview(MechPartGameData artifact)
+        public Texture2D GetArmorPreview()
         {
-            return GetEquipmentPreview(artifact, 0);
+            return armor?.icon?.texture;
         }
 
-        public Texture2D GetArmorPreview(MechPartGameData artifact)
+        public Texture2D GetEnginePreview()
         {
-            return GetEquipmentPreview(artifact, 1);
+            return engine?.icon?.texture;
         }
-
-        public Texture2D GetArtifactPreview(MechPartGameData artifact)
-        {
-            return GetEquipmentPreview(artifact, 2);
-        }
-
-        public Texture2D GetEquipmentPreview(MechPartGameData artifact, int index)
-        {
-            if (cachedArtifacts[index] == artifact)
-            {
-                return cachedTextures[index];
-            }
-
-            cachedArtifacts[index] = artifact;
-
-            if (artifact == null)
-            {
-                cachedTextures[index] = null;
-            }
-            else
-            {
-                Rect texRect = artifact.icon.textureRect;
-                cachedTextures[index] = artifact.icon.texture.CropTexture(texRect);
-            }
-            return cachedTextures[index];
-        }
-
-        public bool IsWeapon(MechPartGameData mechPart)
-        {
-            return mechPart == null || mechPart.type == EEquipmentType.Barrel;
-        }
-
-        public bool IsArmor(MechPartGameData mechPart)
-        {
-            return mechPart == null || mechPart.type == EEquipmentType.Armor;
-        }
-
-        public bool IsArtifact(MechPartGameData mechPart)
-        {
-            return mechPart == null || mechPart.type == EEquipmentType.Engine;
-        }
+        //
+        // public Texture2D GetMechPartPreview(MechPartGameData mechPart, int index)
+        // {
+        //     if (cachedMechParts[index] == mechPart)
+        //     {
+        //         return cachedTextures[index];
+        //     }
+        //
+        //     cachedMechParts[index] = mechPart;
+        //
+        //     if (mechPart == null)
+        //     {
+        //         cachedTextures[index] = null;
+        //     }
+        //     else
+        //     {
+        //         Rect texRect = mechPart.icon.textureRect;
+        //         cachedTextures[index] = mechPart.icon.texture.CropTexture(texRect);
+        //     }
+        //     return cachedTextures[index];
+        // }
+        //
+        // public bool IsBarrel(MechPartGameData mechPart)
+        // {
+        //     return mechPart == null || mechPart.type == EEquipmentType.Barrel;
+        // }
+        //
+        // public bool IsArmor(MechPartGameData mechPart)
+        // {
+        //     return mechPart == null || mechPart.type == EEquipmentType.Armor;
+        // }
+        //
+        // public bool IsEngine(MechPartGameData mechPart)
+        // {
+        //     return mechPart == null || mechPart.type == EEquipmentType.Engine;
+        // }
 #endif
     }
 }

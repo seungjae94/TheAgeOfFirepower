@@ -17,9 +17,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
 
         // View
-        //Transform m_partySlotsParent;
         private List<BatteryPageArtySlot> artySlots;
         private BatteryPageSelectedArtyView selectedArtyView;
+        
+        [field: SerializeField]
+        public BatteryPageArtySlotItemDragView ArtySlotItemViewDragView { get; private set; }
 
         // State - Selected Slot Index
         public readonly ReactiveProperty<int> selectedSlotIndexRx = new(-1);
@@ -41,7 +43,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         }
 
         // State - Is Dragging Slot Item
-        public readonly ReactiveProperty<bool> isDraggingSlotItemRx = new(false);
+        //public readonly ReactiveProperty<bool> isDraggingSlotItemRx = new(false);
 
         // 이벤트 함수
         public override void Initialize()
@@ -66,6 +68,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             // 뷰 초기화
             selectedArtyView.Draw();
+            artySlots.ForEach(slot => slot.Draw());
         }
 
         public override void Close()
@@ -75,6 +78,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // Overlay
             NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
             // TODO: navBackOverlay 콜백에서 OnNavBack 제거
+            
+            // 뷰 정리
+            selectedArtyView.Clear();
+            artySlots.ForEach(slot => slot.Clear());
         }
 
         // 이벤트 콜백

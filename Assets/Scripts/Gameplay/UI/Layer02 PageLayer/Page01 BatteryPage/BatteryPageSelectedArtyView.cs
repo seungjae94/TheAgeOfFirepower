@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace Mathlife.ProjectL.Gameplay.UI
 {
     [RequireComponent(typeof(CanvasGroup))]
-    internal class BatteryPageSelectedArtyView : MonoBehaviour, IView
+    internal class BatteryPageSelectedArtyView : AbstractView
     {
         // Alias
         ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
@@ -39,7 +39,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private IDisposable artyModelSub = null;
         
         // 이벤트 루프
-        public void Initialize()
+        public override void Initialize()
         {
             viewCanvasGroup = GetComponent<CanvasGroup>();
         }
@@ -49,7 +49,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             disposables.Dispose();
         }
         
-        public void Draw()
+        public override void Draw()
         {
             BatteryPage.selectedSlotIndexRx
                 .Subscribe(OnSelectedSlotIndexChange)
@@ -66,7 +66,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             UpdateView();
         }
 
-        public void Clear()
+        public override void Clear()
         {
             disposables.Clear();
         }

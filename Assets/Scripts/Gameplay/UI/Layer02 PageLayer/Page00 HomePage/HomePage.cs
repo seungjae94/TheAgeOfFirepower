@@ -23,16 +23,20 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             base.Open();
 
-            // Page Overlay
+            // Overlay
             // TODO: UserInfo 구현 및 Open
             Find<CurrencyBar>().Activate();
             
-            // View 초기화
+            // 뷰 초기화
             menuBar.Draw();
         }
 
-        private void Start()
+        public override void Close()
         {
+            base.Close();
+            
+            // 뷰 정리
+            menuBar.Clear();
         }
     }
 }

@@ -5,107 +5,112 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class BatteryPageArtySlotItem : MonoBehaviour, IView
+    public class BatteryPageArtySlotItem : AbstractView
     {
         // Alias
         BatteryPage BatteryPage => Presenter.Find<BatteryPage>();
         ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
+        BatteryPageArtySlotItemDragView ItemDragView => BatteryPage.ArtySlotItemViewDragView;
 
-        CanvasGroup m_canvasGroup;
-        ObservableBeginDragTrigger m_beginDragTrigger;
-        ObservableDragTrigger m_dragTrigger;
-        ObservableEndDragTrigger m_endDragTrigger;
-        ObservablePointerClickTrigger m_pointerClickTrigger;
+        // Component
+        private CanvasGroup itemCanvasGroup;
+        private ObservableBeginDragTrigger beginDragTrigger;
+        private ObservableDragTrigger dragTrigger;
+        private ObservableEndDragTrigger endDragTrigger;
+        private ObservablePointerClickTrigger pointerClickTrigger;
 
-        [SerializeField] Image m_portraitImage;
-        [SerializeField] TMP_Text m_nameText;
-        [SerializeField] TMP_Text m_levelText;
-        [SerializeField] CanvasGroup m_selectionOverlayCanvasGroup;
+        [SerializeField]
+        Image portraitImage;
 
-        int m_slotIndex;
+        [SerializeField]
+        TMP_Text nameText;
 
-        ArtyModel arty = null;
-        IDisposable m_characterSubscription = null;
+        [SerializeField]
+        TMP_Text levelText;
 
-        [SerializeField] RectTransform m_dragItemParent;
-        BatteryPageArtySlotDragItem m_dragItem = null;
+        [SerializeField]
+        CanvasGroup selectionCanvasGroup;
 
-        public void Initialize()
+        // Field
+        private int slotIndex;
+        public ArtyModel Arty { get; private set; }
+
+        CompositeDisposable disposables = new CompositeDisposable();
+        IDisposable artySub = null;
+
+        // Setup
+        public void Setup(int pSlotIndex)
         {
-            m_canvasGroup = GetComponent<CanvasGroup>();
-            m_beginDragTrigger = GetComponent<ObservableBeginDragTrigger>();
-            m_dragTrigger = GetComponent<ObservableDragTrigger>();
-            m_endDragTrigger = GetComponent<ObservableEndDragTrigger>();
-            m_pointerClickTrigger = GetComponent<ObservablePointerClickTrigger>();
+            slotIndex = pSlotIndex;
         }
-        
-        public void Setup(int slotIndex)
+
+        // 이벤트 함수
+        public override void Initialize()
         {
-            m_slotIndex = slotIndex;
+            itemCanvasGroup = GetComponent<CanvasGroup>();
+            beginDragTrigger = GetComponent<ObservableBeginDragTrigger>();
+            dragTrigger = GetComponent<ObservableDragTrigger>();
+            endDragTrigger = GetComponent<ObservableEndDragTrigger>();
+            pointerClickTrigger = GetComponent<ObservablePointerClickTrigger>();
         }
-        
-        public void Draw()
+
+        public override void Draw()
         {
             // 모델 구독
             ArtyRosterState.Battery
-                .ObserveEveryValueChanged(party => party[m_slotIndex])
+                .ObserveEveryValueChanged(party => party[slotIndex])
                 .Subscribe(OnSlotMemberChange)
-                .AddTo(gameObject);
+                .AddTo(disposables);
 
             BatteryPage.selectedSlotIndexRx
                 .Subscribe(OnSelectedSlotIndexChange)
-                .AddTo(gameObject);
-            
+                .AddTo(disposables);
+
             // 이벤트 구독
-            m_beginDragTrigger
+            beginDragTrigger
                 .OnBeginDragAsObservable()
                 .Subscribe(OnBeginDrag)
-                .AddTo(gameObject);
+                .AddTo(disposables);
 
-            m_dragTrigger
+            dragTrigger
                 .OnDragAsObservable()
                 .Subscribe(OnDrag)
-                .AddTo(gameObject);
+                .AddTo(disposables);
 
-            m_endDragTrigger
+            endDragTrigger
                 .OnEndDragAsObservable()
                 .Subscribe(OnEndDrag)
-                .AddTo(gameObject);
+                .AddTo(disposables);
 
-            m_pointerClickTrigger
+            pointerClickTrigger
                 .OnPointerClickAsObservable()
                 .Subscribe(OnPointerClick)
-                .AddTo(gameObject);
-            
+                .AddTo(disposables);
+
             // 뷰 초기화
             UpdateView();
         }
 
-        public void Clear()
+        public override void Clear()
         {
-            throw new NotImplementedException();
-        }
-
-        public void Open()
-        {
-            
+            disposables.Clear();
+            artySub?.Dispose();
         }
 
         // 모델 구독 콜백
         void OnSlotMemberChange(ArtyModel arty)
         {
-            this.arty = arty;
+            artySub?.Dispose();
 
-            if (m_characterSubscription != null)
-                m_characterSubscription.Dispose();
-
-            if (this.arty != null)
+            Arty = arty;
+            if (Arty != null)
             {
-                m_characterSubscription = arty.levelRx
+                artySub = arty.levelRx
                     .Subscribe(UpdateLevelText);
             }
 
@@ -115,70 +120,72 @@ namespace Mathlife.ProjectL.Gameplay.UI
         void OnSelectedSlotIndexChange(int selectedSlotIndex)
         {
             // This character is selected.
-            if (selectedSlotIndex == m_slotIndex)
+            if (selectedSlotIndex == slotIndex)
             {
-                m_selectionOverlayCanvasGroup.Show();
+                selectionCanvasGroup.Show();
             }
             // Another character is selected.
             else
             {
-                m_selectionOverlayCanvasGroup.Hide();
+                selectionCanvasGroup.Hide();
             }
         }
 
         // 이벤트 구독 콜백
-        public ArtyModel GetCharacterModel()
+        private void OnBeginDrag(PointerEventData eventData)
         {
-            return arty;
+            ItemDragView.gameObject.SetActive(true);
+            ItemDragView.Setup(Arty);
+            ItemDragView.Draw();
+
+            itemCanvasGroup.HideWithAlpha(0.25f);
+
+            //BatteryPage.isDraggingSlotItemRx.Value = true;
         }
 
-        void OnBeginDrag(PointerEventData eventData)
+        private void OnDrag(PointerEventData eventData)
         {
-            m_dragItem.gameObject.SetActive(true);
-            //m_dragItem.Initialize(m_character);
-            m_dragItem.transform.position = transform.position;
+            RectTransformUtility.ScreenPointToWorldPointInRectangle(
+                ItemDragView.transform as RectTransform,
+                eventData.position,
+                eventData.pressEventCamera,
+                out Vector3 worldPoint
+            );
 
-            m_canvasGroup.HideWithAlpha(0.25f);
-
-            BatteryPage.isDraggingSlotItemRx.Value = true;
+            ItemDragView.transform.position = worldPoint;
         }
 
-        void OnDrag(PointerEventData eventData)
+        private void OnEndDrag(PointerEventData eventData)
         {
-            m_dragItem.GetComponent<RectTransform>().position = eventData.position;
+            //BatteryPage.isDraggingSlotItemRx.Value = false;
+
+            ItemDragView.gameObject.SetActive(false);
+            itemCanvasGroup.Show();
         }
 
-        void OnEndDrag(PointerEventData eventData)
+        private void OnPointerClick(PointerEventData eventData)
         {
-            BatteryPage.isDraggingSlotItemRx.Value = false;
-
-            Destroy(m_dragItem.gameObject);
-            m_canvasGroup.Show();
-        }
-
-        void OnPointerClick(PointerEventData eventData)
-        {
-            BatteryPage.selectedSlotIndexRx.Value = m_slotIndex;
+            BatteryPage.selectedSlotIndexRx.Value = slotIndex;
         }
 
         // 뷰 초기화 함수
-        public void UpdateView()
+        private void UpdateView()
         {
-            if (arty == null)
+            if (Arty == null)
             {
-                m_canvasGroup.Hide();
+                itemCanvasGroup.Hide();
                 return;
             }
 
-            m_canvasGroup.Show();
-            m_portraitImage.sprite = arty.Sprite;
-            m_levelText.text = arty.levelRx.ToString();
-            m_nameText.text = arty.displayName;
+            itemCanvasGroup.Show();
+            portraitImage.sprite = Arty.Sprite;
+            levelText.text = Arty.levelRx.ToString();
+            nameText.text = Arty.displayName;
         }
 
-        void UpdateLevelText(int value)
+        private void UpdateLevelText(int value)
         {
-            m_levelText.text = value.ToString();
+            levelText.text = value.ToString();
         }
     }
 }

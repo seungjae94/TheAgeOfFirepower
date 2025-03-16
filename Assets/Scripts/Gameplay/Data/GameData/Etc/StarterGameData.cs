@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+#if UNITY_EDITOR
+using Sirenix.Utilities.Editor;
+#endif
+
 namespace Mathlife.ProjectL.Gameplay
 {
     public class StarterGameData : SerializedScriptableObject
@@ -47,7 +51,6 @@ namespace Mathlife.ProjectL.Gameplay
         [PropertySpace(spaceBefore: 0, spaceAfter: 35)]
         long editorStarterGold = 0L;
 
-        [FormerlySerializedAs("editorStarterParty")]
         [SerializeField]
         [TabGroup("Editor Starter/Tab", "포대")]
         [HideReferenceObjectPicker]
@@ -72,15 +75,15 @@ namespace Mathlife.ProjectL.Gameplay
         [OnInspectorInit]
         void OnInspectorInit()
         {
-            InitializeMemberSlots(starterBattery);
-            InitializeMemberSlots(editorStarterBattery);
+            // InitializeMemberSlots(starterBattery);
+            // InitializeMemberSlots(editorStarterBattery);
         }
 
         void InitializeMemberSlots(List<ArtyPreset> members)
         {
-            if (members.Count < 4)
+            if (members.Count < 3)
             {
-                int addCount = 4 - members.Count;
+                int addCount = 3 - members.Count;
                 for (int i = 0; i < addCount; ++i)
                 {
                     members.Add(new ArtyPreset());

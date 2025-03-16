@@ -16,13 +16,14 @@ namespace Mathlife.ProjectL.Editor
     internal class GameDesigner : OdinMenuEditorWindow
     {
         private const string k_gameDataAssetFolder = "Assets/AddressableAssets/GameData";
-        
-        private interface IScriptableObjectAssetCreator 
+
+        private interface IScriptableObjectAssetCreator
         {
             public void DestroyScriptableObjectInstance();
         }
 
-        internal class ScriptableObjectAssetCreator<TGameData> : IScriptableObjectAssetCreator where TGameData : GameData
+        internal class ScriptableObjectAssetCreator<TGameData> : IScriptableObjectAssetCreator
+            where TGameData : GameData
         {
             [ShowInInspector]
             [InlineEditor(ObjectFieldMode = InlineEditorObjectFieldModes.Hidden)]
@@ -65,7 +66,8 @@ namespace Mathlife.ProjectL.Editor
                     return;
                 }
 
-                AddressableAssetEntry entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(assetPath), settings.DefaultGroup);
+                AddressableAssetEntry entry =
+                    settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(assetPath), settings.DefaultGroup);
                 entry.address = assetPath;
                 entry.SetLabel("Data Asset", true);
 
@@ -79,10 +81,10 @@ namespace Mathlife.ProjectL.Editor
             {
                 gameData = ScriptableObject.CreateInstance<TGameData>();
                 gameData.displayName = $"New {gameData.GetType().Name}";
-                
+
                 string typeName = gameData.GetType().Name;
                 string directory = $"{k_gameDataAssetFolder}/{typeName}";
-                gameData.id = AssetDatabase.FindAssets("", new[] { directory }).Length; 
+                gameData.id = AssetDatabase.FindAssets("", new[] { directory }).Length;
             }
         }
 
@@ -93,6 +95,27 @@ namespace Mathlife.ProjectL.Editor
         {
             var window = GetWindow<GameDesigner>();
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(1280, 720);
+
+            EditorApplication.delayCall += () =>
+            {
+                window.Focus();
+                window.Repaint();
+            };
+        }
+        
+        protected override void Initialize()
+        {
+            base.Initialize();
+    
+            if (MenuTree != null && MenuTree.MenuItems.Count > 0)
+            {
+                // 첫 번째 항목 강제 선택
+                MenuTree.Selection.Clear();
+                MenuTree.Selection.Add(MenuTree.MenuItems[0]);
+        
+                // 포커스 갱신 트리거
+                GUIHelper.RequestRepaint();
+            }
         }
 
         protected override void OnDestroy()
@@ -131,12 +154,12 @@ namespace Mathlife.ProjectL.Editor
             if (asset == null)
                 return;
 
-            if (asset is not ArtyGameData 
-                && asset is not MechPartGameData 
+            if (asset is not ArtyGameData
+                && asset is not MechPartGameData
                 && asset is not SkillGameData)
                 return;
 
-            GUILayout.Label(selection.FirstOrDefault().Name);
+            GUILayout.Label(selection.FirstOrDefault()?.Name);
 
             if (SirenixEditorGUI.ToolbarButton("Delete"))
             {
@@ -151,18 +174,17 @@ namespace Mathlife.ProjectL.Editor
             var tree = new OdinMenuTree();
             tree.DefaultMenuStyle.SetHeight(50);
             tree.DefaultMenuStyle.SetIconSize(50);
-            //tree.Config.DrawSearchToolbar = true;
-
-            tree.AddAssetAtPath(
-                "스타터",
-                $"{k_gameDataAssetFolder}/UniqueGameData/StarterGameData.asset",
-                typeof(StarterGameData)
-            );
-
+            
             tree.AddAssetAtPath(
                 "경험치",
                 $"{k_gameDataAssetFolder}/UniqueGameData/ExpGameData.asset",
                 typeof(ExpGameData)
+            );
+            
+            tree.AddAssetAtPath(
+                "스타터",
+                $"{k_gameDataAssetFolder}/UniqueGameData/StarterGameData.asset",
+                typeof(StarterGameData)
             );
 
             tree.AddAssetAtPath(
@@ -192,7 +214,7 @@ namespace Mathlife.ProjectL.Editor
                     gameData?.SetMenuItem(ref menuItem);
                     AddDragHandles(menuItem);
                 });
-
+            
             return tree;
         }
 
@@ -202,9 +224,9 @@ namespace Mathlife.ProjectL.Editor
 
             if (AssetDatabase.IsValidFolder(assetDirectory) == false)
             {
-                AssetDatabase.CreateFolder(k_gameDataAssetFolder, typeof(TGameData).Name);    
+                AssetDatabase.CreateFolder(k_gameDataAssetFolder, typeof(TGameData).Name);
             }
-            
+
             IScriptableObjectAssetCreator creator = new ScriptableObjectAssetCreator<TGameData>();
             gameDataAssetCreators.Add(creator);
             tree.Add(menuDirectoryName, creator);

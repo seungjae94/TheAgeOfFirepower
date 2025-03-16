@@ -54,17 +54,17 @@ namespace Mathlife.ProjectL.Gameplay
             var starterParty = starter.GetStarterBattery();
             foreach (var characterSlot in starterParty)
             {
-                AddEquipment(characterSlot.weapon?.id ?? -1);
+                AddEquipment(characterSlot.barrel?.id ?? -1);
                 AddEquipment(characterSlot.armor?.id ?? -1);
-                AddEquipment(characterSlot.artifact?.id ?? -1);
+                AddEquipment(characterSlot.engine?.id ?? -1);
             }
 
             var starterCharactersNotInParty = starter.GetStarterMechParts();
             foreach (var characterSlot in starterCharactersNotInParty)
             {
-                AddEquipment(characterSlot.weapon?.id ?? -1);
+                AddEquipment(characterSlot.barrel?.id ?? -1);
                 AddEquipment(characterSlot.armor?.id ?? -1);
-                AddEquipment(characterSlot.artifact?.id ?? -1);
+                AddEquipment(characterSlot.engine?.id ?? -1);
             }
 
             var starterEquipmentsNotOwned = starter.GetStarterRoster();

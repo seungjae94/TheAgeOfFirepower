@@ -7,108 +7,107 @@ using UnityEngine.Serialization;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class BatteryPageArtySlot : MonoBehaviour, IView
+    public class BatteryPageArtySlot : AbstractView
     {
-        BatteryPage batteryPage;
-        ArtyRosterState artyRosterState;
+        // Alias
+        private BatteryPage BatteryPage => Presenter.Find<BatteryPage>();
+        private ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
 
-        ObservableDropTrigger m_dropTrigger;
-        ObservablePointerClickTrigger m_clickTrigger;
-        int m_slotIndex = 0;
+        // Field
+        private int slotIndex = 0;
+        private ObservableDropTrigger dropTrigger;
+        private ObservablePointerClickTrigger clickTrigger;
 
-        [FormerlySerializedAs("mSlotItemView")]
-        [FormerlySerializedAs("m_slotItem")]
-        [SerializeField] BatteryPageArtySlotItem mSlotItem;
-        [SerializeField] CanvasGroup m_addMemberGuideCanvasGroup;
+        [SerializeField]
+        private CanvasGroup addMemberGuideCanvasGroup;
+
+        [SerializeField]
+        private BatteryPageArtySlotItem slotItem;
+
+        private readonly CompositeDisposable disposables = new();
 
         // 이벤트 함수
-        public void Initialize()
+        public override void Initialize()
         {
-            m_slotIndex = transform.GetSiblingIndex();
-            m_dropTrigger = GetComponent<ObservableDropTrigger>();
-            m_clickTrigger = GetComponent<ObservablePointerClickTrigger>();
+            slotIndex = transform.GetSiblingIndex();
+            dropTrigger = GetComponent<ObservableDropTrigger>();
+            clickTrigger = GetComponent<ObservablePointerClickTrigger>();
+            
+            slotItem.Setup(slotIndex);
         }
-        
-        public void Draw()
-        {
-            // 뷰 초기화
-            ArtyModel arty = artyRosterState.Battery[m_slotIndex];
 
-            if (arty != null)
-                m_addMemberGuideCanvasGroup.Hide();
-            else
-                m_addMemberGuideCanvasGroup.Show();
-            
-            mSlotItem.Setup(m_slotIndex);
-            
+        public override void Draw()
+        {
             // 모델 구독
-            artyRosterState.Battery
-                .ObserveEveryValueChanged(party => party[m_slotIndex])
-                .Subscribe(OnSlotMemberChange)
-                .AddTo(gameObject);
-            
+            ArtyRosterState.Battery
+                .ObserveEveryValueChanged(battery => battery[slotIndex])
+                .Subscribe(UpdateAddMemberGuideView)
+                .AddTo(disposables);
+
             // 이벤트 구독
-            m_dropTrigger
+            dropTrigger
                 .OnDropAsObservable()
                 .Subscribe(OnDrop)
-                .AddTo(gameObject);
+                .AddTo(disposables);
 
-            m_clickTrigger
+            clickTrigger
                 .OnPointerClickAsObservable()
                 .Subscribe(OnClickSlot)
-                .AddTo(gameObject);
+                .AddTo(disposables);
+
+            // 뷰 초기화
+            ArtyModel arty = ArtyRosterState.Battery[slotIndex];
+            UpdateAddMemberGuideView(arty);
+            slotItem.Draw();
         }
 
-        public void Clear()
+        public override void Clear()
         {
-
+            disposables.Clear();
+            slotItem.Clear();
         }
-        
+
         // 모델 구독 콜백
-        void OnSlotMemberChange(ArtyModel arty)
+        void UpdateAddMemberGuideView(ArtyModel arty)
         {
             if (arty != null)
-            {
-                m_addMemberGuideCanvasGroup.Hide();
-            }
+                addMemberGuideCanvasGroup.Hide();
             else
-            {
-                m_addMemberGuideCanvasGroup.Show();
-            }
+                addMemberGuideCanvasGroup.Show();
         }
 
         // 이벤트 구독 콜백
-        void OnDrop(PointerEventData eventData)
+        private void OnDrop(PointerEventData eventData)
         {
-            var newCharacter = eventData.pointerDrag?
+            var draggedArty = eventData.pointerDrag?
                 .GetComponent<BatteryPageArtySlotItem>()?
-                .GetCharacterModel();
-            
-            // 파티 멤버 슬롯 아이템을 드래그하는 경우만 처리
-            if (null == newCharacter)
+                .Arty;
+
+            // 유효한 Arty를 드래그한 경우만 처리
+            if (null == draggedArty)
                 return;
 
-            var oldCharacter = artyRosterState.Battery[m_slotIndex];
+            var currentArty = ArtyRosterState.Battery[slotIndex];
 
-            // i번 슬롯에서 i번 슬롯으로 드래그 한 경우 무시
-            if (oldCharacter == newCharacter)
+            // 같은 슬롯으로 드래그한 경우 무시
+            if (currentArty == draggedArty)
                 return;
 
-            // 멤버 스왑
-            if (artyRosterState.Battery.Contains(newCharacter))
+            // 슬롯 변경
+            if (ArtyRosterState.Battery.Contains(draggedArty))
             {
-                int otherIndex = artyRosterState.Battery.IndexOf(newCharacter);
-                artyRosterState.Battery.Swap(m_slotIndex, otherIndex);
+                int draggedSlotIndex = ArtyRosterState.Battery.IndexOf(draggedArty);
+                ArtyRosterState.Battery.Swap(slotIndex, draggedSlotIndex);
             }
 
             // 선택된 슬롯 초기화
-            batteryPage.selectedSlotIndexRx.Value = -1;
+            BatteryPage.selectedSlotIndexRx.Value = -1;
         }
 
-        async void OnClickSlot(PointerEventData ev)
+        void OnClickSlot(PointerEventData ev)
         {
-            batteryPage.selectedSlotIndexRx.Value = m_slotIndex;
-            //await batteryPage.partyMemberChangeModal.Show();
+            BatteryPage.selectedSlotIndexRx.Value = slotIndex;
+            //Find<PartyMemberChangePopup>().OpenWithAnimation().Forget();
         }
     }
 }

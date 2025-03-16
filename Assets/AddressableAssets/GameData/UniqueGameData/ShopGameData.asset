@@ -21,19 +21,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  shopWeapons:
-  - {fileID: 11400000, guid: bbc8e17a69eefd149a1b608ed34dfc0f, type: 2}
-  - {fileID: 11400000, guid: 10b0f9e32eb0f4f4c990d3e77e944f4b, type: 2}
-  - {fileID: 11400000, guid: a6bbfc5aa7259e6428ae98bc828b5035, type: 2}
-  - {fileID: 11400000, guid: 3b9d678ce80b53c478670761b8997901, type: 2}
-  - {fileID: 11400000, guid: 230021ed6d7fff84185fb42d6969ec8b, type: 2}
-  - {fileID: 11400000, guid: 6d7f332553e58dd4a9a007147efe1190, type: 2}
-  shopArmors:
-  - {fileID: 11400000, guid: 6c1c0bffdeeb2124b9be9fb9e20dee75, type: 2}
-  - {fileID: 11400000, guid: b3a5280999a44b6449f3a978f1a3972f, type: 2}
-  - {fileID: 11400000, guid: 6ad42f14964ad7a4f8dc0d1e9643490b, type: 2}
-  shopArtifacts:
-  - {fileID: 11400000, guid: a0f8ff0d199627343826e6f177ee129d, type: 2}
-  - {fileID: 11400000, guid: 9138a48f634d687498d5c30d26b5c10b, type: 2}
-  - {fileID: 11400000, guid: c3f82f9e243bb31409e8146104b28777, type: 2}
-  - {fileID: 11400000, guid: 5f8762e95c2c5474f8a9e108cd0adc08, type: 2}
+  shopWeapons: []
+  shopArmors: []
+  shopArtifacts: []

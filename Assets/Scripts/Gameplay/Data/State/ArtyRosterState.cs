@@ -123,9 +123,9 @@ namespace Mathlife.ProjectL.Gameplay
                 long totalExp = expData.characterTotalExpAtLevelList[level] + starterCharacter.currentLevelExp;
                 ArtyModel model = new(starterCharacter.arty, expData, level, totalExp);
 
-                Equip(model, starterCharacter.weapon?.id ?? -1);
+                Equip(model, starterCharacter.barrel?.id ?? -1);
                 Equip(model, starterCharacter.armor?.id ?? -1);
-                Equip(model, starterCharacter.artifact?.id ?? -1);
+                Equip(model, starterCharacter.engine?.id ?? -1);
 
                 m_characters.Add(starterCharacter.arty.id, model);
             }
