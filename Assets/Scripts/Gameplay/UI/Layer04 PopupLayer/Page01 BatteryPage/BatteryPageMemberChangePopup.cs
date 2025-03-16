@@ -11,15 +11,13 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 #if UNITY_EDITOR
-using DG.DOTweenEditor;
-using UnityEditor.SceneManagement;
 using Mathlife.ProjectL.Gameplay.UI.Editor;
 #endif
 
-namespace Mathlife.ProjectL.Gameplay
+namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
 {
     [RequireComponent(typeof(RectTransform))]
-    public class BattlePageArtySlotMemberChangePopup : PopupPresenter
+    public class BatteryPageMemberChangePopup : PopupPresenter
     {
         [SerializeField]
         private float slideDuration = 0.5f;
@@ -31,14 +29,12 @@ namespace Mathlife.ProjectL.Gameplay
         // View
         [SerializeField]
         private Button closeButton;
-        
+
         [SerializeField]
-        private Button excludeButton;
-        //[SerializeField] CharacterSelectionFlex m_flex;
+        BatteryPageMemberChangeScrollView scrollView;
 
         // Field
         private readonly CompositeDisposable disposables = new();
-        private SortedCharacterListSubscription m_sortedCharacterListChangeSubs;
 
         // Tween
         private Tween slideInTween;
@@ -65,16 +61,15 @@ namespace Mathlife.ProjectL.Gameplay
         public override void Initialize()
         {
             base.Initialize();
-            
+
             CreateTweens();
         }
 
         void OnDestroy()
         {
             disposables.Dispose();
-            m_sortedCharacterListChangeSubs?.Dispose();
         }
-        
+
         public override async UniTask OpenWithAnimation()
         {
             await base.OpenWithAnimation();
@@ -84,24 +79,14 @@ namespace Mathlife.ProjectL.Gameplay
                 .Subscribe(OnClickCloseButton)
                 .AddTo(disposables);
 
-            excludeButton.OnPointerClickAsObservable()
-                .Subscribe(OnClickExcludeButton)
+            // 모델 구독
+            BatteryPage.selectedSlotIndexRx
+                .Subscribe(selectedSlot => UpdateScrollView())
                 .AddTo(disposables);
 
-            // 모델 구독
-            
-            
-            m_sortedCharacterListChangeSubs = ArtyRosterState
-                 .SubscribeSortedCharacterList(UpdateView);
-            
-            ArtyRosterState.Battery
-                 .SubscribeMemberChange(_ => UpdateView())
-                 .AddTo(disposables);
-
             // 뷰 초기화
-            excludeButton.gameObject.SetActive(BatteryPage.SelectedArty != null);
-            //UpdateView();
-            
+            UpdateScrollView();
+
             // 슬라이드 애니메이션
             slideInTween.Restart();
             await slideInTween;
@@ -110,10 +95,10 @@ namespace Mathlife.ProjectL.Gameplay
         public override async UniTask CloseWithAnimation()
         {
             disposables.Clear();
-            
+
             slideOutTween.Restart();
             await slideOutTween;
-            
+
             await base.CloseWithAnimation();
         }
 
@@ -161,15 +146,23 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // 뷰 업데이트
-        void UpdateView()
+        private void UpdateScrollView()
         {
-            var itemDatas = ArtyRosterState
-                .GetSortedList()
-                .Where(character =>
-                    ArtyRosterState.Battery.Contains(character) == false)
+            ArtyModel selectedArty = BatteryPage.SelectedArty;
+
+            var sortedArtyList = ArtyRosterState
+                .GetSortedList(selectedArty);
+
+            if (selectedArty != null)
+            {
+                sortedArtyList.Insert(0, null);
+            }
+
+            var items = sortedArtyList
+                .Select(arty => new ItemData() { arty = arty })
                 .ToList();
 
-            //m_flex.Draw(itemDatas, OnClickFlexItem);
+            scrollView.UpdateContents(items);
         }
     }
 }

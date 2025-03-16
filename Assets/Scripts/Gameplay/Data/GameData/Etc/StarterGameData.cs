@@ -118,7 +118,7 @@ namespace Mathlife.ProjectL.Gameplay
 #endif
         }
 
-        public List<ArtyPreset> GetStarterMechParts()
+        public List<ArtyPreset> GetStarterRosterMinusBattery()
         {
 #if UNITY_EDITOR
             return editorStarterRoster;
@@ -127,7 +127,7 @@ namespace Mathlife.ProjectL.Gameplay
 #endif
         }
 
-        public List<MechPartStack> GetStarterRoster()
+        public List<MechPartStack> GetStarterMechParts()
         {
 #if UNITY_EDITOR
             return editorStarterMechParts;

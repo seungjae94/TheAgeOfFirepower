@@ -1,11 +1,10 @@
 ﻿using Mathlife.ProjectL.Utils;
 using System;
 using Cysharp.Threading.Tasks;
-using Mathlife.ProjectL.Gameplay.UI;
+using Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup;
 using TMPro;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
@@ -100,7 +99,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClickArtySlotChangeButton(Unit _)
         {
-            Presenter.Find<BattlePageArtySlotMemberChangePopup>()
+            Presenter.Find<BatteryPageMemberChangePopup>()
                 .OpenWithAnimation().Forget();
         }
 

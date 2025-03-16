@@ -16,8 +16,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public readonly ReactiveProperty<ArtyModel> selectedCharacterRx = new();
 
-        SortedCharacterListSubscription m_sortedCharacterListChangeSubs;
-        
         public override void Activate()
         {
             // m_flex.Initialize();

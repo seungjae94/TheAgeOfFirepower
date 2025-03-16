@@ -8,7 +8,7 @@ namespace Mathlife.ProjectL.Gameplay
     [Serializable]
     public class ArtySaveData
     {
-        public int id = -1;
+        public int artyId = -1;
         public int level = 1;
         public int totalExp = 0;
 
@@ -20,14 +20,14 @@ namespace Mathlife.ProjectL.Gameplay
     [Serializable]
     public class BatterySaveData : IHealthCheckable
     {
-        public List<int> members = new();
+        public List<int> memberIndexes = new();
 
         public bool IsHealthy()
         {
             int memberCount = 0;
-            foreach (int memberId in members)
+            foreach (int memberIndex in memberIndexes)
             {
-                if (memberId < 0)
+                if (memberIndex < 0)
                     continue;
                 ++memberCount;
             }

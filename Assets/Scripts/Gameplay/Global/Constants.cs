@@ -2,8 +2,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public static class Constants
     {
-        public const int TeamMaxCount = 3;
-        public const int PartyMemberCount = 3;
+        public const int BatterySize = 3;
     }
 
     public static class SceneNames

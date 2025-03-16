@@ -7,30 +7,12 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class SortedCharacterListSubscription
-    {
-        CompositeDisposable m_characterLevelChangeSubscriptions;
-        IDisposable m_countChangeSubscription;
-
-        public SortedCharacterListSubscription(CompositeDisposable characterLevelChangeSubscriptions, IDisposable countChangedSubscription)
-        {
-            m_characterLevelChangeSubscriptions = characterLevelChangeSubscriptions;
-            m_countChangeSubscription = countChangedSubscription;
-        }
-
-        public void Dispose()
-        {
-            m_characterLevelChangeSubscriptions.Dispose();
-            m_countChangeSubscription.Dispose();
-        }
-    }
-
     public class ArtyRosterState : IPersistable
     {
         SaveDataManager saveDataManager;
         GameDataLoader gameDataLoader;
         
-        public async UniTask Load()
+        public UniTask Load()
         {
             saveDataManager = GameState.Inst.SaveDataManager;
             gameDataLoader = GameState.Inst.GameDataLoader;
@@ -50,23 +32,25 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 LoadFromStarterData();
             }
+            
+            return UniTask.CompletedTask;
         }
 
-        public async UniTask Save()
+        public UniTask Save()
         {
             throw new NotImplementedException();
         }
 
         // From Save File
-        void LoadFromSaveFile()
+        private void LoadFromSaveFile()
         {
             ArtyRosterSaveFile artyRosterSaveFile = saveDataManager.artyRoster;
 
             foreach (var characterSaveData in artyRosterSaveFile.artyRoster)
             {
                 ArtyModel model = new ArtyModel(
-                    gameDataLoader.GetCharacterData(characterSaveData.id),
-                    gameDataLoader.GetExpSO(),
+                    gameDataLoader.GetCharacterData(characterSaveData.artyId),
+                    gameDataLoader.GetExpData(),
                     characterSaveData.level,
                     characterSaveData.totalExp
                 );
@@ -75,11 +59,11 @@ namespace Mathlife.ProjectL.Gameplay
                 Equip(model, characterSaveData.armorId);
                 Equip(model, characterSaveData.artifactId);
 
-                m_characters.Add(characterSaveData.id, model);
+                artyList.Add(model);
             }
 
-            // ���� ĳ���Ͱ� ����. �����Ͱ� ������ �ջ�Ǿ���.
-            if (m_characters.Count == 0)
+            // 세이브 파일에 저장된 화포가 없는 경우
+            if (artyList.Count == 0)
             {
                 LoadFromStarterData();
                 return;
@@ -87,7 +71,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             BatterySaveData teamSaveData = artyRosterSaveFile.battery;
 
-            // �� �����Ͱ� �߸� �����Ǿ� �ִ�. ���� Ȥ�� ����� ����.
+            // 포대 설정이 잘못된 경우
             if (false == teamSaveData.IsHealthy())
             {
                 ConstructBestTeam();
@@ -95,74 +79,69 @@ namespace Mathlife.ProjectL.Gameplay
             }
 
             // Construct team by data.
-            List<ArtyModel> members = teamSaveData.members
-                .Select((memberId) => (memberId == -1) ? null : m_characters[memberId])
+            List<ArtyModel> members = teamSaveData.memberIndexes
+                .Select((memberIndex) => (memberIndex < 0) ? null : artyList[memberIndex])
                 .ToList();
 
             Battery = new(members);
         }
 
-        void LoadFromStarterData()
+        private void LoadFromStarterData()
         {
-            StarterGameData starterData = gameDataLoader.GetStarterSO();
-            ExpGameData expData = gameDataLoader.GetExpSO();
+            StarterGameData starterData = gameDataLoader.GetStarterData();
+            ExpGameData expData = gameDataLoader.GetExpData();
 
-            var starterParty = starterData.GetStarterBattery();
-            var starterCharactersNotInParty = starterData.GetStarterMechParts();
+            var starterBattery = starterData.GetStarterBattery();
+            var starterRosterMinusBattery = starterData.GetStarterRosterMinusBattery();
 
-            List<ArtyPreset> starterCharacters = new();
-            starterCharacters.AddRange(starterParty);
-            starterCharacters.AddRange(starterCharactersNotInParty);
+            List<ArtyPreset> artyPresets = new();
+            artyPresets.AddRange(starterBattery);
+            artyPresets.AddRange(starterRosterMinusBattery);
 
-            foreach (var starterCharacter in starterCharacters)
+            foreach (var artyPreset in artyPresets)
             {
-                if (starterCharacter.arty == null)
+                if (artyPreset.arty == null)
                     continue;
 
-                int level = starterCharacter.level;
-                long totalExp = expData.characterTotalExpAtLevelList[level] + starterCharacter.currentLevelExp;
-                ArtyModel model = new(starterCharacter.arty, expData, level, totalExp);
+                int level = artyPreset.level;
+                long totalExp = expData.characterTotalExpAtLevelList[level] + artyPreset.currentLevelExp;
+                ArtyModel arty = new(artyPreset.arty, expData, level, totalExp);
 
-                Equip(model, starterCharacter.barrel?.id ?? -1);
-                Equip(model, starterCharacter.armor?.id ?? -1);
-                Equip(model, starterCharacter.engine?.id ?? -1);
+                Equip(arty, artyPreset.barrel?.id ?? -1);
+                Equip(arty, artyPreset.armor?.id ?? -1);
+                Equip(arty, artyPreset.engine?.id ?? -1);
 
-                m_characters.Add(starterCharacter.arty.id, model);
+                artyList.Add(arty);
             }
 
-            List<ArtyModel> teamMembers = new();
-            foreach (var starterMember in starterParty)
+            List<ArtyModel> batteryMembers = new();
+            for (int i = 0; i < Constants.BatterySize; ++i)
             {
-                if (starterMember.arty == null)
+                var artyPreset = starterBattery[i]; 
+                
+                if (artyPreset.arty == null)
                 {
-                    teamMembers.Add(null);
+                    batteryMembers.Add(null);
                     continue;
                 }
 
-                int id = starterMember.arty.id;
-
-                if (m_characters.TryGetValue(id, out var character) == false)
-                {
-                    Debug.LogError("��Ÿ�� ���ÿ� ������ �ֽ��ϴ�. ����� ĳ���� ��Ͽ� �������� �ʽ��ϴ�.");
-                    continue;
-                }
-
-                teamMembers.Add(character);
+                ArtyModel arty = artyList[i];
+                batteryMembers.Add(arty);
             }
 
-            Battery = new(teamMembers);
+            Battery = new(batteryMembers);
         }
-        
-        public void Equip(ArtyModel arty, int equipmentId)
+
+        private void Equip(ArtyModel arty, int equipmentId)
         {
             EEquipmentType equipmentType = (EEquipmentType)(equipmentId / 1000);
             arty.Equip(equipmentType, GameState.Inst.InventoryState.FindEquipment(equipmentType, equipmentId));
         }
 
-        void ConstructBestTeam()
+        private void ConstructBestTeam()
         {
             List<ArtyModel> members = new();
-            for (int i = 0; i < Constants.PartyMemberCount; ++i)
+            for (int i = 0; i < Constants.BatterySize; ++i)
                 members.Add(null);
 
             Battery = new(members);
@@ -174,16 +153,14 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void BuildBestTeam()
         {
-            int memberCount = Mathf.Min(m_characters.Count, Constants.PartyMemberCount);
+            int memberCount = Mathf.Min(artyList.Count, Constants.BatterySize);
 
-            List<ArtyModel> members = m_characters
-                .OrderByDescending(kv => kv.Value.levelRx)
-                .ThenBy(kv => kv.Key)
+            List<ArtyModel> members = artyList
+                .OrderByDescending(arty => arty.levelRx.Value)
                 .Take(memberCount)
-                .Select(kv => kv.Value)
                 .ToList();
 
-            for (int i = memberCount; i < Constants.PartyMemberCount; ++i)
+            for (int i = memberCount; i < Constants.BatterySize; ++i)
             {
                 members.Add(null);
             }
@@ -191,76 +168,39 @@ namespace Mathlife.ProjectL.Gameplay
             Battery.Rebuild(members);
         }
 
-        ReactiveDictionary<int, ArtyModel> m_characters = new();
-        List<SortedCharacterListSubscription> subscriptions = new();
+        private readonly ReactiveCollection<ArtyModel> artyList = new();
 
-        public ArtyModel this[int id]
-        {
-            get => m_characters[id];
-        }
+        public ArtyModel this[int index] => artyList[index];
 
         public ArtyModel Add(int id, int level = 1, int totalExp = 0)
         {
             ArtyModel arty = new(
                 gameDataLoader.GetCharacterData(id),
-                gameDataLoader.GetExpSO(),
+                gameDataLoader.GetExpData(),
                 level, totalExp);
-            m_characters.Add(id, arty);
+            artyList.Add(arty);
 
             return arty;
         }
 
-        public bool Remove(int id)
+        public bool Remove(ArtyModel arty)
         {
-            if (m_characters.ContainsKey(id) == false)
+            if (artyList.Contains(arty) == false)
                 return false;
 
-            m_characters.Remove(id);
-            Battery.Remove(m_characters[id]);
-
+            artyList.Remove(arty);
+            Battery.Remove(arty);
             return true;
         }
 
-        public List<ArtyModel> GetSortedList()
+        public List<ArtyModel> GetSortedList(ArtyModel excludeArty = null)
         {
-            return m_characters
-                .Select(kv => kv.Value)
-                .OrderByDescending(character => character.levelRx)
-                .ThenBy(character => character.id)
+            return artyList
+                .Where(arty => arty != excludeArty)
+                .OrderByDescending(arty => arty.levelRx.Value)
+                .ThenBy(arty => arty.totalExpRx.Value)
+                .ThenBy(arty => arty.id)
                 .ToList();
-        }
-
-        public SortedCharacterListSubscription SubscribeSortedCharacterList(Action onCharacterListChangedAction)
-        {
-            CompositeDisposable characterLevelChangeSubscriptions = new();
-            foreach (var kv in m_characters)
-            {
-                ArtyModel arty = kv.Value;
-                IDisposable characterLevelChangeSubscription = arty.levelRx
-                    .Subscribe(level => onCharacterListChangedAction?.Invoke());
-                characterLevelChangeSubscriptions.Add(characterLevelChangeSubscription);
-            }
-
-            IDisposable countChangedSubscription = m_characters.ObserveCountChanged()
-                .Subscribe(_ => OnCountChanged(onCharacterListChangedAction, characterLevelChangeSubscriptions));
-
-            return new(characterLevelChangeSubscriptions, countChangedSubscription);
-        }
-
-        void OnCountChanged(Action onCharacterListChangedAction, CompositeDisposable characterLevelChangeSubscriptions)
-        {
-            // ��� ĳ���� �� �ٽ� ����
-            characterLevelChangeSubscriptions.Clear();
-            foreach (var kv in m_characters)
-            {
-                ArtyModel arty = kv.Value;
-                IDisposable characterLevelChangeSubscription = arty.levelRx
-                    .Subscribe(level => onCharacterListChangedAction?.Invoke());
-                characterLevelChangeSubscriptions.Add(characterLevelChangeSubscription);
-            }
-
-            // �׼� ����
-            onCharacterListChangedAction?.Invoke();
         }
     }
 }

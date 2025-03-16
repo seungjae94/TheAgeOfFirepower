@@ -66,7 +66,7 @@ namespace Mathlife.ProjectL.Gameplay
             return vehicles[id];
         }
 
-        public MechPartGameData GetEquipmentSO(int id)
+        public MechPartGameData GetMechPartData(int id)
         {
             if (id < 0)
                 return null;
@@ -74,22 +74,17 @@ namespace Mathlife.ProjectL.Gameplay
             return mechParts[id];
         }
 
-        public StarterGameData GetStarterSO()
+        public StarterGameData GetStarterData()
         {
             return mStarterGameData;
         }
 
-        public ShopGameData GetShopSO()
+        public ShopGameData GetShopData()
         {
             return shopGameData;
         }
 
-        public PrefabGameData GetPrefabSO()
-        {
-            return prafabGameData;
-        }
-
-        public ExpGameData GetExpSO()
+        public ExpGameData GetExpData()
         {
             return expGameData;
         }

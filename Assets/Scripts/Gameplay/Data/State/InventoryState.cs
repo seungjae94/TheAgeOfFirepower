@@ -47,7 +47,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         void LoadFromStarterData()
         {
-            StarterGameData starter = gameDataLoader.GetStarterSO();
+            StarterGameData starter = gameDataLoader.GetStarterData();
 
             GoldRx.Value = starter.GetStarterGold();
 
@@ -59,7 +59,7 @@ namespace Mathlife.ProjectL.Gameplay
                 AddEquipment(characterSlot.engine?.id ?? -1);
             }
 
-            var starterCharactersNotInParty = starter.GetStarterMechParts();
+            var starterCharactersNotInParty = starter.GetStarterRosterMinusBattery();
             foreach (var characterSlot in starterCharactersNotInParty)
             {
                 AddEquipment(characterSlot.barrel?.id ?? -1);
@@ -67,7 +67,7 @@ namespace Mathlife.ProjectL.Gameplay
                 AddEquipment(characterSlot.engine?.id ?? -1);
             }
 
-            var starterEquipmentsNotOwned = starter.GetStarterRoster();
+            var starterEquipmentsNotOwned = starter.GetStarterMechParts();
             foreach (var equipSlot in starterEquipmentsNotOwned)
             {
                 for (int i = 0; i < equipSlot.count; ++i)
@@ -100,7 +100,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public bool BuyItem(int equipmentId)
         {
-            MechPartGameData mechPartGameData = gameDataLoader.GetEquipmentSO(equipmentId);
+            MechPartGameData mechPartGameData = gameDataLoader.GetMechPartData(equipmentId);
         
             if (GoldRx.Value < mechPartGameData.shopPrice)
             {
@@ -148,7 +148,7 @@ namespace Mathlife.ProjectL.Gameplay
                 return null;
 
             Debug.Log(id);
-            MechPartModel mechPart = new(gameDataLoader.GetEquipmentSO(id));
+            MechPartModel mechPart = new(gameDataLoader.GetMechPartData(id));
             m_equipments[mechPart.type].Add(mechPart);
             return mechPart;
         }

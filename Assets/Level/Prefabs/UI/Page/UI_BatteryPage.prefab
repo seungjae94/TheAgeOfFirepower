@@ -2543,7 +2543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1825287656223730873, guid: bade3a50c8e8e1044b0a7833650acc9c, type: 3}
       propertyPath: m_Name
-      value: Battery Arty Slot 1
+      value: BatteryPageArtySlot1
       objectReference: {fileID: 0}
     - target: {fileID: 5760174605525025037, guid: bade3a50c8e8e1044b0a7833650acc9c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2761,7 +2761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1825287656223730873, guid: bade3a50c8e8e1044b0a7833650acc9c, type: 3}
       propertyPath: m_Name
-      value: Battery Arty Slot 0
+      value: BatteryPageArtySlot0
       objectReference: {fileID: 0}
     - target: {fileID: 5760174605525025037, guid: bade3a50c8e8e1044b0a7833650acc9c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2975,7 +2975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1825287656223730873, guid: bade3a50c8e8e1044b0a7833650acc9c, type: 3}
       propertyPath: m_Name
-      value: Battery Arty Slot 2
+      value: BatteryPageArtySlot2
       objectReference: {fileID: 0}
     - target: {fileID: 5760174605525025037, guid: bade3a50c8e8e1044b0a7833650acc9c, type: 3}
       propertyPath: m_AnchorMax.y
