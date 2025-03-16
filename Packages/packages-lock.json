@@ -1,11 +1,44 @@
 {
   "dependencies": {
+    "com.brunomikoski.animationsequencer": {
+      "version": "https://github.com/brunomikoski/Animation-Sequencer.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "bfbdbda3573da34f590a3f011e2c9f3a14ededc0"
+    },
+    "com.coffee.ui-effect": {
+      "version": "https://github.com/mob-sakai/UIEffect.git?path=Packages/src",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "hash": "3eb775dcf57b5b1fc8af6fd923f6ce0a4fa51bd5"
+    },
+    "com.coffee.ui-particle": {
+      "version": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0",
+        "com.unity.modules.particlesystem": "1.0.0"
+      },
+      "hash": "4b98abd7469b10d55c9c623830cb6e1518f72731"
+    },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "b0d01ca75fc890b76e81202d655d17c1f4214a18"
+    },
+    "com.elringus.spriteglow": {
+      "version": "https://github.com/elringus/sprite-glow.git#package",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "05442994ffb7f6c679f648d702cdf888bd8c01dc"
     },
     "com.marijnzwemmer.unity-toolbar-extender": {
       "version": "https://github.com/marijnz/unity-toolbar-extender.git",
@@ -237,6 +270,15 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.postprocessing": {
+      "version": "3.4.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.physics": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.profiling.core": {
       "version": "1.0.2",
       "depth": 1,
@@ -363,6 +405,13 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.unity.uiextensions": {
+      "version": "https://github.com/Unity-UI-Extensions/com.unity.uiextensions.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "35b9985bf238cde2bad9c8e107c686ba3194471c"
+    },
     "com.unity.visualscripting": {
       "version": "1.9.5",
       "depth": 0,
@@ -372,13 +421,6 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
-    },
-    "jp.hadashikick.vcontainer": {
-      "version": "1.16.8",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

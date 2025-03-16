@@ -109,8 +109,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         void OnClickSlot(PointerEventData ev)
         {
             BatteryPage.selectedSlotIndexRx.Value = slotIndex;
-            Presenter.Find<BattlePageArtySlotMemberChangePopup>()
-                .OpenWithAnimation().Forget();
         }
     }
 }

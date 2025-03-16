@@ -89,12 +89,14 @@ namespace Mathlife.ProjectL.Gameplay
                 .AddTo(disposables);
 
             // 모델 구독
-            // m_sortedCharacterListChangeSubs = ArtyRosterState
-            //     .SubscribeSortedCharacterList(UpdateView);
-            //
-            // ArtyRosterState.Battery
-            //     .SubscribeMemberChange(_ => UpdateView())
-            //     .AddTo(disposables);
+            
+            
+            m_sortedCharacterListChangeSubs = ArtyRosterState
+                 .SubscribeSortedCharacterList(UpdateView);
+            
+            ArtyRosterState.Battery
+                 .SubscribeMemberChange(_ => UpdateView())
+                 .AddTo(disposables);
 
             // 뷰 초기화
             excludeButton.gameObject.SetActive(BatteryPage.SelectedArty != null);
