@@ -1,5 +1,6 @@
 ﻿using Mathlife.ProjectL.Utils;
 using System;
+using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.UI;
 using TMPro;
 using UniRx;
@@ -41,6 +42,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // 이벤트 루프
         public override void Initialize()
         {
+            base.Initialize();
+            
             viewCanvasGroup = GetComponent<CanvasGroup>();
         }
 
@@ -97,7 +100,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClickArtySlotChangeButton(Unit _)
         {
-            Presenter.Find<BattlePageArtySlotChangePopup>().Activate();
+            Presenter.Find<BattlePageArtySlotMemberChangePopup>()
+                .OpenWithAnimation().Forget();
         }
 
         // 뷰 업데이트

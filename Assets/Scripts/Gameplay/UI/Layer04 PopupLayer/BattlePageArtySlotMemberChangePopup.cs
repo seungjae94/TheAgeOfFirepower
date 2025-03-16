@@ -7,6 +7,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 #if UNITY_EDITOR
@@ -18,7 +19,7 @@ using Mathlife.ProjectL.Gameplay.UI.Editor;
 namespace Mathlife.ProjectL.Gameplay
 {
     [RequireComponent(typeof(RectTransform))]
-    public class BattlePageArtySlotChangePopup : PopupPresenter
+    public class BattlePageArtySlotMemberChangePopup : PopupPresenter
     {
         [SerializeField]
         private float slideDuration = 0.5f;
@@ -28,13 +29,16 @@ namespace Mathlife.ProjectL.Gameplay
         private ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
 
         // View
-        Button m_closeButton;
-        Button m_excludeButton;
+        [SerializeField]
+        private Button closeButton;
+        
+        [SerializeField]
+        private Button excludeButton;
         //[SerializeField] CharacterSelectionFlex m_flex;
 
-        int m_selectedSlotIndex;
-
-        SortedCharacterListSubscription m_sortedCharacterListChangeSubs;
+        // Field
+        private readonly CompositeDisposable disposables = new();
+        private SortedCharacterListSubscription m_sortedCharacterListChangeSubs;
 
         // Tween
         private Tween slideInTween;
@@ -60,44 +64,42 @@ namespace Mathlife.ProjectL.Gameplay
         // 이벤트 함수
         public override void Initialize()
         {
+            base.Initialize();
+            
             CreateTweens();
         }
 
         void OnDestroy()
         {
+            disposables.Dispose();
             m_sortedCharacterListChangeSubs?.Dispose();
         }
-
-        // Open / Close
+        
         public override async UniTask OpenWithAnimation()
         {
-            base.Activate();
-
-            // 뷰 초기화
-            m_excludeButton.gameObject.SetActive(BatteryPage.SelectedArty != null);
-
-            //m_flex.Initialize();
-            UpdateFlex();
+            await base.OpenWithAnimation();
 
             // 이벤트 구독
-            m_closeButton.OnClickAsObservable()
+            closeButton.OnClickAsObservable()
                 .Subscribe(OnClickCloseButton)
-                .AddTo(gameObject);
+                .AddTo(disposables);
 
-            m_excludeButton.OnPointerClickAsObservable()
+            excludeButton.OnPointerClickAsObservable()
                 .Subscribe(OnClickExcludeButton)
-                .AddTo(gameObject);
+                .AddTo(disposables);
 
             // 모델 구독
-            m_sortedCharacterListChangeSubs = ArtyRosterState
-                .SubscribeSortedCharacterList(UpdateView);
+            // m_sortedCharacterListChangeSubs = ArtyRosterState
+            //     .SubscribeSortedCharacterList(UpdateView);
+            //
+            // ArtyRosterState.Battery
+            //     .SubscribeMemberChange(_ => UpdateView())
+            //     .AddTo(disposables);
 
-            ArtyRosterState.Battery
-                .SubscribeMemberChange(_ => UpdateView())
-                .AddTo(gameObject);
-
-            m_selectedSlotIndex = Find<BatteryPage>().selectedSlotIndexRx.Value;
-
+            // 뷰 초기화
+            excludeButton.gameObject.SetActive(BatteryPage.SelectedArty != null);
+            //UpdateView();
+            
             // 슬라이드 애니메이션
             slideInTween.Restart();
             await slideInTween;
@@ -105,10 +107,12 @@ namespace Mathlife.ProjectL.Gameplay
 
         public override async UniTask CloseWithAnimation()
         {
+            disposables.Clear();
+            
             slideOutTween.Restart();
             await slideOutTween;
-
-            base.Deactivate();
+            
+            await base.CloseWithAnimation();
         }
 
 #if UNITY_EDITOR
@@ -141,8 +145,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void OnClickExcludeButton(PointerEventData ev)
         {
-            Find<BatteryPage>().selectedSlotIndexRx.Value = m_selectedSlotIndex;
-            ArtyRosterState.Battery.RemoveAt(m_selectedSlotIndex);
+            //Find<BatteryPage>().selectedSlotIndexRx.Value = m_selectedSlotIndex;
+            //ArtyRosterState.Battery.RemoveAt(m_selectedSlotIndex);
             //await Find<BatteryPage>().partyMemberChangeModal.Hide();
         }
 
@@ -156,11 +160,6 @@ namespace Mathlife.ProjectL.Gameplay
 
         // 뷰 업데이트
         void UpdateView()
-        {
-            UpdateFlex();
-        }
-
-        void UpdateFlex()
         {
             var itemDatas = ArtyRosterState
                 .GetSortedList()

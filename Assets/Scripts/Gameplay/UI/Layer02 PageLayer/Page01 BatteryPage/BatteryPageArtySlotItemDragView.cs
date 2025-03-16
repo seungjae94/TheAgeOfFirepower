@@ -14,10 +14,6 @@ namespace Mathlife.ProjectL.Gameplay
 
         private ArtyModel arty = null;
 
-        public override void Initialize()
-        {
-        }
-
         public void Setup(ArtyModel pArty)
         {
             arty = pArty;

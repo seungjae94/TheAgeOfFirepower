@@ -1,9 +1,9 @@
-﻿using UniRx;
+﻿using Cysharp.Threading.Tasks;
+using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Mathlife.ProjectL.Utils;
-using UnityEngine.Serialization;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
@@ -29,6 +29,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // 이벤트 함수
         public override void Initialize()
         {
+            base.Initialize();
+            
             slotIndex = transform.GetSiblingIndex();
             dropTrigger = GetComponent<ObservableDropTrigger>();
             clickTrigger = GetComponent<ObservablePointerClickTrigger>();
@@ -107,7 +109,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         void OnClickSlot(PointerEventData ev)
         {
             BatteryPage.selectedSlotIndexRx.Value = slotIndex;
-            //Find<PartyMemberChangePopup>().OpenWithAnimation().Forget();
+            Presenter.Find<BattlePageArtySlotMemberChangePopup>()
+                .OpenWithAnimation().Forget();
         }
     }
 }

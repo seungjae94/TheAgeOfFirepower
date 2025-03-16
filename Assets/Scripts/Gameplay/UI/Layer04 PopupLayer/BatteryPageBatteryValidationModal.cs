@@ -19,6 +19,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         public override void Initialize()
         {
+            base.Initialize();
+            
             m_canvasGroup = GetComponent<CanvasGroup>();
         }
 

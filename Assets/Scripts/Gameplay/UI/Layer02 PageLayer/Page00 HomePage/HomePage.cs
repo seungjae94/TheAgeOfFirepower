@@ -16,6 +16,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public override void Initialize()
         {
             base.Initialize();
+            
             menuBar = transform.FindRecursive<HomePageMenuBar>();
         }
 

@@ -17,6 +17,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public override void Initialize()
         {
+            base.Initialize();
+            
             batteryMenuButton = transform.FindRecursiveByName<Transform>("Battery Menu")
                 .GetComponentInChildren<Button>();
             artilleryMenuButton = transform.FindRecursiveByName<Transform>("Artillery Menu")
