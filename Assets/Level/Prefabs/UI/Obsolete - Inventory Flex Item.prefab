@@ -400,9 +400,8 @@ GameObject:
   - component: {fileID: 5745251080115398102}
   - component: {fileID: 5985531862072972833}
   - component: {fileID: 6126837246977894992}
-  - component: {fileID: -3250474132699824963}
   m_Layer: 5
-  m_Name: Inventory Flex Item
+  m_Name: Obsolete - Inventory Flex Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -512,19 +511,3 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-3250474132699824963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7851466314636929522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a0b4fe55730a4c4ebd851e6529b2551, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_button: {fileID: 6126837246977894992}
-  m_iconImage: {fileID: 4480957040527221449}
-  m_equippedMark: {fileID: 1946073012978029358}
-  m_selectedMark: {fileID: 5916695262636513716}

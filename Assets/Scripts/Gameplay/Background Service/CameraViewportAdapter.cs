@@ -49,9 +49,11 @@ namespace Mathlife.ProjectL.Gameplay
             prevScreenAspect = screenAspect;
 
             //await UniTask.WaitForEndOfFrame();
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            //await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            //await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
 
+            await UniTask.WaitForEndOfFrame(this);
+            
             // Safe Area 적용
             ApplySafeArea();
         }

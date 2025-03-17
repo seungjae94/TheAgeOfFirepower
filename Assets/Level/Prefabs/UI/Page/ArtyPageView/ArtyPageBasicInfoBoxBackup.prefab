@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 5791420911266387455}
   - component: {fileID: 9212225565790384307}
   m_Layer: 5
-  m_Name: Basic Info Box
+  m_Name: ArtyPageBasicInfoBoxBackup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
