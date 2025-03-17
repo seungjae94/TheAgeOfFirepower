@@ -12,6 +12,11 @@ namespace Mathlife.ProjectL.Gameplay
         SaveDataManager saveDataManager;
         GameDataLoader gameDataLoader;
         
+        private readonly ReactiveCollection<ArtyModel> artyList = new();
+        public ArtyModel this[int index] => artyList[index];
+        
+        public BatteryModel Battery { get; private set; }
+        
         public UniTask Load()
         {
             saveDataManager = GameState.Inst.SaveDataManager;
@@ -149,8 +154,6 @@ namespace Mathlife.ProjectL.Gameplay
             BuildBestTeam();
         }
 
-        public BatteryModel Battery { get; private set; }
-
         public void BuildBestTeam()
         {
             int memberCount = Mathf.Min(artyList.Count, Constants.BatterySize);
@@ -167,10 +170,6 @@ namespace Mathlife.ProjectL.Gameplay
 
             Battery.Rebuild(members);
         }
-
-        private readonly ReactiveCollection<ArtyModel> artyList = new();
-
-        public ArtyModel this[int index] => artyList[index];
 
         public ArtyModel Add(int id, int level = 1, int totalExp = 0)
         {
@@ -195,9 +194,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         public List<ArtyModel> GetSortedList(Func<ArtyModel, bool> excludeFilter = null)
         {
-            if (excludeFilter == null)
-                excludeFilter = (arty) => false;
-            
+            excludeFilter ??= (arty) => false;
+
             return artyList
                 .Where((arty) => excludeFilter(arty) == false)
                 .OrderByDescending(arty => arty.levelRx.Value)

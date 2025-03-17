@@ -10,9 +10,10 @@ namespace Mathlife.ProjectL.Gameplay
         private const float k_minScreenAspect = 16f / 9f;
         private const float k_maxScreenAspect = 21f / 9f;
 
+        [SerializeField] private Canvas targetCanvas;
         private Camera targetCamera;
         private float prevScreenAspect = -1f;
-        
+
         private void Awake()
         {
             targetCamera = GetComponent<Camera>();
@@ -20,7 +21,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void Start()
         {
-            Adapt();
+            Adapt((float)Screen.width / Screen.height).Forget();
         }
 
         private void Update()
@@ -30,13 +31,11 @@ namespace Mathlife.ProjectL.Gameplay
             if (Mathf.Approximately(prevScreenAspect, screenAspect))
                 return;
 
-            Adapt().Forget();
+            Adapt((float)Screen.width / Screen.height).Forget();
         }
 
-        private async UniTaskVoid Adapt()
+        public async UniTaskVoid Adapt(float screenAspect)
         {
-            float screenAspect = (float)Screen.width / Screen.height;
-
             if (screenAspect < k_minScreenAspect)
                 AdaptWithLetterBox(screenAspect);
             else if (screenAspect > k_maxScreenAspect)
@@ -47,7 +46,8 @@ namespace Mathlife.ProjectL.Gameplay
             // 스크린 aspect 저장
             prevScreenAspect = screenAspect;
 
-            await UniTask.WaitForEndOfFrame();
+            //await UniTask.WaitForEndOfFrame();
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             // Safe Area 적용
             ApplySafeArea();
@@ -80,14 +80,22 @@ namespace Mathlife.ProjectL.Gameplay
             targetCamera.rect = new Rect(rectX, 0f, rectWidth, 1f);
         }
 
-        public void ApplySafeArea()
+        private void ApplySafeArea()
         {
-            SafeAreaApplier[] safeMargins = GameObject.FindObjectsByType<SafeAreaApplier>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            
+            SafeAreaApplier[] safeMargins =
+                GameObject.FindObjectsByType<SafeAreaApplier>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
             foreach (var safeMargin in safeMargins)
             {
                 safeMargin.Apply();
             }
         }
+
+#if UNITY_EDITOR
+        public void Setup()
+        {
+            targetCamera = GetComponent<Camera>();
+        }
+#endif
     }
 }

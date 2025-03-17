@@ -160,7 +160,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
             
             // 사이즈
-            rectTransform.sizeDelta = new Vector2(width, height);
+            Vector2 targetSize = new Vector2(width, height);
+            Vector2 anchorBoxSize = (rectTransform.anchorMax - rectTransform.anchorMin); 
+            anchorBoxSize.x *= canvasRectTransform.rect.width;
+            anchorBoxSize.y *= canvasRectTransform.rect.height;
+            rectTransform.sizeDelta = targetSize - anchorBoxSize;
         }
     }
 }

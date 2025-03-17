@@ -131,21 +131,6 @@ namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
             CloseWithAnimation().Forget();
         }
 
-        private void OnClickExcludeButton(PointerEventData ev)
-        {
-            //Find<BatteryPage>().selectedSlotIndexRx.Value = m_selectedSlotIndex;
-            //ArtyRosterState.Battery.RemoveAt(m_selectedSlotIndex);
-            //await Find<BatteryPage>().partyMemberChangeModal.Hide();
-        }
-
-        private void OnClickFlexItem(ArtyModel arty)
-        {
-            ArtyRosterState.Battery.Add(Find<BatteryPage>().selectedSlotIndexRx.Value, arty);
-            Find<BatteryPage>().selectedSlotIndexRx.Value = -1;
-
-            CloseWithAnimation().Forget();
-        }
-
         // 뷰 업데이트
         private void UpdateScrollView()
         {
