@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0c922191370f81148804976b3c32fbe6
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0011.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 13100622dca7b274b9f7564326ec8cda
     m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0018.asset
     m_ReadOnly: 0
@@ -45,6 +51,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c52e64451d7eae499b631605fea7e42
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0005.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e0e6f9d95665e649accd11f8d19ddcf
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0002.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34429c2365021d64cb5ea4a0eece68c7
     m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0019.asset
     m_ReadOnly: 0
@@ -63,6 +81,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 426dcd72f60b7e44abf715e72fb5ade8
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0000.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 42d17e96f05c36a43b0a409794f3afe2
     m_Address: Assets/AddressableAssets/GameData/ShellGameData/ShellGameData_0005.asset
     m_ReadOnly: 0
@@ -77,6 +101,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 48c279c9dce38bc43b64dd31913d0294
     m_Address: Assets/AddressableAssets/GameData/ArtyGameData/ArtyGameData_0004.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4cbf4f43070fb62488f318108148ef5c
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0001.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
@@ -141,8 +171,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 773d70d8c1c995a41b221a4ac26f27fc
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0009.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 77a25fad67345454d9b586e22ce70dcf
     m_Address: Assets/AddressableAssets/GameData/ArtyGameData/ArtyGameData_0005.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86b245a07b003d54d9b53a3dd4a9fca6
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0007.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
@@ -155,6 +197,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 89793249bc975214793f2ed07a237bfa
     m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0020.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ab59246e94d5ad4092310afbeb822fa
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0003.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
@@ -189,6 +237,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3fe567db54d45441b6d61f3a30dbaac
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0010.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b83eafa984d217e44942ee267033a7d8
     m_Address: Assets/AddressableAssets/GameData/ShellGameData/ShellGameData_0001.asset
     m_ReadOnly: 0
@@ -203,6 +257,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c785432e675c2cc4a8a375bb14f5fe42
     m_Address: Assets/Game Assets/Scriptable Objects/00 Global/Starter Data.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd87f1b0da71ecf409302f2ff6d745bb
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0006.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
@@ -227,6 +287,18 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d3162e5e5fd42cb48a95ac63274e6d4f
     m_Address: Assets/Game Assets/Scriptable Objects/00 Global/Exp Data.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d679ad340a5c9ce439639afd92f4eb11
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0008.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7cdf2582d10f8042b8c0426bc8e3da2
+    m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0004.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
