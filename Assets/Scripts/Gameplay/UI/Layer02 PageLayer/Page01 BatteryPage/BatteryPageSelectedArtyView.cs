@@ -36,13 +36,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         // Field
         private readonly CompositeDisposable disposables = new();
-        private IDisposable artyModelSub = null;
-        
+        private IDisposable selectedArtySub = null;
+
         // 이벤트 루프
         public override void Initialize()
         {
             base.Initialize();
-            
+
             viewCanvasGroup = GetComponent<CanvasGroup>();
         }
 
@@ -50,7 +50,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             disposables.Dispose();
         }
-        
+
         public override void Draw()
         {
             BatteryPage.selectedSlotIndexRx
@@ -74,18 +74,15 @@ namespace Mathlife.ProjectL.Gameplay.UI
         }
 
         // 모델 구독 콜백
-        void OnSelectedSlotIndexChange(int selectedSlotIndex)
+        private void OnSelectedSlotIndexChange(int selectedSlotIndex)
         {
-            if (artyModelSub != null)
-                artyModelSub.Dispose();
+            if (selectedArtySub != null)
+                selectedArtySub.Dispose();
 
-            if (BatteryPage.SelectedArty != null)
-            {
-                artyModelSub = BatteryPage.SelectedArty
-                    .levelRx
-                    .Subscribe(level => artyLevelText.text = level.ToString());
-            }
-
+            selectedArtySub = BatteryPage
+                .ObserveEveryValueChanged(page => page.SelectedArty)
+                .Subscribe(arty => UpdateView());
+            
             UpdateView();
         }
 

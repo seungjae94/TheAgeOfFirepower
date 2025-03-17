@@ -307,6 +307,7 @@ RectTransform:
   m_Children:
   - {fileID: 4782309362290464853}
   - {fileID: 3611386959001237852}
+  - {fileID: 9000961639474172017}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -401,6 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   addMemberGuideCanvasGroup: {fileID: 1210958136635031902}
+  selectionCanvasGroup: {fileID: 3363193051431996680}
   slotItem: {fileID: 4361397087490917603}
 --- !u!1 &2043767690883651768
 GameObject:
@@ -576,7 +578,6 @@ RectTransform:
   m_Children:
   - {fileID: 4592810233969909208}
   - {fileID: 8065870711234537659}
-  - {fileID: 9000961639474172017}
   m_Father: {fileID: 8654182628973906298}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -697,7 +698,6 @@ MonoBehaviour:
   portraitImage: {fileID: 9198829564804923940}
   nameText: {fileID: 4615521779808088128}
   levelText: {fileID: 1845403256113222218}
-  selectionCanvasGroup: {fileID: 3363193051431996680}
 --- !u!1 &3713936076720914168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,12 +1361,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5950389498561553174}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3611386959001237852}
+  m_Father: {fileID: 8654182628973906298}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

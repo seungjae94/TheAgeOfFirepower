@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using System.Linq;
 using DG.Tweening;
 using Mathlife.ProjectL.Gameplay.UI;
@@ -89,7 +90,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
 
             // 슬라이드 애니메이션
             slideInTween.Restart();
-            await slideInTween;
+            await slideInTween.AwaitForComplete();
         }
 
         public override async UniTask CloseWithAnimation()
@@ -97,8 +98,8 @@ namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
             disposables.Clear();
 
             slideOutTween.Restart();
-            await slideOutTween;
-
+            await slideOutTween.AwaitForComplete();
+            
             await base.CloseWithAnimation();
         }
 
@@ -148,12 +149,12 @@ namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
         // 뷰 업데이트
         private void UpdateScrollView()
         {
-            ArtyModel selectedArty = BatteryPage.SelectedArty;
+            bool ExcludeFilter(ArtyModel arty) => ArtyRosterState.Battery.Contains(arty);
 
             var sortedArtyList = ArtyRosterState
-                .GetSortedList(selectedArty);
+                .GetSortedList(ExcludeFilter);
 
-            if (selectedArty != null)
+            if (BatteryPage.SelectedArty != null)
             {
                 sortedArtyList.Insert(0, null);
             }

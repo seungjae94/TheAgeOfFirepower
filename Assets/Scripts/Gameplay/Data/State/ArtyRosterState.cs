@@ -193,10 +193,13 @@ namespace Mathlife.ProjectL.Gameplay
             return true;
         }
 
-        public List<ArtyModel> GetSortedList(ArtyModel excludeArty = null)
+        public List<ArtyModel> GetSortedList(Func<ArtyModel, bool> excludeFilter = null)
         {
+            if (excludeFilter == null)
+                excludeFilter = (arty) => false;
+            
             return artyList
-                .Where(arty => arty != excludeArty)
+                .Where((arty) => excludeFilter(arty) == false)
                 .OrderByDescending(arty => arty.levelRx.Value)
                 .ThenBy(arty => arty.totalExpRx.Value)
                 .ThenBy(arty => arty.id)

@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 3732695967489274657}
   - component: {fileID: 4487807966057801436}
   m_Layer: 5
-  m_Name: UI_BattlePageArtySlotChangePopup
+  m_Name: UI_BatteryPageArtySlotChangePopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

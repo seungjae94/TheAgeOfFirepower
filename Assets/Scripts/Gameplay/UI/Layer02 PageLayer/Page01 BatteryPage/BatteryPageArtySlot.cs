@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -21,6 +22,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField]
         private CanvasGroup addMemberGuideCanvasGroup;
 
+        [SerializeField]
+        CanvasGroup selectionCanvasGroup;
+        
         [SerializeField]
         private BatteryPageArtySlotItem slotItem;
 
@@ -46,6 +50,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .Subscribe(UpdateAddMemberGuideView)
                 .AddTo(disposables);
 
+            BatteryPage.selectedSlotIndexRx
+                .Subscribe(OnSelectedSlotIndexChange)
+                .AddTo(disposables);
+            
             // 이벤트 구독
             dropTrigger
                 .OnDropAsObservable()
@@ -76,6 +84,20 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 addMemberGuideCanvasGroup.Hide();
             else
                 addMemberGuideCanvasGroup.Show();
+        }
+        
+        void OnSelectedSlotIndexChange(int selectedSlotIndex)
+        {
+            // This character is selected.
+            if (selectedSlotIndex == slotIndex)
+            {
+                selectionCanvasGroup.Show();
+            }
+            // Another character is selected.
+            else
+            {
+                selectionCanvasGroup.Hide();
+            }
         }
 
         // 이벤트 구독 콜백
@@ -109,6 +131,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
         void OnClickSlot(PointerEventData ev)
         {
             BatteryPage.selectedSlotIndexRx.Value = slotIndex;
+
+            BatteryPageMemberChangePopup popup = Presenter.Find<BatteryPageMemberChangePopup>();
+            ArtyModel arty = ArtyRosterState.Battery[slotIndex];
+            if (arty == null && popup.isActiveAndEnabled == false)
+            {
+                popup.OpenWithAnimation().Forget();
+            }
         }
     }
 }

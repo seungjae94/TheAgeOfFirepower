@@ -33,9 +33,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField]
         TMP_Text levelText;
 
-        [SerializeField]
-        CanvasGroup selectionCanvasGroup;
-
         // Field
         private int slotIndex;
         public ArtyModel Arty { get; private set; }
@@ -67,10 +64,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             ArtyRosterState.Battery
                 .ObserveEveryValueChanged(party => party[slotIndex])
                 .Subscribe(OnSlotMemberChange)
-                .AddTo(disposables);
-
-            BatteryPage.selectedSlotIndexRx
-                .Subscribe(OnSelectedSlotIndexChange)
                 .AddTo(disposables);
 
             // 이벤트 구독
@@ -117,20 +110,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
 
             UpdateView();
-        }
-
-        void OnSelectedSlotIndexChange(int selectedSlotIndex)
-        {
-            // This character is selected.
-            if (selectedSlotIndex == slotIndex)
-            {
-                selectionCanvasGroup.Show();
-            }
-            // Another character is selected.
-            else
-            {
-                selectionCanvasGroup.Hide();
-            }
         }
 
         // 이벤트 구독 콜백
