@@ -10,7 +10,9 @@ namespace Mathlife.ProjectL.Gameplay
         private const float k_minScreenAspect = 16f / 9f;
         private const float k_maxScreenAspect = 21f / 9f;
 
-        [SerializeField] private Canvas targetCanvas;
+        [SerializeField]
+        private Canvas targetCanvas;
+
         private Camera targetCamera;
         private float prevScreenAspect = -1f;
 
@@ -48,7 +50,8 @@ namespace Mathlife.ProjectL.Gameplay
 
             //await UniTask.WaitForEndOfFrame();
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-            
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+
             // Safe Area 적용
             ApplySafeArea();
         }
@@ -87,6 +90,9 @@ namespace Mathlife.ProjectL.Gameplay
 
             foreach (var safeMargin in safeMargins)
             {
+#if UNITY_EDITOR
+                safeMargin.Setup();
+#endif
                 safeMargin.Apply();
             }
         }
