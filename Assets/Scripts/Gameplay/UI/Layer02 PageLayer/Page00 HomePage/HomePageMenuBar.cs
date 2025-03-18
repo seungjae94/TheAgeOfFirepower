@@ -38,7 +38,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(disposables);
 
             artilleryMenuButton.OnClickAsObservable()
-                .Subscribe(_ => Presenter.Find<ArtySelectionPage>().Open())
+                .Subscribe(_ => OpenArtyPage())
                 .AddTo(disposables);
 
             inventoryMenuButton.OnClickAsObservable()
@@ -62,6 +62,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private void OnDestroy()
         {
             disposables.Dispose();
+        }
+
+        private void OpenArtyPage()
+        {
+            var artyPage = Presenter.Find<ArtyPage>();
+            // TODO: Setup ArtyPage. e.g. save and load arty index.
+            artyPage.Open();
         }
     }
 }

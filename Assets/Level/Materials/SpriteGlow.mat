@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UIOutlineGlow
-  m_Shader: {fileID: 4800000, guid: 20fb5fa09d4675a4e94314a228763c23, type: 3}
+  m_Name: SpriteGlow
+  m_Shader: {fileID: 4800000, guid: c20308b0e23b78d4c85098af31f19cb4, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -90,7 +90,7 @@ Material:
     - PixelSnap: 0
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
-    - _AlphaThreshold: 0.01
+    - _AlphaThreshold: 0.3
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -112,7 +112,7 @@ Material:
     - _IsOutlineEnabled: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _OutlineSize: 2
+    - _OutlineSize: 4
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -135,7 +135,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 1.8465364, g: 1.38498, b: 5.9921575, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []

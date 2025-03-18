@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: UIEffectProjectSettings
   m_EditorClassIdentifier: 
   m_TransformSensitivity: 1
-  m_RuntimePresets: []
+  m_RuntimePresets:
+  - {fileID: 487414704940211709, guid: dccdd2eb2f6dc38478c5a66b8b1a0e27, type: 3}
+  - {fileID: 3472546182529074810, guid: 9006edb89aabf764fa0ae258b099b428, type: 3}
+  - {fileID: 804191988758986759, guid: c90fd94a96d937148a29a58c73249dc9, type: 3}
+  - {fileID: 1278388093492537349, guid: 25b560f7daf59dd4e914f91639a19c6a, type: 3}
+  - {fileID: 6760243023748813024, guid: b31db2a6e33b12b44bffd939d3c3429c, type: 3}
+  - {fileID: 4776614747201336280, guid: b78d70d8efb857a44b21938363efb996, type: 3}
   m_UseHDRColorPicker: 1
   m_ShaderVariantCollection: {fileID: 0}
   m_ShaderVariantRegistry:
@@ -34,13 +40,45 @@ ShaderVariantCollection:
       variants:
       - keywords: COLOR_ADDITIVE
         passType: 0
+      - keywords: COLOR_ADDITIVE EDGE_COLOR_ADDITIVE EDGE_SHINY
+        passType: 0
+      - keywords: COLOR_ADDITIVE EDGE_COLOR_REPLACE EDGE_PLAIN
+        passType: 0
+      - keywords: COLOR_ADDITIVE EDGE_COLOR_REPLACE EDGE_SHINY
+        passType: 0
       - keywords: COLOR_MULTIPLY
         passType: 0
+      - keywords: COLOR_MULTIPLY EDGE_COLOR_REPLACE EDGE_SHINY
+        passType: 0
+      - keywords: COLOR_MULTIPLY_ADDITIVE
+        passType: 0
       - keywords: COLOR_MULTIPLY_LUMINANCE
+        passType: 0
+      - keywords: COLOR_MULTIPLY_LUMINANCE EDGE_COLOR_REPLACE EDGE_SHINY
+        passType: 0
+      - keywords: COLOR_REPLACE EDGE_COLOR_REPLACE EDGE_SHINY
         passType: 0
       - keywords: EDGE_COLOR_REPLACE EDGE_PLAIN
         passType: 0
       - keywords: EDGE_COLOR_REPLACE EDGE_SHINY
+        passType: 0
+      - keywords: EDGE_COLOR_REPLACE EDGE_SHINY SHADOW_COLOR_REPLACE
+        passType: 0
+      - keywords: SAMPLING_BLUR_FAST
+        passType: 0
+      - keywords: SAMPLING_EDGE_ALPHA
+        passType: 0
+      - keywords: SAMPLING_EDGE_LUMINANCE
+        passType: 0
+      - keywords: SAMPLING_PIXELATION
+        passType: 0
+      - keywords: SHADOW_COLOR_ADDITIVE
+        passType: 0
+      - keywords: SHADOW_COLOR_MULTIPLY
+        passType: 0
+      - keywords: SHADOW_COLOR_MULTIPLY_LUMINANCE
+        passType: 0
+      - keywords: SHADOW_COLOR_REPLACE
         passType: 0
       - keywords: TONE_GRAYSCALE
         passType: 0
@@ -49,4 +87,14 @@ ShaderVariantCollection:
       - keywords: TONE_POSTERIZE
         passType: 0
       - keywords: TONE_RETRO
+        passType: 0
+      - keywords: TRANSITION_BURN TRANSITION_COLOR_MULTIPLY_ADDITIVE
+        passType: 0
+      - keywords: TRANSITION_COLOR_MULTIPLY_ADDITIVE TRANSITION_PATTERN
+        passType: 0
+      - keywords: TRANSITION_COLOR_MULTIPLY_ADDITIVE TRANSITION_SHINY
+        passType: 0
+      - keywords: TRANSITION_CUTOFF
+        passType: 0
+      - keywords: TRANSITION_FADE
         passType: 0
