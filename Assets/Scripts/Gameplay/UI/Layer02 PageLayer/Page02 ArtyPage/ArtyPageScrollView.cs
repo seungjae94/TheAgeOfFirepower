@@ -14,6 +14,8 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
 
     public class Context : FancyGridViewContext
     {
+        public float cellInterval = 1f;
+        public float scrollOffset = 1f;
         public int selectedIndex = -1;
         public Subject<int> onCellClickRx = new();
     }
@@ -47,6 +49,8 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
         {
             UpdateContents(items.Select(arty => new ItemData { arty = arty }).ToList());
             scroller.SetTotalCount(items.Count);
+            Context.cellInterval = cellInterval;
+            Context.scrollOffset = scrollOffset;
         }
 
         public void SelectCell(int index)

@@ -17,6 +17,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
         private ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
 
         // View
+        private Canvas canvas;
         private UIEffect uiEffect;
         private Animator animator;
 
@@ -34,7 +35,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
 
         // Field
         private ArtyModel arty;
-        
+
         static class AnimatorHash
         {
             public static readonly int Scroll = Animator.StringToHash("ArtyPageScrollViewCell Scroll");
@@ -43,9 +44,10 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
         // Override
         public override void Initialize()
         {
+            canvas = GetComponent<Canvas>();
             uiEffect = GetComponent<UIEffect>();
             animator = GetComponent<Animator>();
-            
+
             cellButton.OnClickAsObservable()
                 .Subscribe(OnClick)
                 .AddTo(gameObject);
@@ -67,16 +69,42 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
         {
             animator.Play(AnimatorHash.Scroll, -1, position);
             animator.speed = 0;
+
+            // Sorting Order
+            // - 0 -> 200
+            // - ...
+            // - 3/7 -> 240
+            // - ...
+            // - 7/7 -> 200
+            // - Lerp를 통해 Sorting Order를 결정한다. 
+            
+            int order = 0;
+            float maximalPosition = Context.scrollOffset;
+            
+            if (position < maximalPosition)
+            {
+                float numerator = 200 * (maximalPosition - position) + 240 * position;
+                order = Mathf.FloorToInt(numerator / maximalPosition);
+            }
+            else
+            {
+                float numerator = 240 * (1 - position) + 200 * (position - maximalPosition);
+                order = Mathf.FloorToInt(numerator / (1 - maximalPosition));
+            }
+
+            ChangeSortingOrder(order);
         }
 
         // 상호작용 콜백
         private void OnClick(Unit _)
         {
             Context.onCellClickRx.OnNext(Index);
+        }
 
-            Debug.Log($"{Index}번 {arty.displayName} 클릭");
-            // ArtyRosterState.Battery.Add(BatteryPage.selectedSlotIndexRx.Value, arty);
-            // Presenter.Find<BatteryPageMemberChangePopup>().CloseWithAnimation().Forget();
+        private void ChangeSortingOrder(int order)
+        {
+            //Debug.Log($"[Cell] cell {Index} Change Layer to {layer}");
+            canvas.sortingOrder = order;
         }
     }
 }

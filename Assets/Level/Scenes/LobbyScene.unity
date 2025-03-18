@@ -1603,6 +1603,7 @@ GameObject:
   - component: {fileID: 340459885}
   - component: {fileID: 340459884}
   - component: {fileID: 340459883}
+  - component: {fileID: 340459886}
   m_Layer: 5
   m_Name: Viewport
   m_TagString: Untagged
@@ -1681,6 +1682,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 340459881}
   m_CullTransparentMesh: 1
+--- !u!223 &340459886
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340459881}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 250
+  m_TargetDisplay: 0
 --- !u!1 &348237339
 GameObject:
   m_ObjectHideFlags: 0
@@ -8481,8 +8505,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 666.03, y: -69.52}
-  m_SizeDelta: {x: 587.96, y: 740.96}
+  m_AnchoredPosition: {x: 666.03, y: -62.499992}
+  m_SizeDelta: {x: 587.96, y: 755}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1530120585
 MonoBehaviour:
@@ -8534,8 +8558,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8093adaad23e4b17b6c61ad6ac5a6b26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellInterval: 0.142857
-  scrollOffset: 0.2857
+  cellInterval: 0.14285715
+  scrollOffset: 0.41
   loop: 0
   cellContainer: {fileID: 1017044722}
   cellPrefab: {fileID: 1193754796092995785, guid: 1b9e6d2589c927149a7cca121af2793d, type: 3}
@@ -8559,7 +8583,7 @@ MonoBehaviour:
   inertia: 1
   decelerationRate: 0.03
   snap:
-    Enable: 0
+    Enable: 1
     VelocityThreshold: 0.5
     Duration: 0.3
     Easing: 24
