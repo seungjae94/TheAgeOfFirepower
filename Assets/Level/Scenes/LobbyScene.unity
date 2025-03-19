@@ -1461,7 +1461,6 @@ GameObject:
   m_Component:
   - component: {fileID: 222724008}
   - component: {fileID: 222724010}
-  - component: {fileID: 222724011}
   m_Layer: 5
   m_Name: UI_ArtyPage
   m_TagString: Untagged
@@ -1504,18 +1503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollView: {fileID: 1530120587}
---- !u!210 &222724011
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222724007}
-  m_Enabled: 1
-  m_SortingLayerID: -27113015
-  m_SortingLayer: 7
-  m_SortingOrder: 0
-  m_SortAtRoot: 0
+  scrollViewMaskRectTransform: {fileID: 340459882}
 --- !u!1 &276891782
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,7 +1591,6 @@ GameObject:
   - component: {fileID: 340459885}
   - component: {fileID: 340459884}
   - component: {fileID: 340459883}
-  - component: {fileID: 340459886}
   m_Layer: 5
   m_Name: Viewport
   m_TagString: Untagged
@@ -1628,7 +1615,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &340459883
@@ -1657,7 +1644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1682,29 +1669,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 340459881}
   m_CullTransparentMesh: 1
---- !u!223 &340459886
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 340459881}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 250
-  m_TargetDisplay: 0
 --- !u!1 &348237339
 GameObject:
   m_ObjectHideFlags: 0
@@ -8505,8 +8469,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 666.03, y: -62.499992}
-  m_SizeDelta: {x: 587.96, y: 755}
+  m_AnchoredPosition: {x: 666.03, y: -36.6}
+  m_SizeDelta: {x: 587.96, y: 703.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1530120585
 MonoBehaviour:

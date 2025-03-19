@@ -1,6 +1,9 @@
+using System;
 using Coffee.UIEffects;
 using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup;
+using Mathlife.ProjectL.Gameplay.UI.Extension;
+using Mathlife.ProjectL.Utils;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -13,11 +16,11 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
         : FancyCell<ItemData, Context>
     {
         // Alias
-        private BatteryPage BatteryPage => Presenter.Find<BatteryPage>();
-        private ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
+        private ArtyPage ArtyPage => Presenter.Find<ArtyPage>();
 
         // View
         private Canvas canvas;
+        private CanvasRenderer canvasRenderer;
         private UIEffect uiEffect;
         private Animator animator;
 
@@ -45,6 +48,12 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
         public override void Initialize()
         {
             canvas = GetComponent<Canvas>();
+            canvasRenderer = GetComponent<CanvasRenderer>();
+
+            UniTask.WaitUntil(Presenter.Has<ArtyPage>)
+                .ContinueWith(() => canvasRenderer.EnableRectClippingRecursive(ArtyPage.ScrollViewMaskRect))
+                .Forget();
+            
             uiEffect = GetComponent<UIEffect>();
             animator = GetComponent<Animator>();
 
@@ -53,13 +62,18 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
                 .AddTo(gameObject);
         }
 
+        public void OnDestroy()
+        {
+            canvasRenderer.DisableRectClippingRecursive();
+        }
+
         public override void UpdateContent(ItemData itemData)
         {
             arty = itemData.arty;
             portraitImage.sprite = itemData.arty?.Sprite;
             levelText.text = itemData.arty?.levelRx.Value.ToString();
             nameText.text = itemData.arty?.displayName;
-
+            
             uiEffect.LoadPreset(Context.selectedIndex == Index
                 ? "GradientArtyCellSelected"
                 : "GradientArtyCellDefault");
@@ -77,18 +91,22 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
             // - ...
             // - 7/7 -> 200
             // - Lerp를 통해 Sorting Order를 결정한다. 
-            
+
             int order = 0;
+            const int minOrder = 200;
+            const int maxOrder = 240;
+            // const int minOrder = 0;
+            // const int maxOrder = 100;
             float maximalPosition = Context.scrollOffset;
-            
+
             if (position < maximalPosition)
             {
-                float numerator = 200 * (maximalPosition - position) + 240 * position;
+                float numerator = minOrder * (maximalPosition - position) + maxOrder * position;
                 order = Mathf.FloorToInt(numerator / maximalPosition);
             }
             else
             {
-                float numerator = 240 * (1 - position) + 200 * (position - maximalPosition);
+                float numerator = maxOrder * (1 - position) + minOrder * (position - maximalPosition);
                 order = Mathf.FloorToInt(numerator / (1 - maximalPosition));
             }
 
@@ -101,9 +119,9 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
             Context.onCellClickRx.OnNext(Index);
         }
 
+        // 구현
         private void ChangeSortingOrder(int order)
         {
-            //Debug.Log($"[Cell] cell {Index} Change Layer to {layer}");
             canvas.sortingOrder = order;
         }
     }

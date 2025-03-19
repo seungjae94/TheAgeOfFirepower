@@ -63,5 +63,43 @@ namespace Mathlife.ProjectL.Utils
             group.interactable = false;
             group.blocksRaycasts = false;
         }
+
+        public static void EnableRectClippingRecursive(this CanvasRenderer renderer, Rect clippingRect)
+        {
+            renderer.EnableRectClipping(clippingRect);
+            EnableRectClippingRecursiveInternal(renderer.transform, clippingRect);
+        }
+
+        private static void EnableRectClippingRecursiveInternal(Transform parent, Rect clippingRect)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.TryGetComponent(out CanvasRenderer childRenderer))
+                {
+                    childRenderer.EnableRectClipping(clippingRect);
+                }
+
+                EnableRectClippingRecursiveInternal(child, clippingRect);
+            }
+        }
+        
+        public static void DisableRectClippingRecursive(this CanvasRenderer renderer)
+        {
+            renderer.DisableRectClipping();
+            DisableRectClippingRecursiveInternal(renderer.transform);
+        }
+        
+        private static void DisableRectClippingRecursiveInternal(Transform parent)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.TryGetComponent(out CanvasRenderer childRenderer))
+                {
+                    childRenderer.DisableRectClipping();
+                }
+
+                DisableRectClippingRecursiveInternal(child);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UniRx;
 using Mathlife.ProjectL.Gameplay.UI.ArtyPageView;
+using Mathlife.ProjectL.Utils;
 using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.UI
@@ -25,7 +26,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // View
         [SerializeField]
         private ArtyPageScrollView scrollView;
-        
+
+        [SerializeField]
+        private RectTransform scrollViewMaskRectTransform;
+
+        public Rect ScrollViewMaskRect => scrollViewMaskRectTransform.GetGlobalRect();
+
         public override void Open()
         {
             base.Open();

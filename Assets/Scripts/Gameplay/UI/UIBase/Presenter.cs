@@ -28,6 +28,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // Alias
         protected RectTransform rectTransform => (transform as RectTransform);
         
+        public static bool Has<TWidget>() where TWidget : Presenter
+        {
+            return s_widgets.ContainsKey(typeof(TWidget));
+        }
+        
         public static TWidget Find<TWidget>() where TWidget : Presenter
         {
             Type widgetType = typeof(TWidget);

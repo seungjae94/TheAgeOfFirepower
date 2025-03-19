@@ -68,5 +68,20 @@ namespace Mathlife.ProjectL.Utils
 
             return list;
         }
+
+        public static Rect GetGlobalRect(this RectTransform rectTransform)
+        {
+            var rect = rectTransform.rect;
+            Vector2 offset = rectTransform.localPosition;
+            Transform parent = rectTransform.parent;
+            while (parent.GetComponent<Canvas>() == null || !parent.GetComponent<Canvas>().isRootCanvas)
+            {
+                offset += (Vector2)parent.localPosition;
+                parent = parent.parent;
+            }
+            rect.x += offset.x;
+            rect.y += offset.y;
+            return rect;
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
         public float cellInterval = 1f;
         public float scrollOffset = 1f;
         public int selectedIndex = -1;
-        public Subject<int> onCellClickRx = new();
+        public readonly Subject<int> onCellClickRx = new();
     }
 
     public class ArtyPageScrollView
