@@ -194,7 +194,7 @@ namespace Mathlife.ProjectL.Gameplay
                 .ToList();
         }
 
-        public void Sort()
+        private void Sort()
         {
             artyList.Sort(Compare);
             return;
@@ -211,6 +211,11 @@ namespace Mathlife.ProjectL.Gameplay
 
                 return result;
             }
+        }
+
+        public int IndexOf(ArtyModel arty)
+        {
+            return artyList.IndexOf(arty);
         }
     }
 }

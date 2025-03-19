@@ -13,7 +13,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
     internal class BatteryPageSelectedArtyView : AbstractView
     {
         // Alias
-        ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
+        private ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
         private BatteryPage BatteryPage => Presenter.Find<BatteryPage>();
 
         // View
@@ -90,7 +90,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private void OnClickNavToArtyPageButton(Unit _)
         {
             ArtyPage artyPage = Presenter.Find<ArtyPage>();
-            // TODO: artyPage.TargetArty = ...;
+            artyPage.selectedArtyIndexRx.Value = ArtyRosterState.IndexOf(BatteryPage.SelectedArty);
             artyPage.Open();
         }
 
