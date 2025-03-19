@@ -19,22 +19,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         // 카탈로그 표시 기능
         //[SerializeField] ShopFlex m_flexView;
-
-        // 초기화
-        protected void Awake()
+        
+        
+        protected override void OnOpen()
         {
-            // foreach (Transform tabMenuTrans in m_tabMenuBar)
-            // {
-            //     TabMenu tabMenu = tabMenuTrans.GetComponent<TabMenu>();
-            //     m_tabMenus.Add(tabMenu);
-            // }
-        }
-
-        // 유저 상호작용
-        public override void Activate()
-        {
-            // base.Open();
-            //
             // UpdateFlexView();
             //
             // m_tabMenus[0].Initialize(0, OnSelectTabMenu);
@@ -52,6 +40,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
             //     .Subscribe(_ => lobbySceneGameMode.NavigateBack())
             //     .AddTo(gameObject);
         }
+
+        protected override void OnClose()
+        {
+            throw new System.NotImplementedException();
+        }
+        
 
         void OnSelectTabMenu(int index)
         {

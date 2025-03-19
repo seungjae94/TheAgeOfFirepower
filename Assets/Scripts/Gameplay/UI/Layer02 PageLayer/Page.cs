@@ -9,30 +9,29 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private class PageHistory
         {
             public Page page; 
-            public List<OverlayPresenter> overlays = new();
             public List<PopupPresenter> popups = new();
         }
         
         private static readonly Stack<PageHistory> s_historyStack = new();
         public static Page CurrentPage { get; private set; }
-
         private static IMainCanvas CurrentCanvas => GameManager.Inst.CurrentCanvas; 
  
-        public virtual void Open()
+        public void Open()
         {
             // 히스토리 백업
             if (CurrentPage != null)
             {
-                CanvasLayer overlayLayer = CurrentCanvas.GetLayer(ECanvasLayer.Overlay);
                 CanvasLayer popupLayer = CurrentCanvas.GetLayer(ECanvasLayer.Popup);
 
                 PageHistory history = new()
                 {
                     page = CurrentPage,
-                    overlays = overlayLayer.GetAllPresenters<OverlayPresenter>(),
                     popups = popupLayer.GetAllPresenters<PopupPresenter>()
                 };
                 s_historyStack.Push(history);
+                
+                // 페이지 콜백
+                CurrentPage.OnClose();
             }
 
             // 열려있는 프레젠터 전부 비활성화
@@ -42,10 +41,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // 이 페이지 활성화
             Activate();
             CurrentPage = this;
-        }
 
-        public virtual void Close()
+            // 페이지 콜백
+            OnOpen();
+        }
+        
+        public void Close()
         {
+            // 페이지 콜백
+            OnClose();
+            
             // 열려있는 프레젠터 전부 비활성화
             // TODO: 불필요한 비활성화 예방 (이전 페이지로 이동하더라도 계속 열려 있어야 하는 경우)
             GameManager.Inst.CurrentCanvas.DeactivateAllPresenters();
@@ -53,15 +58,21 @@ namespace Mathlife.ProjectL.Gameplay.UI
             if (s_historyStack.Count == 0)
                 return;
             
+            // 현재 페이지 변경
+            PageHistory history = s_historyStack.Pop(); 
+            CurrentPage = history.page;
+            
             // 히스토리 복원
-            PageHistory history = s_historyStack.Pop();
-            history.page.Activate();
-            history.overlays.ForEach(overlay => overlay.Activate());
+            CurrentPage.Activate();
             history.popups.ForEach(popup => popup.Activate());
             
-            // 현재 페이지 변경
-            CurrentPage = history.page;
+            // 페이지 콜백
+            CurrentPage.OnOpen();
         }
+
+        protected abstract void OnOpen();
+
+        protected abstract void OnClose();
         
         // 페이지 이름
         public abstract string PageName { get; }

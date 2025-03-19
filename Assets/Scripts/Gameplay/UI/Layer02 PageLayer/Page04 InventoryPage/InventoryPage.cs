@@ -24,20 +24,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField] TMP_Text m_selectedEquipmentName;
         [SerializeField] TMP_Text m_selectedEquipmentDescription;
         MechPartModel selectedMechPart = null;
-
-        // �ʱ�ȭ
-        protected void Awake()
+        
+        protected override void OnOpen()
         {
-            foreach (Transform tabMenuTrans in m_tabMenuBar)
-            {
-        //        m_tabMenus.Add(tabMenuTrans.GetComponent<TabMenu>());
-            }
-        }
-
-        public override void Activate()
-        {
-            // base.Open();
-            //
             // OnSelectTabMenu(0);
             // OnClickFlexItem(null);
             //
@@ -57,6 +46,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
             //     .AddTo(gameObject);
         }
 
+        protected override void OnClose()
+        {
+            throw new System.NotImplementedException();
+        }
+        
         // 이벤트 구독 콜백
         void OnSelectTabMenu(int index)
         {

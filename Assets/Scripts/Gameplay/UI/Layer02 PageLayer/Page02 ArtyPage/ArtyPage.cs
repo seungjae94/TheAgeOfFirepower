@@ -36,11 +36,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         [SerializeField]
         private ArtyPageSelectedArtyView artyPageSelectedArtyView;
-        
-        public override void Open()
-        {
-            base.Open();
 
+        protected override void OnOpen()
+        {
             // Overlay
             NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
             navBackOverlay.Activate();
@@ -67,11 +65,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // TODO: 화포 부품
             // artyMechPartSlots.Foreach(...);
         }
-
-        public override void Close()
+        
+        protected override void OnClose()
         {
-            base.Close();
-            
             NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
             navBackOverlay.Deactivate();
             

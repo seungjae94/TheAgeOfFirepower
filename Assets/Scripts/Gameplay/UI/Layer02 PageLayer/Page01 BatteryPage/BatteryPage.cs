@@ -41,10 +41,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 return ArtyRosterState.Battery[selectedSlotIndexRx.Value];
             }
         }
-
-        // State - Is Dragging Slot Item
-        //public readonly ReactiveProperty<bool> isDraggingSlotItemRx = new(false);
-
+        
         // 이벤트 함수
         public override void Initialize()
         {
@@ -54,10 +51,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
             selectedArtyView = transform.FindRecursive<BatteryPageSelectedArtyView>();
         }
 
-        public override void Open()
+        protected override void OnOpen()
         {
-            base.Open();
-
             // Overlay
             NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
             navBackOverlay.Activate();
@@ -70,11 +65,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
             selectedArtyView.Draw();
             artySlots.ForEach(slot => slot.Draw());
         }
-
-        public override void Close()
+        
+        protected override void OnClose()
         {
-            base.Close();
-
             // Overlay
             NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
             // TODO: navBackOverlay 콜백에서 OnNavBack 제거

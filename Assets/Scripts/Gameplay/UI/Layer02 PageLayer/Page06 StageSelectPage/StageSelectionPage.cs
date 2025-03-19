@@ -27,15 +27,18 @@ namespace Mathlife.ProjectL.Gameplay.UI
             m_enterBattleButton = transform.FindRecursiveByName<Button>("Enter Button");
             m_backButton = transform.FindRecursiveByName<Button>("Back Button");
         }
-
-        public override void Activate()
+        
+        protected override void OnOpen()
         {
             m_backButton
                 .OnClickAsObservable()
                 .Subscribe(_ => OnClickBackButton())
                 .AddTo(m_subscriptions_page);
+        }
 
-            Deactivate();
+        protected override void OnClose()
+        {
+            throw new System.NotImplementedException();
         }
 
         void OnClickBackButton()
