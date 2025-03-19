@@ -12,9 +12,11 @@ namespace Mathlife.ProjectL.Gameplay
         public int level = 1;
         public int totalExp = 0;
 
-        public int weaponId;
+        [FormerlySerializedAs("weaponId")]
+        public int barrelId;
         public int armorId;
-        public int artifactId;
+        [FormerlySerializedAs("artifactId")]
+        public int engineId;
     }
 
     [Serializable]

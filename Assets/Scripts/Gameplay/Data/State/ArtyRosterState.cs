@@ -10,27 +10,27 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class ArtyRosterState : IPersistable
     {
-        SaveDataManager saveDataManager;
-        GameDataLoader gameDataLoader;
-        
+        // Alias
+        private SaveDataManager SaveDataManager => GameState.Inst.saveDataManager;
+        private GameDataLoader GameDataLoader => GameState.Inst.gameDataLoader;
+
+        // Field
         private readonly ReactiveCollection<ArtyModel> artyList = new();
         public ArtyModel this[int index] => artyList[index];
-        
+
         public BatteryModel Battery { get; private set; }
-        
+
+
         public UniTask Load()
         {
-            saveDataManager = GameState.Inst.SaveDataManager;
-            gameDataLoader = GameState.Inst.GameDataLoader;
-
             // Validate that InventoryState was created before creating CharacterState.
-            if (GameState.Inst.InventoryState == null)
+            if (GameState.Inst.inventoryState == null)
             {
-                Debug.LogError("[CharacterRosterState] InventoryState is null.");
-                throw new Exception("[CharacterRosterState] InventoryState is null.");
+                Debug.LogError($"[{nameof(ArtyRosterState)}] InventoryState is null.");
+                throw new Exception($"[{nameof(ArtyRosterState)}] InventoryState is null.");
             }
 
-            if (GameState.Inst.SaveDataManager.DoesSaveFileExist())
+            if (GameState.Inst.saveDataManager.DoesSaveFileExist())
             {
                 LoadFromSaveFile();
             }
@@ -38,7 +38,7 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 LoadFromStarterData();
             }
-            
+
             return UniTask.CompletedTask;
         }
 
@@ -50,22 +50,22 @@ namespace Mathlife.ProjectL.Gameplay
         // From Save File
         private void LoadFromSaveFile()
         {
-            ArtyRosterSaveFile artyRosterSaveFile = saveDataManager.artyRoster;
+            ArtyRosterSaveFile artyRosterSaveFile = SaveDataManager.artyRoster;
 
-            foreach (var characterSaveData in artyRosterSaveFile.artyRoster)
+            foreach (var artySaveData in artyRosterSaveFile.artyRoster)
             {
-                ArtyModel model = new ArtyModel(
-                    gameDataLoader.GetCharacterData(characterSaveData.artyId),
-                    gameDataLoader.GetExpData(),
-                    characterSaveData.level,
-                    characterSaveData.totalExp
+                ArtyModel arty = new ArtyModel(
+                    GameDataLoader.GetCharacterData(artySaveData.artyId),
+                    GameDataLoader.GetExpData(),
+                    artySaveData.level,
+                    artySaveData.totalExp
                 );
 
-                Equip(model, characterSaveData.weaponId);
-                Equip(model, characterSaveData.armorId);
-                Equip(model, characterSaveData.artifactId);
+                arty.Equip(EMechPartType.Barrel, artySaveData.barrelId);
+                arty.Equip(EMechPartType.Armor, artySaveData.armorId);
+                arty.Equip(EMechPartType.Engine, artySaveData.engineId);
 
-                artyList.Add(model);
+                artyList.Add(arty);
             }
 
             // 세이브 파일에 저장된 화포가 없는 경우
@@ -84,7 +84,7 @@ namespace Mathlife.ProjectL.Gameplay
                 return;
             }
 
-            // Construct team by data.
+            // Construct battery by data.
             List<ArtyModel> members = teamSaveData.memberIndexes
                 .Select((memberIndex) => (memberIndex < 0) ? null : artyList[memberIndex])
                 .ToList();
@@ -94,15 +94,15 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void LoadFromStarterData()
         {
-            StarterGameData starterData = gameDataLoader.GetStarterData();
-            ExpGameData expData = gameDataLoader.GetExpData();
+            StarterGameData starterData = GameDataLoader.GetStarterData();
+            ExpGameData expData = GameDataLoader.GetExpData();
 
             var starterBattery = starterData.GetStarterBattery();
-            var starterRosterMinusBattery = starterData.GetStarterRosterMinusBattery();
+            var starterBench = starterData.GetStarterBench();
 
             List<ArtyPreset> artyPresets = new();
             artyPresets.AddRange(starterBattery);
-            artyPresets.AddRange(starterRosterMinusBattery);
+            artyPresets.AddRange(starterBench);
 
             foreach (var artyPreset in artyPresets)
             {
@@ -113,9 +113,9 @@ namespace Mathlife.ProjectL.Gameplay
                 long totalExp = expData.characterTotalExpAtLevelList[level] + artyPreset.currentLevelExp;
                 ArtyModel arty = new(artyPreset.arty, expData, level, totalExp);
 
-                Equip(arty, artyPreset.barrel?.id ?? -1);
-                Equip(arty, artyPreset.armor?.id ?? -1);
-                Equip(arty, artyPreset.engine?.id ?? -1);
+                arty.Equip(EMechPartType.Barrel, (artyPreset.barrel != null) ? artyPreset.barrel.id : -1);
+                arty.Equip(EMechPartType.Armor, (artyPreset.armor != null) ? artyPreset.armor.id : -1);
+                arty.Equip(EMechPartType.Engine, (artyPreset.engine != null) ? artyPreset.engine.id : -1);
 
                 artyList.Add(arty);
             }
@@ -123,8 +123,8 @@ namespace Mathlife.ProjectL.Gameplay
             List<ArtyModel> batteryMembers = new();
             for (int i = 0; i < Constants.BatterySize; ++i)
             {
-                var artyPreset = starterBattery[i]; 
-                
+                var artyPreset = starterBattery[i];
+
                 if (artyPreset.arty == null)
                 {
                     batteryMembers.Add(null);
@@ -136,12 +136,6 @@ namespace Mathlife.ProjectL.Gameplay
             }
 
             Battery = new(batteryMembers);
-        }
-
-        private void Equip(ArtyModel arty, int equipmentId)
-        {
-            EMechPartType mechPartType = (EMechPartType)(equipmentId / 1000);
-            arty.Equip(mechPartType, GameState.Inst.InventoryState.FindEquipment(mechPartType, equipmentId));
         }
 
         private void ConstructBestTeam()
@@ -157,17 +151,13 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void BuildBestTeam()
         {
+            Sort();
+
             int memberCount = Mathf.Min(artyList.Count, Constants.BatterySize);
 
-            List<ArtyModel> members = artyList
-                .OrderByDescending(arty => arty.levelRx.Value)
-                .Take(memberCount)
+            var members = artyList.Take(memberCount)
+                .Concat(Enumerable.Repeat<ArtyModel>(null, Constants.BatterySize - memberCount))
                 .ToList();
-
-            for (int i = memberCount; i < Constants.BatterySize; ++i)
-            {
-                members.Add(null);
-            }
 
             Battery.Rebuild(members);
         }
@@ -175,8 +165,8 @@ namespace Mathlife.ProjectL.Gameplay
         public ArtyModel Add(int id, int level = 1, int totalExp = 0)
         {
             ArtyModel arty = new(
-                gameDataLoader.GetCharacterData(id),
-                gameDataLoader.GetExpData(),
+                GameDataLoader.GetCharacterData(id),
+                GameDataLoader.GetExpData(),
                 level, totalExp);
             artyList.Add(arty);
 
@@ -196,7 +186,7 @@ namespace Mathlife.ProjectL.Gameplay
         public List<ArtyModel> GetSortedList(Func<ArtyModel, bool> excludeFilter = null)
         {
             Sort();
-            
+
             excludeFilter ??= (arty) => false;
 
             return artyList
@@ -212,17 +202,15 @@ namespace Mathlife.ProjectL.Gameplay
             int Compare(ArtyModel arty0, ArtyModel arty1)
             {
                 int result = arty1.levelRx.Value.CompareTo(arty0.levelRx.Value); // Descending
-                
+
                 if (result == 0)
                     result = arty1.totalExpRx.Value.CompareTo(arty0.totalExpRx.Value); // Descending
-                
+
                 if (result == 0)
                     result = arty0.Id.CompareTo(arty1.Id); // Ascending
-                
+
                 return result;
             }
         }
-        
-        
     }
 }

@@ -25,20 +25,22 @@ namespace Mathlife.ProjectL.Gameplay
         [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true, ShowFoldout = false)]
         List<ArtyPreset> starterBattery = new ();
 
+        [FormerlySerializedAs("starterRoster")]
         [SerializeField]
-        [TabGroup("Starter/Tab", "로스터")]
+        [TabGroup("Starter/Tab", "대기 멤버")]
         [HideReferenceObjectPicker]
-        [LabelText("로스터")]
+        [LabelText("대기 멤버")]
         [ListDrawerSettings(ShowFoldout = false)]
-        List<ArtyPreset> starterRoster = new();
+        List<ArtyPreset> starterBench = new();
 
+        [FormerlySerializedAs("starterMechParts")]
         [SerializeField]
         [Space(10)]
-        [TabGroup("Starter/Tab", "인벤토리(부품)")]
+        [TabGroup("Starter/Tab", "인벤토리(백업 부품)")]
         [HideReferenceObjectPicker]
-        [LabelText("부품")]
+        [LabelText("백업 부품")]
         [ListDrawerSettings(ShowFoldout = false)]
-        List<MechPartStack> starterMechParts = new();
+        List<MechPartStack> starterBackupMechParts = new();
 
         [ShowInInspector]
         [SpaceOnly(50)]
@@ -58,25 +60,27 @@ namespace Mathlife.ProjectL.Gameplay
         [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true, ShowFoldout = false)]
         List<ArtyPreset> editorStarterBattery = new();
 
+        [FormerlySerializedAs("editorStarterRoster")]
         [SerializeField]
-        [TabGroup("Editor Starter/Tab", "로스터")]
+        [TabGroup("Editor Starter/Tab", "대기 멤버")]
         [HideReferenceObjectPicker]
-        [LabelText("로스터")]
+        [LabelText("대기 멤버")]
         [ListDrawerSettings(ShowFoldout = false)]
-        List<ArtyPreset> editorStarterRoster = new();
+        List<ArtyPreset> editorStarterBench = new();
 
+        [FormerlySerializedAs("editorStarterMechParts")]
         [SerializeField]
-        [TabGroup("Editor Starter/Tab", "인벤토리(부품)")]
+        [TabGroup("Editor Starter/Tab", "인벤토리(백업 부품)")]
         [HideReferenceObjectPicker]
-        [LabelText("부품")]
+        [LabelText("백업 부품")]
         [ListDrawerSettings(ShowFoldout = false)]
-        List<MechPartStack> editorStarterMechParts = new();
+        List<MechPartStack> editorStarterBackupMechParts = new();
 
         [OnInspectorInit]
         void OnInspectorInit()
         {
-            // InitializeMemberSlots(starterBattery);
-            // InitializeMemberSlots(editorStarterBattery);
+            InitializeMemberSlots(starterBattery);
+            InitializeMemberSlots(editorStarterBattery);
         }
 
         void InitializeMemberSlots(List<ArtyPreset> members)
@@ -118,21 +122,21 @@ namespace Mathlife.ProjectL.Gameplay
 #endif
         }
 
-        public List<ArtyPreset> GetStarterRosterMinusBattery()
+        public List<ArtyPreset> GetStarterBench()
         {
 #if UNITY_EDITOR
-            return editorStarterRoster;
+            return editorStarterBench;
 #else
-            return starterRoster;
+            return starterBench;
 #endif
         }
 
-        public List<MechPartStack> GetStarterMechParts()
+        public List<MechPartStack> GetStarterBackupMechParts()
         {
 #if UNITY_EDITOR
-            return editorStarterMechParts;
+            return editorStarterBackupMechParts;
 #else
-            return starterMechParts;
+            return starterBackupMechParts;
 #endif
         }
     }

@@ -42,13 +42,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(disposables);
             
             // 데이터 구독
-            ArtyPage.SelectedArty.equipmentsRx
+            ArtyPage.SelectedArty.mechPartSlotsRx
                 .ObserveEveryValueChanged(equipments => equipments[slotType])
                 .Subscribe(UpdateView)
                 .AddTo(disposables);
             
             // 뷰 초기화
-            UpdateView(ArtyPage.SelectedArty.equipmentsRx[slotType]);
+            UpdateView(ArtyPage.SelectedArty.mechPartSlotsRx[slotType]);
         }
 
         public override void Clear()
@@ -65,7 +65,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClick(Unit _)
         {
-            Debug.Log($"{slotType} 슬롯 클릭. 아이템 = {ArtyPage.SelectedArty.equipmentsRx[slotType]?.DisplayName}");
+            Debug.Log($"{slotType} 슬롯 클릭. 아이템 = {ArtyPage.SelectedArty.mechPartSlotsRx[slotType]?.DisplayName}");
             //ArtyPageMechPartChangePopup popup = Presenter.Find<ArtyPageMechPartChangePopup>();
             //popup.SetUp(slotType);
             //popup.OpenWithAnimation().Forget();

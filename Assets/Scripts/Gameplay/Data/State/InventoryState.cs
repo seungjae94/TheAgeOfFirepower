@@ -9,18 +9,18 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class InventoryState : IPersistable
     {
-        // Access
-        private SaveDataManager saveDataManager;
-        private GameDataLoader gameDataLoader;
-        
-        public async UniTask Load()
-        {
-            saveDataManager = GameState.Inst.SaveDataManager;
-            gameDataLoader = GameState.Inst.GameDataLoader;
-            
-            InitEquipmentDictionary();
+        // Alias
+        private SaveDataManager SaveDataManager => GameState.Inst.saveDataManager;
+        private GameDataLoader GameDataLoader => GameState.Inst.gameDataLoader;
 
-            if (GameState.Inst.SaveDataManager.DoesSaveFileExist())
+        public UniTask Load()
+        {
+            foreach (var type in Enum.GetValues(typeof(EMechPartType)))
+            {
+                mechPartInventory.Add((EMechPartType)type, new());
+            }
+
+            if (GameState.Inst.saveDataManager.DoesSaveFileExist())
             {
                 LoadFromSaveFile();
             }
@@ -28,64 +28,66 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 LoadFromStarterData();
             }
+            
+            return UniTask.CompletedTask;
         }
 
-        public async UniTask Save()
+        public UniTask Save()
         {
             throw new NotImplementedException();
         }
 
         void LoadFromSaveFile()
         {
-            GoldRx.Value = saveDataManager.inventory.gold;
+            goldRx.Value = SaveDataManager.inventory.gold;
 
-            foreach (int equipmentId in saveDataManager.inventory.mechParts)
+            foreach (int equipmentId in SaveDataManager.inventory.mechParts)
             {
-                AddEquipment(equipmentId);
+                AddMechPart(equipmentId);
             }
         }
 
         void LoadFromStarterData()
         {
-            StarterGameData starter = gameDataLoader.GetStarterData();
+            StarterGameData starter = GameDataLoader.GetStarterData();
 
-            GoldRx.Value = starter.GetStarterGold();
+            goldRx.Value = starter.GetStarterGold();
 
             var starterParty = starter.GetStarterBattery();
-            foreach (var characterSlot in starterParty)
+            foreach (var batteryMemberPreset in starterParty)
             {
-                AddEquipment(characterSlot.barrel?.id ?? -1);
-                AddEquipment(characterSlot.armor?.id ?? -1);
-                AddEquipment(characterSlot.engine?.id ?? -1);
+                AddMechPart((batteryMemberPreset.barrel != null) ? batteryMemberPreset.barrel.id : -1);
+                AddMechPart((batteryMemberPreset.armor != null) ? batteryMemberPreset.armor.id : -1);
+                AddMechPart((batteryMemberPreset.engine != null) ? batteryMemberPreset.engine.id : -1);
             }
 
-            var starterCharactersNotInParty = starter.GetStarterRosterMinusBattery();
-            foreach (var characterSlot in starterCharactersNotInParty)
+            var starterCharactersNotInParty = starter.GetStarterBench();
+            foreach (var rosterMemberPreset in starterCharactersNotInParty)
             {
-                AddEquipment(characterSlot.barrel?.id ?? -1);
-                AddEquipment(characterSlot.armor?.id ?? -1);
-                AddEquipment(characterSlot.engine?.id ?? -1);
+                AddMechPart((rosterMemberPreset.barrel != null) ? rosterMemberPreset.barrel.id : -1);
+                AddMechPart((rosterMemberPreset.armor != null) ? rosterMemberPreset.armor.id : -1);
+                AddMechPart((rosterMemberPreset.engine != null) ? rosterMemberPreset.engine.id : -1);
             }
 
-            var starterEquipmentsNotOwned = starter.GetStarterMechParts();
-            foreach (var equipSlot in starterEquipmentsNotOwned)
+            var starterBackupMechParts = starter.GetStarterBackupMechParts();
+            foreach (var mechPartStack in starterBackupMechParts)
             {
-                for (int i = 0; i < equipSlot.count; ++i)
+                for (int i = 0; i < mechPartStack.count; ++i)
                 {
-                    AddEquipment(equipSlot.mechPart.id);
+                    AddMechPart(mechPartStack.mechPart.id);
                 }
             }
         }
 
-        // 골드
-        public readonly ReactiveProperty<long> GoldRx = new(0L);
+        // 골드 (거래)
+        public readonly ReactiveProperty<long> goldRx = new(0L);
 
         public void GainGold(long gain)
         {
             if (gain <= 0L)
                 return;
 
-            GoldRx.Value += gain;
+            goldRx.Value += gain;
         }
 
         public void LoseGold(long lose)
@@ -93,68 +95,55 @@ namespace Mathlife.ProjectL.Gameplay
             if (lose <= 0L)
                 return;
 
-            GoldRx.Value -= lose;
+            goldRx.Value -= lose;
         }
-
-        // 거래
-
-        public bool BuyItem(int equipmentId)
-        {
-            MechPartGameData mechPartGameData = gameDataLoader.GetMechPartData(equipmentId);
         
-            if (GoldRx.Value < mechPartGameData.shopPrice)
+        public bool BuyMechPart(int mechPartId)
+        {
+            MechPartGameData mechPartGameData = GameDataLoader.GetMechPartData(mechPartId);
+        
+            if (goldRx.Value < mechPartGameData.shopPrice)
             {
                 return false;
             }
         
-            AddEquipment(equipmentId);
+            AddMechPart(mechPartId);
             LoseGold(mechPartGameData.shopPrice);
             return true;
         }
 
-        public bool SellItem(int equipmentId)
+        public bool SellMechPart(int mechPartId)
         {
             return true;
         }
 
-        // 장비
-        ReactiveDictionary<EMechPartType, List<MechPartModel>> m_equipments = new();
-
-        void InitEquipmentDictionary()
-        {
-            foreach (var type in Enum.GetValues(typeof(EMechPartType)))
-            {
-                m_equipments.Add((EMechPartType)type, new());
-            }
-        }
-
+        // 부품
+        private readonly ReactiveDictionary<EMechPartType, List<MechPartModel>> mechPartInventory = new();
+        
         public List<MechPartModel> GetSortedEquipmentList(EMechPartType type)
         {
-            SortEquipmentList(type);
-            return m_equipments[type];
+            SortMechPartList(type);
+            return mechPartInventory[type];
         }
 
-        public MechPartModel FindEquipment(EMechPartType type, int id)
+        public MechPartModel FindBackupMechPart(EMechPartType type, int id)
         {
-            MechPartModel mechPart = m_equipments[type].FirstOrDefault(eq => eq.Id == id);
-            if (mechPart == null)
-                return AddEquipment(id);
-            return mechPart;
+            return mechPartInventory[type].FirstOrDefault(eq => eq.Id == id && eq.Owner.Value == null);
         }
 
-        public MechPartModel AddEquipment(int id)
+        public MechPartModel AddMechPart(int mechPartId)
         {
-            if (id < 0)
+            if (mechPartId < 0)
                 return null;
             
-            MechPartModel mechPart = new(gameDataLoader.GetMechPartData(id));
-            m_equipments[mechPart.Type].Add(mechPart);
+            MechPartModel mechPart = new(GameDataLoader.GetMechPartData(mechPartId));
+            mechPartInventory[mechPart.Type].Add(mechPart);
             return mechPart;
         }
 
-        void SortEquipmentList(EMechPartType type)
+        void SortMechPartList(EMechPartType type)
         {
-            m_equipments[type] = m_equipments[type]
+            mechPartInventory[type] = mechPartInventory[type]
                 .OrderBy(equip =>
                 {
                     if (equip.Owner != null)

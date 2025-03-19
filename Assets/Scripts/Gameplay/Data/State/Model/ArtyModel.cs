@@ -7,8 +7,9 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class ArtyModel
     {
-        private readonly ArtyGameData gameData;
-        private readonly ExpGameData expGameData;
+        // Alias
+        private InventoryState InventoryState => GameState.Inst.inventoryState;
+        private GameDataLoader GameDataLoader => GameState.Inst.gameDataLoader;
         
         public ArtyModel(
             ArtyGameData gameData,
@@ -21,125 +22,107 @@ namespace Mathlife.ProjectL.Gameplay
             levelRx = new(level);
             totalExpRx = new(totalExp);
 
-            equipmentsRx.Add(EMechPartType.Barrel, null);
-            equipmentsRx.Add(EMechPartType.Armor, null);
-            equipmentsRx.Add(EMechPartType.Engine, null);
+            mechPartSlotsRx.Add(EMechPartType.Barrel, null);
+            mechPartSlotsRx.Add(EMechPartType.Armor, null);
+            mechPartSlotsRx.Add(EMechPartType.Engine, null);
         }
-
         
-
+        // Field - Basic Info
+        private readonly ArtyGameData gameData;
+        private readonly ExpGameData expGameData;
+        public readonly ReactiveProperty<int> levelRx;
+        public readonly ReactiveProperty<long> totalExpRx;
+        
         public int Id => gameData.id;
         public string DisplayName => gameData.displayName;
         public Sprite Sprite => gameData.sprite;
-
-        public readonly ReactiveProperty<int> levelRx;
-        public readonly ReactiveProperty<long> totalExpRx;
-
+        
         public long NeedExp => expGameData.characterNeedExpAtLevelList[levelRx.Value];
+        public long CurrentLevelExp => totalExpRx.Value - expGameData.characterTotalExpAtLevelList[levelRx.Value]; 
 
-        public long CurrentLevelExp
-        {
-            get
-            {
-                long totalExpAtCurrentLevel = expGameData.characterTotalExpAtLevelList[levelRx.Value];
-                return totalExpRx.Value - totalExpAtCurrentLevel;
-            }
-        }
+        // Field - Mech Parts
+        public readonly ReactiveDictionary<EMechPartType, MechPartModel> mechPartSlotsRx = new();
 
-        public readonly ReactiveDictionary<EMechPartType, MechPartModel> equipmentsRx = new();
+        public MechPartModel Barrel => mechPartSlotsRx[EMechPartType.Barrel];
 
-        public MechPartModel Weapon { 
-            get => equipmentsRx[EMechPartType.Barrel];
-            private set
-            {
-                if (value != null && value.Type != EMechPartType.Barrel)
-                    return;
+        public MechPartModel Armor => mechPartSlotsRx[EMechPartType.Armor];
 
-                equipmentsRx[EMechPartType.Barrel] = value;
-            }
-        }
+        public MechPartModel Engine => mechPartSlotsRx[EMechPartType.Engine];
 
-        public MechPartModel Armor { 
-            get => equipmentsRx[EMechPartType.Armor];
-            private set
-            {
-                if (value != null && value.Type != EMechPartType.Armor)
-                    return;
-
-                equipmentsRx[EMechPartType.Armor] = value;
-            }
-        }
-
-        public MechPartModel Artifact { 
-            get => equipmentsRx[EMechPartType.Engine];
-            private set
-            {
-                if (value != null && value.Type != EMechPartType.Engine)
-                    return;
-
-                equipmentsRx[EMechPartType.Engine] = value;
-            }
-        }
-
-        public MechPartModel GetEquipment(EMechPartType type)
-        {
-            return equipmentsRx[type];
-        }
-
-        public IDisposable SubscribeEquipmentChangeEvent(EMechPartType type, Action<MechPartModel> action)
-        {
-            return equipmentsRx
-                .ObserveEveryValueChanged(dic => dic[type])
-                .Subscribe(equip => action(equip));
-        }
-
+        public MechPartModel GetMechPartAtSlot(EMechPartType type) => mechPartSlotsRx[type];
+        
+        // Method
         public int GetMaxHp()
         {
             int value = gameData.maxHp + (int)(gameData.maxHpGrowth * (levelRx.Value - 1));
-            value += (Weapon?.Stat.maxHp ?? 0) + (Armor?.Stat.maxHp ?? 0) + (Artifact?.Stat.maxHp ?? 0);
+            value += (Barrel?.Stat.maxHp ?? 0) + (Armor?.Stat.maxHp ?? 0) + (Engine?.Stat.maxHp ?? 0);
             return value;
         }
 
         public int GetAtk()
         {
             int value = gameData.atk + (int)(gameData.atkGrowth * (levelRx.Value - 1));
-            value += (Weapon?.Stat.atk ?? 0) + (Armor?.Stat.atk ?? 0) + (Artifact?.Stat.atk ?? 0);
+            value += (Barrel?.Stat.atk ?? 0) + (Armor?.Stat.atk ?? 0) + (Engine?.Stat.atk ?? 0);
             return value;
         }
 
         public int GetDef()
         {
             int value = gameData.def + (int)(gameData.defGrowth * (levelRx.Value - 1));
-            value += (Weapon?.Stat.def ?? 0) + (Armor?.Stat.def ?? 0) + (Artifact?.Stat.def ?? 0);
+            value += (Barrel?.Stat.def ?? 0) + (Armor?.Stat.def ?? 0) + (Engine?.Stat.def ?? 0);
             return value;
         }
 
         public int GetMobility()
         {
             int value = gameData.mob + (int)(gameData.mobGrowth * (levelRx.Value - 1));
-            value += (Weapon?.Stat.spd ?? 0) + (Armor?.Stat.spd ?? 0) + (Artifact?.Stat.spd ?? 0);
+            value += (Barrel?.Stat.mob ?? 0) + (Armor?.Stat.mob ?? 0) + (Engine?.Stat.mob ?? 0);
             return value;
         }
 
-        public void Equip(EMechPartType type, MechPartModel mechPart)
+        public void Equip(EMechPartType slotType, MechPartModel mechPart)
         {
-            UnEquip(type);
-
             if (mechPart == null)
+            {
+                UnEquip(slotType);
                 return;
+            }
+            
+            // 검증
+            if (slotType != mechPart.Type)
+            {
+                Debug.LogError($"[ArtyRosterState] 슬롯 {slotType}에 {mechPart.Type} 타입의 부품을 장착하려고 합니다.");
+                return;
+            }
 
-            mechPart.Owner.Value?.UnEquip(type);
+            // 주인 변경
+            mechPart.Owner.Value?.UnEquip(slotType);
             mechPart.Owner.Value = this;
-            equipmentsRx[type] = mechPart;
+            
+            // 장착
+            mechPartSlotsRx[slotType] = mechPart;
+        }
+        
+        public void Equip(EMechPartType slotType, int mechPartId)
+        {
+            if (mechPartId < 0)
+            {
+                Equip(slotType, null);
+                return;
+            }
+            
+            MechPartModel mechPart = InventoryState.FindBackupMechPart(slotType, mechPartId);
+            Equip(slotType, mechPart);
         }
 
-        public void UnEquip(EMechPartType type)
+        private void UnEquip(EMechPartType slotType)
         {
-            if (equipmentsRx[type] == null)
+            // 이미 부품을 장착하고 있지 않은 상태
+            if (mechPartSlotsRx[slotType] == null)
                 return;
 
-            equipmentsRx[type].Owner.Value = null;
-            equipmentsRx[type] = null;
+            mechPartSlotsRx[slotType].Owner.Value = null;
+            mechPartSlotsRx[slotType] = null;
         }
     }
 

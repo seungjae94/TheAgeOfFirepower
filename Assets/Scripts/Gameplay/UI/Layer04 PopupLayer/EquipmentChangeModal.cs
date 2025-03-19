@@ -14,7 +14,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         // Alias
         BatteryPage BatteryPage => Find<BatteryPage>();
-        InventoryState InventoryState => GameState.Inst.InventoryState;
+        InventoryState InventoryState => GameState.Inst.inventoryState;
 
         // View
         [SerializeField] CanvasGroup m_canvasGroup;
@@ -82,7 +82,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             m_slotType = slotType;
 
-            MechPartModel currentMechPart = BatteryPage.SelectedArty.GetEquipment(slotType);
+            MechPartModel currentMechPart = BatteryPage.SelectedArty.GetMechPartAtSlot(slotType);
             selectedMechPart = currentMechPart;
 
             UpdateCurrentEquipmentView(currentMechPart);

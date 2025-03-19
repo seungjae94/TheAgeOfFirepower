@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using System;
+using UnityEngine.Serialization;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -19,8 +20,9 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("방어력")]
         public int def;
 
+        [FormerlySerializedAs("spd")]
         [LabelWidth(100)]
         [LabelText("스피드")]
-        public int spd;
+        public int mob;
     }
 }

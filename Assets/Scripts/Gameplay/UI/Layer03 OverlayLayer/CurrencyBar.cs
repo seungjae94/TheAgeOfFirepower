@@ -7,7 +7,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class CurrencyBar : OverlayPresenter
     {
-        InventoryState InventoryState => GameState.Inst.InventoryState;
+        InventoryState InventoryState => GameState.Inst.inventoryState;
         
         [FormerlySerializedAs("m_goldText")]
         [SerializeField] TextMeshProUGUI goldText;
@@ -20,11 +20,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
             base.Activate();
             
             InventoryState
-                .GoldRx
+                .goldRx
                 .Subscribe(gold => goldText.text = gold.ToString())
                 .AddTo(gameObject);
             
-            goldText.text = InventoryState.GoldRx.Value.ToString();
+            goldText.text = InventoryState.goldRx.Value.ToString();
             diamondText.text = 0.ToString();
         }
     }

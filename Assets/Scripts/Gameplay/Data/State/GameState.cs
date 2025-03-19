@@ -7,24 +7,24 @@ namespace Mathlife.ProjectL.Gameplay
     {
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.App;
         
-        public readonly GameDataLoader GameDataLoader = new();
-        public readonly SaveDataManager SaveDataManager = new();
+        public readonly GameDataLoader gameDataLoader = new();
+        public readonly SaveDataManager saveDataManager = new();
 
         public readonly ArtyRosterState artyRosterState = new();
-        public readonly InventoryState InventoryState = new();
+        public readonly InventoryState inventoryState = new();
 
         public async UniTask Load()
         {
-            await GameDataLoader.Load();
-            await SaveDataManager.Load();
+            await gameDataLoader.Load();
+            await saveDataManager.Load();
 
-            await InventoryState.Load();
+            await inventoryState.Load();
             await artyRosterState.Load();
         }
 
         public async UniTask Save()
         {
-            await InventoryState.Save();
+            await inventoryState.Save();
             await artyRosterState.Save();
         }
     }
