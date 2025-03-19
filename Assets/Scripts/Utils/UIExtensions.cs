@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using DG.Tweening;
 using Cysharp.Threading.Tasks;
+using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Utils
 {
@@ -76,6 +77,11 @@ namespace Mathlife.ProjectL.Utils
             {
                 if (child.TryGetComponent(out CanvasRenderer childRenderer))
                 {
+                    if (childRenderer.TryGetComponent(out MaskableGraphic graphic))
+                    {
+                        graphic.maskable = true;
+                    }
+                    
                     childRenderer.EnableRectClipping(clippingRect);
                 }
 
