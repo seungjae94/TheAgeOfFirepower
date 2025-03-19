@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Sirenix.Utilities;
 using UniRx;
 using UnityEngine;
 
@@ -194,14 +195,34 @@ namespace Mathlife.ProjectL.Gameplay
 
         public List<ArtyModel> GetSortedList(Func<ArtyModel, bool> excludeFilter = null)
         {
+            Sort();
+            
             excludeFilter ??= (arty) => false;
 
             return artyList
                 .Where((arty) => excludeFilter(arty) == false)
-                .OrderByDescending(arty => arty.levelRx.Value)
-                .ThenBy(arty => arty.totalExpRx.Value)
-                .ThenBy(arty => arty.id)
                 .ToList();
         }
+
+        public void Sort()
+        {
+            artyList.Sort(Compare);
+            return;
+
+            int Compare(ArtyModel arty0, ArtyModel arty1)
+            {
+                int result = arty1.levelRx.Value.CompareTo(arty0.levelRx.Value); // Descending
+                
+                if (result == 0)
+                    result = arty1.totalExpRx.Value.CompareTo(arty0.totalExpRx.Value); // Descending
+                
+                if (result == 0)
+                    result = arty0.id.CompareTo(arty1.id); // Ascending
+                
+                return result;
+            }
+        }
+        
+        
     }
 }

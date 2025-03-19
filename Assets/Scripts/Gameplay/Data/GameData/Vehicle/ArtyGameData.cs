@@ -65,17 +65,19 @@ namespace Mathlife.ProjectL.Gameplay
         [SuffixLabel("per level")]
         public float defGrowth = 2.0f;
         
+        [FormerlySerializedAs("spd")]
         [VerticalGroup("Stats"), HorizontalGroup("Stats/기동력", Width = 200, LabelWidth = 100)]
         [LabelText("기동력")]
         [GUIColor(1.0f, 1.0f, 0.5f)]
         [SuffixLabel("at level 1")]
-        public int spd = 100;
+        public int mob = 100;
 
+        [FormerlySerializedAs("spdGrowth")]
         [VerticalGroup("Stats"), HorizontalGroup("Stats/기동력", Width = 100, LabelWidth = 20)]
         [LabelText(" + ")]
         [GUIColor(1.0f, 1.0f, 0.5f)]
         [SuffixLabel("per level")]
-        public float spdGrowth = 4.0f;
+        public float mobGrowth = 4.0f;
         
 #if UNITY_EDITOR
         private Texture2D GetShellPreview()

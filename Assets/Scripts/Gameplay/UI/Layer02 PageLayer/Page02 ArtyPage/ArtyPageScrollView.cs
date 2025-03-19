@@ -23,6 +23,9 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
     public class ArtyPageScrollView
         : FancyScrollView<ItemData, Context>
     {
+        // Alias
+        private ArtyPage ArtyPage => Presenter.Find<ArtyPage>();
+        
         // Override
         protected override GameObject CellPrefab => cellPrefab.gameObject;
 
@@ -68,6 +71,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
                 return;
 
             Context.selectedIndex = index;
+            ArtyPage.selectedArtyIndexRx.Value = index;
             Refresh();
         }
     }

@@ -114,9 +114,9 @@ namespace Mathlife.ProjectL.Gameplay
             return value;
         }
 
-        public int GetSpd()
+        public int GetMobility()
         {
-            int value = gameData.spd + (int)(gameData.spdGrowth * (levelRx.Value - 1));
+            int value = gameData.mob + (int)(gameData.mobGrowth * (levelRx.Value - 1));
             value += (Weapon?.stat.spd ?? 0) + (Armor?.stat.spd ?? 0) + (Artifact?.stat.spd ?? 0);
             return value;
         }

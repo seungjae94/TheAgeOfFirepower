@@ -13,7 +13,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         // Alias
         private static ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
-
+        
         //[SerializeField] CharacterBasicInfoPresenter m_basicInfoPresenter;
         //[SerializeField] CharacterStatPresenter m_statPresenter;
         //[SerializeField] List<CharacterEquipmentSlotPresenter> m_artifactSlotPresenters;
@@ -21,8 +21,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
         //[field: SerializeField] public EquipmentChangeModal equipmentChangeModal { get; private set; }
 
         // Field
-        public readonly ReactiveProperty<int> viewingArtyIndex = new(0);
+        public readonly ReactiveProperty<int> selectedArtyIndexRx = new(0);
 
+        public ArtyModel SelectedArty => ArtyRosterState[selectedArtyIndexRx.Value];
+        
         // View
         [SerializeField]
         private ArtyPageScrollView scrollView;
@@ -32,6 +34,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public Rect ScrollViewMaskRect => scrollViewMaskRectTransform.GetGlobalRect();
 
+        [SerializeField]
+        private ArtyPageSelectedArtyView artyPageSelectedArtyView;
+        
         public override void Open()
         {
             base.Open();
@@ -43,14 +48,14 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // 데이터 fetching
             List<ArtyModel> sortedList = ArtyRosterState.GetSortedList();
 
-            if (viewingArtyIndex.Value < 0 || viewingArtyIndex.Value >= sortedList.Count)
-                viewingArtyIndex.Value = 0;
+            if (selectedArtyIndexRx.Value < 0 || selectedArtyIndexRx.Value >= sortedList.Count)
+                selectedArtyIndexRx.Value = 0;
             
             // 뷰 초기화
             scrollView.Setup(sortedList);
-            scrollView.SelectCell(viewingArtyIndex.Value);
+            scrollView.SelectCell(selectedArtyIndexRx.Value);
 
-            // 
+            artyPageSelectedArtyView.Draw();
 
             // 화포
             // TODO: 화포 기본 정보 (이름, 레벨, 경험치)
@@ -61,6 +66,17 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // artyPortraitImage.sprite = ...;
             // TODO: 화포 부품
             // artyMechPartSlots.Foreach(...);
+        }
+
+        public override void Close()
+        {
+            base.Close();
+            
+            NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
+            navBackOverlay.Deactivate();
+            
+            // 뷰 정리
+            artyPageSelectedArtyView.Clear();
         }
     }
 }
