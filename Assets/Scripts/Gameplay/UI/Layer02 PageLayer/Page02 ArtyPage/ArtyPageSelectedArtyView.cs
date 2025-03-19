@@ -13,20 +13,40 @@ namespace Mathlife.ProjectL.Gameplay
     {
         // Alias
         private ArtyPage ArtyPage => Presenter.Find<ArtyPage>();
-        
+
         // View
-        [SerializeField] private Image portrait;
-        [SerializeField] private TextMeshProUGUI nameText;
-        [SerializeField] private TextMeshProUGUI levelText;
-        
-        [SerializeField] private Slider expSlider;
-        [SerializeField] private TextMeshProUGUI currentLevelExpText;
-        [SerializeField] private TextMeshProUGUI needExpText;
-        
-        [SerializeField] private TextMeshProUGUI maxHpText;
-        [SerializeField] private TextMeshProUGUI mobilityText;
-        [SerializeField] private TextMeshProUGUI atkText;
-        [SerializeField] private TextMeshProUGUI defText;
+        [SerializeField]
+        private Image portrait;
+
+        [SerializeField]
+        private TextMeshProUGUI nameText;
+
+        [SerializeField]
+        private TextMeshProUGUI levelText;
+
+        [SerializeField]
+        private Slider expSlider;
+
+        [SerializeField]
+        private TextMeshProUGUI currentLevelExpText;
+
+        [SerializeField]
+        private TextMeshProUGUI needExpText;
+
+        [SerializeField]
+        private TextMeshProUGUI maxHpText;
+
+        [SerializeField]
+        private TextMeshProUGUI mobilityText;
+
+        [SerializeField]
+        private TextMeshProUGUI atkText;
+
+        [SerializeField]
+        private TextMeshProUGUI defText;
+
+        [SerializeField]
+        private ArtyPageMechPartSlot[] mechPartSlots;
         
         // Field
         private readonly CompositeDisposable disposables = new();
@@ -41,7 +61,7 @@ namespace Mathlife.ProjectL.Gameplay
                 .DistinctUntilChanged()
                 .Subscribe(index => UpdateView())
                 .AddTo(disposables);
-            
+
             UpdateView();
         }
 
@@ -57,10 +77,10 @@ namespace Mathlife.ProjectL.Gameplay
             disposables.Dispose();
         }
 
-        void UpdateView()
+        private void UpdateView()
         {
             ArtyModel arty = ArtyPage.SelectedArty;
-            
+
             if (arty == null)
             {
                 Debug.LogError("[ArtyPageSelectedArtyView] 선택된 화포가 없습니다.");
@@ -68,17 +88,30 @@ namespace Mathlife.ProjectL.Gameplay
             }
 
             portrait.sprite = arty.Sprite;
-            nameText.text = arty.displayName;
+            nameText.text = arty.DisplayName;
             levelText.text = arty.levelRx.Value.ToString();
-            
-            expSlider.value = (float)arty.currentLevelExp / arty.needExp;
-            currentLevelExpText.text = arty.currentLevelExp.ToString();
-            needExpText.text = arty.needExp.ToString();
+
+            expSlider.value = (float)arty.CurrentLevelExp / arty.NeedExp;
+            currentLevelExpText.text = arty.CurrentLevelExp.ToString();
+            needExpText.text = arty.NeedExp.ToString();
 
             maxHpText.text = arty.GetMaxHp().ToString();
             mobilityText.text = arty.GetMobility().ToString();
             atkText.text = arty.GetAtk().ToString();
             defText.text = arty.GetDef().ToString();
+
+            RedrawSlots();
+        }
+
+        private void RedrawSlots()
+        {
+            for (int i = 0;  i < mechPartSlots.Length; ++i)
+            {
+                var mechPartSlot = mechPartSlots[i];
+                mechPartSlot.Clear();
+                mechPartSlot.Setup((EMechPartType)i);
+                mechPartSlot.Draw();
+            }
         }
     }
 }

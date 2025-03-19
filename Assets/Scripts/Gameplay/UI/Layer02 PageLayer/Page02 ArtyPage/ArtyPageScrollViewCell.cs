@@ -72,7 +72,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
             arty = itemData.arty;
             portraitImage.sprite = itemData.arty?.Sprite;
             levelText.text = itemData.arty?.levelRx.Value.ToString();
-            nameText.text = itemData.arty?.displayName;
+            nameText.text = itemData.arty?.DisplayName;
             
             uiEffect.LoadPreset(Context.selectedIndex == Index
                 ? "GradientArtyCellSelected"

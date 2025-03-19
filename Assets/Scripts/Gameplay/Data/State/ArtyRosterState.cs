@@ -140,8 +140,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void Equip(ArtyModel arty, int equipmentId)
         {
-            EEquipmentType equipmentType = (EEquipmentType)(equipmentId / 1000);
-            arty.Equip(equipmentType, GameState.Inst.InventoryState.FindEquipment(equipmentType, equipmentId));
+            EMechPartType mechPartType = (EMechPartType)(equipmentId / 1000);
+            arty.Equip(mechPartType, GameState.Inst.InventoryState.FindEquipment(mechPartType, equipmentId));
         }
 
         private void ConstructBestTeam()
@@ -217,7 +217,7 @@ namespace Mathlife.ProjectL.Gameplay
                     result = arty1.totalExpRx.Value.CompareTo(arty0.totalExpRx.Value); // Descending
                 
                 if (result == 0)
-                    result = arty0.id.CompareTo(arty1.id); // Ascending
+                    result = arty0.Id.CompareTo(arty1.Id); // Ascending
                 
                 return result;
             }

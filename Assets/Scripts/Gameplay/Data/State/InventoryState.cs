@@ -118,25 +118,25 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // 장비
-        ReactiveDictionary<EEquipmentType, List<MechPartModel>> m_equipments = new();
+        ReactiveDictionary<EMechPartType, List<MechPartModel>> m_equipments = new();
 
         void InitEquipmentDictionary()
         {
-            foreach (var type in Enum.GetValues(typeof(EEquipmentType)))
+            foreach (var type in Enum.GetValues(typeof(EMechPartType)))
             {
-                m_equipments.Add((EEquipmentType)type, new());
+                m_equipments.Add((EMechPartType)type, new());
             }
         }
 
-        public List<MechPartModel> GetSortedEquipmentList(EEquipmentType type)
+        public List<MechPartModel> GetSortedEquipmentList(EMechPartType type)
         {
             SortEquipmentList(type);
             return m_equipments[type];
         }
 
-        public MechPartModel FindEquipment(EEquipmentType type, int id)
+        public MechPartModel FindEquipment(EMechPartType type, int id)
         {
-            MechPartModel mechPart = m_equipments[type].FirstOrDefault(eq => eq.id == id);
+            MechPartModel mechPart = m_equipments[type].FirstOrDefault(eq => eq.Id == id);
             if (mechPart == null)
                 return AddEquipment(id);
             return mechPart;
@@ -146,23 +146,22 @@ namespace Mathlife.ProjectL.Gameplay
         {
             if (id < 0)
                 return null;
-
-            Debug.Log(id);
+            
             MechPartModel mechPart = new(gameDataLoader.GetMechPartData(id));
-            m_equipments[mechPart.type].Add(mechPart);
+            m_equipments[mechPart.Type].Add(mechPart);
             return mechPart;
         }
 
-        void SortEquipmentList(EEquipmentType type)
+        void SortEquipmentList(EMechPartType type)
         {
             m_equipments[type] = m_equipments[type]
                 .OrderBy(equip =>
                 {
-                    if (equip.owner != null)
-                        return equip.owner.id;
+                    if (equip.Owner != null)
+                        return equip.Owner.Value.Id;
                     return Int32.MaxValue;
                 })
-                .ThenBy(equip => equip.id)
+                .ThenBy(equip => equip.Id)
                 .ToList();
         }
 

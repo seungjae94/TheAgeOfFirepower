@@ -62,7 +62,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
             artyViewCanvasGroup.Show();
             portraitImage.sprite = itemData.arty?.Sprite;
             levelText.text = itemData.arty?.levelRx.Value.ToString();
-            nameText.text = itemData.arty?.displayName;
+            nameText.text = itemData.arty?.DisplayName;
         }
 
         // 상호작용 콜백

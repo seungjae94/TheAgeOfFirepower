@@ -12,19 +12,20 @@ namespace Mathlife.ProjectL.Gameplay
 
         private readonly MechPartGameData gameData;
 
-        public int id => gameData.id;
-
-        public EEquipmentType type => gameData.type;
-
-        public string displayName => gameData.displayName;
-
-        public string description => gameData.description;
-
-        public BasicStat stat => gameData.stat;
+        public int Id => gameData.id;
         
-        public Sprite icon => gameData.icon;
+        public EItemRarity Rarity => gameData.rarity;
 
-        ReactiveProperty<ArtyModel> m_owner = new();
-        public ArtyModel owner { get => m_owner.Value; set => m_owner.Value = value; } 
+        public EMechPartType Type => gameData.type;
+
+        public string DisplayName => gameData.displayName;
+
+        public string Description => gameData.description;
+
+        public BasicStat Stat => gameData.stat;
+        
+        public Sprite Icon => gameData.icon;
+
+        public readonly ReactiveProperty<ArtyModel> Owner = new();
     }
 }

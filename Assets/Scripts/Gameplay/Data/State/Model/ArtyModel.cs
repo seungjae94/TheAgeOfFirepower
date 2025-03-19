@@ -7,8 +7,8 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class ArtyModel
     {
-        ArtyGameData gameData;
-        ExpGameData expGameData;
+        private readonly ArtyGameData gameData;
+        private readonly ExpGameData expGameData;
         
         public ArtyModel(
             ArtyGameData gameData,
@@ -21,23 +21,23 @@ namespace Mathlife.ProjectL.Gameplay
             levelRx = new(level);
             totalExpRx = new(totalExp);
 
-            equipmentsRx.Add(EEquipmentType.Barrel, null);
-            equipmentsRx.Add(EEquipmentType.Armor, null);
-            equipmentsRx.Add(EEquipmentType.Engine, null);
+            equipmentsRx.Add(EMechPartType.Barrel, null);
+            equipmentsRx.Add(EMechPartType.Armor, null);
+            equipmentsRx.Add(EMechPartType.Engine, null);
         }
 
         
 
-        public int id => gameData.id;
-        public string displayName => gameData.displayName;
+        public int Id => gameData.id;
+        public string DisplayName => gameData.displayName;
         public Sprite Sprite => gameData.sprite;
 
         public readonly ReactiveProperty<int> levelRx;
         public readonly ReactiveProperty<long> totalExpRx;
 
-        public long needExp => expGameData.characterNeedExpAtLevelList[levelRx.Value];
+        public long NeedExp => expGameData.characterNeedExpAtLevelList[levelRx.Value];
 
-        public long currentLevelExp
+        public long CurrentLevelExp
         {
             get
             {
@@ -46,47 +46,47 @@ namespace Mathlife.ProjectL.Gameplay
             }
         }
 
-        public readonly ReactiveDictionary<EEquipmentType, MechPartModel> equipmentsRx = new();
+        public readonly ReactiveDictionary<EMechPartType, MechPartModel> equipmentsRx = new();
 
         public MechPartModel Weapon { 
-            get => equipmentsRx[EEquipmentType.Barrel];
+            get => equipmentsRx[EMechPartType.Barrel];
             private set
             {
-                if (value != null && value.type != EEquipmentType.Barrel)
+                if (value != null && value.Type != EMechPartType.Barrel)
                     return;
 
-                equipmentsRx[EEquipmentType.Barrel] = value;
+                equipmentsRx[EMechPartType.Barrel] = value;
             }
         }
 
         public MechPartModel Armor { 
-            get => equipmentsRx[EEquipmentType.Armor];
+            get => equipmentsRx[EMechPartType.Armor];
             private set
             {
-                if (value != null && value.type != EEquipmentType.Armor)
+                if (value != null && value.Type != EMechPartType.Armor)
                     return;
 
-                equipmentsRx[EEquipmentType.Armor] = value;
+                equipmentsRx[EMechPartType.Armor] = value;
             }
         }
 
         public MechPartModel Artifact { 
-            get => equipmentsRx[EEquipmentType.Engine];
+            get => equipmentsRx[EMechPartType.Engine];
             private set
             {
-                if (value != null && value.type != EEquipmentType.Engine)
+                if (value != null && value.Type != EMechPartType.Engine)
                     return;
 
-                equipmentsRx[EEquipmentType.Engine] = value;
+                equipmentsRx[EMechPartType.Engine] = value;
             }
         }
 
-        public MechPartModel GetEquipment(EEquipmentType type)
+        public MechPartModel GetEquipment(EMechPartType type)
         {
             return equipmentsRx[type];
         }
 
-        public IDisposable SubscribeEquipmentChangeEvent(EEquipmentType type, Action<MechPartModel> action)
+        public IDisposable SubscribeEquipmentChangeEvent(EMechPartType type, Action<MechPartModel> action)
         {
             return equipmentsRx
                 .ObserveEveryValueChanged(dic => dic[type])
@@ -96,49 +96,49 @@ namespace Mathlife.ProjectL.Gameplay
         public int GetMaxHp()
         {
             int value = gameData.maxHp + (int)(gameData.maxHpGrowth * (levelRx.Value - 1));
-            value += (Weapon?.stat.maxHp ?? 0) + (Armor?.stat.maxHp ?? 0) + (Artifact?.stat.maxHp ?? 0);
+            value += (Weapon?.Stat.maxHp ?? 0) + (Armor?.Stat.maxHp ?? 0) + (Artifact?.Stat.maxHp ?? 0);
             return value;
         }
 
         public int GetAtk()
         {
             int value = gameData.atk + (int)(gameData.atkGrowth * (levelRx.Value - 1));
-            value += (Weapon?.stat.atk ?? 0) + (Armor?.stat.atk ?? 0) + (Artifact?.stat.atk ?? 0);
+            value += (Weapon?.Stat.atk ?? 0) + (Armor?.Stat.atk ?? 0) + (Artifact?.Stat.atk ?? 0);
             return value;
         }
 
         public int GetDef()
         {
             int value = gameData.def + (int)(gameData.defGrowth * (levelRx.Value - 1));
-            value += (Weapon?.stat.def ?? 0) + (Armor?.stat.def ?? 0) + (Artifact?.stat.def ?? 0);
+            value += (Weapon?.Stat.def ?? 0) + (Armor?.Stat.def ?? 0) + (Artifact?.Stat.def ?? 0);
             return value;
         }
 
         public int GetMobility()
         {
             int value = gameData.mob + (int)(gameData.mobGrowth * (levelRx.Value - 1));
-            value += (Weapon?.stat.spd ?? 0) + (Armor?.stat.spd ?? 0) + (Artifact?.stat.spd ?? 0);
+            value += (Weapon?.Stat.spd ?? 0) + (Armor?.Stat.spd ?? 0) + (Artifact?.Stat.spd ?? 0);
             return value;
         }
 
-        public void Equip(EEquipmentType type, MechPartModel mechPart)
+        public void Equip(EMechPartType type, MechPartModel mechPart)
         {
             UnEquip(type);
 
             if (mechPart == null)
                 return;
 
-            mechPart.owner?.UnEquip(type);
-            mechPart.owner = this;
+            mechPart.Owner.Value?.UnEquip(type);
+            mechPart.Owner.Value = this;
             equipmentsRx[type] = mechPart;
         }
 
-        public void UnEquip(EEquipmentType type)
+        public void UnEquip(EMechPartType type)
         {
             if (equipmentsRx[type] == null)
                 return;
 
-            equipmentsRx[type].owner = null;
+            equipmentsRx[type].Owner.Value = null;
             equipmentsRx[type] = null;
         }
     }

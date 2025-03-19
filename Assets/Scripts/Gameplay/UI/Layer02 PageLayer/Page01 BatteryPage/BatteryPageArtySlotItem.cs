@@ -161,7 +161,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             itemCanvasGroup.Show();
             portraitImage.sprite = Arty.Sprite;
             levelText.text = Arty.levelRx.ToString();
-            nameText.text = Arty.displayName;
+            nameText.text = Arty.DisplayName;
         }
 
         private void UpdateLevelText(int value)

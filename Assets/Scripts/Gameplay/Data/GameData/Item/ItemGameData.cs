@@ -8,6 +8,14 @@ using Sirenix.Utilities.Editor;
 
 namespace Mathlife.ProjectL.Gameplay
 {
+    public enum EItemRarity
+    {
+        N,
+        R,
+        SR,
+        SSR
+    }
+    
     public enum EItemType
     {
         MechPart,
@@ -19,11 +27,16 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public abstract EItemType ItemType { get; }
 
-        [LabelWidth(75)]
+        [Title("아이템 데이터")]
+        [LabelWidth(100)]
+        [LabelText("희귀도")]
+        public EItemRarity rarity;
+
+        [LabelWidth(100)]
         [LabelText("아이콘")]
-        [PreviewField(50, Sirenix.OdinInspector.ObjectFieldAlignment.Left)]
         [AssetSelector(Paths = "Assets/Arts/UI/Icons", FlattenTreeView = true)]
 #if UNITY_EDITOR
+        [PreviewField(50, Sirenix.OdinInspector.ObjectFieldAlignment.Left)]
         [OnValueChanged(nameof(CacheIconTexture))]
 #endif
         public Sprite icon = null;
@@ -42,23 +55,29 @@ namespace Mathlife.ProjectL.Gameplay
         // 게임 디자이너 에디터 프리뷰 최적화
         private Texture2D cachedTexture;
 
+        public Texture2D GetPreview()
+        {
+            if (cachedTexture != null)
+                return cachedTexture;
+            
+            if (icon != null)
+                CacheIconTexture();
+            
+            return cachedTexture;
+        }
+        
         private void CacheIconTexture()
         {
             if (icon == null) 
                 return;
             
-            Rect texRect = icon.textureRect;
-            cachedTexture = icon.texture.CropTexture(texRect);
+            cachedTexture = TextureUtilities.ConvertSpriteToTexture(icon);
         }
 
         public override void SetMenuItem(ref OdinMenuItem menuItem)
         {
             menuItem.Name = displayName;
-            
-            if (cachedTexture != null)
-            {
-                menuItem.Icon = cachedTexture;
-            }
+            menuItem.Icon = GetPreview();
         }
 #endif
     }

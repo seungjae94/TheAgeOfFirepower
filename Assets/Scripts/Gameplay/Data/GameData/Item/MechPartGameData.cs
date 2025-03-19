@@ -10,7 +10,7 @@ using Sirenix.Utilities.Editor;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public enum EEquipmentType
+    public enum EMechPartType
     {
         Barrel,
         Armor,
@@ -27,7 +27,7 @@ namespace Mathlife.ProjectL.Gameplay
         [Title("부품 데이터", horizontalLine: true)]
         [LabelWidth(100)]
         [LabelText("부품 타입")]
-        public EEquipmentType type;
+        public EMechPartType type;
 
         [LabelWidth(100)]
         [LabelText("스탯")]

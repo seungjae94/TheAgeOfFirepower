@@ -23,6 +23,7 @@ MonoBehaviour:
     SerializationNodes: []
   displayName: "\uCD5C\uC2E0\uD615 \uC7A5\uAC11"
   id: 6
+  rarity: 2
   icon: {fileID: 21300000, guid: 0e31d3dd29aed904d913ed9e65ddb297, type: 3}
   description: 
   shopPrice: 600

@@ -30,7 +30,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         //[SerializeField] InventoryFlex m_flex;
         [SerializeField] Button m_unequipButton;
 
-        EEquipmentType m_slotType = EEquipmentType.Barrel;
+        EMechPartType m_slotType = EMechPartType.Barrel;
 
         MechPartModel selectedMechPart = null;
 
@@ -78,7 +78,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             UpdateFlex();
         }
 
-        public async UniTask Show(EEquipmentType slotType)
+        public async UniTask Show(EMechPartType slotType)
         {
             m_slotType = slotType;
 
@@ -120,10 +120,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
             else
             {
                 m_currentEquipmentIcon.enabled = true;
-                m_currentEquipmentIcon.sprite = currentMechPart.icon;
-                m_currentEquipmentName.text = currentMechPart.displayName;
-                m_currentEquipmentDescription.text = $"<style=\"NoticePrimaryColor\">{currentMechPart.owner.displayName} ���� ��</style>\n";
-                m_currentEquipmentDescription.text += currentMechPart.description;
+                m_currentEquipmentIcon.sprite = currentMechPart.Icon;
+                m_currentEquipmentName.text = currentMechPart.DisplayName;
+                m_currentEquipmentDescription.text = $"<style=\"NoticePrimaryColor\">{currentMechPart.Owner.Value.DisplayName} ���� ��</style>\n";
+                m_currentEquipmentDescription.text += currentMechPart.Description;
             }
         }
 
@@ -141,15 +141,15 @@ namespace Mathlife.ProjectL.Gameplay.UI
             else
             {
                 m_selectedEquipmentIcon.enabled = true;
-                m_selectedEquipmentIcon.sprite = selectedMechPart.icon;
-                m_selectedEquipmentName.text = selectedMechPart.displayName;
+                m_selectedEquipmentIcon.sprite = selectedMechPart.Icon;
+                m_selectedEquipmentName.text = selectedMechPart.DisplayName;
 
-                if (selectedMechPart.owner != null)
-                    m_selectedEquipmentDescription.text = $"<style=\"NoticePrimaryColor\">{selectedMechPart.owner.displayName} ���� ��</style>\n";
+                if (selectedMechPart.Owner != null)
+                    m_selectedEquipmentDescription.text = $"<style=\"NoticePrimaryColor\">{selectedMechPart.Owner.Value.DisplayName} ���� ��</style>\n";
                 else
                     m_selectedEquipmentDescription.text = "";
 
-                m_selectedEquipmentDescription.text += selectedMechPart.description;
+                m_selectedEquipmentDescription.text += selectedMechPart.Description;
             }
         }
 
@@ -163,15 +163,15 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // m_flex.Draw(itemDatas, OnClickFlexItem);
         }
 
-        string EquipmentTypeToString(EEquipmentType type)
+        string EquipmentTypeToString(EMechPartType type)
         {
             switch (type)
             {
-                case EEquipmentType.Barrel:
+                case EMechPartType.Barrel:
                     return "����";
-                case EEquipmentType.Armor:
+                case EMechPartType.Armor:
                     return "��";
-                case EEquipmentType.Engine:
+                case EMechPartType.Engine:
                     return "��Ƽ��Ʈ";
             }
 

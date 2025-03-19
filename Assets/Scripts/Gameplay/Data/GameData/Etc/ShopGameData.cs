@@ -40,15 +40,15 @@ namespace Mathlife.ProjectL.Gameplay
         }
 #endif
 
-        public List<MechPartGameData> GetItemCatalog(EEquipmentType type)
+        public List<MechPartGameData> GetItemCatalog(EMechPartType type)
         {
             switch (type)
             {
-                case EEquipmentType.Barrel:
+                case EMechPartType.Barrel:
                     return shopWeapons;
-                case EEquipmentType.Armor:
+                case EMechPartType.Armor:
                     return shopArmors;
-                case EEquipmentType.Engine:
+                case EMechPartType.Engine:
                     return shopArtifacts;
                 default:
                     return null;

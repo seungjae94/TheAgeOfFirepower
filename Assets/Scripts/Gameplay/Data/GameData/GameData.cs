@@ -9,7 +9,7 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public abstract class GameData : SerializedScriptableObject
     {
-        [Title("게임 데이터")]
+        [Title("공통 데이터")]
         [LabelWidth(100)]
         [LabelText("이름")]
         public string displayName = "";

@@ -103,15 +103,15 @@ namespace Mathlife.ProjectL.Gameplay.UI
             else
             {
                 m_selectedEquipmentIcon.enabled = true;
-                m_selectedEquipmentIcon.sprite = selectedMechPart.icon;
+                m_selectedEquipmentIcon.sprite = selectedMechPart.Icon;
 
-                m_selectedEquipmentName.text = selectedMechPart.displayName;
+                m_selectedEquipmentName.text = selectedMechPart.DisplayName;
 
-                if (selectedMechPart.owner != null)
-                    m_selectedEquipmentDescription.text = $"<style=\"NoticePrimaryColor\">{selectedMechPart.owner.displayName} 장착 중</style>\n";
+                if (selectedMechPart.Owner != null)
+                    m_selectedEquipmentDescription.text = $"<style=\"NoticePrimaryColor\">{selectedMechPart.Owner.Value.DisplayName} 장착 중</style>\n";
                 else
                     m_selectedEquipmentDescription.text = "";
-                m_selectedEquipmentDescription.text += selectedMechPart.description;
+                m_selectedEquipmentDescription.text += selectedMechPart.Description;
             }
         }
     }

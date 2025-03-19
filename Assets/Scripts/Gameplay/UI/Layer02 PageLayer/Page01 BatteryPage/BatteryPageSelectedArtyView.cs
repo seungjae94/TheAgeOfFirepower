@@ -113,7 +113,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             portraitImage.sprite = BatteryPage.SelectedArty.Sprite;
             artyLevelText.text = BatteryPage.SelectedArty.levelRx.Value.ToString();
-            artyNameText.text = BatteryPage.SelectedArty.displayName;
+            artyNameText.text = BatteryPage.SelectedArty.DisplayName;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             portraitImage.sprite = arty.Sprite;
             levelText.text = arty.levelRx.ToString();
-            nameText.text = arty.displayName;
+            nameText.text = arty.DisplayName;
         }
     }
 }

@@ -23,6 +23,7 @@ MonoBehaviour:
     SerializationNodes: []
   displayName: "\uCC28\uC138\uB300 \uC7A5\uAC11"
   id: 7
+  rarity: 3
   icon: {fileID: 21300000, guid: d472e00f132753946bc79c5195345422, type: 3}
   description: 
   shopPrice: 1000
