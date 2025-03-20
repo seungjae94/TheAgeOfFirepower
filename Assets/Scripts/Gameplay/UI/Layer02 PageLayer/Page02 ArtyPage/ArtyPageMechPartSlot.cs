@@ -82,22 +82,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
             
             uiEffect.gameObject.SetActive(true);
-            switch (mechPart.Rarity)
-            {
-                case EItemRarity.N:
-                    uiEffect.LoadPreset("GradientN");
-                    break;
-                case EItemRarity.R:
-                    uiEffect.LoadPreset("GradientR");
-                    break;
-                case EItemRarity.SR:
-                    uiEffect.LoadPreset("GradientSR");
-                    break;
-                case EItemRarity.SSR:
-                    uiEffect.LoadPreset("GradientSSR");
-                    break;
-            }
-            
+            uiEffect.LoadPreset(mechPart.Rarity.ToGradientPresetName());
             iconImage.sprite = mechPart.Icon;
         }
     }

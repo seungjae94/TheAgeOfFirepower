@@ -17,6 +17,20 @@ namespace Mathlife.ProjectL.Gameplay
         Engine
     }
 
+    public static class EMechPartTypeExtensions
+    {
+        public static string ToDisplayName(this EMechPartType type)
+        {
+            return type switch
+            {
+                EMechPartType.Barrel => "화포",
+                EMechPartType.Armor => "장갑",
+                EMechPartType.Engine => "엔진",
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+        }
+    }
+
     [Serializable]
     public class MechPartGameData : ItemGameData
     {

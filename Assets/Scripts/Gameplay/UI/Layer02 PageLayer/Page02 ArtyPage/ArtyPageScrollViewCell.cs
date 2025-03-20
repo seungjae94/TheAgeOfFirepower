@@ -1,8 +1,5 @@
-using System;
 using Coffee.UIEffects;
 using Cysharp.Threading.Tasks;
-using Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup;
-using Mathlife.ProjectL.Gameplay.UI.Extension;
 using Mathlife.ProjectL.Utils;
 using TMPro;
 using UniRx;

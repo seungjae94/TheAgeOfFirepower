@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -14,6 +15,21 @@ namespace Mathlife.ProjectL.Gameplay
         R,
         SR,
         SSR
+    }
+    
+    public static class EItemRarityExtensions
+    {
+        public static string ToGradientPresetName(this EItemRarity rarity)
+        {
+            return rarity switch
+            {
+                EItemRarity.N => "GradientN",
+                EItemRarity.R => "GradientR",
+                EItemRarity.SR => "GradientST",
+                EItemRarity.SSR => "GradientSSR",
+                _ => throw new ArgumentOutOfRangeException(nameof(rarity), rarity, null)
+            };
+        }
     }
     
     public enum EItemType

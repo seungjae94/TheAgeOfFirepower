@@ -15,7 +15,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private const float k_openDuration = 0.25f;
 
         // Alias
-        BatteryPage BatteryPage => Find<BatteryPage>();
+        ArtyPage ArtyPage => Find<ArtyPage>();
         InventoryState InventoryState => GameState.Inst.inventoryState;
 
         // View
@@ -27,24 +27,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         [SerializeField]
         private Button cancelButton;
+
+        [SerializeField]
+        private MechPartBasicView currentMechPartView;
         
         [SerializeField]
-        private Image currentMechPartIcon;
-        
-        [SerializeField]
-        private TextMeshProUGUI currentMechPartNameText;
-        
-        [SerializeField]
-        private TextMeshProUGUI currentMechPartDescriptionText;
-        
-        [SerializeField]
-        private Image selectedMechPartIcon;
-        
-        [SerializeField]
-        private TextMeshProUGUI selectedMechPartNameText;
-        
-        [SerializeField]
-        private TextMeshProUGUI selectedMechPartDescriptionText;
+        private MechPartBasicView selectedMechPartView;
         
         [SerializeField]
         private RectTransform windowTransform;
@@ -100,6 +88,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .Subscribe(OnClickCancelButton)
                 .AddTo(disposables);
             
+            // 뷰 초기화
+            InitializeView();
+            
             // 애니메이션
             openTween.Restart();
             await openTween.AwaitForComplete();
@@ -138,52 +129,42 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // }
 
         // 뷰 업데이트
-        public void UpdateCurrentEquipmentView(MechPartModel currentMechPart)
+        private void InitializeView()
         {
-            string equipTypeString = EquipmentTypeToString(slotType);
-            titleText.text = $"{equipTypeString} ��ü";
+            titleText.text = $"{slotType.ToDisplayName()} 교체";
 
-            if (currentMechPart == null)
-            {
-                currentMechPartIcon.enabled = false;
-                currentMechPartIcon.sprite = null;
-                currentMechPartNameText.text = "";
-                currentMechPartDescriptionText.text = $"<style=\"WarningPrimaryColor\">{equipTypeString}�� �����ϰ� ���� �ʽ��ϴ�.</style>";
-            }
-            else
-            {
-                currentMechPartIcon.enabled = true;
-                currentMechPartIcon.sprite = currentMechPart.Icon;
-                currentMechPartNameText.text = currentMechPart.DisplayName;
-                currentMechPartDescriptionText.text = $"<style=\"NoticePrimaryColor\">{currentMechPart.Owner.Value.DisplayName} ���� ��</style>\n";
-                currentMechPartDescriptionText.text += currentMechPart.Description;
-            }
+            MechPartModel currentMechPart = ArtyPage.SelectedArty.mechPartSlotsRx[slotType];
+            currentMechPartView.Setup(currentMechPart, "부품을 장착하지 않았습니다.");
+            currentMechPartView.Draw();
+            
+            selectedMechPartView.Setup(null);
+            selectedMechPartView.Draw();
         }
 
         void UpdateSelectedEquipmentView()
         {
-            string equipTypeString = EquipmentTypeToString(slotType);
-
-            if (selectedMechPart == null)
-            {
-                selectedMechPartIcon.enabled = false;
-                selectedMechPartIcon.sprite = null;
-                selectedMechPartNameText.text = "";
-                selectedMechPartDescriptionText.text = $"<style=\"WarningPrimaryColor\">{equipTypeString}�� �������� �ʽ��ϴ�.</style>";
-            }
-            else
-            {
-                selectedMechPartIcon.enabled = true;
-                selectedMechPartIcon.sprite = selectedMechPart.Icon;
-                selectedMechPartNameText.text = selectedMechPart.DisplayName;
-
-                if (selectedMechPart.Owner != null)
-                    selectedMechPartDescriptionText.text = $"<style=\"NoticePrimaryColor\">{selectedMechPart.Owner.Value.DisplayName} ���� ��</style>\n";
-                else
-                    selectedMechPartDescriptionText.text = "";
-
-                selectedMechPartDescriptionText.text += selectedMechPart.Description;
-            }
+            // string equipTypeString = EquipmentTypeToString(slotType);
+            //
+            // if (selectedMechPart == null)
+            // {
+            //     selectedMechPartIcon.enabled = false;
+            //     selectedMechPartIcon.sprite = null;
+            //     selectedMechPartNameText.text = "";
+            //     selectedMechPartDescriptionText.text = $"<style=\"WarningPrimaryColor\">{equipTypeString}�� �������� �ʽ��ϴ�.</style>";
+            // }
+            // else
+            // {
+            //     selectedMechPartIcon.enabled = true;
+            //     selectedMechPartIcon.sprite = selectedMechPart.Icon;
+            //     selectedMechPartNameText.text = selectedMechPart.DisplayName;
+            //
+            //     if (selectedMechPart.Owner != null)
+            //         selectedMechPartDescriptionText.text = $"<style=\"NoticePrimaryColor\">{selectedMechPart.Owner.Value.DisplayName} ���� ��</style>\n";
+            //     else
+            //         selectedMechPartDescriptionText.text = "";
+            //
+            //     selectedMechPartDescriptionText.text += selectedMechPart.Description;
+            // }
         }
 
         void UpdateFlex()
@@ -194,21 +175,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             //         .ToList();
             //
             // m_flex.Draw(itemDatas, OnClickFlexItem);
-        }
-
-        string EquipmentTypeToString(EMechPartType type)
-        {
-            switch (type)
-            {
-                case EMechPartType.Barrel:
-                    return "화포";
-                case EMechPartType.Armor:
-                    return "장갑";
-                case EMechPartType.Engine:
-                    return "엔진";
-            }
-
-            return "";
         }
         
         // public UniTask Show(EMechPartType slotType)
