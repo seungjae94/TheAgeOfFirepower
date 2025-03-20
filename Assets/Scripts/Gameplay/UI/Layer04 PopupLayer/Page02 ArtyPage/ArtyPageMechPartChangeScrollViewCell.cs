@@ -21,6 +21,9 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPagePopup
         private GameObject selectionGameObject;
         
         [SerializeField]
+        private GameObject equippedMarkGameObject;
+        
+        [SerializeField]
         private UIEffect uiEffect;
         
         [SerializeField]
@@ -55,14 +58,24 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPagePopup
             {
                 itemSlotGameObject.SetActive(false);
                 selectionGameObject.SetActive(false);
+                equippedMarkGameObject.SetActive(false);
                 return;
             }
 
             itemSlotGameObject.SetActive(true);
             uiEffect.LoadPreset(mechPart.Rarity.ToGradientPresetName());
             iconImage.sprite = mechPart.Icon;
-            
-            selectionGameObject.SetActive(Context.selectedIndex == Index);
+
+            if (Context.selectedIndex == Index)
+            {
+                selectionGameObject.SetActive(true);
+                equippedMarkGameObject.SetActive(false);
+            }
+            else
+            {
+                selectionGameObject.SetActive(false);
+                equippedMarkGameObject.SetActive(mechPart.Owner.Value != null);
+            }
         }
 
         // 상호작용 콜백
