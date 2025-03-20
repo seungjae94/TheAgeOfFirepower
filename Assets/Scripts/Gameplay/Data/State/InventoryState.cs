@@ -148,7 +148,8 @@ namespace Mathlife.ProjectL.Gameplay
         private void SortMechPartList(EMechPartType type)
         {
             mechPartInventory[type] = mechPartInventory[type]
-                .OrderBy(mechPart => mechPart.Owner.Value?.Id ?? Int32.MaxValue)
+                .OrderBy(mechPart => (mechPart.Owner.Value != null) ? 0 : 1)
+                .ThenByDescending(equip => equip.Rarity)
                 .ThenBy(equip => equip.Id)
                 .ToList();
         }

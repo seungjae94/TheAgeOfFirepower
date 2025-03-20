@@ -152,32 +152,33 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // 뷰 업데이트
         private void InitializeView()
         {
-            titleText.text = $"{slotType.ToDisplayName()} 교체";
-
-            MechPartModel currentMechPart = ArtyPage.SelectedArty.mechPartSlotsRx[slotType];
-            currentMechPartView.Setup(currentMechPart, "부품을 장착하지 않았습니다.");
-            currentMechPartView.Draw();
-            
-            // 스크롤 뷰 초기화
-            InitializeScrollView();
-        }
-        
-        // 뷰 업데이트
-        private void InitializeScrollView()
-        {
+            // Fetch Data
             MechPartModel currentMechPart = ArtyPage.SelectedArty.mechPartSlotsRx[slotType];
             bool ExcludeFilter(MechPartModel mechPart) => mechPart == currentMechPart;
 
             mechPartList = InventoryState
                 .GetSortedMechPartList(slotType, ExcludeFilter);
+
+            if (currentMechPart != null)
+                mechPartList.Insert(0, currentMechPart);
             mechPartList.Insert(0, null);
             
             var items = mechPartList
                 .Select(mechPart => new ItemData() { mechPart = mechPart })
                 .ToList();
+            
+            selectedIndexRx.Value = (currentMechPart != null) ? 1 : 0;
+            
+            // 일반 뷰 초기화
+            titleText.text = $"{slotType.ToDisplayName()} 교체";
 
+            currentMechPartView.Setup(currentMechPart, "부품을 장착하지 않았습니다.");
+            currentMechPartView.Draw();
+            
+            // 스크롤 뷰 초기화
             scrollView.UpdateContents(items);
-            scrollView.SelectCell(0);
+            scrollView.SelectCell(selectedIndexRx.Value);
         }
+        
     }
 }
