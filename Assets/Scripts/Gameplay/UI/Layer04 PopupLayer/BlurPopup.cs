@@ -97,7 +97,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
 
             // Save To RT
-            Graphics.Blit(tempB, resultRenderTexture, new Vector2(1, -1), new Vector2(0, 1));
+            if (SystemInfo.graphicsUVStartsAtTop)
+                Graphics.Blit(tempB, resultRenderTexture, new Vector2(1, -1), new Vector2(0, 1));
+            else
+                Graphics.Blit(tempB, resultRenderTexture);
 
 #if UNITY_EDITOR
             if (saveRenderTextureAsFile)
