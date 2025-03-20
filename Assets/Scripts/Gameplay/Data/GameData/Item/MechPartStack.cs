@@ -14,7 +14,6 @@ namespace Mathlife.ProjectL.Gameplay
     public class MechPartStack
     {
 #if UNITY_EDITOR
-        [FormerlySerializedAs("equipment")]
         [LabelText("부품")]
         [LabelWidth(125)]
         [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetEquipmentPreview))]

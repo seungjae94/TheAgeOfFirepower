@@ -32,8 +32,7 @@ namespace Mathlife.ProjectL.Gameplay
         [ShowInInspector]
         [SpaceOnly(25)]
         bool _dummySpacing;
-
-        [FormerlySerializedAs("monsterBaseExpAtLevelList")]
+        
         [Delayed]
         [Title("적 경험치", horizontalLine: false)]
         [LabelText("레벨별 적 기초 경험치")]

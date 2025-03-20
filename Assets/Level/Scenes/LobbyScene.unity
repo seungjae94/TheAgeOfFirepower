@@ -4977,7 +4977,7 @@ GameObject:
   - component: {fileID: 1209482123}
   - component: {fileID: 1209482124}
   m_Layer: 5
-  m_Name: Current (1)
+  m_Name: Selected
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9803,7 +9803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: d6f72e6bfe4bde74c8ba94e46587d6a8, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -13656,17 +13656,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8ba2b371402004cba5006eb6356a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_canvasGroup: {fileID: 2763955339000875164}
-  m_okButton: {fileID: 4201317669729951271}
-  m_cancelButton: {fileID: 1177520183242432953}
-  m_title: {fileID: 7380358793802118603}
-  m_currentEquipmentIcon: {fileID: 1686942891}
-  m_currentEquipmentName: {fileID: 1856628830}
-  m_currentEquipmentDescription: {fileID: 3491412511743862052}
-  m_selectedEquipmentIcon: {fileID: 0}
-  m_selectedEquipmentName: {fileID: 0}
-  m_selectedEquipmentDescription: {fileID: 0}
-  m_unequipButton: {fileID: 0}
+  titleText: {fileID: 7380358793802118603}
+  okButton: {fileID: 4201317669729951271}
+  cancelButton: {fileID: 1177520183242432953}
+  currentMechPartIcon: {fileID: 1686942891}
+  currentMechPartNameText: {fileID: 1856628830}
+  currentMechPartDescriptionText: {fileID: 3491412511743862052}
+  selectedMechPartIcon: {fileID: 152509468}
+  selectedMechPartNameText: {fileID: 1599283891}
+  selectedMechPartDescriptionText: {fileID: 1355268935}
+  windowTransform: {fileID: 1843723328}
 --- !u!1 &8684925600005707778
 GameObject:
   m_ObjectHideFlags: 0

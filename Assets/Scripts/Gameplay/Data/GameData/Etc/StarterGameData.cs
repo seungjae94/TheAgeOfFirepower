@@ -24,16 +24,14 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("포대")]
         [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true, ShowFoldout = false)]
         List<ArtyPreset> starterBattery = new ();
-
-        [FormerlySerializedAs("starterRoster")]
+        
         [SerializeField]
         [TabGroup("Starter/Tab", "대기 멤버")]
         [HideReferenceObjectPicker]
         [LabelText("대기 멤버")]
         [ListDrawerSettings(ShowFoldout = false)]
         List<ArtyPreset> starterBench = new();
-
-        [FormerlySerializedAs("starterMechParts")]
+        
         [SerializeField]
         [Space(10)]
         [TabGroup("Starter/Tab", "인벤토리(백업 부품)")]
@@ -59,16 +57,14 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("포대")]
         [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true, ShowFoldout = false)]
         List<ArtyPreset> editorStarterBattery = new();
-
-        [FormerlySerializedAs("editorStarterRoster")]
+        
         [SerializeField]
         [TabGroup("Editor Starter/Tab", "대기 멤버")]
         [HideReferenceObjectPicker]
         [LabelText("대기 멤버")]
         [ListDrawerSettings(ShowFoldout = false)]
         List<ArtyPreset> editorStarterBench = new();
-
-        [FormerlySerializedAs("editorStarterMechParts")]
+        
         [SerializeField]
         [TabGroup("Editor Starter/Tab", "인벤토리(백업 부품)")]
         [HideReferenceObjectPicker]

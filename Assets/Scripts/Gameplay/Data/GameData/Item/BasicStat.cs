@@ -20,7 +20,6 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("방어력")]
         public int def;
 
-        [FormerlySerializedAs("spd")]
         [LabelWidth(100)]
         [LabelText("스피드")]
         public int mob;

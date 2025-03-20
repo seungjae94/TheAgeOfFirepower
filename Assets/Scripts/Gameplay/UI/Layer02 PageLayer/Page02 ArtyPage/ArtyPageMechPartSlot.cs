@@ -1,6 +1,7 @@
 using Mathlife.ProjectL.Utils;
 using System;
 using Coffee.UIEffects;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -66,9 +67,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private void OnClick(Unit _)
         {
             Debug.Log($"{slotType} 슬롯 클릭. 아이템 = {ArtyPage.SelectedArty.mechPartSlotsRx[slotType]?.DisplayName}");
-            //ArtyPageMechPartChangePopup popup = Presenter.Find<ArtyPageMechPartChangePopup>();
-            //popup.SetUp(slotType);
-            //popup.OpenWithAnimation().Forget();
+            
+            ArtyPageMechPartChangePopup popup = Presenter.Find<ArtyPageMechPartChangePopup>();
+            popup.Setup(slotType);
+            popup.OpenWithAnimation().Forget();
         }
 
         private void UpdateView(MechPartModel mechPart)

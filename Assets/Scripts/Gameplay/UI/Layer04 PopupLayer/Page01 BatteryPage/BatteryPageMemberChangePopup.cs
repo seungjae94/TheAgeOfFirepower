@@ -68,6 +68,8 @@ namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
 
         void OnDestroy()
         {
+            slideInTween.Kill();
+            slideOutTween.Kill();
             disposables.Dispose();
         }
 

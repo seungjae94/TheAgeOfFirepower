@@ -9,10 +9,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
     {
         InventoryState InventoryState => GameState.Inst.inventoryState;
         
-        [FormerlySerializedAs("m_goldText")]
         [SerializeField] TextMeshProUGUI goldText;
         
-        [FormerlySerializedAs("m_diamondText")]
         [SerializeField] TextMeshProUGUI diamondText;
 
         public override void Activate()
