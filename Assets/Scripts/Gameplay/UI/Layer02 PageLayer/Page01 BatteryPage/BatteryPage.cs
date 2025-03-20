@@ -19,9 +19,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // View
         private List<BatteryPageArtySlot> artySlots;
         private BatteryPageSelectedArtyView selectedArtyView;
-        
-        [field: SerializeField]
-        public BatteryPageArtySlotItemDragView ArtySlotItemViewDragView { get; private set; }
+
+        [field: SerializeField] public BatteryPageArtySlotItemDragView ArtySlotItemViewDragView { get; private set; }
+
+        // Field
+        private readonly CompositeDisposable disposables = new();
 
         // State - Selected Slot Index
         public readonly ReactiveProperty<int> selectedSlotIndexRx = new(-1);
@@ -41,12 +43,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 return ArtyRosterState.Battery[selectedSlotIndexRx.Value];
             }
         }
-        
+
         // 이벤트 함수
         public override void Initialize()
         {
             base.Initialize();
-        
+
             artySlots = transform.FindAllRecursive<BatteryPageArtySlot>();
             selectedArtyView = transform.FindRecursive<BatteryPageSelectedArtyView>();
         }
@@ -55,33 +57,43 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             // Overlay
             NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
+            navBackOverlay.onNavigateBack
+                .Subscribe(OnNavBack)
+                .AddTo(disposables);
+
             navBackOverlay.Activate();
             // TODO: navBackOverlay 콜백에 OnNavBack 등록
 
             // 상태 초기화
             selectedSlotIndexRx.Value = -1;
-            
+
             // 뷰 초기화
             selectedArtyView.Draw();
             artySlots.ForEach(slot => slot.Draw());
         }
-        
+
         protected override void OnClose()
         {
-            // Overlay
-            NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
-            // TODO: navBackOverlay 콜백에서 OnNavBack 제거
-            
+            disposables.Clear();
+
             // 뷰 정리
             selectedArtyView.Clear();
             artySlots.ForEach(slot => slot.Clear());
         }
 
+        private void OnDestroy()
+        {
+            disposables.Dispose();
+        }
+
         // 이벤트 콜백
-        async UniTaskVoid OnNavBack(Unit _)
+        private void OnNavBack(NavigateBackOverlay navigator)
         {
             if (ArtyRosterState.Battery.Validate() == false)
-                await Find<BatteryPageBatteryValidationModal>().OpenWithAnimation();
+            {
+                navigator.StopNavigation();
+                Find<BatteryPageValidationPopup>().OpenWithAnimation().Forget();
+            }
         }
     }
 }

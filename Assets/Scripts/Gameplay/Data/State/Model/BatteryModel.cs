@@ -9,51 +9,34 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class BatteryModel
     {
+        private readonly ReactiveCollection<ArtyModel> membersRx;
         public BatteryModel(List<ArtyModel> members)
         {
-            m_members = new(members);
+            membersRx = new(members);
         }
 
-        ReactiveCollection<ArtyModel> m_members;
-
-        public ArtyModel this[int i] => m_members[i];
-
-        public CompositeDisposable SubscribeMemberChange(Action<ArtyModel> onMemberChangedAction)
-        {
-            CompositeDisposable subscriptions = new();
-
-            for (int i = 0; i < m_members.Count; i++)
-            {
-                int iCapture = i;
-                IDisposable subscription = m_members
-                    .ObserveEveryValueChanged(members => members[iCapture])
-                    .Subscribe(character => onMemberChangedAction(character));
-                subscriptions.Add(subscription);
-            }
-
-            return subscriptions;
-        }
-
+        public ArtyModel this[int i] => membersRx[i];
+        
         public bool Contains(ArtyModel arty)
         {
             if (null == arty)
                 throw new ArgumentNullException("Tried to check if team contains null.");
 
-            return m_members.Contains(arty);
+            return membersRx.Contains(arty);
         }
 
         public int IndexOf(ArtyModel arty)
         {
-            return m_members.IndexOf(arty);
+            return membersRx.IndexOf(arty);
         }
 
-        // ??? <-> ???
+        // 슬롯 스왑
         public void Swap(int i, int j)
         {
-            m_members.Swap(i, j);
+            membersRx.Swap(i, j);
         }
 
-        // ???? ĳ???? -> ???
+        // 멤버 추가
         public void Add(int index, ArtyModel arty)
         {
             if (null == arty)
@@ -65,18 +48,18 @@ namespace Mathlife.ProjectL.Gameplay
             if (Contains(arty))
                 throw new ArgumentException("Failed to add a member. Given character was already in the team.");
 
-            var oldCharacter = m_members[index];
+            var oldCharacter = membersRx[index];
 
-            m_members[index] = arty;
+            membersRx[index] = arty;
         }
 
-        // ??? -> ???? ĳ????
+        // 멤버 제거 (인덱스)
         public void RemoveAt(int index)
         {
-            Remove(m_members[index]);
+            Remove(membersRx[index]);
         }
 
-        // ??? -> ???? ĳ????
+        // 멤버 제거 (모델)
         public void Remove(ArtyModel arty)
         {
             if (null == arty)
@@ -85,50 +68,31 @@ namespace Mathlife.ProjectL.Gameplay
             if (false == Contains(arty))
                 throw new ArgumentException("Failed to remove a member. Given character was not a member.");
 
-            m_members[m_members.IndexOf(arty)] = null;
+            membersRx[membersRx.IndexOf(arty)] = null;
         }
 
+        // 멤버 전부 제거
         public void Clear()
         {
-            for (int i = 0; i < m_members.Count; ++i)
+            for (int i = 0; i < membersRx.Count; ++i)
             {
-                m_members[i] = null;
+                membersRx[i] = null;
             }
-        }
-
-        public bool IsEmpty()
-        {
-            return memberCount == 0;
         }
 
         public void Rebuild(List<ArtyModel> members)
         {
             Clear();
 
-            for (int i = 0; i < m_members.Count; ++i)
+            for (int i = 0; i < membersRx.Count; ++i)
             {
-                m_members[i] = members[i];
-            }
-        }
-
-        int memberCount
-        {
-            get
-            {
-                int count = 0;
-                foreach (var member in m_members)
-                {
-                    if (member == null)
-                        continue;
-                    count++;
-                }
-                return count;
+                membersRx[i] = members[i];
             }
         }
 
         public bool Validate()
         {
-            return m_members.Count > 0;
+            return membersRx.Count(arty => arty != null) > 0;
         }
     }
 }

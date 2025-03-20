@@ -84,7 +84,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public override async UniTask OpenWithAnimation()
         {
             // 블러 적용
-            await Find<BlurPopup>().OpenWithAnimation();
+            BlurPopup blurPopup = Find<BlurPopup>();
+            blurPopup.transform.SetSiblingIndex(transform.GetSiblingIndex() - 1);
+            await blurPopup.OpenWithAnimation();
             
             base.OpenWithAnimation();
             
@@ -117,16 +119,15 @@ namespace Mathlife.ProjectL.Gameplay.UI
             closeTween.Restart();
             await closeTween.AwaitForComplete();
             
+            // 블러 제거
             await Find<BlurPopup>().CloseWithAnimation();
+            
             base.CloseWithAnimation();
         }
 
         // 이벤트 구독 콜백
         private void OnClickOKButton(Unit _)
         {
-            // BatteryPage.SelectedArty
-            //     .Equip(m_slotType, selectedMechPart);
-
             MechPartModel mechPart = mechPartList[selectedIndexRx.Value];
             ArtyPage.SelectedArty.Equip(slotType, mechPart);
             

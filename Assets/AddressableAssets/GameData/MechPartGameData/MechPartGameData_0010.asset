@@ -32,4 +32,4 @@ MonoBehaviour:
     maxHp: 0
     atk: 0
     def: 0
-    spd: 30
+    mob: 30
