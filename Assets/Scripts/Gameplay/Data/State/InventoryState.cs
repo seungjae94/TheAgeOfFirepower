@@ -152,21 +152,5 @@ namespace Mathlife.ProjectL.Gameplay
                 .ThenBy(equip => equip.Id)
                 .ToList();
         }
-
-        //public bool RemoveArtifact(EEquipmentId id)
-        //{
-        //    EquipmentModel artifact = m_artifacts.Where(artifact =>
-        //    {
-        //        return artifact.artifactId == id && artifact.owner == null;
-        //    }).First();
-
-        //    if (artifact == null)
-        //    {
-        //        return false;
-        //    }
-
-        //    m_artifacts.Remove(artifact);
-        //    return true;
-        //}
     }
 }

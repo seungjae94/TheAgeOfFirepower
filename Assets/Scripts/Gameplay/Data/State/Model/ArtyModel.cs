@@ -94,6 +94,9 @@ namespace Mathlife.ProjectL.Gameplay
                 Debug.LogError($"[ArtyRosterState] 슬롯 {slotType}에 {mechPart.Type} 타입의 부품을 장착하려고 합니다.");
                 return;
             }
+            
+            // 장착 중이던 부품이 있다면 해제
+            UnEquip(slotType);
 
             // 주인 변경
             mechPart.Owner.Value?.UnEquip(slotType);
@@ -117,7 +120,6 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void UnEquip(EMechPartType slotType)
         {
-            // 이미 부품을 장착하고 있지 않은 상태
             if (mechPartSlotsRx[slotType] == null)
                 return;
 
