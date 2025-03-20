@@ -84,7 +84,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             {
                 ownerViewGameObject.SetActive(false);
             }
-            descriptionText.text = mechPart.Description;
+            descriptionText.text = mechPart.Stat.Description;
         }
 
         public override void Clear()

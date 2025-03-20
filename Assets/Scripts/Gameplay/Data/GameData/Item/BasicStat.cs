@@ -23,5 +23,18 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelWidth(100)]
         [LabelText("스피드")]
         public int mob;
+
+        public string Description
+        {
+            get
+            {
+                string description = string.Empty;
+                description += (maxHp > 0) ? $"내구력 + {maxHp}\n" :  string.Empty;
+                description += (atk > 0) ? $"공격력 + {atk}\n" :  string.Empty;
+                description += (def > 0) ? $"방어력 + {def}\n" :  string.Empty;
+                description += (mob > 0) ? $"기동력 + {mob}\n" :  string.Empty;
+                return description;
+            }
+        }
     }
 }
