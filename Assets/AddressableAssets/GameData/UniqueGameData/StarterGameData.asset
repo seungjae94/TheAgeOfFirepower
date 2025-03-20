@@ -112,4 +112,20 @@ MonoBehaviour:
     barrel: {fileID: 0}
     armor: {fileID: 0}
     engine: {fileID: 0}
-  editorStarterBackupMechParts: []
+  editorStarterBackupMechParts:
+  - mechPart: {fileID: 11400000, guid: 426dcd72f60b7e44abf715e72fb5ade8, type: 2}
+    count: 5
+  - mechPart: {fileID: 11400000, guid: 4cbf4f43070fb62488f318108148ef5c, type: 2}
+    count: 5
+  - mechPart: {fileID: 11400000, guid: d7cdf2582d10f8042b8c0426bc8e3da2, type: 2}
+    count: 5
+  - mechPart: {fileID: 11400000, guid: 86b245a07b003d54d9b53a3dd4a9fca6, type: 2}
+    count: 5
+  - mechPart: {fileID: 11400000, guid: cd87f1b0da71ecf409302f2ff6d745bb, type: 2}
+    count: 3
+  - mechPart: {fileID: 11400000, guid: 2e0e6f9d95665e649accd11f8d19ddcf, type: 2}
+    count: 5
+  - mechPart: {fileID: 11400000, guid: 8ab59246e94d5ad4092310afbeb822fa, type: 2}
+    count: 5
+  - mechPart: {fileID: 11400000, guid: 0c922191370f81148804976b3c32fbe6, type: 2}
+    count: 20

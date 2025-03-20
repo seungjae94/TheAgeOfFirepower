@@ -37,7 +37,7 @@ namespace Mathlife.ProjectL.Gameplay
             throw new NotImplementedException();
         }
 
-        void LoadFromSaveFile()
+        private void LoadFromSaveFile()
         {
             goldRx.Value = SaveDataManager.inventory.gold;
 
@@ -47,7 +47,7 @@ namespace Mathlife.ProjectL.Gameplay
             }
         }
 
-        void LoadFromStarterData()
+        private void LoadFromStarterData()
         {
             StarterGameData starter = GameDataLoader.GetStarterData();
 
@@ -120,10 +120,14 @@ namespace Mathlife.ProjectL.Gameplay
         // 부품
         private readonly ReactiveDictionary<EMechPartType, List<MechPartModel>> mechPartInventory = new();
         
-        public List<MechPartModel> GetSortedEquipmentList(EMechPartType type)
+        public List<MechPartModel> GetSortedMechPartList(EMechPartType type, Func<MechPartModel, bool> excludeFilter = null)
         {
+            excludeFilter ??= (mechPart) => false;
+            
             SortMechPartList(type);
-            return mechPartInventory[type];
+            return mechPartInventory[type]
+                .Where((mechPart) => excludeFilter(mechPart) == false)
+                .ToList();
         }
 
         public MechPartModel FindBackupMechPart(EMechPartType type, int id)
@@ -141,15 +145,10 @@ namespace Mathlife.ProjectL.Gameplay
             return mechPart;
         }
 
-        void SortMechPartList(EMechPartType type)
+        private void SortMechPartList(EMechPartType type)
         {
             mechPartInventory[type] = mechPartInventory[type]
-                .OrderBy(equip =>
-                {
-                    if (equip.Owner != null)
-                        return equip.Owner.Value.Id;
-                    return Int32.MaxValue;
-                })
+                .OrderBy(mechPart => mechPart.Owner.Value?.Id ?? Int32.MaxValue)
                 .ThenBy(equip => equip.Id)
                 .ToList();
         }

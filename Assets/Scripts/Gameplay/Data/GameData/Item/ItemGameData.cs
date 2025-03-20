@@ -25,7 +25,7 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 EItemRarity.N => "GradientN",
                 EItemRarity.R => "GradientR",
-                EItemRarity.SR => "GradientST",
+                EItemRarity.SR => "GradientSR",
                 EItemRarity.SSR => "GradientSSR",
                 _ => throw new ArgumentOutOfRangeException(nameof(rarity), rarity, null)
             };

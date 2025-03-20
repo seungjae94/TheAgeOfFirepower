@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Utils;
 using TMPro;
@@ -6,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using DG.Tweening;
+using Mathlife.ProjectL.Gameplay.UI.ArtyPagePopup;
 using UnityEngine.Serialization;
 
 namespace Mathlife.ProjectL.Gameplay.UI
@@ -36,6 +38,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         [SerializeField]
         private RectTransform windowTransform;
+
+        [SerializeField]
+        private ArtyPageMechPartChangeScrollView scrollView;
         
         // Field
         private Tween openTween;
@@ -43,8 +48,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private EMechPartType slotType = EMechPartType.Barrel;
 
         private readonly CompositeDisposable disposables = new ();
-        
-        MechPartModel selectedMechPart = null;
+
+        public readonly ReactiveProperty<int> selectedIndexRx = new(0);
+        private List<MechPartModel> mechPartList;
 
         // 이벤트 함수
         public void Setup(EMechPartType pSlotType)
@@ -78,7 +84,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public override async UniTask OpenWithAnimation()
         {
             base.OpenWithAnimation();
-
+            
+            // 뷰 초기화
+            selectedIndexRx.Value = 0;
+            InitializeView();
+            
             // 이벤트 구독
             okButton.OnClickAsObservable()
                 .Subscribe(OnClickOKButton)
@@ -88,8 +98,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .Subscribe(OnClickCancelButton)
                 .AddTo(disposables);
             
-            // 뷰 초기화
-            InitializeView();
+            selectedIndexRx
+                .Subscribe(OnSelectedIndexChanged)
+                .AddTo(disposables);
             
             // 애니메이션
             openTween.Restart();
@@ -106,12 +117,15 @@ namespace Mathlife.ProjectL.Gameplay.UI
             base.CloseWithAnimation();
         }
 
-        // 유저 이벤트 처리
+        // 이벤트 구독 콜백
         private void OnClickOKButton(Unit _)
         {
             // BatteryPage.SelectedArty
             //     .Equip(m_slotType, selectedMechPart);
 
+            MechPartModel mechPart = mechPartList[selectedIndexRx.Value];
+            ArtyPage.SelectedArty.Equip(slotType, mechPart);
+            
             CloseWithAnimation().Forget();
         }
 
@@ -120,13 +134,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
             CloseWithAnimation().Forget();
         }
 
-        // void OnClickUnequipButton(Unit _)
-        // {
-        //     selectedMechPart = null;
-        //
-        //     UpdateSelectedEquipmentView();
-        //     UpdateFlex();
-        // }
+        private void OnSelectedIndexChanged(int selectedIndex)
+        {
+            int targetIndex = selectedIndex < 0 ? 0 : selectedIndex;
+
+            if (targetIndex >= mechPartList.Count)
+                return;
+            
+            selectedMechPartView.Setup(mechPartList[targetIndex]);
+            selectedMechPartView.Draw();
+        }
 
         // 뷰 업데이트
         private void InitializeView()
@@ -137,64 +154,26 @@ namespace Mathlife.ProjectL.Gameplay.UI
             currentMechPartView.Setup(currentMechPart, "부품을 장착하지 않았습니다.");
             currentMechPartView.Draw();
             
-            selectedMechPartView.Setup(null);
-            selectedMechPartView.Draw();
-        }
-
-        void UpdateSelectedEquipmentView()
-        {
-            // string equipTypeString = EquipmentTypeToString(slotType);
-            //
-            // if (selectedMechPart == null)
-            // {
-            //     selectedMechPartIcon.enabled = false;
-            //     selectedMechPartIcon.sprite = null;
-            //     selectedMechPartNameText.text = "";
-            //     selectedMechPartDescriptionText.text = $"<style=\"WarningPrimaryColor\">{equipTypeString}�� �������� �ʽ��ϴ�.</style>";
-            // }
-            // else
-            // {
-            //     selectedMechPartIcon.enabled = true;
-            //     selectedMechPartIcon.sprite = selectedMechPart.Icon;
-            //     selectedMechPartNameText.text = selectedMechPart.DisplayName;
-            //
-            //     if (selectedMechPart.Owner != null)
-            //         selectedMechPartDescriptionText.text = $"<style=\"NoticePrimaryColor\">{selectedMechPart.Owner.Value.DisplayName} ���� ��</style>\n";
-            //     else
-            //         selectedMechPartDescriptionText.text = "";
-            //
-            //     selectedMechPartDescriptionText.text += selectedMechPart.Description;
-            // }
-        }
-
-        void UpdateFlex()
-        {
-            // var itemDatas = inventoryState
-            //         .GetSortedEquipmentList(m_slotType)
-            //         .Select(item => new InventoryFlexItemData(item, item == m_selectedEquipment))
-            //         .ToList();
-            //
-            // m_flex.Draw(itemDatas, OnClickFlexItem);
+            // 스크롤 뷰 초기화
+            InitializeScrollView();
         }
         
-        // public UniTask Show(EMechPartType slotType)
-        // {
-        //     this.slotType = slotType;
-        //
-        //     MechPartModel currentMechPart = BatteryPage.SelectedArty.GetMechPartAtSlot(slotType);
-        //     selectedMechPart = currentMechPart;
-        //
-        //     UpdateCurrentEquipmentView(currentMechPart);
-        //     UpdateSelectedEquipmentView();
-        //     UpdateFlex();
-        //     
-        // }
+        // 뷰 업데이트
+        private void InitializeScrollView()
+        {
+            MechPartModel currentMechPart = ArtyPage.SelectedArty.mechPartSlotsRx[slotType];
+            bool ExcludeFilter(MechPartModel mechPart) => mechPart == currentMechPart;
 
-        // void OnClickFlexItem(MechPartModel mechPart)
-        // {
-        //     selectedMechPart = mechPart;
-        //     UpdateSelectedEquipmentView();
-        //     UpdateFlex();
-        // }
+            mechPartList = InventoryState
+                .GetSortedMechPartList(slotType, ExcludeFilter);
+            mechPartList.Insert(0, null);
+            
+            var items = mechPartList
+                .Select(mechPart => new ItemData() { mechPart = mechPart })
+                .ToList();
+
+            scrollView.UpdateContents(items);
+            scrollView.SelectCell(0);
+        }
     }
 }

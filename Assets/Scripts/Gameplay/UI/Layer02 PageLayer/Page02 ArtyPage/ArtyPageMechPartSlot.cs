@@ -66,8 +66,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClick(Unit _)
         {
-            Debug.Log($"{slotType} 슬롯 클릭. 아이템 = {ArtyPage.SelectedArty.mechPartSlotsRx[slotType]?.DisplayName}");
-            
             ArtyPageMechPartChangePopup popup = Presenter.Find<ArtyPageMechPartChangePopup>();
             popup.Setup(slotType);
             popup.OpenWithAnimation().Forget();
