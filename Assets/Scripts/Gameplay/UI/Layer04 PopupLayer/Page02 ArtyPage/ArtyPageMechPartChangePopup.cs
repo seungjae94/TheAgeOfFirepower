@@ -83,6 +83,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         public override async UniTask OpenWithAnimation()
         {
+            // 블러 적용
+            await Find<BlurPopup>().OpenWithAnimation();
+            
             base.OpenWithAnimation();
             
             // 뷰 초기화
@@ -114,6 +117,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             closeTween.Restart();
             await closeTween.AwaitForComplete();
             
+            await Find<BlurPopup>().CloseWithAnimation();
             base.CloseWithAnimation();
         }
 

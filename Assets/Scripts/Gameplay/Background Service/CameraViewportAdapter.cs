@@ -48,14 +48,13 @@ namespace Mathlife.ProjectL.Gameplay
             // 스크린 aspect 저장
             prevScreenAspect = screenAspect;
 
-            //await UniTask.WaitForEndOfFrame();
-            //await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-            //await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-
             await UniTask.WaitForEndOfFrame(this);
             
             // Safe Area 적용
-            ApplySafeArea();
+            if (targetCamera.CompareTag("MainCamera"))
+            {
+                ApplySafeArea();
+            }
         }
 
         // 스크린 aspect가 16:9 미만일 경우, 위 아래에 레터 박스를 그려서 카메라 aspect를 16:9로 고정한다.
