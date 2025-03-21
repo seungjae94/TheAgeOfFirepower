@@ -11,22 +11,34 @@ namespace Mathlife.ProjectL.Gameplay.UI
     {
         public override string PageName => "인벤토리";
         
-        LobbySceneGameMode lobbySceneGameMode;
-        InventoryState inventoryState;
-
-        [SerializeField] Button m_navBackButton;
-        [SerializeField] CurrencyBar m_ingameCurrencyBar;
-        [SerializeField] Transform m_tabMenuBar;
-        //List<TabMenu> m_tabMenus = new();
-        int m_selectedTab = 0;
-        //[SerializeField] InventoryFlex m_flex;
-        [SerializeField] Image m_selectedEquipmentIcon;
-        [SerializeField] TMP_Text m_selectedEquipmentName;
-        [SerializeField] TMP_Text m_selectedEquipmentDescription;
-        MechPartModel selectedMechPart = null;
+        // View
+        [SerializeField]
+        private InventoryTabMenuBar tabMenuBar;
+        
+        // TODO: InventoryPageMechPartTabView
+        // TODO: InventoryPageOtherItemView
+        
+        // Field
+        // TODO: 선택된 탭 상태 관리
+        
         
         protected override void OnOpen()
         {
+            // Overlay
+            NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
+            navBackOverlay.Activate();
+            
+            // 뷰 초기화
+            var inventoryTabMenuItemDataList = new List<InventoryTabMenuItemData>()
+            {
+                new InventoryTabMenuItemData() { displayName = "부품" },
+                new InventoryTabMenuItemData() { displayName = "소모품" },
+                new InventoryTabMenuItemData() { displayName = "전투" },
+            };
+            
+            tabMenuBar.Setup(inventoryTabMenuItemDataList);
+            tabMenuBar.SelectCell(0);
+            
             // OnSelectTabMenu(0);
             // OnClickFlexItem(null);
             //
@@ -48,7 +60,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         protected override void OnClose()
         {
-            throw new System.NotImplementedException();
+            
         }
         
         // 이벤트 구독 콜백
@@ -63,16 +75,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // UpdateFlex();
             // UpdateSelectedEquipmentView();
         }
-
-        void OnClickFlexItem(MechPartModel mechPart)
-        {
-            selectedMechPart = mechPart;
-
-            UpdateSelectedEquipmentView();
-            UpdateFlex();
-        }
-
-        // �� ������Ʈ
+        
         void UpdateFlex()
         {
             // var itemDatas = inventoryState
@@ -81,32 +84,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             //         .ToList();
             //
             // m_flex.Draw(itemDatas, OnClickFlexItem);
-        }
-
-        void UpdateSelectedEquipmentView()
-        {
-            if (selectedMechPart == null)
-            {
-                m_selectedEquipmentIcon.enabled = false;
-                m_selectedEquipmentIcon.sprite = null;
-
-                m_selectedEquipmentName.text = "";
-
-                m_selectedEquipmentDescription.text = $"<style=\"WarningPrimaryColor\">장비 선택 X.</style>";
-            }
-            else
-            {
-                m_selectedEquipmentIcon.enabled = true;
-                m_selectedEquipmentIcon.sprite = selectedMechPart.Icon;
-
-                m_selectedEquipmentName.text = selectedMechPart.DisplayName;
-
-                if (selectedMechPart.Owner != null)
-                    m_selectedEquipmentDescription.text = $"<style=\"NoticePrimaryColor\">{selectedMechPart.Owner.Value.DisplayName} 장착 중</style>\n";
-                else
-                    m_selectedEquipmentDescription.text = "";
-                m_selectedEquipmentDescription.text += selectedMechPart.Description;
-            }
         }
     }
 }

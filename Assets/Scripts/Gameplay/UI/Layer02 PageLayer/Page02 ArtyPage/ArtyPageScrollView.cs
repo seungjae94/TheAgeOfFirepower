@@ -12,7 +12,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
         public ArtyModel arty;
     }
 
-    public class Context : FancyGridViewContext
+    public class Context : FancyScrollRectContext
     {
         public float cellInterval = 1f;
         public float scrollOffset = 1f;

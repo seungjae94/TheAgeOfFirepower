@@ -14,12 +14,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // Alias
         private static ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
         
-        //[SerializeField] CharacterBasicInfoPresenter m_basicInfoPresenter;
-        //[SerializeField] CharacterStatPresenter m_statPresenter;
-        //[SerializeField] List<CharacterEquipmentSlotPresenter> m_artifactSlotPresenters;
-
-        //[field: SerializeField] public EquipmentChangeModal equipmentChangeModal { get; private set; }
-
         // Field
         public readonly ReactiveProperty<int> selectedArtyIndexRx = new(0);
 
@@ -68,9 +62,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         protected override void OnClose()
         {
-            NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
-            navBackOverlay.Deactivate();
-            
             // 뷰 정리
             artyPageSelectedArtyView.Clear();
         }
