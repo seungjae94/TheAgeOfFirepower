@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 
@@ -20,5 +21,18 @@ namespace Mathlife.ProjectL.Gameplay.UI
     
     public class InventoryTabMenuBar : TabMenuBar<InventoryTabMenuItemData, TabMenuContext>
     {
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            onSelectCellRx
+                .Subscribe(OnSelectCell)
+                .AddTo(gameObject);
+        }
+
+        private void OnSelectCell(TabMenuCellData<InventoryTabMenuItemData> cellData)
+        {
+            Presenter.Find<InventoryPage>().selectedTabIndexRx.Value = cellData.index;
+        }
     }
 }

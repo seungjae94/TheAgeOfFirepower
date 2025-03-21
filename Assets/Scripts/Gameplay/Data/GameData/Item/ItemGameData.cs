@@ -35,8 +35,8 @@ namespace Mathlife.ProjectL.Gameplay
     public enum EItemType
     {
         MechPart,
-        Consumable,
-        CombatKit
+        ConsumableItem,
+        BattleItem
     }
 
     public abstract class ItemGameData : GameData

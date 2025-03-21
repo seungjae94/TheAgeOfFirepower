@@ -8,6 +8,6 @@ namespace Mathlife.ProjectL.Gameplay
     {
         [ShowInInspector]
         [ReadOnly]
-        public override EItemType ItemType => EItemType.Consumable;
+        public override EItemType ItemType => EItemType.ConsumableItem;
     }
 }

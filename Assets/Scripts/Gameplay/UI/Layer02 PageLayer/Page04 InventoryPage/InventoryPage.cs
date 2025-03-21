@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -15,12 +16,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField]
         private InventoryTabMenuBar tabMenuBar;
         
-        // TODO: InventoryPageMechPartTabView
-        // TODO: InventoryPageOtherItemView
+        [SerializeField]
+        private InventoryMechPartTabView mechPartTabView;
+        
+        [SerializeField]
+        private InventoryOtherItemTabView otherItemTabView;
         
         // Field
         // TODO: 선택된 탭 상태 관리
-        
+        public readonly ReactiveProperty<int> selectedTabIndexRx = new(0);
+        private readonly CompositeDisposable disposables = new();
         
         protected override void OnOpen()
         {
@@ -29,6 +34,15 @@ namespace Mathlife.ProjectL.Gameplay.UI
             navBackOverlay.Activate();
             
             // 뷰 초기화
+            mechPartTabView.gameObject.SetActive(false);
+            otherItemTabView.gameObject.SetActive(false);
+            
+            selectedTabIndexRx.Value = 0;
+            selectedTabIndexRx
+                .DistinctUntilChanged()
+                .Subscribe(OnSelectTab)
+                .AddTo(disposables);
+            
             var inventoryTabMenuItemDataList = new List<InventoryTabMenuItemData>()
             {
                 new InventoryTabMenuItemData() { displayName = "부품" },
@@ -38,52 +52,35 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             tabMenuBar.Setup(inventoryTabMenuItemDataList);
             tabMenuBar.SelectCell(0);
-            
-            // OnSelectTabMenu(0);
-            // OnClickFlexItem(null);
-            //
-            // m_tabMenus[0].Initialize(0, OnSelectTabMenu);
-            // m_tabMenus[0].Select();
-            //
-            // for (int i = 1; i < m_tabMenus.Count; ++i)
-            // {
-            //     m_tabMenus[i].Initialize(i, OnSelectTabMenu);
-            //     m_tabMenus[i].Default();
-            // }
-
-            //m_ingameCurrencyBar.Initialize();
-        
-            // m_navBackButton.OnClickAsObservable()
-            //     .Subscribe(_ => lobbySceneGameMode.NavigateBack())
-            //     .AddTo(gameObject);
         }
 
         protected override void OnClose()
         {
+            if (false == mechPartTabView.IsClear)
+                mechPartTabView.Clear();
+            if (false == otherItemTabView.IsClear)
+                otherItemTabView.Clear();
             
+            disposables.Clear();
         }
-        
+
+        private void OnDestroy()
+        {
+            disposables.Dispose();
+        }
+
         // 이벤트 구독 콜백
-        void OnSelectTabMenu(int index)
+        private void OnSelectTab(int index)
         {
-            // m_tabMenus[m_selectedTab].Default();
-            // m_tabMenus[index].Select();
-            //
-            // m_selectedTab = index;
-            // m_selectedEquipment = null;
-            //
-            // UpdateFlex();
-            // UpdateSelectedEquipmentView();
-        }
-        
-        void UpdateFlex()
-        {
-            // var itemDatas = inventoryState
-            //         .GetSortedEquipmentList((EEquipmentType)m_selectedTab)
-            //         .Select(item => new InventoryFlexItemData(item, item == m_selectedEquipment))
-            //         .ToList();
-            //
-            // m_flex.Draw(itemDatas, OnClickFlexItem);
+            if (false == mechPartTabView.IsClear)
+                mechPartTabView.Clear();
+            if (false == otherItemTabView.IsClear)
+                otherItemTabView.Clear();
+
+            if (index == 0)
+                mechPartTabView.Draw();
+            else
+                otherItemTabView.Draw();
         }
     }
 }

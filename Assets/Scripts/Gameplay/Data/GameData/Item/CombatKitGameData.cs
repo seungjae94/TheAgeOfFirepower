@@ -8,6 +8,6 @@ namespace Mathlife.ProjectL.Gameplay
     {
         [ShowInInspector]
         [ReadOnly]
-        public override EItemType ItemType => EItemType.CombatKit;
+        public override EItemType ItemType => EItemType.BattleItem;
     }
 }

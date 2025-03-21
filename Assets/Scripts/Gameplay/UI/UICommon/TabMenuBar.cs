@@ -25,7 +25,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         where TContext : TabMenuContext, new() 
         where TItemData : new()
     {
-        public readonly Subject<TabMenuCellData<TItemData>> onSelectCellRx = new();
+        protected readonly Subject<TabMenuCellData<TItemData>> onSelectCellRx = new();
 
         [SerializeField]
         protected GameObject cellPrefab;
