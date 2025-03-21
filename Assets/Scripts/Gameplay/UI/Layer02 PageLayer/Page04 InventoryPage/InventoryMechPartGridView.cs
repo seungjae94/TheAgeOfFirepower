@@ -23,7 +23,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         protected override void OnSelectCell(SimpleGridViewSelectionData<MechPartModel> selectionData)
         {
-            //tabView.selected
+            tabView.selectedIndexRx.Value = selectionData.index;
         }
     }
 }

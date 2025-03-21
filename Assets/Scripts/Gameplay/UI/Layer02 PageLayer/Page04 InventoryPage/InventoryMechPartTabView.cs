@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
@@ -12,11 +13,14 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // View
         [SerializeField]
         private InventoryMechPartGridView gridView;
-        // TODO: InventorySelectedMechPartView
+        
+        [SerializeField]
+        private InventorySelectedMechPartView selectedMechPartView;
         
         // Field
-        private readonly ReactiveProperty<int> selectedIndexRx = new(-1);
+        public readonly ReactiveProperty<int> selectedIndexRx = new(-1);
         private readonly CompositeDisposable disposables = new();
+        public List<MechPartModel> mechParts;
         
         public override void Draw()
         {
@@ -30,10 +34,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(disposables);
             
             // 뷰 초기화
-            var items = InventoryState.GetSortedMechPartList();
+            mechParts = InventoryState.GetSortedMechPartList();
             
             gridView.Setup(this);
-            gridView.UpdateContents(items);
+            gridView.UpdateContents(mechParts);
             gridView.SelectCell(-1);
         }
         
@@ -52,7 +56,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnSelectCell(int index)
         {
-            // TODO: InventorySelectedMechPartView Re-draw
+            selectedMechPartView.Clear();
+            selectedMechPartView.Setup(index >= 0 ? mechParts[index] : null);
+            selectedMechPartView.Draw();
         }
     }
 }
