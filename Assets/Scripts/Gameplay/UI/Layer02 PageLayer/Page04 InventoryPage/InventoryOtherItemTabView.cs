@@ -26,10 +26,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 case EItemType.MechPart:
                     throw new ArgumentOutOfRangeException("");
                 case EItemType.ConsumableItem:
-                    Debug.Log("소모품");
+                    //Debug.Log("소모품");
                     break;
                 case EItemType.BattleItem:
-                    Debug.Log("전투");
+                    //Debug.Log("전투");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("");

@@ -19,7 +19,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         }
     }
     
-    public class InventoryTabMenuBar : TabMenuBar<InventoryTabMenuItemData, TabMenuContext>
+    public class InventoryTabMenuBar : SimpleScrollRect<InventoryTabMenuItemData, SimpleScrollRectContext>
     {
         protected override void Initialize()
         {
@@ -30,7 +30,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(gameObject);
         }
 
-        private void OnSelectCell(TabMenuCellData<InventoryTabMenuItemData> cellData)
+        private void OnSelectCell(SimpleScrollRectSelectionData<InventoryTabMenuItemData> cellData)
         {
             Presenter.Find<InventoryPage>().selectedTabIndexRx.Value = cellData.index;
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class InventoryTabMenuBarCell : TabMenuBarCell<InventoryTabMenuItemData, TabMenuContext>
+    public class InventoryTabMenuBarCell : SimpleScrollRectCell<InventoryTabMenuItemData, SimpleScrollRectContext>
     {
         [SerializeField]
         public TextMeshProUGUI tabMenuNameText;

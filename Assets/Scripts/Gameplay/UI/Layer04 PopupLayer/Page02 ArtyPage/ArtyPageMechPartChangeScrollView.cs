@@ -21,6 +21,10 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPagePopup
         // Alias
         ArtyPageMechPartChangePopup Popup => Presenter.Find<ArtyPageMechPartChangePopup>();
         
+        // Field
+        [SerializeField]
+        ArtyPageMechPartChangeScrollViewCell cellPrefab;
+        
         // Override
         class CellGroup : DefaultCellGroup
         {
@@ -49,9 +53,5 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPagePopup
             // 팝업 뷰 업데이트
             Popup.selectedIndexRx.Value = index;
         }
-        
-        // Field
-        [SerializeField]
-        ArtyPageMechPartChangeScrollViewCell cellPrefab;
     }
 }

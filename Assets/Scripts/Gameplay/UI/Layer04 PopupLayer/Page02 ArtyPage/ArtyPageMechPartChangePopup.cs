@@ -158,7 +158,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             bool ExcludeFilter(MechPartModel mechPart) => mechPart == currentMechPart;
 
             mechPartList = InventoryState
-                .GetSortedMechPartList(slotType, ExcludeFilter);
+                .GetSortedMechPartListOfType(slotType, ExcludeFilter);
 
             if (currentMechPart != null)
                 mechPartList.Insert(0, currentMechPart);

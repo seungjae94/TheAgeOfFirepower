@@ -120,13 +120,28 @@ namespace Mathlife.ProjectL.Gameplay
         // 부품
         private readonly ReactiveDictionary<EMechPartType, List<MechPartModel>> mechPartInventory = new();
         
-        public List<MechPartModel> GetSortedMechPartList(EMechPartType type, Func<MechPartModel, bool> excludeFilter = null)
+        public List<MechPartModel> GetSortedMechPartListOfType(EMechPartType type, Func<MechPartModel, bool> excludeFilter = null)
         {
             excludeFilter ??= (mechPart) => false;
             
             SortMechPartList(type);
             return mechPartInventory[type]
                 .Where((mechPart) => excludeFilter(mechPart) == false)
+                .ToList();
+        }
+        
+        public List<MechPartModel> GetSortedMechPartList(Func<MechPartModel, bool> excludeFilter = null)
+        {
+            excludeFilter ??= (mechPart) => false;
+            
+            return mechPartInventory[EMechPartType.Barrel]
+                .Concat(mechPartInventory[EMechPartType.Armor])
+                .Concat(mechPartInventory[EMechPartType.Engine])
+                .Where(mechPart => excludeFilter(mechPart) == false)
+                .OrderBy(mechPart => (mechPart.Owner.Value != null) ? 0 : 1)
+                .ThenByDescending(mechPart => mechPart.Rarity)
+                .ThenBy(mechPart => mechPart.Type)
+                .ThenBy(mechPart => mechPart.Id)
                 .ToList();
         }
 
@@ -149,8 +164,8 @@ namespace Mathlife.ProjectL.Gameplay
         {
             mechPartInventory[type] = mechPartInventory[type]
                 .OrderBy(mechPart => (mechPart.Owner.Value != null) ? 0 : 1)
-                .ThenByDescending(equip => equip.Rarity)
-                .ThenBy(equip => equip.Id)
+                .ThenByDescending(mechPart => mechPart.Rarity)
+                .ThenBy(mechPart => mechPart.Id)
                 .ToList();
         }
     }
