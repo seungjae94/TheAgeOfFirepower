@@ -88,21 +88,23 @@ namespace Mathlife.ProjectL.Gameplay.UI
                     break;
                 case 1:
                     itemTabView.gameObject.SetActive(true);
-                    itemTabView.UpdateContents(shopGameData.shopBarrels.Select<MechPartGameData, ItemGameData>(mechPart => mechPart).ToList());
+                    itemTabView.UpdateContents(shopGameData.shopBarrels.Cast<ItemGameData>().ToList());
                     break;
                 case 2:
                     itemTabView.gameObject.SetActive(true);
-                    itemTabView.UpdateContents(shopGameData.shopArmors.Select<MechPartGameData, ItemGameData>(mechPart => mechPart).ToList());
+                    itemTabView.UpdateContents(shopGameData.shopArmors.Cast<ItemGameData>().ToList());
                     break;
                 case 3:
                     itemTabView.gameObject.SetActive(true);
-                    itemTabView.UpdateContents(shopGameData.shopEngines.Select<MechPartGameData, ItemGameData>(mechPart => mechPart).ToList());
+                    itemTabView.UpdateContents(shopGameData.shopEngines.Cast<ItemGameData>().ToList());
                     break;
                 case 4:
-                    //itemTabView.gameObject.SetActive(true);
+                    itemTabView.gameObject.SetActive(true);
+                    itemTabView.UpdateContents(shopGameData.shopMaterialItems.Cast<ItemGameData>().ToList());
                     break;
                 case 5:
-                    //itemTabView.gameObject.SetActive(true);
+                    itemTabView.gameObject.SetActive(true);
+                    itemTabView.UpdateContents(shopGameData.shopBattleItems.Cast<ItemGameData>().ToList());
                     break;
             }
         }

@@ -27,6 +27,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private TextMeshProUGUI descriptionText;
 
         [SerializeField]
+        private TextMeshProUGUI priceText;
+        
+        [SerializeField]
         private Button buyButton;
         
         // Field
@@ -54,6 +57,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
             {
                 descriptionText.text = gameData.description;
             }
+
+            priceText.text = gameData.shopPrice.ToString();
             
             disposables.Clear();
             buyButton.OnClickAsObservable()

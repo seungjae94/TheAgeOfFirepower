@@ -661,14 +661,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cc4f35b1bdf4bdb8e269f6358076e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellInterval: 0.20652172
-  scrollOffset: 0.20652172
+  cellInterval: 0.21925132
+  scrollOffset: 0.21925132
   loop: 0
   cellContainer: {fileID: 253175382}
   reuseCellMarginCount: 0
-  paddingHead: 30
-  paddingTail: 30
-  spacing: 60
+  paddingHead: 90
+  paddingTail: 90
+  spacing: 90
   cellPrefab: {fileID: 4185519688629269451, guid: ed8a32f95bf4dfe4a808e24d60211a67, type: 3}
   cellSize: 320
 --- !u!114 &126215752
