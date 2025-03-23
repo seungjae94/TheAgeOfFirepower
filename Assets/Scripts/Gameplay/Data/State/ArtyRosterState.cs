@@ -162,10 +162,10 @@ namespace Mathlife.ProjectL.Gameplay
             Battery.Rebuild(members);
         }
 
-        public ArtyModel Add(int id, int level = 1, int totalExp = 0)
+        public ArtyModel Add(ArtyGameData artyGameData, int level = 1, int totalExp = 0)
         {
             ArtyModel arty = new(
-                GameDataLoader.GetArtyData(id),
+                artyGameData,
                 GameDataLoader.GetExpData(),
                 level, totalExp);
             artyList.Add(arty);

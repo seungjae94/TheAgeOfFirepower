@@ -83,36 +83,6 @@ MonoBehaviour:
     barrel: {fileID: 11400000, guid: 426dcd72f60b7e44abf715e72fb5ade8, type: 2}
     armor: {fileID: 11400000, guid: d7cdf2582d10f8042b8c0426bc8e3da2, type: 2}
     engine: {fileID: 11400000, guid: d679ad340a5c9ce439639afd92f4eb11, type: 2}
-  - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 2
-    currentLevelExp: 5
-    barrel: {fileID: 0}
-    armor: {fileID: 0}
-    engine: {fileID: 0}
-  - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 1
-    currentLevelExp: 0
-    barrel: {fileID: 0}
-    armor: {fileID: 0}
-    engine: {fileID: 0}
-  - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 1
-    currentLevelExp: 0
-    barrel: {fileID: 0}
-    armor: {fileID: 0}
-    engine: {fileID: 0}
-  - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 1
-    currentLevelExp: 0
-    barrel: {fileID: 0}
-    armor: {fileID: 0}
-    engine: {fileID: 0}
-  - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 1
-    currentLevelExp: 0
-    barrel: {fileID: 0}
-    armor: {fileID: 0}
-    engine: {fileID: 0}
   editorStarterBackupMechParts:
   - mechPart: {fileID: 11400000, guid: cd87f1b0da71ecf409302f2ff6d745bb, type: 2}
     count: 3

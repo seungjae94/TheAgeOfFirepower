@@ -13,8 +13,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField]
         private ShopTabMenuBar tabMenuBar;
         
-        //[SerializeField]
-        //private ShopMechPartGridView artyTabView;
+        [SerializeField]
+        private ShopArtyScrollRect artyTabView;
         
         [SerializeField]
         private ShopItemScrollRect itemTabView;
@@ -39,6 +39,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             Find<CurrencyBar>().Activate();
             
             // 뷰 초기화
+            artyTabView.gameObject.SetActive(false);
             itemTabView.gameObject.SetActive(false);
             
             selectedTabIndexRx.Value = 0;
@@ -78,25 +79,32 @@ namespace Mathlife.ProjectL.Gameplay.UI
             {
                 case 0:
                     itemTabView.gameObject.SetActive(false);
+                    artyTabView.gameObject.SetActive(true);
+                    artyTabView.UpdateContents(shopGameData.shopArtyList);
                     break;
                 case 1:
                     itemTabView.gameObject.SetActive(true);
+                    artyTabView.gameObject.SetActive(false);
                     itemTabView.UpdateContents(shopGameData.shopBarrels);
                     break;
                 case 2:
                     itemTabView.gameObject.SetActive(true);
+                    artyTabView.gameObject.SetActive(false);
                     itemTabView.UpdateContents(shopGameData.shopArmors);
                     break;
                 case 3:
                     itemTabView.gameObject.SetActive(true);
+                    artyTabView.gameObject.SetActive(false);
                     itemTabView.UpdateContents(shopGameData.shopEngines);
                     break;
                 case 4:
                     itemTabView.gameObject.SetActive(true);
+                    artyTabView.gameObject.SetActive(false);
                     itemTabView.UpdateContents(shopGameData.shopMaterialItems);
                     break;
                 case 5:
                     itemTabView.gameObject.SetActive(true);
+                    artyTabView.gameObject.SetActive(false);
                     itemTabView.UpdateContents(shopGameData.shopBattleItems);
                     break;
             }

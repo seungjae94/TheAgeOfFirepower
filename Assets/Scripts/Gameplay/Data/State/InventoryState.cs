@@ -111,14 +111,28 @@ namespace Mathlife.ProjectL.Gameplay
             goldRx.Value -= lose;
         }
 
-        public bool CanBuyItem(int price, int amount)
+        public bool CanBuy(int price, int amount)
         {
             return goldRx.Value >= price * amount;
         }
         
+        public bool BuyArty(ShopArtySaleInfo saleInfo)
+        {
+            if (CanBuy(saleInfo.price, saleInfo.amount) == false)
+            {
+                return false;
+            }
+
+            ArtyRosterState roster = GameState.Inst.artyRosterState;
+            roster.Add(saleInfo.arty, 1, 0);
+
+            LoseGold(saleInfo.price * saleInfo.amount);
+            return true;
+        }
+        
         public bool BuyItem(ShopItemSaleInfo saleInfo)
         {
-            if (CanBuyItem(saleInfo.price, saleInfo.amount) == false)
+            if (CanBuy(saleInfo.price, saleInfo.amount) == false)
             {
                 return false;
             }
