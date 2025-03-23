@@ -73,7 +73,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClickBuyButton(Unit _)
         {
-            bool buyResult = InventoryState.BuyMechPart(gameData.id);
+            bool buyResult = InventoryState.BuyItem(gameData);
             
             if (buyResult)
             {

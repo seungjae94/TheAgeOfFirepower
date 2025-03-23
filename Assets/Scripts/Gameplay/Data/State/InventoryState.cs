@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Mathlife.ProjectL.Gameplay.Battle;
 using UniRx;
 using UnityEngine;
 
@@ -50,7 +51,7 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 AddCountableItemStack(EItemType.MaterialItem, itemStack.id, itemStack.amount);
             }
-            
+
             foreach (var itemStack in SaveDataManager.inventory.battleItems)
             {
                 AddCountableItemStack(EItemType.BattleItem, itemStack.id, itemStack.amount);
@@ -62,21 +63,21 @@ namespace Mathlife.ProjectL.Gameplay
             StarterGameData starter = GameDataLoader.GetStarterData();
 
             goldRx.Value = starter.GetStarterGold();
-            
+
             foreach (var batteryMemberPreset in starter.GetStarterBattery())
             {
                 AddMechPart((batteryMemberPreset.barrel != null) ? batteryMemberPreset.barrel.id : -1);
                 AddMechPart((batteryMemberPreset.armor != null) ? batteryMemberPreset.armor.id : -1);
                 AddMechPart((batteryMemberPreset.engine != null) ? batteryMemberPreset.engine.id : -1);
             }
-            
+
             foreach (var rosterMemberPreset in starter.GetStarterBench())
             {
                 AddMechPart((rosterMemberPreset.barrel != null) ? rosterMemberPreset.barrel.id : -1);
                 AddMechPart((rosterMemberPreset.armor != null) ? rosterMemberPreset.armor.id : -1);
                 AddMechPart((rosterMemberPreset.engine != null) ? rosterMemberPreset.engine.id : -1);
             }
-            
+
             foreach (var mechPartStack in starter.GetStarterBackupMechParts())
             {
                 for (int i = 0; i < mechPartStack.count; ++i)
@@ -110,29 +111,34 @@ namespace Mathlife.ProjectL.Gameplay
             goldRx.Value -= lose;
         }
 
-        public bool BuyMechPart(int mechPartId)
+        public bool BuyItem(ItemGameData itemGameData)
         {
-            MechPartGameData mechPartGameData = GameDataLoader.GetMechPartData(mechPartId);
-
-            if (goldRx.Value < mechPartGameData.shopPrice)
+            if (goldRx.Value < itemGameData.shopPrice)
             {
                 return false;
             }
 
-            AddMechPart(mechPartId);
-            LoseGold(mechPartGameData.shopPrice);
-            return true;
-        }
+            switch (itemGameData)
+            {
+                case MechPartGameData mechPartGameData:
+                    AddMechPart(mechPartGameData.id);
+                    break;
+                case MaterialItemGameData materialItemGameData:
+                    AddCountableItemStack(EItemType.MaterialItem, materialItemGameData.id, 1);
+                    break;
+                case BattleItemGameData battleItemGameData:
+                    AddCountableItemStack(EItemType.BattleItem, battleItemGameData.id, 1);
+                    break;
+            }
 
-        public bool SellMechPart(int mechPartId)
-        {
+            LoseGold(itemGameData.shopPrice);
             return true;
         }
 
         // 아이템 관리
         private readonly ReactiveDictionary<EMechPartType, List<MechPartModel>> mechPartInventory = new();
-        private readonly ReactiveCollection<ItemStackModel> materialItemInventory = new();
-        private readonly ReactiveCollection<ItemStackModel> battleItemInventory = new();
+        private readonly ReactiveDictionary<int, ItemStackModel> materialItemInventory = new();
+        private readonly ReactiveDictionary<int, ItemStackModel> battleItemInventory = new();
 
         public List<MechPartModel> GetSortedMechPartListOfType(EMechPartType type,
             Func<MechPartModel, bool> excludeFilter = null)
@@ -171,6 +177,7 @@ namespace Mathlife.ProjectL.Gameplay
             var targetInventory = (itemType == EItemType.MaterialItem) ? materialItemInventory : battleItemInventory;
 
             return targetInventory
+                .Select(kv => kv.Value)
                 .Where(itemStack => excludeFilter(itemStack) == false)
                 .OrderByDescending(itemStack => itemStack.Rarity)
                 .ThenBy(itemStack => itemStack.Id)
@@ -182,7 +189,7 @@ namespace Mathlife.ProjectL.Gameplay
             return mechPartInventory[type].FirstOrDefault(eq => eq.Id == id && eq.Owner.Value == null);
         }
 
-        public MechPartModel AddMechPart(int mechPartId)
+        private MechPartModel AddMechPart(int mechPartId)
         {
             if (mechPartId < 0)
                 return null;
@@ -192,24 +199,37 @@ namespace Mathlife.ProjectL.Gameplay
             return mechPart;
         }
 
-        public ItemStackModel AddCountableItemStack(EItemType itemType, int itemId, int amount)
+        private ItemStackModel AddCountableItemStack(EItemType itemType, int itemId, int amount)
         {
             CountableItemGameData itemGameData = GameDataLoader.GetCountableItemData(itemType, itemId);
             return AddCountableItemStack(itemGameData, amount);
         }
-        
-        public ItemStackModel AddCountableItemStack(CountableItemGameData itemGameData, int amount)
+
+        private ItemStackModel AddCountableItemStack(CountableItemGameData itemGameData, int amount)
         {
             if (itemGameData == null)
                 return null;
 
-            ItemStackModel itemStack = new(itemGameData, amount);
+            ItemStackModel itemStack = null;
             
-            if (itemGameData.ItemType == EItemType.MaterialItem)
-                materialItemInventory.Add(itemStack);
-            else if (itemGameData.ItemType == EItemType.BattleItem)
-                battleItemInventory.Add(itemStack);
-            
+            switch (itemGameData.ItemType)
+            {
+                case EItemType.MaterialItem when materialItemInventory.TryGetValue(itemGameData.id, out itemStack):
+                    itemStack.Add(amount);
+                    return itemStack;
+                case EItemType.MaterialItem:
+                    itemStack = new(itemGameData, amount);
+                    materialItemInventory.Add(itemGameData.id, itemStack);
+                    break;
+                case EItemType.BattleItem when battleItemInventory.TryGetValue(itemGameData.id, out itemStack):
+                    itemStack.Add(amount);
+                    return itemStack;
+                case EItemType.BattleItem:
+                    itemStack = new(itemGameData, amount);
+                    battleItemInventory.Add(itemGameData.id, itemStack);
+                    break;
+            }
+
             return itemStack;
         }
 

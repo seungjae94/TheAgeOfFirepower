@@ -43,5 +43,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 246524f5968dcd9428f7568515044cc9, type: 2}
   shopBattleItems:
   - {fileID: 11400000, guid: 736c025dc6d2b62468610d76110af19f, type: 2}
-  - {fileID: 11400000, guid: 715879cc4e6f0a64e9c528ba65882130, type: 2}
   - {fileID: 11400000, guid: 42ca2c5aa5f94e1458ca29250d31efd3, type: 2}
+  - {fileID: 11400000, guid: 715879cc4e6f0a64e9c528ba65882130, type: 2}

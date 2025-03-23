@@ -37,8 +37,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         protected override void OnOpen()
         {
             // Overlay
-            NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
-            navBackOverlay.Activate();
+            Find<NavigateBackOverlay>().Activate();
+            Find<CurrencyBar>().Activate();
             
             // 뷰 초기화
             itemTabView.gameObject.SetActive(false);
