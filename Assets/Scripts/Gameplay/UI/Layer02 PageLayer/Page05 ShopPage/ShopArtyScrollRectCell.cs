@@ -77,16 +77,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             CurrencyBar currencyBar = Presenter.Find<CurrencyBar>();
             
-            await UniTask.WaitWhile(currencyBar, pCurrencyBar => pCurrencyBar.IsTweening == true);
+            await UniTask.WaitWhile(currencyBar, pCurrencyBar => pCurrencyBar.IsDiamondTweening == true);
             
-            bool canBuy = InventoryState.CanBuy(saleInfo.price, saleInfo.amount);
+            bool canBuy = InventoryState.CanBuyByDiamond(saleInfo.price, saleInfo.amount);
             if (canBuy)
             {
-                long doTarget = InventoryState.goldRx.Value - saleInfo.price;
-                await currencyBar.DOGold(doTarget);
+                long doTarget = InventoryState.diamondRx.Value - saleInfo.price;
+                await currencyBar.DODiamond(doTarget);
 
                 InventoryState.BuyArty(saleInfo);
-                currencyBar.SubscribeGoldChange();
+                currencyBar.SubscribeDiamondChange();
             }
             else
             {

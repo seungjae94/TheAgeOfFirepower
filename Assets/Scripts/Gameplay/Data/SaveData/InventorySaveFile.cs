@@ -16,6 +16,7 @@ namespace Mathlife.ProjectL.Gameplay
     public class InventorySaveFile : SaveFile
     {
         public long gold = 0L;
+        public long diamond = 0L;
         
         public List<int> mechParts = new();
         public List<ItemStackSaveData> materialItems = new();

@@ -41,6 +41,7 @@ namespace Mathlife.ProjectL.Gameplay
         private void LoadFromSaveFile()
         {
             goldRx.Value = SaveDataManager.inventory.gold;
+            diamondRx.Value = SaveDataManager.inventory.diamond;
 
             foreach (int equipmentId in SaveDataManager.inventory.mechParts)
             {
@@ -63,6 +64,7 @@ namespace Mathlife.ProjectL.Gameplay
             StarterGameData starter = GameDataLoader.GetStarterData();
 
             goldRx.Value = starter.GetStarterGold();
+            diamondRx.Value = starter.GetStarterDiamond();
 
             foreach (var batteryMemberPreset in starter.GetStarterBattery())
             {
@@ -94,6 +96,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         // 골드 (거래)
         public readonly ReactiveProperty<long> goldRx = new(0L);
+        public readonly ReactiveProperty<long> diamondRx = new(0L);
 
         public void GainGold(long gain)
         {
@@ -111,14 +114,27 @@ namespace Mathlife.ProjectL.Gameplay
             goldRx.Value -= lose;
         }
 
-        public bool CanBuy(int price, int amount)
+        private void LoseDiamond(long lose)
+        {
+            if (lose <= 0L)
+                return;
+
+            diamondRx.Value -= lose;
+        }
+
+        public bool CanBuyByGold(int price, int amount)
         {
             return goldRx.Value >= price * amount;
         }
         
+        public bool CanBuyByDiamond(int price, int amount)
+        {
+            return diamondRx.Value >= price * amount;
+        }
+        
         public bool BuyArty(ShopArtySaleInfo saleInfo)
         {
-            if (CanBuy(saleInfo.price, saleInfo.amount) == false)
+            if (CanBuyByDiamond(saleInfo.price, saleInfo.amount) == false)
             {
                 return false;
             }
@@ -126,13 +142,13 @@ namespace Mathlife.ProjectL.Gameplay
             ArtyRosterState roster = GameState.Inst.artyRosterState;
             roster.Add(saleInfo.arty, 1, 0);
 
-            LoseGold(saleInfo.price * saleInfo.amount);
+            LoseDiamond(saleInfo.price * saleInfo.amount);
             return true;
         }
         
         public bool BuyItem(ShopItemSaleInfo saleInfo)
         {
-            if (CanBuy(saleInfo.price, saleInfo.amount) == false)
+            if (CanBuyByGold(saleInfo.price, saleInfo.amount) == false)
             {
                 return false;
             }

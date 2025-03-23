@@ -86,9 +86,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             CurrencyBar currencyBar = Presenter.Find<CurrencyBar>();
             
-            await UniTask.WaitWhile(currencyBar, pCurrencyBar => pCurrencyBar.IsTweening == true);
+            await UniTask.WaitWhile(currencyBar, pCurrencyBar => pCurrencyBar.IsGoldTweening == true);
             
-            bool canBuy = InventoryState.CanBuy(saleInfo.price, saleInfo.amount);
+            bool canBuy = InventoryState.CanBuyByGold(saleInfo.price, saleInfo.amount);
             if (canBuy)
             {
 

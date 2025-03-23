@@ -14,24 +14,43 @@ namespace Mathlife.ProjectL.Gameplay
     {
         [SerializeField]
         [TitleGroup("릴리즈 모드 스타터", GroupID = "Starter", Indent = true, HorizontalLine = true)]
+        [HorizontalGroup(GroupID = "Starter/Currency", Width = 200, LabelWidth = 50)]
         [LabelText("골드")]
-        [PropertySpace(spaceBefore: 0, spaceAfter: 35)]
         long starterGold = 0L;
 
+#if UNITY_EDITOR
+        [SerializeField]
+        [HorizontalGroup(GroupID = "Starter/Currency", Width = 100)]
+        [SpaceOnly(0)]
+        private bool _dummy00;
+#endif
+
+        [SerializeField]
+        [LabelText("다이아")]
+        [HorizontalGroup(GroupID = "Starter/Currency", Width = 200, LabelWidth = 50)]
+        long starterDiamond = 0L;
+
+#if UNITY_EDITOR
+        [SerializeField]
+        [HorizontalGroup(GroupID = "Starter/Dummy", Width = 100)]
+        [SpaceOnly(15)]
+        private bool _dummy01;
+#endif
+        
         [SerializeField]
         [TabGroup("Starter/Tab", "포대")]
         [HideReferenceObjectPicker]
         [LabelText("포대")]
         [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true, ShowFoldout = false)]
-        List<ArtyPreset> starterBattery = new ();
-        
+        List<ArtyPreset> starterBattery = new();
+
         [SerializeField]
         [TabGroup("Starter/Tab", "대기 멤버")]
         [HideReferenceObjectPicker]
         [LabelText("대기 멤버")]
         [ListDrawerSettings(ShowFoldout = false)]
         List<ArtyPreset> starterBench = new();
-        
+
         [SerializeField]
         [Space(10)]
         [TabGroup("Starter/Tab", "인벤토리(백업 부품)")]
@@ -46,7 +65,7 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("재료/전투 아이템")]
         [ListDrawerSettings(ShowFoldout = false)]
         List<CountableItemStack> starterItemStacks = new();
-        
+
         [ShowInInspector]
         [SpaceOnly(50)]
         bool _dummySpacing;
@@ -54,24 +73,39 @@ namespace Mathlife.ProjectL.Gameplay
 #if UNITY_EDITOR
         [SerializeField]
         [TitleGroup("디버그 모드 스타터", GroupID = "Editor Starter", Indent = true, HorizontalLine = true)]
+        [HorizontalGroup(GroupID = "Editor Starter/Currency", Width = 200, LabelWidth = 50)]
         [LabelText("골드")]
-        [PropertySpace(spaceBefore: 0, spaceAfter: 35)]
         long editorStarterGold = 0L;
 
+        [SerializeField]
+        [HorizontalGroup(GroupID = "Editor Starter/Currency", Width = 100)]
+        [SpaceOnly(0)]
+        private bool _dummy10;
+        
+        [SerializeField]
+        [LabelText("다이아")]
+        [HorizontalGroup(GroupID = "Editor Starter/Currency", Width = 200, LabelWidth = 50)]
+        long editorStarterDiamond = 0L;
+
+        [SerializeField]
+        [HorizontalGroup(GroupID = "Editor Starter/Dummy", Width = 100)]
+        [SpaceOnly(15)]
+        private bool _dummy11;
+        
         [SerializeField]
         [TabGroup("Editor Starter/Tab", "포대")]
         [HideReferenceObjectPicker]
         [LabelText("포대")]
         [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true, ShowFoldout = false)]
         List<ArtyPreset> editorStarterBattery = new();
-        
+
         [SerializeField]
         [TabGroup("Editor Starter/Tab", "대기 멤버")]
         [HideReferenceObjectPicker]
         [LabelText("대기 멤버")]
         [ListDrawerSettings(ShowFoldout = false)]
         List<ArtyPreset> editorStarterBench = new();
-        
+
         [SerializeField]
         [TabGroup("Editor Starter/Tab", "인벤토리(백업 부품)")]
         [HideReferenceObjectPicker]
@@ -85,7 +119,7 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("재료/전투 아이템")]
         [ListDrawerSettings(ShowFoldout = false)]
         List<CountableItemStack> editorStarterItemStacks = new();
-        
+
         [OnInspectorInit]
         void OnInspectorInit()
         {
@@ -123,6 +157,15 @@ namespace Mathlife.ProjectL.Gameplay
 #endif
         }
 
+        public long GetStarterDiamond()
+        {
+#if UNITY_EDITOR
+            return editorStarterDiamond;
+#else
+            return starterDiamond;
+#endif
+        }
+
         public List<ArtyPreset> GetStarterBattery()
         {
 #if UNITY_EDITOR
@@ -155,7 +198,7 @@ namespace Mathlife.ProjectL.Gameplay
 #if UNITY_EDITOR
             return editorStarterItemStacks;
 #else
-            return starterItemStacks;  
+            return starterItemStacks;
 #endif
         }
     }
