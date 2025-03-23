@@ -17,6 +17,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             base.Initialize();
 
+            // Not Selectable
+            if (cellButton == null)
+                return;
+            
             cellButton.OnClickAsObservable()
                 .Subscribe(OnClick)
                 .AddTo(gameObject);

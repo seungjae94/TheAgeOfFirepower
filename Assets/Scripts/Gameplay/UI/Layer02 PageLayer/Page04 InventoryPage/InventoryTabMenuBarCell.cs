@@ -14,14 +14,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             tabMenuNameText.text = itemData.displayName;
             tabMenuNameText.characterSpacing = itemData.GetCharacterSpacing();
 
-            if (Index == Context.selectedIndex)
-            {
-                tabMenuNameText.color = Color.cyan;
-            }
-            else
-            {
-                tabMenuNameText.color = Color.white;
-            }
+            tabMenuNameText.color = (Index == Context.selectedIndex) ? Color.cyan : Color.white;
         }
     }
 }

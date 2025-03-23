@@ -23,10 +23,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
     // (참고) FancyScrollRect extends FancyScrollView
     public abstract class SimpleScrollRect<TItemData, TContext> : FancyScrollRect<TItemData, TContext>
         where TContext : SimpleScrollRectContext, new() 
-        where TItemData : new()
     {
-        protected readonly Subject<SimpleScrollRectSelectionData<TItemData>> onSelectCellRx = new();
-
         [SerializeField]
         protected GameObject cellPrefab;
 
@@ -45,22 +42,26 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(gameObject);
         }
 
-        public virtual void Setup(List<TItemData> items)
+        public new void UpdateContents(IList<TItemData> itemDatas)
         {
-            UpdateContents(items);
+            base.UpdateContents(itemDatas);
         }
-
+        
         public void SelectCell(int index)
         {
             if (index == Context.selectedIndex)
                 return;
             
             Context.selectedIndex = index;
-            onSelectCellRx.OnNext(new SimpleScrollRectSelectionData<TItemData>
+            OnSelectCell(new SimpleScrollRectSelectionData<TItemData>
             {
                 index = Context.selectedIndex, itemData = ItemsSource[index]
             });
             Refresh();
+        }
+
+        protected virtual void OnSelectCell(SimpleScrollRectSelectionData<TItemData> selectionData)
+        {
         }
     }
 }

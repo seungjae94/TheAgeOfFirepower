@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,75 +10,101 @@ namespace Mathlife.ProjectL.Gameplay.UI
     public class ShopPage : Page
     {
         public override string PageName => "상점";
-        
-        [SerializeField] Button m_navBackButton;
-        [SerializeField] CurrencyBar m_ingameCurrencyBar;
 
-        // 탭 선택 기능
-        [SerializeField] Transform m_tabMenuBar;
-        //List<TabMenu> m_tabMenus = new();
-        int m_selectedTab = 0;
-
-        // 카탈로그 표시 기능
-        //[SerializeField] ShopFlex m_flexView;
+        // View
+        [SerializeField]
+        private ShopTabMenuBar tabMenuBar;
         
+        //[SerializeField]
+        //private ShopMechPartGridView artyTabView;
+        
+        [SerializeField]
+        private ShopItemScrollRect itemTabView;
+        
+        // Field
+        public readonly ReactiveProperty<int> selectedTabIndexRx = new(1);
+        private readonly CompositeDisposable disposables = new();
+
+        private ShopGameData shopGameData;
+        
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            shopGameData = GameState.Inst.gameDataLoader.GetShopData();
+        }
         
         protected override void OnOpen()
         {
-            // UpdateFlexView();
-            //
-            // m_tabMenus[0].Initialize(0, OnSelectTabMenu);
-            // m_tabMenus[0].Select();
-            //
-            // for (int i = 1; i < m_tabMenus.Count; ++i)
-            // {
-            //     m_tabMenus[i].Initialize(i, OnSelectTabMenu);
-            //     m_tabMenus[i].Default();
-            // }
-
-            //m_ingameCurrencyBar.Initialize();
-        
-            // m_navBackButton.OnClickAsObservable()
-            //     .Subscribe(_ => lobbySceneGameMode.NavigateBack())
-            //     .AddTo(gameObject);
+            // Overlay
+            NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
+            navBackOverlay.Activate();
+            
+            // 뷰 초기화
+            itemTabView.gameObject.SetActive(false);
+            
+            selectedTabIndexRx.Value = 0;
+            selectedTabIndexRx
+                .DistinctUntilChanged()
+                .Subscribe(OnSelectTab)
+                .AddTo(disposables);
+            
+            var tabMenuItemDataList = new List<ShopTabMenuItemData>()
+            {
+                new ShopTabMenuItemData() { displayName = "화포" },
+                new ShopTabMenuItemData() { displayName = "포신" },
+                new ShopTabMenuItemData() { displayName = "장갑" },
+                new ShopTabMenuItemData() { displayName = "엔진" },
+                new ShopTabMenuItemData() { displayName = "재료" },
+                new ShopTabMenuItemData() { displayName = "전투" },
+            };
+            
+            tabMenuBar.UpdateContents(tabMenuItemDataList);
+            tabMenuBar.SelectCell(selectedTabIndexRx.Value);
         }
 
         protected override void OnClose()
         {
-            throw new System.NotImplementedException();
-        }
-        
-
-        void OnSelectTabMenu(int index)
-        {
-            // m_tabMenus[m_selectedTab].Default();
-            // m_tabMenus[index].Select();
+            // if (false == mechPartTabView.IsClear)
+            //     mechPartTabView.Clear();
+            // if (false == countableItemTabView.IsClear)
+            //     countableItemTabView.Clear();
             //
-            // m_selectedTab = index;
-            //
-            // UpdateFlexView();
+            disposables.Clear();
         }
 
-        public void OnClickBuyButton(MechPartGameData mechPartGameData)
+        private void OnDestroy()
         {
-            // bool buyResult = inventoryState.BuyItem(mechPartGameData.id);
-            //
-            // if (buyResult)
-            // {
-            //     // 구매 이펙트
-            //     Debug.Log("구매 이펙트");
-            // }
-            // else
-            // {
-            //     // 구매 실패 알림
-            //     Debug.Log("구매 실패 알림");
-            // }
+            disposables.Dispose();
         }
 
-        // 뷰 업데이트
-        void UpdateFlexView()
+        // 이벤트 구독 콜백
+        private void OnSelectTab(int index)
         {
-            //m_flexView.Draw(gameDataLoader.GetShopSO().GetItemCatalog((EEquipmentType)m_selectedTab), OnClickBuyButton);
+            switch (index)
+            {
+                case 0:
+                    itemTabView.gameObject.SetActive(false);
+                    break;
+                case 1:
+                    itemTabView.gameObject.SetActive(true);
+                    itemTabView.UpdateContents(shopGameData.shopBarrels.Select<MechPartGameData, ItemGameData>(mechPart => mechPart).ToList());
+                    break;
+                case 2:
+                    itemTabView.gameObject.SetActive(true);
+                    itemTabView.UpdateContents(shopGameData.shopArmors.Select<MechPartGameData, ItemGameData>(mechPart => mechPart).ToList());
+                    break;
+                case 3:
+                    itemTabView.gameObject.SetActive(true);
+                    itemTabView.UpdateContents(shopGameData.shopEngines.Select<MechPartGameData, ItemGameData>(mechPart => mechPart).ToList());
+                    break;
+                case 4:
+                    //itemTabView.gameObject.SetActive(true);
+                    break;
+                case 5:
+                    //itemTabView.gameObject.SetActive(true);
+                    break;
+            }
         }
     }
 }

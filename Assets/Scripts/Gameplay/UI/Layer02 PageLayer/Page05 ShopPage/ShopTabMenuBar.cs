@@ -6,7 +6,7 @@ using UnityEngine.UI.Extensions;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class InventoryTabMenuItemData
+    public class ShopTabMenuItemData
     {
         public string displayName;
 
@@ -19,11 +19,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
         }
     }
     
-    public class InventoryTabMenuBar : SimpleScrollRect<InventoryTabMenuItemData, SimpleScrollRectContext>
+    public class ShopTabMenuBar : SimpleScrollRect<ShopTabMenuItemData, SimpleScrollRectContext>
     {
-        protected override void OnSelectCell(SimpleScrollRectSelectionData<InventoryTabMenuItemData> cellData)
+        protected override void OnSelectCell(SimpleScrollRectSelectionData<ShopTabMenuItemData> cellData)
         {
-            Presenter.Find<InventoryPage>().selectedTabIndexRx.Value = cellData.index;
+            Presenter.Find<ShopPage>().selectedTabIndexRx.Value = cellData.index;
         }
     }
 }

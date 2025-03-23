@@ -194,12 +194,6 @@ namespace Mathlife.ProjectL.Editor
                 typeof(ShopGameData)
             );
 
-            tree.AddAssetAtPath(
-                "프리팹",
-                $"{k_gameDataAssetFolder}/UniqueGameData/PrefabGameData.asset",
-                typeof(PrefabGameData)
-            );
-
             // 메뉴 아이템 생성
             AddMenuItems<ArtyGameData>(tree, "차량");
             AddMenuItems<ShellGameData>(tree, "포탄");

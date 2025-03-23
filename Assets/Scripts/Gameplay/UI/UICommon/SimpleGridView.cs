@@ -27,7 +27,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             base.Initialize();
 
             Context.onCellClickRx
-                .Subscribe(OnCellClick)
+                .Subscribe(SelectCell)
                 .AddTo(gameObject);
         }
 
@@ -52,11 +52,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             });
             
             Refresh();
-        }
-
-        private void OnCellClick(int index)
-        {
-            SelectCell(index);
         }
 
         protected abstract void OnSelectCell(SimpleGridViewSelectionData<TItemData> selectionData);

@@ -24,7 +24,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private InventoryCountableItemTabView countableItemTabView;
         
         // Field
-        // TODO: 선택된 탭 상태 관리
         public readonly ReactiveProperty<int> selectedTabIndexRx = new(0);
         private readonly CompositeDisposable disposables = new();
         
@@ -51,7 +50,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 new InventoryTabMenuItemData() { displayName = "전투" },
             };
             
-            tabMenuBar.Setup(inventoryTabMenuItemDataList);
+            tabMenuBar.UpdateContents(inventoryTabMenuItemDataList);
             tabMenuBar.SelectCell(0);
         }
 
