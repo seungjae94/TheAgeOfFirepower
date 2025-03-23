@@ -10,6 +10,7 @@ using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using System.Collections.Generic;
 using System;
+using Mathlife.ProjectL.Gameplay.Battle;
 
 namespace Mathlife.ProjectL.Editor
 {
@@ -203,6 +204,8 @@ namespace Mathlife.ProjectL.Editor
             AddMenuItems<ArtyGameData>(tree, "차량");
             AddMenuItems<ShellGameData>(tree, "포탄");
             AddMenuItems<MechPartGameData>(tree, "기계 부품");
+            AddMenuItems<MaterialItemGameData>(tree, "재료 아이템");
+            AddMenuItems<BattleItemGameData>(tree, "배틀 아이템");
             //AddMenuItems<SkillGameData>(tree, "스킬");
 
             // 메뉴 아이템 아이콘 설정 및 드래그 핸들 추가

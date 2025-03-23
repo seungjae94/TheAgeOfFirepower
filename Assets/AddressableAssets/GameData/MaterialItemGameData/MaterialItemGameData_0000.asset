@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ce2c3b619904280b51e09e8cf806344, type: 3}
+  m_Name: MaterialItemGameData_0000
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  displayName: "\uD558\uAE09 \uAE30\uC5B4"
+  id: 0
+  rarity: 1
+  icon: {fileID: 21300000, guid: 60360e6d85579894d83b6ad34806f8f0, type: 3}
+  description: "\uD654\uD3EC \uACBD\uD5D8\uCE58 + 10"
+  shopPrice: 10
+  maxStack: 100

@@ -35,7 +35,7 @@ namespace Mathlife.ProjectL.Gameplay
     public enum EItemType
     {
         MechPart,
-        ConsumableItem,
+        MaterialItem,
         BattleItem
     }
 

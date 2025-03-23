@@ -4,10 +4,10 @@ using System;
 namespace Mathlife.ProjectL.Gameplay
 {
     [Serializable]
-    public class ConsumableGameData : ItemGameData
+    public class MaterialItemGameData : CountableItemGameData
     {
         [ShowInInspector]
         [ReadOnly]
-        public override EItemType ItemType => EItemType.ConsumableItem;
+        public override EItemType ItemType => EItemType.MaterialItem;
     }
 }

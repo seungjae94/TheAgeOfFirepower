@@ -16,7 +16,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             if (Index == Context.selectedIndex)
             {
-                tabMenuNameText.color = Color.yellow;
+                tabMenuNameText.color = Color.blue;
             }
             else
             {

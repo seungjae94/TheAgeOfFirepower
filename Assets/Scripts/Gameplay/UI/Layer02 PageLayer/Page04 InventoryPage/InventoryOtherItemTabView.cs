@@ -25,7 +25,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             {
                 case EItemType.MechPart:
                     throw new ArgumentOutOfRangeException("");
-                case EItemType.ConsumableItem:
+                case EItemType.MaterialItem:
                     //Debug.Log("소모품");
                     break;
                 case EItemType.BattleItem:
@@ -34,13 +34,22 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 default:
                     throw new ArgumentOutOfRangeException("");
             }
-            
         }
 
         public override void Clear()
         {
             base.Clear();
             gameObject.SetActive(false);
+        }
+
+        private void DrawConsumableItemView()
+        {
+            
+        }
+
+        private void DrawBattleItemView()
+        {
+            
         }
     }
 }
