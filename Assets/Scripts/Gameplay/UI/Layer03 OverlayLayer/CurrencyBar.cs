@@ -20,6 +20,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private readonly CompositeDisposable goldSubscription = new();
 
+        public bool IsTweening { get; private set; } = false;
+        
         public override void Activate()
         {
             base.Activate();
@@ -52,8 +54,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(goldSubscription);
         }
 
-        public async UniTask DOGold(long targetGold, float duration = 0.5f)
+        public async UniTask DOGold(long targetGold, float duration = 0.25f)
         {
+            IsTweening = true;
+            
             goldSubscription.Clear();
             
             long curValue = InventoryState.goldRx.Value;
@@ -68,6 +72,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .SetEase(Ease.OutQuad);
             
             await tween.AwaitForComplete();
+
+            IsTweening = false;
         }
     }
 }

@@ -74,27 +74,29 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClickBuyButton(Unit _)
         {
-            bool canBuy = InventoryState.CanBuyItem(gameData);
+            BuyItemAsync().Forget();
+        }
+
+        private async UniTaskVoid BuyItemAsync()
+        {
+            CurrencyBar currencyBar = Presenter.Find<CurrencyBar>();
             
+            await UniTask.WaitWhile(currencyBar, pCurrencyBar => pCurrencyBar.IsTweening == true);
+            
+            bool canBuy = InventoryState.CanBuyItem(gameData);
             if (canBuy)
             {
-                BuyItem().Forget();
+
+                long doTarget = InventoryState.goldRx.Value - gameData.shopPrice;
+                await currencyBar.DOGold(doTarget);
+
+                InventoryState.BuyItem(gameData);
+                currencyBar.SubscribeGoldChange();
             }
             else
             {
-                // TODO: 구매 실패 알림
                 Debug.Log("구매 실패 알림창");
             }
-        }
-
-        private async UniTaskVoid BuyItem()
-        {
-            CurrencyBar currencyBar = Presenter.Find<CurrencyBar>();
-            long doTarget = InventoryState.goldRx.Value - gameData.shopPrice; 
-            await currencyBar.DOGold(doTarget);
-            
-            InventoryState.BuyItem(gameData);
-            currencyBar.SubscribeGoldChange();
         }
     }
 }
