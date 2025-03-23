@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
@@ -20,7 +21,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private InventoryMechPartTabView mechPartTabView;
         
         [SerializeField]
-        private InventoryOtherItemTabView otherItemTabView;
+        private InventoryCountableItemTabView countableItemTabView;
         
         // Field
         // TODO: 선택된 탭 상태 관리
@@ -35,7 +36,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             // 뷰 초기화
             mechPartTabView.gameObject.SetActive(false);
-            otherItemTabView.gameObject.SetActive(false);
+            countableItemTabView.gameObject.SetActive(false);
             
             selectedTabIndexRx.Value = 0;
             selectedTabIndexRx
@@ -46,7 +47,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             var inventoryTabMenuItemDataList = new List<InventoryTabMenuItemData>()
             {
                 new InventoryTabMenuItemData() { displayName = "부품" },
-                new InventoryTabMenuItemData() { displayName = "소모품" },
+                new InventoryTabMenuItemData() { displayName = "재료" },
                 new InventoryTabMenuItemData() { displayName = "전투" },
             };
             
@@ -58,8 +59,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             if (false == mechPartTabView.IsClear)
                 mechPartTabView.Clear();
-            if (false == otherItemTabView.IsClear)
-                otherItemTabView.Clear();
+            if (false == countableItemTabView.IsClear)
+                countableItemTabView.Clear();
             
             disposables.Clear();
         }
@@ -74,13 +75,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             if (false == mechPartTabView.IsClear)
                 mechPartTabView.Clear();
-            if (false == otherItemTabView.IsClear)
-                otherItemTabView.Clear();
+            if (false == countableItemTabView.IsClear)
+                countableItemTabView.Clear();
 
             if (index == 0)
                 mechPartTabView.Draw();
             else
-                otherItemTabView.Draw();
+                countableItemTabView.Draw();
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 LoadFromStarterData();
             }
-            
+
             return UniTask.CompletedTask;
         }
 
@@ -45,6 +45,16 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 AddMechPart(equipmentId);
             }
+
+            foreach (var itemStack in SaveDataManager.inventory.materialItems)
+            {
+                AddCountableItemStack(EItemType.MaterialItem, itemStack.id, itemStack.amount);
+            }
+            
+            foreach (var itemStack in SaveDataManager.inventory.battleItems)
+            {
+                AddCountableItemStack(EItemType.BattleItem, itemStack.id, itemStack.amount);
+            }
         }
 
         private void LoadFromStarterData()
@@ -52,30 +62,32 @@ namespace Mathlife.ProjectL.Gameplay
             StarterGameData starter = GameDataLoader.GetStarterData();
 
             goldRx.Value = starter.GetStarterGold();
-
-            var starterParty = starter.GetStarterBattery();
-            foreach (var batteryMemberPreset in starterParty)
+            
+            foreach (var batteryMemberPreset in starter.GetStarterBattery())
             {
                 AddMechPart((batteryMemberPreset.barrel != null) ? batteryMemberPreset.barrel.id : -1);
                 AddMechPart((batteryMemberPreset.armor != null) ? batteryMemberPreset.armor.id : -1);
                 AddMechPart((batteryMemberPreset.engine != null) ? batteryMemberPreset.engine.id : -1);
             }
-
-            var starterCharactersNotInParty = starter.GetStarterBench();
-            foreach (var rosterMemberPreset in starterCharactersNotInParty)
+            
+            foreach (var rosterMemberPreset in starter.GetStarterBench())
             {
                 AddMechPart((rosterMemberPreset.barrel != null) ? rosterMemberPreset.barrel.id : -1);
                 AddMechPart((rosterMemberPreset.armor != null) ? rosterMemberPreset.armor.id : -1);
                 AddMechPart((rosterMemberPreset.engine != null) ? rosterMemberPreset.engine.id : -1);
             }
-
-            var starterBackupMechParts = starter.GetStarterBackupMechParts();
-            foreach (var mechPartStack in starterBackupMechParts)
+            
+            foreach (var mechPartStack in starter.GetStarterBackupMechParts())
             {
                 for (int i = 0; i < mechPartStack.count; ++i)
                 {
                     AddMechPart(mechPartStack.mechPart.id);
                 }
+            }
+
+            foreach (var itemStack in starter.GetStarterItemStacks())
+            {
+                AddCountableItemStack(itemStack.item, itemStack.count);
             }
         }
 
@@ -97,16 +109,16 @@ namespace Mathlife.ProjectL.Gameplay
 
             goldRx.Value -= lose;
         }
-        
+
         public bool BuyMechPart(int mechPartId)
         {
             MechPartGameData mechPartGameData = GameDataLoader.GetMechPartData(mechPartId);
-        
+
             if (goldRx.Value < mechPartGameData.shopPrice)
             {
                 return false;
             }
-        
+
             AddMechPart(mechPartId);
             LoseGold(mechPartGameData.shopPrice);
             return true;
@@ -117,23 +129,26 @@ namespace Mathlife.ProjectL.Gameplay
             return true;
         }
 
-        // 부품
+        // 아이템 관리
         private readonly ReactiveDictionary<EMechPartType, List<MechPartModel>> mechPartInventory = new();
-        
-        public List<MechPartModel> GetSortedMechPartListOfType(EMechPartType type, Func<MechPartModel, bool> excludeFilter = null)
+        private readonly ReactiveCollection<ItemStackModel> materialItemInventory = new();
+        private readonly ReactiveCollection<ItemStackModel> battleItemInventory = new();
+
+        public List<MechPartModel> GetSortedMechPartListOfType(EMechPartType type,
+            Func<MechPartModel, bool> excludeFilter = null)
         {
             excludeFilter ??= (mechPart) => false;
-            
+
             SortMechPartList(type);
             return mechPartInventory[type]
                 .Where((mechPart) => excludeFilter(mechPart) == false)
                 .ToList();
         }
-        
+
         public List<MechPartModel> GetSortedMechPartList(Func<MechPartModel, bool> excludeFilter = null)
         {
             excludeFilter ??= (mechPart) => false;
-            
+
             return mechPartInventory[EMechPartType.Barrel]
                 .Concat(mechPartInventory[EMechPartType.Armor])
                 .Concat(mechPartInventory[EMechPartType.Engine])
@@ -142,6 +157,23 @@ namespace Mathlife.ProjectL.Gameplay
                 .ThenByDescending(mechPart => mechPart.Rarity)
                 .ThenBy(mechPart => mechPart.Type)
                 .ThenBy(mechPart => mechPart.Id)
+                .ToList();
+        }
+
+        public List<ItemStackModel> GetSortedItemStackList(EItemType itemType,
+            Func<ItemStackModel, bool> excludeFilter = null)
+        {
+            excludeFilter ??= (itemStack) => false;
+
+            if (itemType != EItemType.MaterialItem && itemType != EItemType.BattleItem)
+                throw new ArgumentOutOfRangeException("Selected item type is not countable.");
+
+            var targetInventory = (itemType == EItemType.MaterialItem) ? materialItemInventory : battleItemInventory;
+
+            return targetInventory
+                .Where(itemStack => excludeFilter(itemStack) == false)
+                .OrderByDescending(itemStack => itemStack.Rarity)
+                .ThenBy(itemStack => itemStack.Id)
                 .ToList();
         }
 
@@ -154,10 +186,31 @@ namespace Mathlife.ProjectL.Gameplay
         {
             if (mechPartId < 0)
                 return null;
-            
+
             MechPartModel mechPart = new(GameDataLoader.GetMechPartData(mechPartId));
             mechPartInventory[mechPart.Type].Add(mechPart);
             return mechPart;
+        }
+
+        public ItemStackModel AddCountableItemStack(EItemType itemType, int itemId, int amount)
+        {
+            CountableItemGameData itemGameData = GameDataLoader.GetCountableItemData(itemType, itemId);
+            return AddCountableItemStack(itemGameData, amount);
+        }
+        
+        public ItemStackModel AddCountableItemStack(CountableItemGameData itemGameData, int amount)
+        {
+            if (itemGameData == null)
+                return null;
+
+            ItemStackModel itemStack = new(itemGameData, amount);
+            
+            if (itemGameData.ItemType == EItemType.MaterialItem)
+                materialItemInventory.Add(itemStack);
+            else if (itemGameData.ItemType == EItemType.BattleItem)
+                battleItemInventory.Add(itemStack);
+            
+            return itemStack;
         }
 
         private void SortMechPartList(EMechPartType type)

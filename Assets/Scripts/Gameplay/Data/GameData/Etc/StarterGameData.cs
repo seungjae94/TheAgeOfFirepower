@@ -40,6 +40,13 @@ namespace Mathlife.ProjectL.Gameplay
         [ListDrawerSettings(ShowFoldout = false)]
         List<MechPartStack> starterBackupMechParts = new();
 
+        [SerializeField]
+        [TabGroup("Starter/Tab", "인벤토리(재료, 전투)")]
+        [HideReferenceObjectPicker]
+        [LabelText("재료/전투 아이템")]
+        [ListDrawerSettings(ShowFoldout = false)]
+        List<CountableItemStack> starterItemStacks = new();
+        
         [ShowInInspector]
         [SpaceOnly(50)]
         bool _dummySpacing;
@@ -72,6 +79,13 @@ namespace Mathlife.ProjectL.Gameplay
         [ListDrawerSettings(ShowFoldout = false)]
         List<MechPartStack> editorStarterBackupMechParts = new();
 
+        [SerializeField]
+        [TabGroup("Editor Starter/Tab", "인벤토리(재료, 전투)")]
+        [HideReferenceObjectPicker]
+        [LabelText("재료/전투 아이템")]
+        [ListDrawerSettings(ShowFoldout = false)]
+        List<CountableItemStack> editorStarterItemStacks = new();
+        
         [OnInspectorInit]
         void OnInspectorInit()
         {
@@ -133,6 +147,15 @@ namespace Mathlife.ProjectL.Gameplay
             return editorStarterBackupMechParts;
 #else
             return starterBackupMechParts;
+#endif
+        }
+
+        public List<CountableItemStack> GetStarterItemStacks()
+        {
+#if UNITY_EDITOR
+            return editorStarterItemStacks;
+#else
+            return starterItemStacks;  
 #endif
         }
     }

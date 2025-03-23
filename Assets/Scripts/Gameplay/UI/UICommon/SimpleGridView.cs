@@ -34,9 +34,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // Method
         public void SelectCell(int index)
         {
-            if (Context.selectedIndex == index)
-                return;
-            
             Context.selectedIndex = index;
 
             TItemData itemData = default;

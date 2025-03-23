@@ -13,13 +13,13 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class GameDataLoader : IDisposable
     {
-        private StarterGameData mStarterGameData;
+        private StarterGameData starterGameData;
         private ExpGameData expGameData;
         private ShopGameData shopGameData;
-        private PrefabGameData prafabGameData;
-        private Dictionary<int, ShellGameData> shells = new();
-        private Dictionary<int, ArtyGameData> vehicles = new();
-        private Dictionary<int, MechPartGameData> mechParts = new();
+        private readonly Dictionary<int, ShellGameData> shells = new();
+        private readonly Dictionary<int, ArtyGameData> artyDict = new();
+        private readonly Dictionary<int, MechPartGameData> mechParts = new();
+        private readonly Dictionary<EItemType, Dictionary<int, CountableItemGameData>> countableItems = new();
 
         public async UniTask Load()
         {
@@ -27,43 +27,41 @@ namespace Mathlife.ProjectL.Gameplay
 
             foreach (var dataAsset in dataAssets)
             {
-                if (dataAsset is ExpGameData expSO)
-                    expGameData = expSO;
-                else if (dataAsset is ShopGameData shopSO)
-                    shopGameData = shopSO;
-                else if (dataAsset is PrefabGameData prefabSO)
-                    prafabGameData = prefabSO;
-                else if (dataAsset is StarterGameData starterSO)
-                    mStarterGameData = starterSO;
-                else if (dataAsset is ArtyGameData characterSO)
-                    vehicles.Add(characterSO.id, characterSO);
-                else if (dataAsset is MechPartGameData equipmentSO)
-                    mechParts.Add(equipmentSO.id, equipmentSO);
+                switch (dataAsset)
+                {
+                    case ExpGameData itExpGameData:
+                        expGameData = itExpGameData;
+                        break;
+                    case ShopGameData itShopGameData:
+                        shopGameData = itShopGameData;
+                        break;
+                    case StarterGameData itStarterGameData:
+                        starterGameData = itStarterGameData;
+                        break;
+                    case ArtyGameData itArtyGameData:
+                        artyDict.Add(itArtyGameData.id, itArtyGameData);
+                        break;
+                    case MechPartGameData itMechPartGameData:
+                        mechParts.Add(itMechPartGameData.id, itMechPartGameData);
+                        break;
+                    case CountableItemGameData itCountableItemGameData:
+                    {
+                        var itemType = itCountableItemGameData.ItemType;
+                        if (countableItems.ContainsKey(itemType) == false)
+                            countableItems.Add(itemType, new Dictionary<int, CountableItemGameData>());
+                        countableItems[itemType].Add(itCountableItemGameData.id, itCountableItemGameData);
+                        break;
+                    }
+                }
             }
         }
 
-        public T Instantiate<T>(EPrefabId prefabId) where T : Component
-        {
-            return Instantiate<T>(prefabId, null);
-        }
-
-        public T Instantiate<T>(EPrefabId prefabId, Transform parent) where T : Component
-        {
-            if (false == prafabGameData.prefabs.ContainsKey(prefabId))
-            {
-                Debug.LogError($"Tried to instantiate undefined prefab {prefabId}");
-                return null;
-            }
-
-            return GameObject.Instantiate(prafabGameData.prefabs[prefabId], parent).GetComponent<T>();
-        }
-
-        public ArtyGameData GetCharacterData(int id)
+        public ArtyGameData GetArtyData(int id)
         {
             if (id < 0)
                 return null;
 
-            return vehicles[id];
+            return artyDict[id];
         }
 
         public MechPartGameData GetMechPartData(int id)
@@ -74,9 +72,17 @@ namespace Mathlife.ProjectL.Gameplay
             return mechParts[id];
         }
 
+        public CountableItemGameData GetCountableItemData(EItemType itemType, int id)
+        {
+            if (id < 0)
+                return null;
+            
+            return countableItems[itemType][id];
+        }
+
         public StarterGameData GetStarterData()
         {
-            return mStarterGameData;
+            return starterGameData;
         }
 
         public ShopGameData GetShopData()
@@ -92,8 +98,8 @@ namespace Mathlife.ProjectL.Gameplay
         public void Dispose()
         {
             Addressables.Release(expGameData);
-            
-            foreach(var character in vehicles.Values)
+
+            foreach (var character in artyDict.Values)
             {
                 Addressables.Release(character);
             }

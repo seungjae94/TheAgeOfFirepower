@@ -86,10 +86,5 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
             descriptionText.text = mechPart.Stat.Description;
         }
-
-        public override void Clear()
-        {
-            base.Clear();
-        }
     }
 }

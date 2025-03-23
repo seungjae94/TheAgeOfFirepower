@@ -43,6 +43,7 @@ MonoBehaviour:
     engine: {fileID: 0}
   starterBench: []
   starterBackupMechParts: []
+  starterItemStacks: []
   editorStarterGold: 100000
   editorStarterBattery:
   - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
@@ -113,14 +114,6 @@ MonoBehaviour:
     armor: {fileID: 0}
     engine: {fileID: 0}
   editorStarterBackupMechParts:
-  - mechPart: {fileID: 11400000, guid: 426dcd72f60b7e44abf715e72fb5ade8, type: 2}
-    count: 5
-  - mechPart: {fileID: 11400000, guid: 4cbf4f43070fb62488f318108148ef5c, type: 2}
-    count: 5
-  - mechPart: {fileID: 11400000, guid: d7cdf2582d10f8042b8c0426bc8e3da2, type: 2}
-    count: 5
-  - mechPart: {fileID: 11400000, guid: 86b245a07b003d54d9b53a3dd4a9fca6, type: 2}
-    count: 5
   - mechPart: {fileID: 11400000, guid: cd87f1b0da71ecf409302f2ff6d745bb, type: 2}
     count: 3
   - mechPart: {fileID: 11400000, guid: 2e0e6f9d95665e649accd11f8d19ddcf, type: 2}
@@ -129,3 +122,16 @@ MonoBehaviour:
     count: 5
   - mechPart: {fileID: 11400000, guid: 0c922191370f81148804976b3c32fbe6, type: 2}
     count: 20
+  editorStarterItemStacks:
+  - item: {fileID: 11400000, guid: d2401f60129bc484cabe759c5d234fb0, type: 2}
+    count: 10
+  - item: {fileID: 11400000, guid: 0a6bb2d97cca16c45a8dedfbf9a5affd, type: 2}
+    count: 100
+  - item: {fileID: 11400000, guid: 246524f5968dcd9428f7568515044cc9, type: 2}
+    count: 1000
+  - item: {fileID: 11400000, guid: 736c025dc6d2b62468610d76110af19f, type: 2}
+    count: 10
+  - item: {fileID: 11400000, guid: 715879cc4e6f0a64e9c528ba65882130, type: 2}
+    count: 100
+  - item: {fileID: 11400000, guid: 42ca2c5aa5f94e1458ca29250d31efd3, type: 2}
+    count: 1000

@@ -55,7 +55,7 @@ namespace Mathlife.ProjectL.Gameplay
             foreach (var artySaveData in artyRosterSaveFile.artyRoster)
             {
                 ArtyModel arty = new ArtyModel(
-                    GameDataLoader.GetCharacterData(artySaveData.artyId),
+                    GameDataLoader.GetArtyData(artySaveData.artyId),
                     GameDataLoader.GetExpData(),
                     artySaveData.level,
                     artySaveData.totalExp
@@ -165,7 +165,7 @@ namespace Mathlife.ProjectL.Gameplay
         public ArtyModel Add(int id, int level = 1, int totalExp = 0)
         {
             ArtyModel arty = new(
-                GameDataLoader.GetCharacterData(id),
+                GameDataLoader.GetArtyData(id),
                 GameDataLoader.GetExpData(),
                 level, totalExp);
             artyList.Add(arty);

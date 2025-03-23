@@ -21,8 +21,6 @@ namespace Mathlife.ProjectL.Gameplay
 
         public string DisplayName => gameData.displayName;
 
-        public string Description => gameData.description;
-
         public BasicStat Stat => gameData.stat;
         
         public Sprite Icon => gameData.icon;

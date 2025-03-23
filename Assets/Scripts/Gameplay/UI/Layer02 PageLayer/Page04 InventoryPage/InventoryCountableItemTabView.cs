@@ -5,27 +5,28 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class InventoryMechPartTabView : AbstractView
+    public class InventoryCountableItemTabView : AbstractView
     {
         // Alias
-        private static InventoryState InventoryState => GameState.Inst.inventoryState; 
+        private static InventoryPage InventoryPage => Presenter.Find<InventoryPage>();
+        private static InventoryState InventoryState => GameState.Inst.inventoryState;
         
         // View
         [SerializeField]
-        private InventoryMechPartGridView gridView;
+        private InventoryCountableItemGridView gridView;
         
         [SerializeField]
-        private InventorySelectedMechPartView selectedMechPartView;
+        private InventorySelectedCountableItemView selectedItemView;
         
         // Field
         private readonly CompositeDisposable disposables = new();
-        private List<MechPartModel> mechParts;
+        private List<ItemStackModel> itemStacks;
         
         public override void Draw()
         {
             base.Draw();
             gameObject.SetActive(true);
-            
+
             // 구독
             gridView.onSelectedIndexSubject
                 .DistinctUntilChanged()
@@ -33,11 +34,15 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(disposables);
             
             // 뷰 초기화
-            mechParts = InventoryState.GetSortedMechPartList();
-            gridView.UpdateContents(mechParts);
+            EItemType itemType = (EItemType) InventoryPage.selectedTabIndexRx.Value;
+            if (itemType != EItemType.MaterialItem && itemType != EItemType.BattleItem)
+                throw new ArgumentOutOfRangeException("Selected item type is not countable.");
+            
+            itemStacks = InventoryState.GetSortedItemStackList(itemType);
+            gridView.UpdateContents(itemStacks);
             gridView.SelectCell(-1);
         }
-        
+
         public override void Clear()
         {
             base.Clear();
@@ -49,12 +54,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             disposables.Dispose();
         }
-
+        
         private void OnSelectCell(int index)
         {
-            selectedMechPartView.Clear();
-            selectedMechPartView.Setup(index >= 0 ? mechParts[index] : null);
-            selectedMechPartView.Draw();
+            selectedItemView.Clear();
+            selectedItemView.Setup(index >= 0 ? itemStacks[index] : null);
+            selectedItemView.Draw();
         }
     }
 }
