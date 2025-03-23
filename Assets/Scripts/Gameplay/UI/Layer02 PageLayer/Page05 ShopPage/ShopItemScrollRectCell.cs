@@ -1,5 +1,6 @@
 using System;
 using Coffee.UIEffects;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -73,18 +74,27 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClickBuyButton(Unit _)
         {
-            bool buyResult = InventoryState.BuyItem(gameData);
+            bool canBuy = InventoryState.CanBuyItem(gameData);
             
-            if (buyResult)
+            if (canBuy)
             {
-                // 구매 이펙트
-                Debug.Log("구매 이펙트");
+                BuyItem().Forget();
             }
             else
             {
-                // 구매 실패 알림
-                Debug.Log("구매 실패 알림");
+                // TODO: 구매 실패 알림
+                Debug.Log("구매 실패 알림창");
             }
+        }
+
+        private async UniTaskVoid BuyItem()
+        {
+            CurrencyBar currencyBar = Presenter.Find<CurrencyBar>();
+            long doTarget = InventoryState.goldRx.Value - gameData.shopPrice; 
+            await currencyBar.DOGold(doTarget);
+            
+            InventoryState.BuyItem(gameData);
+            currencyBar.SubscribeGoldChange();
         }
     }
 }

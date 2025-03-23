@@ -103,7 +103,7 @@ namespace Mathlife.ProjectL.Gameplay
             goldRx.Value += gain;
         }
 
-        public void LoseGold(long lose)
+        private void LoseGold(long lose)
         {
             if (lose <= 0L)
                 return;
@@ -111,9 +111,14 @@ namespace Mathlife.ProjectL.Gameplay
             goldRx.Value -= lose;
         }
 
-        public bool BuyItem(ItemGameData itemGameData)
+        public bool CanBuyItem(ItemGameData itemGameData, int amount = 1)
         {
-            if (goldRx.Value < itemGameData.shopPrice)
+            return goldRx.Value >= itemGameData.shopPrice * amount;
+        }
+        
+        public bool BuyItem(ItemGameData itemGameData, int amount = 1)
+        {
+            if (CanBuyItem(itemGameData, amount) == false)
             {
                 return false;
             }
@@ -124,10 +129,10 @@ namespace Mathlife.ProjectL.Gameplay
                     AddMechPart(mechPartGameData.id);
                     break;
                 case MaterialItemGameData materialItemGameData:
-                    AddCountableItemStack(EItemType.MaterialItem, materialItemGameData.id, 1);
+                    AddCountableItemStack(EItemType.MaterialItem, materialItemGameData.id, amount);
                     break;
                 case BattleItemGameData battleItemGameData:
-                    AddCountableItemStack(EItemType.BattleItem, battleItemGameData.id, 1);
+                    AddCountableItemStack(EItemType.BattleItem, battleItemGameData.id, amount);
                     break;
             }
 

@@ -65,11 +65,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         protected override void OnClose()
         {
-            // if (false == mechPartTabView.IsClear)
-            //     mechPartTabView.Clear();
-            // if (false == countableItemTabView.IsClear)
-            //     countableItemTabView.Clear();
-            //
             disposables.Clear();
         }
 
