@@ -13,7 +13,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
     {
         // Alias
         private static InventoryState InventoryState => GameState.Inst.inventoryState;
-        
+
         // View
         [SerializeField]
         private Image spriteImage;
@@ -23,19 +23,19 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         [SerializeField]
         private Image shellIconImage;
-        
+
         [SerializeField]
         private TextMeshProUGUI shellNameText;
-        
+
         [SerializeField]
         private TextMeshProUGUI shellDescriptionText;
-        
+
         [SerializeField]
         private TextMeshProUGUI priceText;
-        
+
         [SerializeField]
         private Button buyButton;
-        
+
         // Field
         private ShopArtySaleInfo saleInfo;
         private readonly CompositeDisposable disposables = new();
@@ -48,7 +48,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             {
                 throw new ArgumentNullException();
             }
-            
+
             spriteImage.sprite = saleInfo.arty.sprite;
             nameText.text = saleInfo.arty.displayName;
             shellIconImage.sprite = saleInfo.arty.shell.icon;
@@ -56,7 +56,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             shellDescriptionText.text = saleInfo.arty.shell.description;
 
             priceText.text = (saleInfo.price * saleInfo.amount).ToString();
-            
+
             disposables.Clear();
             buyButton.OnClickAsObservable()
                 .Subscribe(OnClickBuyButton)
@@ -76,9 +76,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private async UniTaskVoid BuyItemAsync()
         {
             CurrencyBar currencyBar = Presenter.Find<CurrencyBar>();
-            
+
             await UniTask.WaitWhile(currencyBar, pCurrencyBar => pCurrencyBar.IsDiamondTweening == true);
-            
+
             bool canBuy = InventoryState.CanBuyByDiamond(saleInfo.price, saleInfo.amount);
             if (canBuy)
             {
@@ -90,7 +90,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
             else
             {
-                Debug.Log("구매 실패 알림창");
+                OKPopup popup = Presenter.Find<OKPopup>();
+                popup.Setup("구매 실패", "다이아몬드가 부족합니다.");
+                popup.OpenWithAnimation().Forget();
             }
         }
     }

@@ -100,7 +100,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
             else
             {
-                Debug.Log("구매 실패 알림창");
+                OKPopup popup = Presenter.Find<OKPopup>();
+                popup.Setup("구매 실패", "골드가 부족합니다.");
+                popup.OpenWithAnimation().Forget();
             }
         }
     }
