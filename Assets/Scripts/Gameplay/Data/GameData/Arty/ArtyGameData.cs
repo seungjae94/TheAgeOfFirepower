@@ -26,7 +26,6 @@ namespace Mathlife.ProjectL.Gameplay
         [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetShellPreview))]
         public ShellGameData shell;
         
-        
         [VerticalGroup("Stats")]
         [HorizontalGroup("Stats/내구력", Title = "Stats", Width = 200, LabelWidth = 100)]
         [LabelText("내구력")]

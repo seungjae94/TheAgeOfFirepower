@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
@@ -83,23 +81,23 @@ namespace Mathlife.ProjectL.Gameplay.UI
                     break;
                 case 1:
                     itemTabView.gameObject.SetActive(true);
-                    itemTabView.UpdateContents(shopGameData.shopBarrels.Cast<ItemGameData>().ToList());
+                    itemTabView.UpdateContents(shopGameData.shopBarrels);
                     break;
                 case 2:
                     itemTabView.gameObject.SetActive(true);
-                    itemTabView.UpdateContents(shopGameData.shopArmors.Cast<ItemGameData>().ToList());
+                    itemTabView.UpdateContents(shopGameData.shopArmors);
                     break;
                 case 3:
                     itemTabView.gameObject.SetActive(true);
-                    itemTabView.UpdateContents(shopGameData.shopEngines.Cast<ItemGameData>().ToList());
+                    itemTabView.UpdateContents(shopGameData.shopEngines);
                     break;
                 case 4:
                     itemTabView.gameObject.SetActive(true);
-                    itemTabView.UpdateContents(shopGameData.shopMaterialItems.Cast<ItemGameData>().ToList());
+                    itemTabView.UpdateContents(shopGameData.shopMaterialItems);
                     break;
                 case 5:
                     itemTabView.gameObject.SetActive(true);
-                    itemTabView.UpdateContents(shopGameData.shopBattleItems.Cast<ItemGameData>().ToList());
+                    itemTabView.UpdateContents(shopGameData.shopBattleItems);
                     break;
             }
         }

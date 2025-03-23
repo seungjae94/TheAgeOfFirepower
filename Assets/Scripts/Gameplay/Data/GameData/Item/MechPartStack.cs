@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
 using Sirenix.OdinInspector;
@@ -16,7 +15,7 @@ namespace Mathlife.ProjectL.Gameplay
 #if UNITY_EDITOR
         [LabelText("부품")]
         [LabelWidth(125)]
-        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetEquipmentPreview))]
+        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetPreview))]
         [HorizontalGroup(group: "Row")]
 #endif
         public MechPartGameData mechPart;
@@ -29,35 +28,9 @@ namespace Mathlife.ProjectL.Gameplay
         public int count;
 
 #if UNITY_EDITOR
-        MechPartGameData cachedMechPart;
-        Texture2D cachedTexture;
-
-        [OnInspectorInit]
-        public void OnInspectorInit()
+        public Sprite GetPreview()
         {
-            cachedMechPart = null; 
-            cachedTexture = null;
-        }
-
-        public Texture2D GetEquipmentPreview()
-        {
-            if (cachedMechPart == mechPart)
-            {
-                return cachedTexture;
-            }
-
-            cachedMechPart = mechPart;
-
-            if (mechPart == null)
-            {
-                cachedTexture = null;
-            }
-            else
-            {
-                Rect texRect = mechPart.icon.textureRect;
-                cachedTexture = mechPart.icon.texture.CropTexture(texRect);
-            }
-            return cachedTexture;
+            return mechPart?.icon;
         }
 #endif
     }

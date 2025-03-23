@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class ShopItemScrollRectCell
-        : SimpleScrollRectCell<ItemGameData, SimpleScrollRectContext>
+        : SimpleScrollRectCell<ShopItemSaleInfo, SimpleScrollRectContext>
     {
         // Alias
         private static InventoryState InventoryState => GameState.Inst.inventoryState;
@@ -34,32 +34,37 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private Button buyButton;
         
         // Field
-        private ItemGameData gameData;
+        private ShopItemSaleInfo saleInfo;
         private readonly CompositeDisposable disposables = new();
 
-        public override void UpdateContent(ItemGameData itemData)
+        public override void UpdateContent(ShopItemSaleInfo itemData)
         {
-            gameData = itemData;
+            saleInfo = itemData;
 
-            if (gameData == null)
+            if (saleInfo == null)
             {
                 throw new ArgumentNullException("null 부품 데이터가 인자로 들어왔습니다.");
             }
 
-            uiEffect.LoadPreset(gameData.rarity.ToGradientPresetName());
-            iconImage.sprite = gameData.icon;
-            nameText.text = gameData.displayName;
+            uiEffect.LoadPreset(saleInfo.item.rarity.ToGradientPresetName());
+            iconImage.sprite = saleInfo.item.icon;
+            
+            nameText.text = saleInfo.item.displayName;
+            if (saleInfo.amount > 1)
+            {
+                nameText.text += $" X {saleInfo.amount}";
+            }
 
-            if (gameData is MechPartGameData mechPartGameData)
+            if (saleInfo.item is MechPartGameData mechPartGameData)
             {
                 descriptionText.text = mechPartGameData.stat.Description;    
             }
             else
             {
-                descriptionText.text = gameData.description;
+                descriptionText.text = saleInfo.item.description;
             }
 
-            priceText.text = gameData.shopPrice.ToString();
+            priceText.text = (saleInfo.price * saleInfo.amount).ToString();
             
             disposables.Clear();
             buyButton.OnClickAsObservable()
@@ -83,14 +88,14 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             await UniTask.WaitWhile(currencyBar, pCurrencyBar => pCurrencyBar.IsTweening == true);
             
-            bool canBuy = InventoryState.CanBuyItem(gameData);
+            bool canBuy = InventoryState.CanBuyItem(saleInfo.price, saleInfo.amount);
             if (canBuy)
             {
 
-                long doTarget = InventoryState.goldRx.Value - gameData.shopPrice;
+                long doTarget = InventoryState.goldRx.Value - saleInfo.price;
                 await currencyBar.DOGold(doTarget);
 
-                InventoryState.BuyItem(gameData);
+                InventoryState.BuyItem(saleInfo);
                 currencyBar.SubscribeGoldChange();
             }
             else

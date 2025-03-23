@@ -15,7 +15,7 @@ namespace Mathlife.ProjectL.Gameplay
 #if UNITY_EDITOR
         [LabelText("아이템")]
         [LabelWidth(125)]
-        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetEquipmentPreview))]
+        [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetPreview))]
         [HorizontalGroup(group: "Row")]
 #endif
         public CountableItemGameData item;
@@ -28,35 +28,9 @@ namespace Mathlife.ProjectL.Gameplay
         public int count;
 
 #if UNITY_EDITOR
-        CountableItemGameData cachedItem;
-        Texture2D cachedTexture;
-
-        [OnInspectorInit]
-        public void OnInspectorInit()
+        public Sprite GetPreview()
         {
-            cachedItem = null; 
-            cachedTexture = null;
-        }
-
-        public Texture2D GetEquipmentPreview()
-        {
-            if (cachedItem == item)
-            {
-                return cachedTexture;
-            }
-
-            cachedItem = item;
-
-            if (item == null)
-            {
-                cachedTexture = null;
-            }
-            else
-            {
-                Rect texRect = item.icon.textureRect;
-                cachedTexture = item.icon.texture.CropTexture(texRect);
-            }
-            return cachedTexture;
+            return item?.icon;
         }
 #endif
     }

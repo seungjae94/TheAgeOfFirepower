@@ -111,32 +111,33 @@ namespace Mathlife.ProjectL.Gameplay
             goldRx.Value -= lose;
         }
 
-        public bool CanBuyItem(ItemGameData itemGameData, int amount = 1)
+        public bool CanBuyItem(int price, int amount)
         {
-            return goldRx.Value >= itemGameData.shopPrice * amount;
+            return goldRx.Value >= price * amount;
         }
         
-        public bool BuyItem(ItemGameData itemGameData, int amount = 1)
+        public bool BuyItem(ShopItemSaleInfo saleInfo)
         {
-            if (CanBuyItem(itemGameData, amount) == false)
+            if (CanBuyItem(saleInfo.price, saleInfo.amount) == false)
             {
                 return false;
             }
 
-            switch (itemGameData)
+            switch (saleInfo.item)
             {
                 case MechPartGameData mechPartGameData:
-                    AddMechPart(mechPartGameData.id);
+                    for (int i = 0; i < saleInfo.amount; ++i)
+                        AddMechPart(mechPartGameData.id);
                     break;
                 case MaterialItemGameData materialItemGameData:
-                    AddCountableItemStack(EItemType.MaterialItem, materialItemGameData.id, amount);
+                    AddCountableItemStack(EItemType.MaterialItem, materialItemGameData.id, saleInfo.amount);
                     break;
                 case BattleItemGameData battleItemGameData:
-                    AddCountableItemStack(EItemType.BattleItem, battleItemGameData.id, amount);
+                    AddCountableItemStack(EItemType.BattleItem, battleItemGameData.id, saleInfo.amount);
                     break;
             }
 
-            LoseGold(itemGameData.shopPrice);
+            LoseGold(saleInfo.price * saleInfo.amount);
             return true;
         }
 

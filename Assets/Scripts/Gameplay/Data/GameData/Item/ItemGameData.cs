@@ -62,11 +62,6 @@ namespace Mathlife.ProjectL.Gameplay
         [Multiline(10)]
         public string description = "";
 
-        [LabelWidth(100)]
-        [LabelText("상점 판매가")]
-        [Min(0)]
-        public int shopPrice = 0;
-        
 #if UNITY_EDITOR
         // 게임 디자이너 에디터 프리뷰 최적화
         private Texture2D cachedTexture;
