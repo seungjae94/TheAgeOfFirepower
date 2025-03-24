@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 356479d822884ffcb5af5120e2a34927, type: 3}
+  m_Name: StageGameData_0000
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  displayName: 1-1
+  id: 0
+  worldNo: 1
+  stageNo: 1
+  enemyList:
+  - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
+    level: 1
+  rewardList:
+  - gold: 100
+    diamond: 0
+    itemGameData: {fileID: 0}
+    itemAmount: 0
+  - gold: 0
+    diamond: 0
+    itemGameData: {fileID: 11400000, guid: 426dcd72f60b7e44abf715e72fb5ade8, type: 2}
+    itemAmount: 1
+  - gold: 0
+    diamond: 0
+    itemGameData: {fileID: 11400000, guid: d2401f60129bc484cabe759c5d234fb0, type: 2}
+    itemAmount: 5

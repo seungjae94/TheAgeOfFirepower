@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 356479d822884ffcb5af5120e2a34927, type: 3}
+  m_Name: StageGameData_0001
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  displayName: 1-2
+  id: 1
+  worldNo: 1
+  stageNo: 2
+  enemyList:
+  - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
+    level: 2
+  - artyGameData: {fileID: 11400000, guid: e858c33d5a0d4e64d9432444f4ef4ba9, type: 2}
+    level: 1
+  rewardList:
+  - gold: 200
+    diamond: 0
+    itemGameData: {fileID: 0}
+    itemAmount: 0
+  - gold: 0
+    diamond: 0
+    itemGameData: {fileID: 11400000, guid: d7cdf2582d10f8042b8c0426bc8e3da2, type: 2}
+    itemAmount: 1
+  - gold: 0
+    diamond: 0
+    itemGameData: {fileID: 11400000, guid: d679ad340a5c9ce439639afd92f4eb11, type: 2}
+    itemAmount: 1
+  - gold: 0
+    diamond: 0
+    itemGameData: {fileID: 11400000, guid: d2401f60129bc484cabe759c5d234fb0, type: 2}
+    itemAmount: 5

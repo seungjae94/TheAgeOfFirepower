@@ -24,6 +24,7 @@ MonoBehaviour:
   displayName: "\uC81C\uC2A4\uD130"
   id: 5
   sprite: {fileID: -7083545565698355939, guid: 5061ee6358482574bbeb097e4cceca5a, type: 3}
+  enemySprite: {fileID: 1543947613322283905, guid: 79910d9010e5dff4a93adc0687648703, type: 3}
   shell: {fileID: 11400000, guid: 42d17e96f05c36a43b0a409794f3afe2, type: 2}
   maxHp: 550
   maxHpGrowth: 27
@@ -31,5 +32,5 @@ MonoBehaviour:
   atkGrowth: 7
   def: 25
   defGrowth: 2.5
-  spd: 80
-  spdGrowth: 3.2
+  mob: 100
+  mobGrowth: 4

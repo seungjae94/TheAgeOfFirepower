@@ -11,6 +11,7 @@ using UnityEditor.AddressableAssets.Settings;
 using System.Collections.Generic;
 using System;
 using Mathlife.ProjectL.Gameplay.Battle;
+using Mathlife.ProjectL.Gameplay.Stage;
 
 namespace Mathlife.ProjectL.Editor
 {
@@ -156,8 +157,7 @@ namespace Mathlife.ProjectL.Editor
                 return;
 
             if (asset is not ArtyGameData
-                && asset is not MechPartGameData
-                && asset is not SkillGameData)
+                && asset is not ItemGameData)
                 return;
 
             GUILayout.Label(selection.FirstOrDefault()?.Name);
@@ -200,7 +200,7 @@ namespace Mathlife.ProjectL.Editor
             AddMenuItems<MechPartGameData>(tree, "기계 부품");
             AddMenuItems<MaterialItemGameData>(tree, "재료 아이템");
             AddMenuItems<BattleItemGameData>(tree, "배틀 아이템");
-            //AddMenuItems<SkillGameData>(tree, "스킬");
+            AddMenuItems<StageGameData>(tree, "스테이지");
 
             // 메뉴 아이템 아이콘 설정 및 드래그 핸들 추가
             tree.EnumerateTree()

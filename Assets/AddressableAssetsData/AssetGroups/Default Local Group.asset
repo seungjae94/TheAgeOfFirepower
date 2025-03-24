@@ -135,6 +135,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f3e1fa1dfdc7d647b5fa6d72c8f0cd4
+    m_Address: Assets/AddressableAssets/GameData/StageGameData/StageGameData_0000.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 60cfa879680e3394a86ab48a16542e08
     m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0012.asset
     m_ReadOnly: 0
@@ -255,6 +261,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: acb591c854c157c439319cd82789d3df
+    m_Address: Assets/AddressableAssets/GameData/StageGameData/StageGameData_0002.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ad800a83d6413714680754cdeb9e2744
     m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0003.asset
     m_ReadOnly: 0
@@ -279,8 +291,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be37e9bad4c30f847853d1e23f0d5201
+    m_Address: Assets/AddressableAssets/GameData/StageGameData/StageGameData_0003.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c785432e675c2cc4a8a375bb14f5fe42
     m_Address: Assets/Game Assets/Scriptable Objects/00 Global/Starter Data.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd5f7109239e1964aafce035a2945218
+    m_Address: Assets/AddressableAssets/GameData/StageGameData/StageGameData_0001.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
@@ -333,8 +357,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db4fe1784b5cc8147ba96ac06bc185a6
+    m_Address: Assets/AddressableAssets/GameData/StageGameData/StageGameData_0004.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e0fb34ed66623ea4daf00d49d5432b07
     m_Address: Assets/Game Assets/Scriptable Objects/Global Data.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Data Asset
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e530b43f42334a84aacb5b2987cc5790
+    m_Address: Assets/AddressableAssets/GameData/StageGameData/StageGameData_0005.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset

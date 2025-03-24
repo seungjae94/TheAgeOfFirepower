@@ -14,13 +14,18 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class ArtyGameData : GameData
     {
-        [Title("화포 데이터", horizontalLine: true)]
-        [HorizontalGroup("Sprites")]
+        [TitleGroup("화포 데이터", GroupID = "Arty", HorizontalLine = true)]
+        [HorizontalGroup("Arty/Sprites", Width = 100)]
         [LabelWidth(100)]
         [LabelText("스프라이트")]
         [PreviewField(Alignment = ObjectFieldAlignment.Left)]
         public Sprite sprite = null;
 
+        [HorizontalGroup("Arty/Sprites", Width = 100, Gap = 75)]
+        [HideLabel]
+        [PreviewField(Alignment = ObjectFieldAlignment.Left)]
+        public Sprite enemySprite = null;
+        
         [LabelText("무장(포탄)")]
         [LabelWidth(100)]
         [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetShellPreview))]
