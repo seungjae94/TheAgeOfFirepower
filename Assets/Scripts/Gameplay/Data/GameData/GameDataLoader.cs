@@ -1,13 +1,10 @@
 using Cysharp.Threading.Tasks;
-using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Net;
+using System.Linq;
+using Mathlife.ProjectL.Gameplay.Stage;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceLocations;
-using UnityEngine.UIElements;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -20,6 +17,7 @@ namespace Mathlife.ProjectL.Gameplay
         private readonly Dictionary<int, ArtyGameData> artyDict = new();
         private readonly Dictionary<int, MechPartGameData> mechParts = new();
         private readonly Dictionary<EItemType, Dictionary<int, CountableItemGameData>> countableItems = new();
+        private readonly Dictionary<int, Dictionary<int, StageGameData>> stages = new();
 
         public async UniTask Load()
         {
@@ -52,6 +50,13 @@ namespace Mathlife.ProjectL.Gameplay
                         countableItems[itemType].Add(itCountableItemGameData.id, itCountableItemGameData);
                         break;
                     }
+                    case StageGameData itStageGameData:
+                        int worldNo = itStageGameData.worldNo;
+                        int stageNo = itStageGameData.stageNo;
+                        if (stages.ContainsKey(worldNo) == false)
+                            stages.Add(worldNo, new());
+                        stages[worldNo].Add(stageNo, itStageGameData);
+                        break;
                 }
             }
         }
@@ -76,7 +81,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             if (id < 0)
                 return null;
-            
+
             return countableItems[itemType][id];
         }
 
@@ -93,6 +98,11 @@ namespace Mathlife.ProjectL.Gameplay
         public ExpGameData GetExpData()
         {
             return expGameData;
+        }
+
+        public Dictionary<int, StageGameData> GetWorldMapData(int worldNo)
+        {
+            return stages[worldNo];
         }
 
         public void Dispose()
