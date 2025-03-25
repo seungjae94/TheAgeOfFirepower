@@ -1,4 +1,4 @@
-namespace Mathlife.ProjectL.Gameplay.Battle
+namespace Mathlife.ProjectL.Gameplay
 {
     public class BattleItemGameData : CountableItemGameData
     {

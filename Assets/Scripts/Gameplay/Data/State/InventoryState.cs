@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Mathlife.ProjectL.Gameplay.Battle;
 using UniRx;
-using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {

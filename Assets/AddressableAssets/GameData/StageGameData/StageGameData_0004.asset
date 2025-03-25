@@ -40,15 +40,15 @@ MonoBehaviour:
   - gold: 0
     diamond: 0
     itemGameData: {fileID: 11400000, guid: 2e0e6f9d95665e649accd11f8d19ddcf, type: 2}
-    itemAmount: 0
+    itemAmount: 1
   - gold: 0
     diamond: 0
     itemGameData: {fileID: 11400000, guid: cd87f1b0da71ecf409302f2ff6d745bb, type: 2}
-    itemAmount: 0
+    itemAmount: 1
   - gold: 0
     diamond: 0
     itemGameData: {fileID: 11400000, guid: b3fe567db54d45441b6d61f3a30dbaac, type: 2}
-    itemAmount: 0
+    itemAmount: 1
   - gold: 0
     diamond: 0
     itemGameData: {fileID: 11400000, guid: 246524f5968dcd9428f7568515044cc9, type: 2}

@@ -10,8 +10,6 @@ using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using System.Collections.Generic;
 using System;
-using Mathlife.ProjectL.Gameplay.Battle;
-using Mathlife.ProjectL.Gameplay.Stage;
 
 namespace Mathlife.ProjectL.Editor
 {

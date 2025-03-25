@@ -19,7 +19,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             stageInfoViews = GetComponentsInChildren<StageInfoView>();
             for (int i = 0; i < stageInfoViews.Length; i++)
             {
-                stageInfoViews[i-1].Setup(stageDataDict[i]);
+                stageInfoViews[i].Setup(stageDataDict[i+1]);
             }
         }
 

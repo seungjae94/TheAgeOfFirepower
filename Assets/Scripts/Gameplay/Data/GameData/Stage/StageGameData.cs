@@ -8,7 +8,7 @@ using UnityEngine;
 using Sirenix.OdinInspector.Editor;
 #endif
 
-namespace Mathlife.ProjectL.Gameplay.Stage
+namespace Mathlife.ProjectL.Gameplay
 {
     [Serializable]
     public class Enemy

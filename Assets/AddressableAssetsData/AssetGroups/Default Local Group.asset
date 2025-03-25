@@ -33,32 +33,14 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 13100622dca7b274b9f7564326ec8cda
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0018.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 16b97e306709619449d735b5046d522e
     m_Address: Assets/AddressableAssets/GameData/ShellGameData/ShellGameData_0004.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1e81e6d18189bb2438511bda9cc0a714
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0005.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 246524f5968dcd9428f7568515044cc9
     m_Address: Assets/AddressableAssets/GameData/MaterialItemGameData/MaterialItemGameData_0002.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2770726377c484346afc4d53a0c97c2d
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0013.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
@@ -75,20 +57,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 34429c2365021d64cb5ea4a0eece68c7
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0019.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 38aa331051829944ebb184dc641fa34c
     m_Address: Assets/AddressableAssets/GameData/ShellGameData/ShellGameData_0002.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 390f8f39fc74cd34e9731d50546c65b9
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0002.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
@@ -111,12 +81,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 45b5df712ee7d6a45aa1894e4b5f3ace
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0001.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 48c279c9dce38bc43b64dd31913d0294
     m_Address: Assets/AddressableAssets/GameData/ArtyGameData/ArtyGameData_0004.asset
     m_ReadOnly: 0
@@ -129,56 +93,14 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 52b0628d20285764d82870d3fe7522a5
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0023.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5f3e1fa1dfdc7d647b5fa6d72c8f0cd4
     m_Address: Assets/AddressableAssets/GameData/StageGameData/StageGameData_0000.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 60cfa879680e3394a86ab48a16542e08
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0012.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 63ec05f7e884f0d46b2a0ae4c9c8bed3
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0024.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 645db9ed47b26784881ee7d2ef7ac9f1
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0008.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 67b6f737a4377c74387eeba92461901c
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0021.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 715879cc4e6f0a64e9c528ba65882130
     m_Address: Assets/AddressableAssets/GameData/BattleItemGameData/BattleItemGameData_0001.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 71d62ea796cd72a4da4a25f03e370d90
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0004.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7369341a04f7c8c43b4a6632e99d2666
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0026.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
@@ -219,56 +141,14 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 87761d0de3e4aef4fbc11411fe4f8db6
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0009.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 89793249bc975214793f2ed07a237bfa
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0020.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8ab59246e94d5ad4092310afbeb822fa
     m_Address: Assets/AddressableAssets/GameData/MechPartGameData/MechPartGameData_0003.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8e596c5c172fd2c45a53b6e0ede71622
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0022.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9a9527e28cd65604cbb5c98e12c127cf
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0007.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: aa6dd4654450639419ad80fea98eed3c
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0014.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ab16676163c1c0a4f8aaf56e95a06481
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0015.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: acb591c854c157c439319cd82789d3df
     m_Address: Assets/AddressableAssets/GameData/StageGameData/StageGameData_0002.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ad800a83d6413714680754cdeb9e2744
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0003.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
@@ -281,12 +161,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b83eafa984d217e44942ee267033a7d8
     m_Address: Assets/AddressableAssets/GameData/ShellGameData/ShellGameData_0001.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ba4ca0d0b8c75124389fdc9b1d505db8
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0025.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
@@ -321,20 +195,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d178b96da15e9b04fa4e9071b5bb0280
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0017.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d2401f60129bc484cabe759c5d234fb0
     m_Address: Assets/AddressableAssets/GameData/MaterialItemGameData/MaterialItemGameData_0000.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d286ead8816fdc1499a24d2d07ff2f0b
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0010.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
@@ -375,12 +237,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data Asset
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e7372cf259526774ba2b831993251450
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0016.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e858c33d5a0d4e64d9432444f4ef4ba9
     m_Address: Assets/AddressableAssets/GameData/ArtyGameData/ArtyGameData_0001.asset
     m_ReadOnly: 0
@@ -389,18 +245,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e9e07534cad916940ada567f6ab9d94c
     m_Address: Assets/AddressableAssets/GameData/ShellGameData/ShellGameData_0000.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ec63e41604dcc4b44a0f218fa458b498
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0006.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Data Asset
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f5d007c6d952fe849aa2a02af1ce2eb1
-    m_Address: Assets/Game Assets/Scriptable Objects/SkillSO/SkillSO_0011.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Data Asset
