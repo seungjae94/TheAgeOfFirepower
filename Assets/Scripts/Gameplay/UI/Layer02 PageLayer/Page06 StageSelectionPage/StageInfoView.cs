@@ -51,6 +51,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // Callback
         private void OnClick(Unit _)
         {
+            var stageSelectionPage = Presenter.Find<StageSelectionPage>();
+            stageSelectionPage.onSelectStage.OnNext(this);
+            
             var popup = Presenter.Find<StageInfoPopup>();
             popup.Setup(stageGameData);
             popup.OpenWithAnimation().Forget();

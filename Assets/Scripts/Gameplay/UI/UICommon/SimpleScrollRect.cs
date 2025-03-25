@@ -42,7 +42,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(gameObject);
         }
 
-        public new void UpdateContents(IList<TItemData> itemDatas)
+        public new virtual void UpdateContents(IList<TItemData> itemDatas)
         {
             base.UpdateContents(itemDatas);
         }
