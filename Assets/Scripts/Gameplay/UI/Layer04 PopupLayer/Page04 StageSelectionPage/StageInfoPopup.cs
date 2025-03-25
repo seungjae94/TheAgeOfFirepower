@@ -16,6 +16,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private Button enterButton;
 
         [SerializeField]
+        private Button closeButton;
+        
+        [SerializeField]
         private StageInfoEnemyScrollRect enemyScrollRect;
         
         [SerializeField]
@@ -36,6 +39,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             enterButton.OnClickAsObservable()
                 .Subscribe(OnClickEnterButton)
+                .AddTo(disposables);
+            
+            closeButton.OnClickAsObservable()
+                .Subscribe(_ => CloseWithAnimation().Forget())
                 .AddTo(disposables);
             
             enemyScrollRect.UpdateContents(stageGameData.enemyList);
