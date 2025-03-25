@@ -99,9 +99,11 @@ namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
         {
             disposables.Clear();
 
+            BatteryPage.selectedSlotIndexRx.Value = -1;
+            
             slideOutTween.Restart();
             await slideOutTween.AwaitForComplete();
-            
+
             await base.CloseWithAnimation();
         }
 

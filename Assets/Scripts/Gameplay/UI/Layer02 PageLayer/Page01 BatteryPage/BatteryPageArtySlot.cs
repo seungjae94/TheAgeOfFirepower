@@ -14,20 +14,22 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private BatteryPage BatteryPage => Presenter.Find<BatteryPage>();
         private ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
 
-        // Field
-        private int slotIndex = 0;
+        // Trigger
         private ObservableDropTrigger dropTrigger;
         private ObservablePointerClickTrigger clickTrigger;
 
+        // View
         [SerializeField]
         private CanvasGroup addMemberGuideCanvasGroup;
-
+        
         [SerializeField]
-        CanvasGroup selectionCanvasGroup;
+        private GameObject selectionOverlay;
         
         [SerializeField]
         private BatteryPageArtySlotItem slotItem;
-
+        
+        // Field
+        private int slotIndex = 0;
         private readonly CompositeDisposable disposables = new();
 
         // 이벤트 함수
@@ -91,12 +93,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // This character is selected.
             if (selectedSlotIndex == slotIndex)
             {
-                selectionCanvasGroup.Show();
+                selectionOverlay.SetActive(true);
             }
             // Another character is selected.
             else
             {
-                selectionCanvasGroup.Hide();
+                selectionOverlay.SetActive(false);
             }
         }
 
@@ -128,7 +130,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             BatteryPage.selectedSlotIndexRx.Value = -1;
         }
 
-        void OnClickSlot(PointerEventData ev)
+        private void OnClickSlot(PointerEventData ev)
         {
             BatteryPage.selectedSlotIndexRx.Value = slotIndex;
 

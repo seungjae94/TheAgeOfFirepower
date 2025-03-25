@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Utils;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
