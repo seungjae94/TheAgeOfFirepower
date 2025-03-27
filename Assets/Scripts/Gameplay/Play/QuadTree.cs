@@ -47,18 +47,20 @@ namespace Mathlife.ProjectL.Gameplay.Play
 #if UNITY_EDITOR
         public void DrawGizmos()
         {
-            //DrawQuadNode(root, Color.green);
             foreach (QuadNode node in this)
             {
-                Color color = terrainData.IsFilled(node) ? Color.green : Color.red;
-                DrawQuadNode(node, color);
+                if (terrainData.IsQuadNodeUniform(node))
+                {
+                    Color color = terrainData.IsFilled(node) ? Color.blue : Color.red;
+                    DrawQuadNode(node, color);
+                }
             }
         }
         
         private void DrawQuadNode(QuadNode node, Color color)
         {
-            Vector3 center = new Vector3(node.xMin + (node.width / 2f), node.yMin + (node.height / 2f));
-            Vector3 size = new Vector3(node.width, node.height);
+            Vector3 center = new Vector3(node.xMin + (node.width / 2f), node.yMin + (node.height / 2f), 0);
+            Vector3 size = new Vector3(node.width, node.height, 0);
             
             Gizmos.color = color;
             Gizmos.DrawWireCube(center, size);

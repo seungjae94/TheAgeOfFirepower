@@ -46,26 +46,5 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
             return true;
         }
-        
-        #if UNITY_EDITOR
-        // public void DrawGizmos(float ppu)
-        // {
-        //     if (ppu <= 0)
-        //         throw new ArgumentException("PPU(Pixel Per Unit) should be positive.");
-        //
-        //     if (texels == null)
-        //         throw new NullReferenceException("TerrainData isn't initialized.");
-        //
-        //     for (int x = 0; x < width; ++x)
-        //     {
-        //         for (int y = 0; y < height; ++y)
-        //         {
-        //             Vector3 position = new Vector3(x, y, 0) / ppu;
-        //             Gizmos.color = texels[x, y] ? Color.green : Color.red;
-        //             Gizmos.DrawSphere(position, 0.5f / ppu);
-        //         }
-        //     }
-        // }
-        #endif
     }
 }
