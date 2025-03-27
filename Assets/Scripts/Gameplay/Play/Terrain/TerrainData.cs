@@ -26,12 +26,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
         }
 
-        public bool IsFilled(QuadNode node)
+        public bool IsFilled(Quad node)
         {
             return texels[node.xMin, node.yMin];
         }
         
-        public bool IsQuadNodeUniform(QuadNode node)
+        public bool IsQuadUniform(Quad node)
         {
             bool value = texels[node.xMin, node.yMin];
             for (int x = node.xMin; x < node.xMin + node.width; ++x)

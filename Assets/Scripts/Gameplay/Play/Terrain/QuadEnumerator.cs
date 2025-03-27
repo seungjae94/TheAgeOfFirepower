@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace Mathlife.ProjectL.Gameplay.Play
 {
-    public class QuadNodeEnumerator : IEnumerator<QuadNode>
+    public class QuadEnumerator : IEnumerator<Quad>
     {
-        Stack<QuadNode> stack = new();
-        private QuadNode root;
+        Stack<Quad> stack = new();
+        private Quad root;
 
-        public QuadNode Current { get; private set; }
+        public Quad Current { get; private set; }
 
         object IEnumerator.Current => Current;
 
-        public QuadNodeEnumerator(QuadNode root)
+        public QuadEnumerator(Quad root)
         {
             this.root = root;
             stack.Push(root);
@@ -20,10 +20,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         public bool MoveNext()
         {
-            if (stack.TryPop(out QuadNode node))
+            if (stack.TryPop(out Quad quad))
             {
-                Current = node;
-                if (node.TryGetChildren(out QuadNode[] children))
+                Current = quad;
+                if (quad.TryGetChildren(out Quad[] children))
                 {
                     foreach (var child in children)
                     {
