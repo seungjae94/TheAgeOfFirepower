@@ -24,14 +24,23 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public QuadNode[] Divide()
         {
+            // if (width > height + 1)
+            // {
+            //     children = new[]
+            //     {
+            //         new QuadNode(xMin, yMin, width, height)
+            //     };
+            //     return children;
+            // }
+            
             int halfWidth = width / 2;
             int halfHeight = height / 2;
             children = new[]
             {
                 new QuadNode(xMin, yMin, halfWidth, halfHeight),
-                new QuadNode(xMin + halfWidth, yMin, halfWidth, halfHeight),
-                new QuadNode(xMin, yMin + halfHeight, halfWidth, halfHeight),
-                new QuadNode(xMin + halfWidth, yMin + halfHeight, halfWidth, halfHeight)
+                new QuadNode(xMin + halfWidth, yMin, width - halfWidth, halfHeight),
+                new QuadNode(xMin, yMin + halfHeight, halfWidth, height - halfHeight),
+                new QuadNode(xMin + halfWidth, yMin + halfHeight, width - halfWidth, height - halfHeight)
             };
             return children;
         }

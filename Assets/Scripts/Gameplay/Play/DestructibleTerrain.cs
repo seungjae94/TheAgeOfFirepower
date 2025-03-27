@@ -1,3 +1,4 @@
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -16,6 +17,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private QuadTree quadTree;
 
 #if UNITY_EDITOR
+        [ReadOnly]
+        [ShowInInspector]
+        private int quadNodeCount = 0;
+        
         private void OnDrawGizmosSelected()
         {
             if (quadTree != null)
@@ -29,6 +34,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             terrainData = new TerrainData(texture);
             quadTree = new QuadTree(terrainData);
+            quadNodeCount = quadTree.Count();
             EditorUtility.SetDirty(this);
         }
         #endif
