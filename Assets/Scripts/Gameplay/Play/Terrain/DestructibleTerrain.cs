@@ -30,6 +30,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [ReadOnly]
         [ShowInInspector]
         private int quadNodeCount = 0;
+        
+        [SerializeField]
+        private new Camera camera;
+
+        private Vector3 mousePosition = Vector3.zero;
+        private float circleRadius = 0.2f;
 
         private void OnDrawGizmosSelected()
         {
@@ -39,13 +45,46 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
         }
 
-        [Button(ButtonSizes.Large, Name = "Generate Terrain")]
-        public void GenerateTerrain()
+        private void Awake()
+        {
+            GenerateTerrain();
+        }
+
+        private void Update()
+        {
+            if (Input.GetMouseButton(0))
+            {
+                Vector3 mousePosition = camera.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 5f));
+                DestroyArea(mousePosition);
+            }
+        }
+
+        private void DestroyArea(Vector3 position)
+        {
+            // 일단은 맵이 0, 0에 있다고 가정
+            int texelCenterX = (int)(position.x * pixelsPerUnit + texture.width / 2f); 
+            int texelCenterY = (int)(position.y * pixelsPerUnit + texture.height / 2f);
+            int texelRadius = (int)(circleRadius * pixelsPerUnit);
+            
+            terrainData.DestroyCircle(texelCenterX, texelCenterY, texelRadius);
+            
+            quadTree = new QuadTree(terrainData);
+            quadNodeCount = quadTree.Count();
+            CreateMesh();
+        }
+
+        private void GenerateTerrain()
         {
             terrainData = new TerrainData(texture);
             quadTree = new QuadTree(terrainData);
             quadNodeCount = quadTree.Count();
             CreateMesh();
+        }
+        
+        [Button(ButtonSizes.Large, Name = "Generate Terrain")]
+        public void GenerateTerrainEditor()
+        {
+            GenerateTerrain();
             EditorUtility.SetDirty(this);
         }
 
