@@ -1,4 +1,5 @@
 using System.Linq;
+using Mathlife.ProjectL.Gameplay.ObjectBase;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -8,8 +9,10 @@ using UnityEditor;
 
 namespace Mathlife.ProjectL.Gameplay.Play
 {
-    public class DestructibleTerrain : MonoBehaviour
+    public class DestructibleTerrain : MonoSingleton<DestructibleTerrain>
     {
+        protected override SingletonLifeTime LifeTime => SingletonLifeTime.Scene;
+        
         // Dependency
         [SerializeField]
         private Sprite sprite;
@@ -28,12 +31,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private Vector2Int lastChunkSize = new Vector2Int(0, 0);
 
         private QuadTreeChunk[,] chunks;
-
-        // Info: 테스트용
-        private void Awake()
-        {
-            GenerateTerrain();
-        }
         
         public void GenerateTerrain()
         {
@@ -84,122 +81,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
         }
         
-        public void Paint( /*Vector3 position, Shape shape, EPaintType paintType*/)
+        public void Paint(Vector3 worldPosition, Shape shape, Color paintColor)
         {
+            
         }
-
-#if UNITY_EDITOR
-        // [ShowInInspector]
-        // private bool drawGizmos = false;
-        //
-        // [ReadOnly]
-        // [ShowInInspector]
-        // private int quadNodeCount = 0;
-        //
-        // [SerializeField]
-        // private new Camera camera;
-        //
-        // private Vector3 mousePosition = Vector3.zero;
-        // private float circleRadius = 0.2f;
-        //
-        // private void OnDrawGizmosSelected()
-        // {
-        //     if (quadTree != null && drawGizmos)
-        //     {
-        //         quadTree.DrawGizmos(texture, pixelsPerUnit);
-        //     }
-        // }
-        //
-        // private void Awake()
-        // {
-        //     GenerateTerrain();
-        // }
-        //
-        // private void Update()
-        // {
-        //     if (Input.GetMouseButton(0))
-        //     {
-        //         Vector3 mousePosition = camera.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 5f));
-        //         DestroyArea(mousePosition);
-        //     }
-        // }
-        //
-        // private void DestroyArea(Vector3 position)
-        // {
-        //     // 일단은 맵이 0, 0에 있다고 가정
-        //     int texelCenterX = (int)(position.x * pixelsPerUnit + texture.width / 2f);
-        //     int texelCenterY = (int)(position.y * pixelsPerUnit + texture.height / 2f);
-        //     int texelRadius = (int)(circleRadius * pixelsPerUnit);
-        //
-        //     terrainData.DestroyCircle(texelCenterX, texelCenterY, texelRadius);
-        //
-        //     quadTree = new QuadTree(terrainData);
-        //     quadNodeCount = quadTree.Count();
-        //     CreateMesh();
-        // }
-        //
-        // private void GenerateTerrain()
-        // {
-        //     terrainData = new TerrainData(texture);
-        //     quadTree = new QuadTree(terrainData);
-        //     quadNodeCount = quadTree.Count();
-        //     CreateMesh();
-        // }
-        //
-        // [Button(ButtonSizes.Large, Name = "Generate Terrain")]
-        // public void GenerateTerrainEditor()
-        // {
-        //     GenerateTerrain();
-        //     EditorUtility.SetDirty(this);
-        // }
-        //
-        // private void CreateMesh()
-        // {
-        //     MeshCreator creator = new();
-        //
-        //     foreach (Quad quad in quadTree)
-        //     {
-        //         if (quad.HasChildren() == true)
-        //             continue;
-        //
-        //         if (terrainData.IsFilled(quad) == false)
-        //             continue;
-        //
-        //         VertexData[] vertexes = QuadToVertexes(quad);
-        //         creator.AddTriangle(vertexes[0], vertexes[1], vertexes[2]);
-        //         creator.AddTriangle(vertexes[0], vertexes[2], vertexes[3]);
-        //     }
-        //
-        //     meshFilter.mesh = creator.Create();
-        // }
-        //
-        // // 1 2
-        // // 0 3
-        // private VertexData[] QuadToVertexes(Quad quad)
-        // {
-        //     VertexData[] vertexArray = new VertexData[4]
-        //     {
-        //         TexCoordToVertex(quad.xMin, quad.yMin),
-        //         TexCoordToVertex(quad.xMin, quad.yMin + quad.height),
-        //         TexCoordToVertex(quad.xMin + quad.width, quad.yMin + quad.height),
-        //         TexCoordToVertex(quad.xMin + quad.width, quad.yMin),
-        //     };
-        //
-        //     return vertexArray;
-        // }
-        //
-        // private VertexData TexCoordToVertex(int x, int y)
-        // {
-        //     float u = x / (float)texture.width;
-        //     float v = y / (float)texture.height;
-        //
-        //     return new VertexData()
-        //     {
-        //         position = new Vector3(x - (texture.width / 2f), y - (texture.height / 2f), 0) / pixelsPerUnit,
-        //         uv = new Vector2(u, v),
-        //         normal = transform.forward
-        //     };
-        // }
-#endif
     }
 }
