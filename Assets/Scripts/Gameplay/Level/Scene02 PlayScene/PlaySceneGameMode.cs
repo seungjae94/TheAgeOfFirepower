@@ -15,7 +15,7 @@ namespace Mathlife.ProjectL.Gameplay
         private new Camera camera;
         
         private Vector3 mousePosition = Vector3.zero;
-        private float circleRadius = 0.2f;
+        private readonly int circleRadiusPx = 12;
         
         public override async UniTask InitializeScene(IProgress<float> progress)
         {
@@ -44,7 +44,7 @@ namespace Mathlife.ProjectL.Gameplay
             if (Input.GetMouseButton(0))
             {
                 Vector3 mousePosition = camera.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 5f));
-                DestructibleTerrain.Inst.Paint(mousePosition, Shape.Circle(circleRadius), Color.clear);
+                DestructibleTerrain.Inst.Paint(mousePosition, Shape.Circle(circleRadiusPx), Color.clear);
             }
         }
     }

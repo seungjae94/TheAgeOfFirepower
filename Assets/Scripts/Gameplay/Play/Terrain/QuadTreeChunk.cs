@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,20 +7,42 @@ namespace Mathlife.ProjectL.Gameplay.Play
 {
     public class QuadTreeChunk : MonoBehaviour
     {
+        public int Width => spriteRenderer?.sprite?.texture?.width ?? 0;
+        public int Height => spriteRenderer?.sprite?.texture?.height ?? 0;
+        
         private SpriteRenderer spriteRenderer;
         private QuadTree quadTree;
+
+        /// <summary>
+        /// 한 프레임에 여러 번 Paint를 할 수 있기 때문에 Paint를 호출할 때는 dirty 체크만 하고
+        /// Update 타이밍에 콜라이더를 업데이트한다. 
+        /// </summary>
+        private bool dirty = false;
         
         public void Init(Texture2D texture, float pixelsPerUnit)
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero,
                 pixelsPerUnit);
-            RefreshColliders();
+
+            dirty = true;
         }
 
-        public void Paint()
+        public void Paint(int texelX, int texelY, int height, Color paintColor)
         {
-            // TODO: refresh texture
+            if (texelX < 0 || texelX >= Width || texelY < 0 || height < 0 || texelY + height > Height)
+                throw new IndexOutOfRangeException("Given texels are out of bounds.");
+            
+            Texture2D texture = spriteRenderer.sprite.texture;
+
+            Color[] colors = new Color[height];
+            for (int i = 0; i < colors.Length; i++)
+                colors[i] = paintColor;
+            
+            texture.SetPixels(texelX, texelY, 1, height, colors);
+            texture.Apply();
+
+            dirty = true;
         }
 
         private void RefreshColliders()
@@ -64,6 +87,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
             {
                 if (boxCollider2D.enabled == false)
                     Destroy(boxCollider2D);
+            }
+        }
+
+        private void Update()
+        {
+            if (dirty)
+            {
+                RefreshColliders();
+                dirty = false;
             }
         }
     }

@@ -1,10 +1,10 @@
-using System.Linq;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
+using Mathlife.ProjectL.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI.Extensions;
 
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 namespace Mathlife.ProjectL.Gameplay.Play
@@ -83,7 +83,56 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         public void Paint(Vector3 worldPosition, Shape shape, Color paintColor)
         {
+            Vector3 localPixelPosition = (worldPosition - transform.position) * pixelsPerUnit;
+
+            int offsetX = (int) localPixelPosition.x;
+            int offsetY = (int) localPixelPosition.y;
+            foreach (Column column in shape.columns)
+            {
+                foreach (Range range in column.ranges)
+                {
+                    PaintRange(offsetX + shape.Offset.x, offsetY + shape.Offset.y, range, paintColor);                    
+                }
+
+                ++offsetX;
+            }
+        }
+
+        private void PaintRange(int offsetX, int offsetY, Range range, Color paintColor)
+        {
+            int chunkIndexX = MyMathf.FloorDiv(offsetX, chunkSize.x);
+            int chunkIndexYMin = MyMathf.FloorDiv(offsetY + range.yMin, chunkSize.y);
+            int chunkIndexYMax = MyMathf.FloorDiv(offsetY + range.yMax, chunkSize.y);
             
+            if (chunkIndexX < 0 || chunkIndexX >= chunks.GetLength(0))
+                return;
+
+            if (chunkIndexYMax < 0 || chunkIndexYMin >= chunks.GetLength(1))
+                return;
+
+            chunkIndexYMin.Clamp(0, chunks.GetLength(1) - 1);
+            chunkIndexYMax.Clamp(0, chunks.GetLength(1) - 1);
+            
+            int texelX = offsetX % chunkSize.x;
+
+            for (int chunkIndexY = chunkIndexYMin; chunkIndexY <= chunkIndexYMax; ++chunkIndexY)
+            {
+                QuadTreeChunk chunk = chunks[chunkIndexX, chunkIndexY];
+
+                int texelYMin = 0;
+                if (chunkIndexY == chunkIndexYMin)
+                {
+                    texelYMin = (offsetY + range.yMin) % chunkSize.y;
+                }
+
+                int texelYMax = chunk.Height - 1;
+                if (chunkIndexY == chunkIndexYMax)
+                {
+                    texelYMax  = Mathf.Clamp((offsetY + range.yMax) % chunkSize.y, 0, chunk.Height - 1);
+                }
+
+                chunk.Paint(texelX, texelYMin, texelYMax - texelYMin + 1, paintColor);
+            }
         }
     }
 }
