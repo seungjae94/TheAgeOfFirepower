@@ -11,6 +11,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         private Quad[] children;
 
+        public Vector2 Offset => new Vector2(xMin + (width / 2f), yMin + (height / 2f));
+        public Vector2 Size => new Vector2(width, height);
+
         public Quad(int xMin, int yMin, int width, int height)
         {
             this.xMin = xMin;
@@ -18,6 +21,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             this.width = width;
             this.height = height;
         }
+        
 
         public bool IsDivisible()
         {

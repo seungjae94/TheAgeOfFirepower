@@ -5,8 +5,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 {
     public class QuadEnumerator : IEnumerator<Quad>
     {
-        Stack<Quad> stack = new();
-        private Quad root;
+        private readonly Stack<Quad> stack = new();
+        private readonly Quad root;
 
         public Quad Current { get; private set; }
 
