@@ -34,12 +34,8 @@ namespace Mathlife.ProjectL.Utils
         private static readonly int[] enterDirsCW =  new int[8] { 2, 2, 4, 4, 6, 6, 0, 0 };
         private static readonly int[] enterDirsCCW =  new int[8] { 6, 0, 0, 2, 2, 4, 4, 6 };
         
-        public static List<Vector2Int> MooreNeighbor(Vector2Int start, int count, Func<int, int, bool> gridReader)
+        public static List<Vector2Int> MooreNeighbor(Vector2Int start, bool clockWiseSearch, int contourLength, Func<int, int, bool> gridReader)
         {
-            // 파라미터 수정
-            bool clockWise = count > 0;
-            count = Mathf.Abs(count);
-
             // 진입 방향 찾기
             int enterDir = -1;
             for (int d = 0; d < 8; d++)
@@ -60,20 +56,20 @@ namespace Mathlife.ProjectL.Utils
             List<Vector2Int> boundary = new() { start };
             Vector2Int current = start;
 
-            for (int i = 0; i < count; ++i)
+            for (int i = 0; i < contourLength; ++i)
             {
                 int backtrackDir = (enterDir + 4) % 8;
 
                 for (int d = 0; d < 8; ++d)
                 {
-                    int testDir = clockWise ? MyMathf.Mod(backtrackDir + d, 8) : MyMathf.Mod(backtrackDir - d, 8);
+                    int testDir = clockWiseSearch ? MyMathf.Mod(backtrackDir + d, 8) : MyMathf.Mod(backtrackDir - d, 8);
 
                     Vector2Int next = new Vector2Int(current.x + dx[testDir], current.y + dy[testDir]);
                     bool value = gridReader(next.x, next.y);
 
                     if (value)
                     {
-                        enterDir = clockWise ? enterDirsCW[testDir] :  enterDirsCCW[testDir];
+                        enterDir = clockWiseSearch ? enterDirsCW[testDir] :  enterDirsCCW[testDir];
                         current = next;
                         boundary.Add(current);
                         break;

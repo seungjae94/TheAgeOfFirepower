@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
 using Mathlife.ProjectL.Utils;
 using Sirenix.OdinInspector;
@@ -19,6 +20,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         [MinValue(1f)]
         private Vector2Int chunkSize = new Vector2Int(64, 64);
+
+        [SerializeField]
+        private int minContourLength = 12;
+
 
         // Field
         private QuadTree quadTree;
@@ -134,38 +139,64 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         // 물리
 
-        public void ProjectDownToSurface(Vector3 position, out Vector3 surfacePosition)
+        public Vector3 ProjectDownToSurface(Vector3 position)
         {
             RaycastHit2D hit = Physics2D.Raycast(position, Vector2.down);
-            surfacePosition = hit.point;
+            return hit.point;
+        }
+
+        public Vector3 ProjectUpToSurface(Vector3 position)
+        {
+            Vector2Int offset = WorldPositionToOffset(position);
+            while (GetTexel(offset.x, offset.y))
+            {
+                offset.y++;
+            }
+
+            Vector3 projectedPosition = OffsetToWorldPosition(offset + Vector2Int.down);
+
+            return new Vector3(position.x, projectedPosition.y + 0.5f / pixelsPerUnit, position.z);
         }
 
         /// <summary>
         /// 표면을 따라 이동한 결과를 반환한다.
         /// </summary>
         /// <param name="startPosition">시작 위치 (표면 위에 있거나 표면 근처에 있는 위치)</param>
-        /// <param name="slideAmount">표면을 따라 이동할 거리 (방향 포함)</param>
+        /// <param name="translation">표면을 따라 이동할 거리 (방향 포함)</param>
         /// <param name="endPosition">[out] 도착 위치</param>
         /// <param name="normal">[out] 도착 위치에서의 노말</param>
-        public void Slide(Vector3 startPosition, float slideAmount, out Vector3 endPosition, out Vector3 normal)
+        public void Slide(Vector3 startPosition, float translation, out Vector3 endPosition, out Vector3 normal, out Vector3 tangent)
         {
-            ProjectDownToSurface(startPosition, out Vector3 startSurfacePosition);
+            Vector3 startSurfacePosition = ProjectDownToSurface(startPosition);
 
-            int slideCount = Mathf.RoundToInt(slideAmount * pixelsPerUnit);
+            bool clockWise = translation > 0f;
+            int contourLength = Mathf.RoundToInt(Mathf.Abs(translation) * pixelsPerUnit) + 1;
+            contourLength = Mathf.Clamp(contourLength, minContourLength, contourLength);
 
             // 시작 위치 찾기
             Vector2Int startOffset = WorldPositionToOffset(startSurfacePosition);
 
             // 컨투어 계산
-            List<Vector2Int> contour = MyMathf.MooreNeighbor(startOffset, slideCount, GetTexel);
-            //DebugDrawBoundary(contour);
-            
-            // 도착지점 계산
-            Vector2Int endPositionPx = contour[^1];
-            endPosition = new Vector3(endPositionPx.x + 0.5f, endPositionPx.y + 0.5f) / pixelsPerUnit;
+            List<Vector2Int> contour = MyMathf.MooreNeighbor(startOffset, clockWise, contourLength, GetTexel);
 
-            // TODO: Catmull-Rom 보간을 통한 노말 계산
-            normal = new Vector3();
+            List<Vector2> worldContour = contour
+                .Select(posPx => new Vector2(posPx.x + 0.5f, posPx.y + 0.5f) / pixelsPerUnit)
+                .ToList();
+
+            // 스플라인 보간
+            int n = worldContour.Count;
+
+            CatmullRomSpline spline = new(clockWise, worldContour);
+#if UNITY_EDITOR
+            spline.DrawSpline(DebugLineRenderer.Inst);
+#endif
+
+            spline.GetPoint(Mathf.Abs(translation), out Vector2 point2D, out Vector2 normal2D, out Vector2 tangent2D);
+            endPosition = new Vector3(point2D.x, point2D.y, startPosition.z);
+            endPosition = ProjectUpToSurface(endPosition);
+
+            normal = new Vector3(normal2D.x, normal2D.y, 0f);
+            tangent = new Vector3(tangent2D.x, tangent2D.y, 0f);
         }
 
         private bool GetTexel(int x, int y)
