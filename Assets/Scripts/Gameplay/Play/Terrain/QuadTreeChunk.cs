@@ -98,5 +98,26 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 dirty = false;
             }
         }
+
+        public void Copy(int x, int y, int width, int height, ref bool[,] texels)
+        {
+            if (width < 0 || height < 0 || x < 0 || x + width > Width || y < 0 || y + height > Height)
+                throw new IndexOutOfRangeException("Given texels are out of bounds.");
+            
+            Texture2D texture = spriteRenderer.sprite.texture;
+
+            for (int i = x; i < x + width; ++i)
+            {
+                for (int j = y; j < y + height; ++j)
+                {
+                    texels[i, j] = texture.GetPixel(i, j).a > float.Epsilon;
+                }
+            }
+        }
+
+        public bool GetTexel(int x, int y)
+        {
+            return spriteRenderer.sprite.texture.GetPixel(x, y).a > float.Epsilon;
+        }
     }
 }

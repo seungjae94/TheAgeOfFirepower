@@ -1,18 +1,17 @@
+using System;
+using System.Collections.Generic;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
 using Mathlife.ProjectL.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 
-#if UNITY_EDITOR
-#endif
-
 namespace Mathlife.ProjectL.Gameplay.Play
 {
     public class DestructibleTerrain : MonoSingleton<DestructibleTerrain>
     {
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.Scene;
-        
+
         // Dependency
         [SerializeField]
         private Sprite sprite;
@@ -31,7 +30,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private Vector2Int lastChunkSize = new Vector2Int(0, 0);
 
         private QuadTreeChunk[,] chunks;
-        
+
         public void GenerateTerrain()
         {
             // 텍스쳐 데이터 저장
@@ -80,21 +79,19 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 }
             }
         }
-        
+
+        // 렌더링
         public void Paint(Vector3 worldPosition, Shape shape, Color paintColor)
         {
-            Vector3 localPixelPosition = (worldPosition - transform.position) * pixelsPerUnit;
-
-            int offsetX = (int) localPixelPosition.x;
-            int offsetY = (int) localPixelPosition.y;
+            Vector2Int offset = WorldPositionToOffset(worldPosition);
             foreach (Column column in shape.columns)
             {
                 foreach (Range range in column.ranges)
                 {
-                    PaintRange(offsetX + shape.Offset.x, offsetY + shape.Offset.y, range, paintColor);                    
+                    PaintRange(offset.x + shape.Offset.x, offset.y + shape.Offset.y, range, paintColor);
                 }
 
-                ++offsetX;
+                ++offset.x;
             }
         }
 
@@ -103,7 +100,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             int chunkIndexX = MyMathf.FloorDiv(offsetX, chunkSize.x);
             int chunkIndexYMin = MyMathf.FloorDiv(offsetY + range.yMin, chunkSize.y);
             int chunkIndexYMax = MyMathf.FloorDiv(offsetY + range.yMax, chunkSize.y);
-            
+
             if (chunkIndexX < 0 || chunkIndexX >= chunks.GetLength(0))
                 return;
 
@@ -112,7 +109,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             chunkIndexYMin.Clamp(0, chunks.GetLength(1) - 1);
             chunkIndexYMax.Clamp(0, chunks.GetLength(1) - 1);
-            
+
             int texelX = offsetX % chunkSize.x;
 
             for (int chunkIndexY = chunkIndexYMin; chunkIndexY <= chunkIndexYMax; ++chunkIndexY)
@@ -128,11 +125,86 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 int texelYMax = chunk.Height - 1;
                 if (chunkIndexY == chunkIndexYMax)
                 {
-                    texelYMax  = Mathf.Clamp((offsetY + range.yMax) % chunkSize.y, 0, chunk.Height - 1);
+                    texelYMax = Mathf.Clamp((offsetY + range.yMax) % chunkSize.y, 0, chunk.Height - 1);
                 }
 
                 chunk.Paint(texelX, texelYMin, texelYMax - texelYMin + 1, paintColor);
             }
+        }
+
+        // 물리
+
+        public void ProjectDownToSurface(Vector3 position, out Vector3 surfacePosition)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(position, Vector2.down);
+            surfacePosition = hit.point;
+        }
+
+        /// <summary>
+        /// 표면을 따라 이동한 결과를 반환한다.
+        /// </summary>
+        /// <param name="startPosition">시작 위치 (표면 위에 있거나 표면 근처에 있는 위치)</param>
+        /// <param name="slideAmount">표면을 따라 이동할 거리 (방향 포함)</param>
+        /// <param name="endPosition">[out] 도착 위치</param>
+        /// <param name="normal">[out] 도착 위치에서의 노말</param>
+        public void Slide(Vector3 startPosition, float slideAmount, out Vector3 endPosition, out Vector3 normal)
+        {
+            ProjectDownToSurface(startPosition, out Vector3 startSurfacePosition);
+
+            int slideCount = Mathf.RoundToInt(slideAmount * pixelsPerUnit);
+
+            // 시작 위치 찾기
+            Vector2Int startOffset = WorldPositionToOffset(startSurfacePosition);
+
+            // 컨투어 계산
+            List<Vector2Int> contour = MyMathf.MooreNeighbor(startOffset, slideCount, GetTexel);
+            //DebugDrawBoundary(contour);
+            
+            // 도착지점 계산
+            Vector2Int endPositionPx = contour[^1];
+            endPosition = new Vector3(endPositionPx.x + 0.5f, endPositionPx.y + 0.5f) / pixelsPerUnit;
+
+            // TODO: Catmull-Rom 보간을 통한 노말 계산
+            normal = new Vector3();
+        }
+
+        private bool GetTexel(int x, int y)
+        {
+            int indexX = MyMathf.FloorDiv(x, chunkSize.x);
+            int indexY = MyMathf.FloorDiv(y, chunkSize.y);
+
+            if (indexX < 0 || indexX >= chunks.GetLength(0) || indexY < 0 || indexY >= chunks.GetLength(1))
+                return false;
+
+            return chunks[indexX, indexY].GetTexel(x % chunkSize.x, y % chunkSize.y);
+        }
+
+        // 유틸
+        private Vector2Int WorldPositionToOffset(Vector3 worldPosition)
+        {
+            Vector3 localPositionPx = (worldPosition - transform.position) * pixelsPerUnit;
+            return new Vector2Int((int)localPositionPx.x, (int)localPositionPx.y);
+        }
+
+        private Vector3 OffsetToWorldPosition(Vector2Int offset)
+        {
+            Vector3 localPositionPx = new Vector3(offset.x, offset.y);
+            return (localPositionPx / pixelsPerUnit) + transform.position;
+        }
+
+        private void DebugDrawBoundary(List<Vector2Int> boundary)
+        {
+#if UNITY_EDITOR
+            foreach (var boundaryPoint in boundary)
+            {
+                Vector3 center = OffsetToWorldPosition(boundaryPoint);
+                float hw = 0.5f / pixelsPerUnit;
+                Debug.DrawLine(center + new Vector3(-hw, hw), center + new Vector3(hw, hw), Color.magenta);
+                Debug.DrawLine(center + new Vector3(-hw, hw), center + new Vector3(hw, -hw), Color.magenta);
+                Debug.DrawLine(center + new Vector3(hw, hw), center + new Vector3(hw, -hw), Color.magenta);
+                Debug.DrawLine(center + new Vector3(-hw, -hw), center + new Vector3(hw, -hw), Color.magenta);
+            }
+#endif
         }
     }
 }
