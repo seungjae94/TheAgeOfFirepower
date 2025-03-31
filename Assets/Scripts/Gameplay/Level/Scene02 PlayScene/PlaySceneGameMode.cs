@@ -14,12 +14,6 @@ namespace Mathlife.ProjectL.Gameplay
     {
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.Scene;
 
-        [SerializeField]
-        private new Camera camera;
-
-        private Vector3 mousePosition = Vector3.zero;
-        private readonly int circleRadiusPx = 12;
-
         public override async UniTask InitializeScene(IProgress<float> progress)
         {
             // 0. 게임 모드 공통 초기화 로직 수행
@@ -57,15 +51,6 @@ namespace Mathlife.ProjectL.Gameplay
             // 5. 딜레이
             await UniTask.Delay(100);
             progress.Report(1.0f);
-        }
-
-        private void Update()
-        {
-            if (Input.GetMouseButton(0))
-            {
-                Vector3 mousePosition = camera.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 5f));
-                DestructibleTerrain.Inst.Paint(mousePosition, Shape.Circle(circleRadiusPx), Color.clear);
-            }
         }
     }
 }

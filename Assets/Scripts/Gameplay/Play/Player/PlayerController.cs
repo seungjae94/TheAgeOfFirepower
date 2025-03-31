@@ -12,6 +12,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private float speed = 5f;
 
+        [SerializeField]
+        private GameObject testShellPrefab;
+
+        [SerializeField]
+        private float testFireAngle = 30;
+
+        [SerializeField]
+        private float testFireSpeed = 1f;
+        
 #if UNITY_EDITOR
         [SerializeField]
         private bool drawTangentNormal = false;
@@ -33,7 +42,23 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (MovabilityTest() == false)
                 return;
+            
+            // 포탄 발사
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                GameObject shellGameObject = Instantiate(testShellPrefab);
+                shellGameObject.transform.position = transform.position + 0.4f * transform.up;
+                
+                IShell shell = shellGameObject.GetComponent<IShell>();
+                shell.Init(GameState.Inst.gameDataLoader.GetShellData(0));
+                
+                Vector2 shellVelocity = new Vector2(
+                    Mathf.Cos(testFireAngle *  Mathf.Deg2Rad), 
+                    Mathf.Sin(testFireAngle * Mathf.Deg2Rad)) * testFireSpeed;
+                shell.Fire(shellVelocity);
+            }
 
+            // 슬라이드
             float axis = Input.GetAxisRaw("Horizontal");
             if (axis == 0f)
                 return;

@@ -37,6 +37,9 @@ namespace Mathlife.ProjectL.Gameplay
                     case ArtyGameData itArtyGameData:
                         artyDict.Add(itArtyGameData.id, itArtyGameData);
                         break;
+                    case ShellGameData itShellGameData:
+                        shells.Add(itShellGameData.id, itShellGameData);
+                        break;
                     case MechPartGameData itMechPartGameData:
                         mechParts.Add(itMechPartGameData.id, itMechPartGameData);
                         break;
@@ -65,6 +68,14 @@ namespace Mathlife.ProjectL.Gameplay
                 return null;
 
             return artyDict[id];
+        }
+        
+        public ShellGameData GetShellData(int id)
+        {
+            if (id < 0)
+                return null;
+
+            return shells[id];
         }
 
         public MechPartGameData GetMechPartData(int id)

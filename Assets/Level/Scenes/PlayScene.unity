@@ -290,7 +290,7 @@ Transform:
   m_GameObject: {fileID: 329246509}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.7422, y: 3.9453, z: 0}
+  m_LocalPosition: {x: 1.28, y: 8.814, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -625,7 +625,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08d3791f4a94211ae2b645cd9fade5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 1899075552}
 --- !u!1 &1014636397 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1353286964897475400, guid: 8c493102392add8409eab89a5843f963, type: 3}
@@ -746,6 +745,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1081817287}
   speed: 10
+  testShellPrefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}
+  testFireAngle: 30
+  testFireSpeed: 10
   drawTangentNormal: 0
 --- !u!1 &1393218671
 GameObject:

@@ -24,12 +24,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         [SerializeField]
         private int minContourLength = 12;
-        
+
 #if UNITY_EDITOR
         [SerializeField]
         private bool drawSpline = true;
 #endif
-        
+
+        // Const
+        private int terrainLayer = -1;
+
         // Field
         private QuadTree quadTree;
 
@@ -43,6 +46,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void GenerateTerrain()
         {
+            terrainLayer = LayerMask.NameToLayer("Terrain");
+
             // 텍스쳐 데이터 저장
             originalTexture = sprite.texture;
             pixelsPerUnit = sprite.pixelsPerUnit;
@@ -79,6 +84,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
                     GameObject instance = Instantiate(chunkPrefab, transform);
                     instance.name = $"Chunk{x * chunkCount.y + y}";
+                    instance.layer = terrainLayer;
                     instance.transform.localPosition = new Vector3((float)x * chunkSize.x / pixelsPerUnit,
                         (float)y * chunkSize.y / pixelsPerUnit, 0f);
 
@@ -107,9 +113,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         private void PaintRange(int offsetX, int offsetY, Range range, Color paintColor)
         {
+            if (offsetX < 0 || offsetX >= originalTexture.width)
+                return;
+
+            int yMin = Mathf.Max(offsetY + range.yMin, 0);
+            int yMax = Mathf.Min(offsetY + range.yMax, originalTexture.height - 1);
+
             int chunkIndexX = MyMathf.FloorDiv(offsetX, chunkSize.x);
-            int chunkIndexYMin = MyMathf.FloorDiv(offsetY + range.yMin, chunkSize.y);
-            int chunkIndexYMax = MyMathf.FloorDiv(offsetY + range.yMax, chunkSize.y);
+            int chunkIndexYMin = MyMathf.FloorDiv(yMin, chunkSize.y);
+            int chunkIndexYMax = MyMathf.FloorDiv(yMax, chunkSize.y);
 
             if (chunkIndexX < 0 || chunkIndexX >= chunks.GetLength(0))
                 return;
@@ -126,17 +138,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
             {
                 QuadTreeChunk chunk = chunks[chunkIndexX, chunkIndexY];
 
-                int texelYMin = 0;
-                if (chunkIndexY == chunkIndexYMin)
-                {
-                    texelYMin = (offsetY + range.yMin) % chunkSize.y;
-                }
+                int texelYMin = (chunkIndexY == chunkIndexYMin) 
+                    ? (yMin % chunkSize.y) 
+                    : 0;
 
-                int texelYMax = chunk.Height - 1;
-                if (chunkIndexY == chunkIndexYMax)
-                {
-                    texelYMax = Mathf.Clamp((offsetY + range.yMax) % chunkSize.y, 0, chunk.Height - 1);
-                }
+                int texelYMax = (chunkIndexY == chunkIndexYMax) 
+                    ? Mathf.Clamp(yMax % chunkSize.y, 0, chunk.Height - 1)
+                    : (chunk.Height - 1);
 
                 chunk.Paint(texelX, texelYMin, texelYMax - texelYMin + 1, paintColor);
             }
@@ -158,12 +166,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             // width or height 중 더 큰 방향으로 최소 1 픽셀은 움직이도록 수정
             projDirection.Normalize();
-            Vector2 displacement = projDirection / Mathf.Max(Mathf.Abs(projDirection.x), Mathf.Abs(projDirection.y)); 
+            Vector2 displacement = projDirection / Mathf.Max(Mathf.Abs(projDirection.x), Mathf.Abs(projDirection.y));
             displacement /= pixelsPerUnit;
-            
+
             if (InGround(position) == false)
                 displacement = -displacement;
-            
+
             int k = 1;
             while (true)
             {
@@ -173,7 +181,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 {
                     break;
                 }
-                
+
                 if (OnSurface(testPosition))
                 {
                     surfacePosition = testPosition;
@@ -195,7 +203,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
         /// <param name="translation">표면을 따라 이동할 거리 (방향 포함)</param>
         /// <param name="endPosition">[out] 도착 위치</param>
         /// <param name="normal">[out] 도착 위치에서의 노말</param>
-        public bool Slide(Vector2 startPosition, float translation, out Vector2 endPosition, out Vector2 normal, out Vector2 tangent)
+        public bool Slide(Vector2 startPosition, float translation, out Vector2 endPosition, out Vector2 normal,
+            out Vector2 tangent)
         {
             // surface에 있는지 테스트
             if (false == OnSurface(startPosition))
@@ -241,7 +250,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             return GetTexel(texCoord.x, texCoord.y);
         }
-        
+
         private bool GetTexel(int x, int y)
         {
             int indexX = MyMathf.FloorDiv(x, chunkSize.x);
@@ -270,17 +279,17 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             return InTerrain(WorldPositionToTexCoord(worldPosition));
         }
-        
+
         public bool InTerrain(Vector2Int texCoord)
         {
             return InTerrain(texCoord.x, texCoord.y);
         }
-        
+
         public bool InTerrain(int x, int y)
         {
             return x >= 0 && x < originalTexture.width && y >= 0 && y < originalTexture.height;
         }
-        
+
         public bool InGround(Vector2 worldPosition)
         {
             Vector2Int texCoord = WorldPositionToTexCoord(worldPosition);
@@ -304,7 +313,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
                     if (InTerrain(x, y) == false)
                         continue;
-                    
+
                     if (GetTexel(x, y) == false)
                         return true;
                 }
