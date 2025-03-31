@@ -48,7 +48,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             {
                 Vector2 nextPosition = transform.position + slideAmount * Vector3.right;
 
-                if (DestructibleTerrain.Inst.OnGround(nextPosition))
+                if (DestructibleTerrain.Inst.InGround(nextPosition))
                 {
                      DestructibleTerrain.Inst.ProjectToSurface(nextPosition, Vector3.up, out nextPosition);
                 }
@@ -89,7 +89,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         /// </returns>
         private bool MovabilityTest()
         {
-            bool thisFrameOnGround = DestructibleTerrain.Inst.OnGround(transform.position);
+            bool thisFrameOnGround = DestructibleTerrain.Inst.InGround(transform.position);
 
             // 임시로 가짜 중력 적용
             if (thisFrameOnGround == false)

@@ -143,39 +143,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
         }
 
         // 물리
-        public bool OnGround(Vector2 worldPosition)
-        {
-            Vector2Int texCoord = WorldPositionToTexCoord(worldPosition);
-            return GetTexel(texCoord.x, texCoord.y);
-        }
-
-        public bool OnSurface(Vector2 worldPosition)
-        {
-            Vector2Int texCoord = WorldPositionToTexCoord(worldPosition);
-
-            if (GetTexel(texCoord.x, texCoord.y) == false)
-                return false;
-
-            // 근처 8방향에 Air가 하나라도 있는지 확인
-            for (int dx = -1; dx <= 1; ++dx)
-            {
-                for (int dy = -1; dy <= 1; ++dy)
-                {
-                    int x = texCoord.x + dx;
-                    int y = texCoord.y + dy;
-
-                    if (x < 0 || x >= originalTexture.width || y < 0 || y >= originalTexture.height)
-                        continue;
-                    
-                    if (GetTexel(x, y) == false)
-                        return true;
-                }
-            }
-
-            //Debug.Log($"{worldPosition.x:F6}, {worldPosition.y:F6}");
-            return false;
-        }
-        
         public bool ProjectDownToSurface(Vector2 position, out Vector2 surfacePosition)
         {
             return ProjectToSurface(position, Vector2.up, out surfacePosition);
@@ -183,32 +150,42 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public bool ProjectToSurface(Vector2 position, Vector2 projDirection, out Vector2 surfacePosition)
         {
-            bool startTexel = OnGround(position);
-            
+            if (OnSurface(position))
+            {
+                surfacePosition = position;
+                return true;
+            }
+
             // width or height 중 더 큰 방향으로 최소 1 픽셀은 움직이도록 수정
-            Vector2 displacement = projDirection / Mathf.Max(Mathf.Abs(projDirection.x), Mathf.Abs(projDirection.y)) /
-                                   pixelsPerUnit;
+            projDirection.Normalize();
+            Vector2 displacement = projDirection / Mathf.Max(Mathf.Abs(projDirection.x), Mathf.Abs(projDirection.y)); 
+            displacement /= pixelsPerUnit;
             
-            if (startTexel == false)
+            if (InGround(position) == false)
                 displacement = -displacement;
             
             int k = 1;
             while (true)
             {
                 Vector2 testPosition = position + k * displacement;
-                Vector2Int texCoord = WorldPositionToTexCoord(testPosition);
 
-                if (GetTexel(texCoord.x, texCoord.y) == !startTexel)
+                if (InTerrain(testPosition) == false)
                 {
                     break;
+                }
+                
+                if (OnSurface(testPosition))
+                {
+                    surfacePosition = testPosition;
+                    //Debug.Log($"{testPosition.x:F6} {testPosition.y:F6}");
+                    return true;
                 }
 
                 ++k;
             }
 
-            surfacePosition = TexCoordToWorldPosition(WorldPositionToTexCoord((position + (k - 1) * displacement)));
-
-            return true;
+            surfacePosition = position;
+            return false;
         }
 
         /// <summary>
@@ -260,6 +237,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
             return true;
         }
 
+        private bool GetTexel(Vector2Int texCoord)
+        {
+            return GetTexel(texCoord.x, texCoord.y);
+        }
+        
         private bool GetTexel(int x, int y)
         {
             int indexX = MyMathf.FloorDiv(x, chunkSize.x);
@@ -282,6 +264,53 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             Vector3 localPosition = new Vector2(texCoord.x + 0.5f, texCoord.y + 0.5f) / pixelsPerUnit;
             return localPosition + transform.position;
+        }
+
+        public bool InTerrain(Vector2 worldPosition)
+        {
+            return InTerrain(WorldPositionToTexCoord(worldPosition));
+        }
+        
+        public bool InTerrain(Vector2Int texCoord)
+        {
+            return InTerrain(texCoord.x, texCoord.y);
+        }
+        
+        public bool InTerrain(int x, int y)
+        {
+            return x >= 0 && x < originalTexture.width && y >= 0 && y < originalTexture.height;
+        }
+        
+        public bool InGround(Vector2 worldPosition)
+        {
+            Vector2Int texCoord = WorldPositionToTexCoord(worldPosition);
+            return GetTexel(texCoord.x, texCoord.y);
+        }
+
+        public bool OnSurface(Vector2 worldPosition)
+        {
+            Vector2Int texCoord = WorldPositionToTexCoord(worldPosition);
+
+            if (GetTexel(texCoord.x, texCoord.y) == false)
+                return false;
+
+            // 근처 8방향에 Air가 하나라도 있는지 확인
+            for (int dx = -1; dx <= 1; ++dx)
+            {
+                for (int dy = -1; dy <= 1; ++dy)
+                {
+                    int x = texCoord.x + dx;
+                    int y = texCoord.y + dy;
+
+                    if (InTerrain(x, y) == false)
+                        continue;
+                    
+                    if (GetTexel(x, y) == false)
+                        return true;
+                }
+            }
+
+            return false;
         }
     }
 }
