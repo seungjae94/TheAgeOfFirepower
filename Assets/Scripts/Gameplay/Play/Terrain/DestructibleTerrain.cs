@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
 using Mathlife.ProjectL.Utils;
 using Sirenix.OdinInspector;
@@ -23,8 +24,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         [SerializeField]
         private int minContourLength = 12;
-
-
+        
+#if UNITY_EDITOR
+        [SerializeField]
+        private bool drawSpline = true;
+#endif
+        
         // Field
         private QuadTree quadTree;
 
@@ -88,7 +93,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         // 렌더링
         public void Paint(Vector3 worldPosition, Shape shape, Color paintColor)
         {
-            Vector2Int offset = WorldPositionToOffset(worldPosition);
+            Vector2Int offset = WorldPositionToTexCoord(worldPosition);
             foreach (Column column in shape.columns)
             {
                 foreach (Range range in column.ranges)
@@ -138,37 +143,72 @@ namespace Mathlife.ProjectL.Gameplay.Play
         }
 
         // 물리
-        public bool OnGround(Vector3 worldPosition)
+        public bool OnGround(Vector2 worldPosition)
         {
-            Vector2Int texCoord = WorldPositionToOffset(worldPosition);
+            Vector2Int texCoord = WorldPositionToTexCoord(worldPosition);
             return GetTexel(texCoord.x, texCoord.y);
         }
-        
-        public Vector3 ProjectDownToSurface(Vector3 position)
+
+        public bool OnSurface(Vector2 worldPosition)
         {
-            RaycastHit2D hit = Physics2D.Raycast(position, Vector2.down);
-            return hit.point;
+            Vector2Int texCoord = WorldPositionToTexCoord(worldPosition);
+
+            if (GetTexel(texCoord.x, texCoord.y) == false)
+                return false;
+
+            // 근처 8방향에 Air가 하나라도 있는지 확인
+            for (int dx = -1; dx <= 1; ++dx)
+            {
+                for (int dy = -1; dy <= 1; ++dy)
+                {
+                    int x = texCoord.x + dx;
+                    int y = texCoord.y + dy;
+
+                    if (x < 0 || x >= originalTexture.width || y < 0 || y >= originalTexture.height)
+                        continue;
+                    
+                    if (GetTexel(x, y) == false)
+                        return true;
+                }
+            }
+
+            //Debug.Log($"{worldPosition.x:F6}, {worldPosition.y:F6}");
+            return false;
+        }
+        
+        public bool ProjectDownToSurface(Vector2 position, out Vector2 surfacePosition)
+        {
+            return ProjectToSurface(position, Vector2.up, out surfacePosition);
         }
 
-        public Vector3 PushOutToSurface(Vector3 position, Vector3 pushDirection)
+        public bool ProjectToSurface(Vector2 position, Vector2 projDirection, out Vector2 surfacePosition)
         {
+            bool startTexel = OnGround(position);
+            
+            // width or height 중 더 큰 방향으로 최소 1 픽셀은 움직이도록 수정
+            Vector2 displacement = projDirection / Mathf.Max(Mathf.Abs(projDirection.x), Mathf.Abs(projDirection.y)) /
+                                   pixelsPerUnit;
+            
+            if (startTexel == false)
+                displacement = -displacement;
+            
             int k = 1;
             while (true)
             {
-                Vector3 testPosition = position + k * pushDirection / pixelsPerUnit;
-                Vector2Int texCoord = WorldPositionToOffset(testPosition);
+                Vector2 testPosition = position + k * displacement;
+                Vector2Int texCoord = WorldPositionToTexCoord(testPosition);
 
-                if (GetTexel(texCoord.x, texCoord.y) == false)
+                if (GetTexel(texCoord.x, texCoord.y) == !startTexel)
                 {
-                    position += (k - 1) * pushDirection / pixelsPerUnit;
                     break;
                 }
 
                 ++k;
             }
 
-            Vector3 projectedPosition = OffsetToWorldPosition(WorldPositionToOffset((position)));
-            return new Vector3(position.x, projectedPosition.y + 0.5f / pixelsPerUnit, position.z);
+            surfacePosition = TexCoordToWorldPosition(WorldPositionToTexCoord((position + (k - 1) * displacement)));
+
+            return true;
         }
 
         /// <summary>
@@ -178,16 +218,18 @@ namespace Mathlife.ProjectL.Gameplay.Play
         /// <param name="translation">표면을 따라 이동할 거리 (방향 포함)</param>
         /// <param name="endPosition">[out] 도착 위치</param>
         /// <param name="normal">[out] 도착 위치에서의 노말</param>
-        public bool Slide(Vector3 startPosition, float translation, out Vector3 endPosition, out Vector3 normal, out Vector3 tangent)
+        public bool Slide(Vector2 startPosition, float translation, out Vector2 endPosition, out Vector2 normal, out Vector2 tangent)
         {
-            Vector3 startSurfacePosition = ProjectDownToSurface(startPosition);
+            // surface에 있는지 테스트
+            if (false == OnSurface(startPosition))
+                ProjectDownToSurface(startPosition, out startPosition);
 
             bool clockWise = translation > 0f;
             int contourLength = Mathf.RoundToInt(Mathf.Abs(translation) * pixelsPerUnit) + 1;
             contourLength = Mathf.Clamp(contourLength, minContourLength, contourLength);
 
             // 시작 위치 찾기
-            Vector2Int startOffset = WorldPositionToOffset(startSurfacePosition);
+            Vector2Int startOffset = WorldPositionToTexCoord(startPosition);
 
             // 컨투어 계산
             List<Vector2Int> contour = MyMathf.MooreNeighbor(startOffset, clockWise, contourLength, GetTexel);
@@ -209,16 +251,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             CatmullRomSpline spline = new(clockWise, worldContour);
 #if UNITY_EDITOR
-            spline.DrawSpline(DebugLineRenderer.Inst);
+            if (drawSpline)
+                spline.DrawSpline(DebugLineRenderer.Inst);
 #endif
 
-            spline.GetPoint(Mathf.Abs(translation), out Vector2 point2D, out Vector2 normal2D, out Vector2 tangent2D);
-            endPosition = new Vector3(point2D.x, point2D.y, startPosition.z);
-
-            normal = new Vector3(normal2D.x, normal2D.y, 0f);
-            tangent = new Vector3(tangent2D.x, tangent2D.y, 0f);
-            endPosition = PushOutToSurface(endPosition, normal);
-
+            spline.GetPoint(Mathf.Abs(translation), out endPosition, out normal, out tangent);
+            ProjectToSurface(endPosition, normal, out endPosition);
             return true;
         }
 
@@ -234,31 +272,16 @@ namespace Mathlife.ProjectL.Gameplay.Play
         }
 
         // 유틸
-        private Vector2Int WorldPositionToOffset(Vector3 worldPosition)
+        private Vector2Int WorldPositionToTexCoord(Vector2 worldPosition)
         {
-            Vector3 texCoord3D = (worldPosition - transform.position) * pixelsPerUnit;
-            return new Vector2Int((int)texCoord3D.x, (int)texCoord3D.y);
+            Vector2 texCoordFloat = (worldPosition - (Vector2)transform.position) * pixelsPerUnit;
+            return Vector2Int.FloorToInt(texCoordFloat);
         }
 
-        private Vector3 OffsetToWorldPosition(Vector2Int offset)
+        private Vector3 TexCoordToWorldPosition(Vector2Int texCoord)
         {
-            Vector3 localPosition = new Vector3(offset.x + 0.5f, offset.y + 0.5f) / pixelsPerUnit;
+            Vector3 localPosition = new Vector2(texCoord.x + 0.5f, texCoord.y + 0.5f) / pixelsPerUnit;
             return localPosition + transform.position;
-        }
-
-        private void DebugDrawBoundary(List<Vector2Int> boundary)
-        {
-#if UNITY_EDITOR
-            foreach (var boundaryPoint in boundary)
-            {
-                Vector3 center = OffsetToWorldPosition(boundaryPoint);
-                float hw = 0.5f / pixelsPerUnit;
-                Debug.DrawLine(center + new Vector3(-hw, hw), center + new Vector3(hw, hw), Color.magenta);
-                Debug.DrawLine(center + new Vector3(-hw, hw), center + new Vector3(hw, -hw), Color.magenta);
-                Debug.DrawLine(center + new Vector3(hw, hw), center + new Vector3(hw, -hw), Color.magenta);
-                Debug.DrawLine(center + new Vector3(-hw, -hw), center + new Vector3(hw, -hw), Color.magenta);
-            }
-#endif
         }
     }
 }

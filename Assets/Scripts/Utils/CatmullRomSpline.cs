@@ -66,8 +66,6 @@ namespace Mathlife.ProjectL.Utils
             float accPrev = (index > 0) ? accArcLengths[index - 1] : 0;
             float accNext = accArcLengths[index];
             float t = (length - accPrev) / (accNext - accPrev);
-            
-            Debug.Log($"length: {length}, index: {index}, t: {t}");
 
             CatmullRomSegment segment = segments[index];
             point = segment.GetPoint(t);
