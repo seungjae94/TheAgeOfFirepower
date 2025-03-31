@@ -20,8 +20,24 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             float slideAmount = axis * speed * Time.deltaTime;
 
-            DestructibleTerrain.Inst.Slide(transform.position, slideAmount, out Vector3 endPosition, out Vector3 normal,
+            bool slideResult = DestructibleTerrain.Inst.Slide(transform.position, slideAmount, out Vector3 endPosition, out Vector3 normal,
                 out Vector3 tangent);
+
+            if (false == slideResult)
+            {
+                Vector3 nextPosition = transform.position + slideAmount * Vector3.right;
+
+                if (DestructibleTerrain.Inst.OnGround(nextPosition))
+                {
+                    nextPosition = DestructibleTerrain.Inst.PushOutToSurface(nextPosition, Vector3.up); 
+                }
+                // TODO: 중력 처리
+
+                transform.position = nextPosition;
+                
+                return;
+            }
+            
             transform.position = endPosition;
 
             float angle;

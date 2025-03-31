@@ -138,23 +138,29 @@ namespace Mathlife.ProjectL.Gameplay.Play
         }
 
         // 물리
+        public bool OnGround(Vector3 worldPosition)
+        {
+            Vector2Int texCoord = WorldPositionToOffset(worldPosition);
+            return GetTexel(texCoord.x, texCoord.y);
+        }
+        
         public Vector3 ProjectDownToSurface(Vector3 position)
         {
             RaycastHit2D hit = Physics2D.Raycast(position, Vector2.down);
             return hit.point;
         }
 
-        public Vector3 PushOutToSurface(Vector3 position, Vector3 normal)
+        public Vector3 PushOutToSurface(Vector3 position, Vector3 pushDirection)
         {
             int k = 1;
             while (true)
             {
-                Vector3 testPosition = position + k * normal / pixelsPerUnit;
+                Vector3 testPosition = position + k * pushDirection / pixelsPerUnit;
                 Vector2Int texCoord = WorldPositionToOffset(testPosition);
 
                 if (GetTexel(texCoord.x, texCoord.y) == false)
                 {
-                    position += (k - 1) * normal / pixelsPerUnit;
+                    position += (k - 1) * pushDirection / pixelsPerUnit;
                     break;
                 }
 
@@ -172,7 +178,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         /// <param name="translation">표면을 따라 이동할 거리 (방향 포함)</param>
         /// <param name="endPosition">[out] 도착 위치</param>
         /// <param name="normal">[out] 도착 위치에서의 노말</param>
-        public void Slide(Vector3 startPosition, float translation, out Vector3 endPosition, out Vector3 normal, out Vector3 tangent)
+        public bool Slide(Vector3 startPosition, float translation, out Vector3 endPosition, out Vector3 normal, out Vector3 tangent)
         {
             Vector3 startSurfacePosition = ProjectDownToSurface(startPosition);
 
@@ -193,9 +199,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
             // 스플라인 보간
             int n = worldContour.Count;
 
-            if (n / CatmullRomSpline.MODULO < 4)
+            if (n < contourLength)
             {
-                // 다시 컨투어 계산
+                endPosition = Vector3.zero;
+                normal = Vector3.zero;
+                tangent = Vector3.zero;
+                return false;
             }
 
             CatmullRomSpline spline = new(clockWise, worldContour);
@@ -209,6 +218,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             normal = new Vector3(normal2D.x, normal2D.y, 0f);
             tangent = new Vector3(tangent2D.x, tangent2D.y, 0f);
             endPosition = PushOutToSurface(endPosition, normal);
+
+            return true;
         }
 
         private bool GetTexel(int x, int y)
