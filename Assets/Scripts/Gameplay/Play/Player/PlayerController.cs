@@ -1,4 +1,6 @@
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Mathlife.ProjectL.Gameplay.Play
 {
@@ -20,12 +22,25 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             DestructibleTerrain.Inst.Slide(transform.position, slideAmount, out Vector3 endPosition, out Vector3 normal,
                 out Vector3 tangent);
-            transform.position = DestructibleTerrain.Inst.ProjectUpToSurface(endPosition);
+            transform.position = endPosition;
 
-            spriteRenderer.flipX = tangent.x < 0f;
-
-            float angle = Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, (tangent.x < 0f) ? angle + 180f : angle));
+            float angle;
+            if (axis > 0f)
+            {
+                spriteRenderer.flipX = false;
+                angle = Vector3.SignedAngle(Vector3.right, tangent, Vector3.forward);
+                
+            }
+            else
+            {
+                spriteRenderer.flipX = true;
+                angle = Vector3.SignedAngle(Vector3.left, tangent, Vector3.forward);
+            }
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            
+            // Draw Normal
+            DebugLineRenderer.Inst.DrawLine(endPosition, endPosition + tangent, Color.red, 0.1f);
+            DebugLineRenderer.Inst.DrawLine(endPosition, endPosition + normal, Color.green, 0.1f);
         }
     }
 }

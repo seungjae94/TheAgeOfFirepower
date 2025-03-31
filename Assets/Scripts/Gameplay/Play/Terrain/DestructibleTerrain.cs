@@ -138,23 +138,30 @@ namespace Mathlife.ProjectL.Gameplay.Play
         }
 
         // 물리
-
         public Vector3 ProjectDownToSurface(Vector3 position)
         {
             RaycastHit2D hit = Physics2D.Raycast(position, Vector2.down);
             return hit.point;
         }
 
-        public Vector3 ProjectUpToSurface(Vector3 position)
+        public Vector3 PushOutToSurface(Vector3 position, Vector3 normal)
         {
-            Vector2Int offset = WorldPositionToOffset(position);
-            while (GetTexel(offset.x, offset.y))
+            int k = 1;
+            while (true)
             {
-                offset.y++;
+                Vector3 testPosition = position + k * normal / pixelsPerUnit;
+                Vector2Int texCoord = WorldPositionToOffset(testPosition);
+
+                if (GetTexel(texCoord.x, texCoord.y) == false)
+                {
+                    position += (k - 1) * normal / pixelsPerUnit;
+                    break;
+                }
+
+                ++k;
             }
 
-            Vector3 projectedPosition = OffsetToWorldPosition(offset + Vector2Int.down);
-
+            Vector3 projectedPosition = OffsetToWorldPosition(WorldPositionToOffset((position)));
             return new Vector3(position.x, projectedPosition.y + 0.5f / pixelsPerUnit, position.z);
         }
 
@@ -186,6 +193,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
             // 스플라인 보간
             int n = worldContour.Count;
 
+            if (n / CatmullRomSpline.MODULO < 4)
+            {
+                // 다시 컨투어 계산
+            }
+
             CatmullRomSpline spline = new(clockWise, worldContour);
 #if UNITY_EDITOR
             spline.DrawSpline(DebugLineRenderer.Inst);
@@ -193,10 +205,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             spline.GetPoint(Mathf.Abs(translation), out Vector2 point2D, out Vector2 normal2D, out Vector2 tangent2D);
             endPosition = new Vector3(point2D.x, point2D.y, startPosition.z);
-            endPosition = ProjectUpToSurface(endPosition);
 
             normal = new Vector3(normal2D.x, normal2D.y, 0f);
             tangent = new Vector3(tangent2D.x, tangent2D.y, 0f);
+            endPosition = PushOutToSurface(endPosition, normal);
         }
 
         private bool GetTexel(int x, int y)
@@ -213,14 +225,14 @@ namespace Mathlife.ProjectL.Gameplay.Play
         // 유틸
         private Vector2Int WorldPositionToOffset(Vector3 worldPosition)
         {
-            Vector3 localPositionPx = (worldPosition - transform.position) * pixelsPerUnit;
-            return new Vector2Int((int)localPositionPx.x, (int)localPositionPx.y);
+            Vector3 texCoord3D = (worldPosition - transform.position) * pixelsPerUnit;
+            return new Vector2Int((int)texCoord3D.x, (int)texCoord3D.y);
         }
 
         private Vector3 OffsetToWorldPosition(Vector2Int offset)
         {
-            Vector3 localPositionPx = new Vector3(offset.x, offset.y);
-            return (localPositionPx / pixelsPerUnit) + transform.position;
+            Vector3 localPosition = new Vector3(offset.x + 0.5f, offset.y + 0.5f) / pixelsPerUnit;
+            return localPosition + transform.position;
         }
 
         private void DebugDrawBoundary(List<Vector2Int> boundary)

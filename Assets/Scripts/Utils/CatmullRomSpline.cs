@@ -10,6 +10,8 @@ namespace Mathlife.ProjectL.Utils
     /// <seealso href="https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline"/>
     public class CatmullRomSpline
     {
+        public const int MODULO = 12;
+        
         private readonly bool clockWiseOriented;
 
         private readonly List<CatmullRomSegment> segments = new();
@@ -19,9 +21,9 @@ namespace Mathlife.ProjectL.Utils
         {
             this.clockWiseOriented = clockWiseOriented;
 
-            var controlPoints = points.Where((v, index) => index % 6 == 0).ToList();
-            controlPoints.Insert(0, 2 * points[0] - points[1]);
-            controlPoints.Add(2 * points[^1] - points[^2]);
+            var controlPoints = points.Where((v, index) => index % MODULO == 0).ToList();
+            controlPoints.Insert(0, 2 * controlPoints[0] - controlPoints[1]);
+            controlPoints.Add(2 * controlPoints[^1] - controlPoints[^2]);
 
             for (int i = 0; i + 3 < controlPoints.Count; ++i)
             {
@@ -54,16 +56,18 @@ namespace Mathlife.ProjectL.Utils
                 return;
             }
 
-            // acc = [2, 4, 5]
-            // length = 1.5 -> index = 0 
-            // length = 3.5 -> index = 1
-            // length = 4.5 -> index = 2
+            // acc = [0.02, 0.04, 0.06]
+            // length = 0.01 -> index = 0 (acc[index] > length) 
+            // length = 0.03 -> index = 1 (acc[index] > length)
+            // length = 0.05 -> index = 2 (acc[index] > length)
 
-            int index = accArcLengths.FindIndex(acc => length <= acc);
+            int index = accArcLengths.FindIndex(acc => length < acc);
 
             float accPrev = (index > 0) ? accArcLengths[index - 1] : 0;
             float accNext = accArcLengths[index];
             float t = (length - accPrev) / (accNext - accPrev);
+            
+            Debug.Log($"length: {length}, index: {index}, t: {t}");
 
             CatmullRomSegment segment = segments[index];
             point = segment.GetPoint(t);
