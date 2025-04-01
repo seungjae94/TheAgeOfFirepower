@@ -75,6 +75,10 @@ namespace Mathlife.ProjectL.Gameplay
         [HorizontalGroup("Stage/No", Width = 100, Gap = 25)]
         public int stageNo;
 
+        [LabelWidth(100)]
+        [PreviewField(ObjectFieldAlignment.Left, Height = 400)]
+        public Sprite mapSprite;
+        
 #if UNITY_EDITOR
         [SpaceOnly(25)]
         private bool _dummy0;
@@ -85,7 +89,7 @@ namespace Mathlife.ProjectL.Gameplay
         [ListDrawerSettings(ShowFoldout = false)]
         [PropertySpace(SpaceBefore = 25)]
         public List<Enemy> enemyList = new();
-
+        
 #if UNITY_EDITOR
         [SpaceOnly(25)]
         private bool _dummy1;

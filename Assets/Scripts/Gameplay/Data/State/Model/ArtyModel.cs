@@ -10,15 +10,14 @@ namespace Mathlife.ProjectL.Gameplay
         // Alias
         private InventoryState InventoryState => GameState.Inst.inventoryState;
         private GameDataLoader GameDataLoader => GameState.Inst.gameDataLoader;
+        private ExpGameData ExpGameData => GameDataLoader.GetExpData();
         
         public ArtyModel(
             ArtyGameData gameData,
-            ExpGameData expGameData,
             int level, long totalExp
         )
         {
             this.gameData = gameData;
-            this.expGameData = expGameData;
             levelRx = new(level);
             totalExpRx = new(totalExp);
 
@@ -29,16 +28,16 @@ namespace Mathlife.ProjectL.Gameplay
         
         // Field - Basic Info
         private readonly ArtyGameData gameData;
-        private readonly ExpGameData expGameData;
         public readonly ReactiveProperty<int> levelRx;
         public readonly ReactiveProperty<long> totalExpRx;
         
         public int Id => gameData.id;
         public string DisplayName => gameData.displayName;
         public Sprite Sprite => gameData.sprite;
+        public Sprite EnemySprite => gameData.enemySprite;
         
-        public long NeedExp => expGameData.characterNeedExpAtLevelList[levelRx.Value];
-        public long CurrentLevelExp => totalExpRx.Value - expGameData.characterTotalExpAtLevelList[levelRx.Value]; 
+        public long NeedExp => ExpGameData.characterNeedExpAtLevelList[levelRx.Value];
+        public long CurrentLevelExp => totalExpRx.Value - ExpGameData.characterTotalExpAtLevelList[levelRx.Value]; 
 
         // Field - Mech Parts
         public readonly ReactiveDictionary<EMechPartType, MechPartModel> mechPartSlotsRx = new();

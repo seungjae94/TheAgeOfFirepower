@@ -16,9 +16,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         // Dependency
         [SerializeField]
-        private Sprite sprite;
-
-        [SerializeField]
         [MinValue(1f)]
         private Vector2Int chunkSize = new Vector2Int(64, 64);
 
@@ -43,8 +40,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private Vector2Int lastChunkSize = new Vector2Int(0, 0);
 
         private QuadTreeChunk[,] chunks;
-
-        public void GenerateTerrain()
+        
+        public void GenerateTerrain(Sprite sprite)
         {
             terrainLayer = LayerMask.NameToLayer("Terrain");
 

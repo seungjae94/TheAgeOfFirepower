@@ -56,7 +56,6 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 ArtyModel arty = new ArtyModel(
                     GameDataLoader.GetArtyData(artySaveData.artyId),
-                    GameDataLoader.GetExpData(),
                     artySaveData.level,
                     artySaveData.totalExp
                 );
@@ -111,7 +110,7 @@ namespace Mathlife.ProjectL.Gameplay
 
                 int level = artyPreset.level;
                 long totalExp = expData.characterTotalExpAtLevelList[level] + artyPreset.currentLevelExp;
-                ArtyModel arty = new(artyPreset.arty, expData, level, totalExp);
+                ArtyModel arty = new(artyPreset.arty, level, totalExp);
 
                 arty.Equip(EMechPartType.Barrel, (artyPreset.barrel != null) ? artyPreset.barrel.id : -1);
                 arty.Equip(EMechPartType.Armor, (artyPreset.armor != null) ? artyPreset.armor.id : -1);
@@ -166,7 +165,6 @@ namespace Mathlife.ProjectL.Gameplay
         {
             ArtyModel arty = new(
                 artyGameData,
-                GameDataLoader.GetExpData(),
                 level, totalExp);
             artyList.Add(arty);
 

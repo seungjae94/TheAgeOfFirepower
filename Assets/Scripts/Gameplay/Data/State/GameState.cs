@@ -12,6 +12,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public readonly ArtyRosterState artyRosterState = new();
         public readonly InventoryState inventoryState = new();
+        public readonly BattleState battleState = new();
 
         public async UniTask Load()
         {
