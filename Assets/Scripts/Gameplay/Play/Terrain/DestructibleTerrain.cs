@@ -147,13 +147,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
         }
 
-        // 물리
-        public bool ProjectDownToSurface(Vector2 position, out Vector2 surfacePosition)
+        // 스냅
+        public bool VerticalSnapToSurface(Vector2 position, out Vector2 surfacePosition)
         {
-            return ProjectToSurface(position, Vector2.up, out surfacePosition);
+            return SnapToSurface(position, Vector2.up, out surfacePosition);
         }
 
-        public bool ProjectToSurface(Vector2 position, Vector2 projDirection, out Vector2 surfacePosition)
+        public bool SnapToSurface(Vector2 position, Vector2 snapDirection, out Vector2 surfacePosition)
         {
             if (OnSurface(position))
             {
@@ -162,8 +162,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
 
             // width or height 중 더 큰 방향으로 최소 1 픽셀은 움직이도록 수정
-            projDirection.Normalize();
-            Vector2 displacement = projDirection / Mathf.Max(Mathf.Abs(projDirection.x), Mathf.Abs(projDirection.y));
+            snapDirection.Normalize();
+            Vector2 displacement = snapDirection / Mathf.Max(Mathf.Abs(snapDirection.x), Mathf.Abs(snapDirection.y));
             displacement /= pixelsPerUnit;
 
             if (InGround(position) == false)
@@ -203,9 +203,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public bool Slide(Vector2 startPosition, float translation, out Vector2 endPosition, out Vector2 normal,
             out Vector2 tangent)
         {
+            endPosition = Vector3.zero;
+            normal = Vector3.zero;
+            tangent = Vector3.zero;
+            
             // surface에 있는지 테스트
             if (false == OnSurface(startPosition))
-                ProjectDownToSurface(startPosition, out startPosition);
+                VerticalSnapToSurface(startPosition, out startPosition);
 
             bool clockWise = translation > 0f;
             int contourLength = Mathf.RoundToInt(Mathf.Abs(translation) * pixelsPerUnit) + 1;
@@ -226,23 +230,43 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (n < contourLength)
             {
-                endPosition = Vector3.zero;
-                normal = Vector3.zero;
-                tangent = Vector3.zero;
                 return false;
             }
 
             CatmullRomSpline spline = new(clockWise, worldContour);
-#if UNITY_EDITOR
-            if (drawSpline)
-                spline.DrawSpline(DebugLineRenderer.Inst);
-#endif
-
             spline.GetPoint(Mathf.Abs(translation), out endPosition, out normal, out tangent);
-            ProjectToSurface(endPosition, normal, out endPosition);
+            SnapToSurface(endPosition, normal, out endPosition);
             return true;
         }
 
+        public bool ExtractNormalTangent(Vector2 startPosition, out Vector2 normal, out Vector2 tangent)
+        {
+            normal = Vector2.zero;
+            tangent = Vector2.zero;
+            
+            if (false == OnSurface(startPosition))
+                return false;
+            
+            Vector2Int startTexCoord = WorldPositionToTexCoord(startPosition);
+            
+            // 컨투어 계산
+            List<Vector2Int> contourCW = MyMathf.MooreNeighbor(startTexCoord, true, CatmullRomSpline.MODULO + 1, GetTexel);
+            List<Vector2Int> contourCCW = MyMathf.MooreNeighbor(startTexCoord, false, CatmullRomSpline.MODULO + 1, GetTexel);
+            contourCCW.Reverse();
+            contourCCW.RemoveAt(contourCCW.Count - 1);
+            contourCCW.AddRange(contourCW);
+            
+            List<Vector2> worldContour = contourCCW
+                .Select(posPx => new Vector2(posPx.x + 0.5f, posPx.y + 0.5f) / pixelsPerUnit)
+                .ToList();
+            
+            CatmullRomSpline spline = new(true, worldContour);
+            spline.GetCenterPoint(out Vector2 point, out normal, out tangent);
+            return true;
+        }
+
+        
+        // Terrain Data
         private bool GetTexel(Vector2Int texCoord)
         {
             return GetTexel(texCoord.x, texCoord.y);
@@ -258,8 +282,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             return chunks[indexX, indexY].GetTexel(x % chunkSize.x, y % chunkSize.y);
         }
-
-        // 유틸
+        
         private Vector2Int WorldPositionToTexCoord(Vector2 worldPosition)
         {
             Vector2 texCoordFloat = (worldPosition - (Vector2)transform.position) * pixelsPerUnit;
@@ -289,12 +312,18 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public bool InGround(Vector2 worldPosition)
         {
+            if (InTerrain(worldPosition) == false)
+                return false;
+            
             Vector2Int texCoord = WorldPositionToTexCoord(worldPosition);
             return GetTexel(texCoord.x, texCoord.y);
         }
 
         public bool OnSurface(Vector2 worldPosition)
         {
+            if (InTerrain(worldPosition) == false)
+                return false;
+            
             Vector2Int texCoord = WorldPositionToTexCoord(worldPosition);
 
             if (GetTexel(texCoord.x, texCoord.y) == false)

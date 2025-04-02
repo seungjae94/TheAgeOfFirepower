@@ -10,7 +10,7 @@ namespace Mathlife.ProjectL.Utils
     /// <seealso href="https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline"/>
     public class CatmullRomSpline
     {
-        public const int MODULO = 12;
+        public const int MODULO = 12; // PREV = 12
         
         private readonly bool clockWiseOriented;
 
@@ -67,6 +67,17 @@ namespace Mathlife.ProjectL.Utils
             float accNext = accArcLengths[index];
             float t = (length - accPrev) / (accNext - accPrev);
 
+            CatmullRomSegment segment = segments[index];
+            point = segment.GetPoint(t);
+            normal = segment.GetNormal(t);
+            tangent = segment.GetTangent(t);
+        }
+
+        public void GetCenterPoint(out Vector2 point, out Vector2 normal, out Vector2 tangent)
+        {
+            int index = segments.Count / 2;
+            float t = (segments.Count % 2 == 0) ? 0f : 0.5f; 
+            
             CatmullRomSegment segment = segments[index];
             point = segment.GetPoint(t);
             normal = segment.GetNormal(t);

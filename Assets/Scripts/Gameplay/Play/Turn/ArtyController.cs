@@ -30,82 +30,120 @@ namespace Mathlife.ProjectL.Gameplay.Play
 #endif
 
         // Field
+        public bool Ready { get; private set; } = false;
+        public bool HasTurn { get; private set; } = false;
         public bool IsPlayer { get; private set; } = true;
+
+        private bool clockWise = true;
+        private float verticalVelocity;
+        private Vector2 prevNormal;
+        private Vector2 prevTangent;
 
         private ArtyModel arty = null;
         
-        private bool onGround = true;
-        
         public void Setup(ArtyModel playerArty)
         {
-            if (playerArty == null)
-                return;
-            
-            IsPlayer = true;
-            arty = playerArty;
-
-            spriteRenderer.sprite = arty.Sprite;
-            spriteRenderer.flipX = false;
-
-            ProjectToSurface();
+            SetupInternal(true, playerArty);
         }
         
         public void Setup(Enemy enemy)
         {
-            if (enemy == null)
-                return;
-            
-            IsPlayer = false;
-            arty = new ArtyModel(enemy.artyGameData, enemy.level, 0L);
-            
-            spriteRenderer.sprite = arty?.EnemySprite;
-            spriteRenderer.flipX = true;
-            
-            ProjectToSurface();
+            SetupInternal(false, 
+                new ArtyModel(enemy.artyGameData, enemy.level, 0L));
         }
 
         public void Setup(DevelopArtyData developArty)
         {
-            if (developArty == null)
-                return;
-            
-            IsPlayer = developArty.isPlayer;
-            arty = new ArtyModel(developArty.artyGameData, developArty.level, 0L);
-            
+            SetupInternal(developArty.isPlayer, 
+                new ArtyModel(developArty.artyGameData, developArty.level, 0L));
+        }
+
+        private void SetupInternal(bool isPlayer, ArtyModel artyModel)
+        {
+            IsPlayer = isPlayer;
+            arty = artyModel;
             spriteRenderer.sprite = IsPlayer ? arty.Sprite : arty.EnemySprite;
             spriteRenderer.flipX = !IsPlayer;
-            
+            clockWise = IsPlayer;
+
             ProjectToSurface();
+
+            Ready = true;
         }
 
         private void ProjectToSurface()
         {
-            DestructibleTerrain.Inst.ProjectToSurface(transform.position, Vector2.up, out Vector2 surfacePosition);
+            DestructibleTerrain.Inst.SnapToSurface(transform.position, Vector2.up, out Vector2 surfacePosition);
             transform.position = surfacePosition;
         }
 
-        // /// <summary>
-        // /// 이동이 가능한지 체크
-        // /// </summary>
-        // /// <returns>
-        // /// 다음 단계를 수행할 수 있는지 여부
-        // /// </returns>
-        // public bool MovabilityTest()
-        // {
-        //     bool thisFrameOnGround = DestructibleTerrain.Inst.InGround(transform.position);
-        //
-        //     // 임시로 가짜 중력 적용
-        //     if (thisFrameOnGround == false)
-        //     {
-        //         DestructibleTerrain.Inst.ProjectDownToSurface(transform.position, out Vector2 surfacePosition);
-        //         transform.position = surfacePosition;
-        //     }
-        //
-        //     return true;
-        // }
-
-        public void Slide(float axis)
+        public void StartTurn(int turn)
         {
+            Debug.Log($"Turn {turn} start!");
+            
+            HasTurn = true;
+        }
+
+        private void Update()
+        {
+            if (Ready == false)
+                return;
+            
+            // 턴과 상관 없이 항상 중력 작용
+            if (DestructibleTerrain.Inst.InGround(transform.position) == false)
+            {
+                ApplyGravity();
+                return;
+            }
+            
+            if (false == HasTurn)
+                return;
+            
+            // TODO: InputSystem 통합
+            float axis = Input.GetAxisRaw("Horizontal");
+            Slide(axis);
+            
+            // 이동 후 중력 작용
+            if (DestructibleTerrain.Inst.InGround(transform.position) == false)
+            {
+                ApplyGravity();
+            }
+        }
+
+        private void ApplyGravity()
+        {
+            verticalVelocity += Physics2D.gravity.y * Time.deltaTime;
+            Vector2 nextPosition = (Vector2) transform.position + verticalVelocity * Vector2.up;
+
+            if (DestructibleTerrain.Inst.InGround(nextPosition))
+            {
+                DestructibleTerrain.Inst.VerticalSnapToSurface(transform.position, out nextPosition);
+                
+                DestructibleTerrain.Inst.ExtractNormalTangent(nextPosition, out prevNormal, out prevTangent);
+                
+                if (clockWise == false)
+                    prevTangent = -prevTangent;
+            }
+            
+            transform.position = nextPosition;
+
+            UpdateRotation();
+        }
+
+        private void UpdateRotation()
+        {
+            spriteRenderer.flipX = !clockWise;
+            float angle = clockWise ? Vector3.SignedAngle(Vector3.right, prevTangent, Vector3.forward) : Vector3.SignedAngle(Vector3.left, prevTangent, Vector3.forward);  
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            
+            DrawTangentNormal();
+        }
+
+        private void Slide(float axis)
+        {
+            if (axis == 0f)
+                return;
+            
             float slideAmount = axis * speed * Time.deltaTime;
 
             bool slideResult = DestructibleTerrain.Inst.Slide(transform.position, slideAmount, out Vector2 endPosition,
@@ -114,39 +152,16 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (false == slideResult)
             {
-                Vector2 nextPosition = transform.position + slideAmount * Vector3.right;
-
-                if (DestructibleTerrain.Inst.InGround(nextPosition))
-                {
-                    DestructibleTerrain.Inst.ProjectToSurface(nextPosition, Vector3.up, out nextPosition);
-                }
-                // TODO: 중력 처리
-
-                transform.position = nextPosition;
-                Debug.Log("slide failed.");
-
+                transform.position= (Vector2)transform.position + slideAmount * prevTangent;
                 return;
             }
 
+            clockWise = axis > 0f;
+            
             transform.position = endPosition;
-
-            float angle;
-            if (axis > 0f)
-            {
-                spriteRenderer.flipX = false;
-                angle = Vector3.SignedAngle(Vector3.right, tangent, Vector3.forward);
-            }
-            else
-            {
-                spriteRenderer.flipX = true;
-                angle = Vector3.SignedAngle(Vector3.left, tangent, Vector3.forward);
-            }
-
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-
-#if UNITY_EDITOR
-            DrawTangentNormal(endPosition, tangent, normal);
-#endif
+            prevNormal = normal;
+            prevTangent = tangent;
+            UpdateRotation();
         }
 
         public void Fire(float angle)
@@ -164,13 +179,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
         }
 
 #if UNITY_EDITOR
-        private void DrawTangentNormal(Vector3 position, Vector3 tangent, Vector3 normal)
+        private void DrawTangentNormal()
         {
             if (drawTangentNormal == false)
                 return;
 
-            DebugLineRenderer.Inst.DrawLine(position, position + tangent, Color.red, 0.01f);
-            DebugLineRenderer.Inst.DrawLine(position, position + normal, Color.green, 0.01f);
+            DebugLineRenderer.Inst.DrawLine((Vector2) transform.position, (Vector2) transform.position + prevTangent, Color.red, 0.01f);
+            DebugLineRenderer.Inst.DrawLine((Vector2) transform.position, (Vector2) transform.position + prevNormal, Color.green, 0.01f);
         }
 #endif
     }

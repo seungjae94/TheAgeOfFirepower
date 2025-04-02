@@ -30,6 +30,9 @@ namespace Mathlife.ProjectL.Gameplay
         private Sprite developMapSprite;
 #endif
 
+        // Field
+        private List<ArtyController> battlers = new();
+
         public override async UniTask InitializeScene(IProgress<float> progress)
         {
             // 0. 게임 모드 공통 초기화 로직 수행
@@ -44,17 +47,17 @@ namespace Mathlife.ProjectL.Gameplay
             bool developMode = (BattleState.StageGameData == null);
 
             // 3. 맵 생성
-            Sprite mapSprite = developMode ? developMapSprite : BattleState.StageGameData.mapSprite; 
+            Sprite mapSprite = developMode ? developMapSprite : BattleState.StageGameData.mapSprite;
             DestructibleTerrain.Inst.GenerateTerrain(mapSprite);
             await UniTask.NextFrame();
             progress.Report(0.6f);
-            
+
             // 3. 플레이어 및 적 준비
             Debug.Assert(artyControllers.Count == 6);
             if (developMode)
             {
                 Debug.Assert(developArtyList.Count == 6);
-                
+
                 for (int i = 0; i < 6; ++i)
                 {
                     var arty = developArtyList[i];
@@ -63,7 +66,7 @@ namespace Mathlife.ProjectL.Gameplay
 
                     if (artyEmpty)
                         continue;
-                        
+
                     artyControllers[i].Setup(arty);
                 }
             }
@@ -72,27 +75,28 @@ namespace Mathlife.ProjectL.Gameplay
                 for (int i = 0; i < 3; ++i)
                 {
                     ArtyModel playerArty = ArtyRosterState.Battery[i];
-                    
+
                     artyControllers[i].gameObject.SetActive(playerArty != null);
 
                     if (playerArty == null)
                         continue;
-                    
+
                     artyControllers[i].Setup(playerArty);
                 }
 
                 for (int i = 0; i < 3; ++i)
                 {
                     Enemy enemy = BattleState.StageGameData.enemyList.ElementAtOrDefault(i);
-                    
+
                     artyControllers[i + 3].gameObject.SetActive(enemy != null);
 
                     if (enemy == null)
                         continue;
-                    
+
                     artyControllers[i + 3].Setup(enemy);
                 }
             }
+
             progress.Report(0.7f);
 
             // 4. HUD 준비
@@ -104,36 +108,28 @@ namespace Mathlife.ProjectL.Gameplay
             progress.Report(1.0f);
 
             // 6. 배틀 루프 시작
-            //BattleLoop().Forget();
+            BattleLoop().Forget();
         }
 
         private async UniTaskVoid BattleLoop()
         {
             Debug.Assert(artyControllers.Count == 6);
 
+            battlers = artyControllers
+                .Where(ac => ac.gameObject.activeSelf)
+                .ToList();
+
             int turn = 0;
+            int index = 0;
             while (true)
             {
-                //await turn.Logic();
+                battlers[index].StartTurn(turn);
+                await UniTask.WaitWhile(battlers[index], battler => battler.HasTurn);
+                
+                // TODO: 턴 결과 집계
 
-                //TurnBase turn = CreateTurn(/*The fighter of this order*/);
-                // //await turn.BeginTurn();
-                //
-                // while (true)
-                // {
-                //     Decision decision = await turn.MakeDecision();
-                //     await turn.DispatchDecision(decision);
-                //
-                //     if (decision.Type == EDecisionType.Fire 
-                //         || decision.Type == EDecisionType.Skip)
-                //         break;
-                // }
-                //
-                // TurnResult turnResult = await turn.EndTurn();
-                //
-                // if (turnResult.battleFinished)
-                //     break;
-
+                battlers.RemoveAll(battler => battler.gameObject.activeSelf == false);
+                index = (index + 1) % battlers.Count;
                 ++turn;
             }
 
