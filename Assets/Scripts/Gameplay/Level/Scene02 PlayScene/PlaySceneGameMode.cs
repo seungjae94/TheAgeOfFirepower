@@ -100,7 +100,7 @@ namespace Mathlife.ProjectL.Gameplay
             progress.Report(0.7f);
 
             // 4. HUD 준비
-            //Presenter.Find<HomePage>().Open();
+            Presenter.Find<FireHUD>().Activate();
             progress.Report(0.8f);
 
             // 5. 딜레이
@@ -123,6 +123,7 @@ namespace Mathlife.ProjectL.Gameplay
             int index = 0;
             while (true)
             {
+                Presenter.Find<FireHUD>().Setup(battlers[index]);
                 battlers[index].StartTurn(turn);
                 await UniTask.WaitWhile(battlers[index], battler => battler.HasTurn);
                 

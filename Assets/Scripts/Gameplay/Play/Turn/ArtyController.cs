@@ -7,11 +7,14 @@ namespace Mathlife.ProjectL.Gameplay.Play
 {
     public class ArtyController : MonoBehaviour
     {
-        // Serialize Field
+        // Component & Children
         
         [SerializeField]
         private SpriteRenderer spriteRenderer;
-
+        
+        public FireGuideArrowRenderer FireGuideArrow { get; private set; }
+        
+        // Settings
         [SerializeField]
         private float speed = 5f;
 
@@ -28,8 +31,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private bool drawTangentNormal = false;
 #endif
-
+        
         // Field
+        
         public bool Ready { get; private set; } = false;
         public bool HasTurn { get; private set; } = false;
         public bool IsPlayer { get; private set; } = true;
@@ -38,6 +42,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private float verticalVelocity;
         private Vector2 prevNormal;
         private Vector2 prevTangent;
+
+        public Vector2 Tangent => prevTangent;
 
         private ArtyModel arty = null;
         
@@ -69,6 +75,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
             ProjectToSurface();
 
             Ready = true;
+            
+            FireGuideArrow = GetComponentInChildren<FireGuideArrowRenderer>(true);
+            FireGuideArrow.Setup();
+            FireGuideArrow.Off();
         }
 
         private void ProjectToSurface()
@@ -82,6 +92,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Debug.Log($"Turn {turn} start!");
             
             HasTurn = true;
+            FireGuideArrow.On();
         }
 
         private void Update()
