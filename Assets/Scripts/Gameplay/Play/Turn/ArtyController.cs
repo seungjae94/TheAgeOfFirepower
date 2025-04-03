@@ -204,9 +204,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         //     Debug.Log(other);
         // }
 
-        private void OnParticleCollision(GameObject other)
+        public void Damage(int damage)
         {
-            Debug.Log(other.name);
+            Debug.Log(damage);
         }
 
 #if UNITY_EDITOR

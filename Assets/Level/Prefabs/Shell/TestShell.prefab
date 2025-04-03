@@ -178,6 +178,50 @@ PrefabInstance:
       propertyPath: lengthInSec
       value: 0.15
       objectReference: {fileID: 0}
+    - target: {fileID: 1404336286346685133, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404336286346685133, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
+      propertyPath: CollisionModule.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404336286346685133, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
+      propertyPath: TriggerModule.inside
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404336286346685133, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
+      propertyPath: TriggerModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404336286346685133, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404336286346685133, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
+      propertyPath: TriggerModule.radiusScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404336286346685133, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
+      propertyPath: InitialModule.gravitySource
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404336286346685133, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
+      propertyPath: CollisionModule.collisionMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404336286346685133, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404336286346685133, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
+      propertyPath: TriggerModule.primitives.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404336286346685133, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
+      propertyPath: 'TriggerModule.primitives.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6677171874560706200}
     - target: {fileID: 4822932328962149355, guid: 023ce918ea5415d4eb79abce042ff531, type: 3}
       propertyPath: m_Name
       value: ExplosionVFX

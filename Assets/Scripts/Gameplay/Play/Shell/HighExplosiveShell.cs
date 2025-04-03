@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -6,7 +7,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 {
     public class HighExplosiveShell : MonoBehaviour, IShell
     {
-        private static int terrainLayer = -1;
+        private static int terrainLayerIndex = -1;
+        private static int battlerLayer = -1;
         
         private ShellGameData shellGameData;
 
@@ -23,8 +25,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             this.shellGameData = shellGameData;
             
-            if (terrainLayer < 0)
-                terrainLayer = LayerMask.NameToLayer("Terrain");
+            if (terrainLayerIndex < 0)
+                terrainLayerIndex = LayerMask.NameToLayer("Terrain");
+            
+            if (battlerLayer < 0)
+                battlerLayer = LayerMask.GetMask("Battler");
         }
 
         public void Fire(Vector2 velocity)
@@ -46,7 +51,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (toBeDestroyed)
                 return;
             
-            if (other.gameObject.layer != terrainLayer)
+            if (other.gameObject.layer != terrainLayerIndex)
             {
                 return;
             }
@@ -58,6 +63,14 @@ namespace Mathlife.ProjectL.Gameplay.Play
             spriteRenderer.enabled = false;
             rigidbody2D.simulated = false;
             particleSystem.Play();
+            
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2, battlerLayer);
+
+            foreach (var collider in colliders)
+            {
+                collider.GetComponent<ArtyController>()?.Damage(10);
+            }
+            
             DestroyOnParticleDead().Forget();
         }
 
@@ -67,5 +80,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             
             Destroy(gameObject);
         }
+        
+        
     }
 }

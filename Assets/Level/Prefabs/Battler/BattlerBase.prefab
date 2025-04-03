@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3868937679276415381}
   - component: {fileID: 1648591696538501046}
   - component: {fileID: -4070025891287255086}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BattlerBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,6 +105,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3868937679276415381}
   moveSpeed: 5
   shellMaxSpeed: 15
+  gravityScale: 0.1
   testShellPrefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}
   drawTangentNormal: 0
 --- !u!61 &-4070025891287255086
@@ -164,7 +165,7 @@ GameObject:
   - component: {fileID: 5273337188098692839}
   - component: {fileID: 806047509470108757}
   - component: {fileID: 5683205590603593613}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FireGuideArrowRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
