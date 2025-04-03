@@ -35,36 +35,20 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public bool Ready { get; private set; } = false;
         public bool HasTurn { get; private set; } = false;
         public bool IsPlayer { get; private set; } = true;
+        public int FireAngle { get; private set; } = 0;
+        public int FirePower { get; private set; } = 50;
+        
 
         private bool clockWise = true;
         private float verticalVelocity;
         private Vector2 prevNormal;
         private Vector2 prevTangent;
-        private float fireAngle;
-        private int firePower;
 
         public Vector2 Tangent => prevTangent;
 
         private ArtyModel arty = null;
         
-        public void Setup(ArtyModel playerArty)
-        {
-            SetupInternal(true, playerArty);
-        }
-        
-        public void Setup(Enemy enemy)
-        {
-            SetupInternal(false, 
-                new ArtyModel(enemy.artyGameData, enemy.level, 0L));
-        }
-
-        public void Setup(DevelopArtyData developArty)
-        {
-            SetupInternal(developArty.isPlayer, 
-                new ArtyModel(developArty.artyGameData, developArty.level, 0L));
-        }
-
-        private void SetupInternal(bool isPlayer, ArtyModel artyModel)
+        public void Setup(bool isPlayer, ArtyModel artyModel)
         {
             IsPlayer = isPlayer;
             arty = artyModel;
@@ -147,7 +131,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             float angle = clockWise ? Vector3.SignedAngle(Vector3.right, prevTangent, Vector3.forward) : Vector3.SignedAngle(Vector3.left, prevTangent, Vector3.forward);  
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
             
-            SetFireAngle(fireAngle);
+            SetFireAngle(FireAngle);
             
             DrawTangentNormal();
         }
@@ -177,9 +161,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
             UpdateRotation();
         }
         
-        public void SetFireAngle(float angle)
+        public void SetFireAngle(int angle)
         {
-            fireAngle = angle;
+            FireAngle = angle;
             
             if (clockWise)
                 fireGuideArrow.SetAngle(angle);
@@ -189,7 +173,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void SetFirePower(int power)
         {
-            firePower = power;
+            FirePower = power;
             fireGuideArrow.SetPower(power);
         }
 

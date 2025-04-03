@@ -31,9 +31,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public void Setup(ArtyController artyController)
         {
             this.artyController = artyController;
+
+            int iFireAngle = artyController.FireAngle;
+            int iFirePower = artyController.FirePower;
             
-            angleSlider.value = 30f / 105f;
-            powerSlider.value = 0f;
+            angleSlider.value = (iFireAngle + 30f) / 105f;
+            powerSlider.value = (iFirePower - 1) / 99f;
         }
         
         public override void Activate()
@@ -68,7 +71,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private void OnAngleSliderValueChanged(float angle)
         {
             // -30도 ~ +75도
-            int iAngle = (int) (-30 + angle * 105);
+            int iAngle = Mathf.RoundToInt(-30 + angle * 105);
 
             string text = (iAngle >= 0) ? "+" : "";
             text += iAngle.ToString();
@@ -83,7 +86,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private void OnPowerSliderValueChanged(float power)
         {
             // 1 ~ 100
-            int iPower = (int)(1 + power * 99);
+            int iPower = Mathf.RoundToInt(1 + power * 99);
             powerText.text = iPower.ToString();
             
             if (artyController != null)

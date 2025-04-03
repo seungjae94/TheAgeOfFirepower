@@ -78,6 +78,11 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelWidth(100)]
         [PreviewField(ObjectFieldAlignment.Left, Height = 400)]
         public Sprite mapSprite;
+
+        [LabelWidth(100)]
+        [LabelText("스폰 위치")]
+        [ListDrawerSettings(ShowFoldout = false)]
+        public List<float> spawnXs = new(); 
         
 #if UNITY_EDITOR
         [SpaceOnly(25)]

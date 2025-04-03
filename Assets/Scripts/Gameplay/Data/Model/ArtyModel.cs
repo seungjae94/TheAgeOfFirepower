@@ -36,6 +36,8 @@ namespace Mathlife.ProjectL.Gameplay
         public Sprite Sprite => gameData.sprite;
         public Sprite EnemySprite => gameData.enemySprite;
         
+        public GameObject BattlerPrefab => gameData.battlerPrefab;
+        
         public long NeedExp => ExpGameData.characterNeedExpAtLevelList[levelRx.Value];
         public long CurrentLevelExp => totalExpRx.Value - ExpGameData.characterTotalExpAtLevelList[levelRx.Value]; 
 

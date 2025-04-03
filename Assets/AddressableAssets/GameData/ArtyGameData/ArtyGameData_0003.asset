@@ -25,6 +25,7 @@ MonoBehaviour:
   id: 3
   sprite: {fileID: -7822231473254092506, guid: f863de0c6b653f3409fc2f26f0f9af76, type: 3}
   enemySprite: {fileID: 9186734072051548185, guid: cb5807628bd76a74ebb8537031494e5f, type: 3}
+  battlerPrefab: {fileID: 4888119881158464328, guid: cd43059a0b255df4584035b4e3e453d8, type: 3}
   shell: {fileID: 11400000, guid: 737a7d56ea51ee748b510e8415d1fbb3, type: 2}
   maxHp: 525
   maxHpGrowth: 26

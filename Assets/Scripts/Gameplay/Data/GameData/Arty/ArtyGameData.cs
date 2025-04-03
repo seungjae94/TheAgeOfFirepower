@@ -26,6 +26,10 @@ namespace Mathlife.ProjectL.Gameplay
         [PreviewField(Alignment = ObjectFieldAlignment.Left)]
         public Sprite enemySprite = null;
         
+        [LabelWidth(100)]
+        [LabelText("배틀러")]
+        public GameObject battlerPrefab = null;
+        
         [LabelText("무장(포탄)")]
         [LabelWidth(100)]
         [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetShellPreview))]

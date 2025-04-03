@@ -25,6 +25,14 @@ MonoBehaviour:
   id: 4
   worldNo: 1
   stageNo: 5
+  mapSprite: {fileID: 0}
+  spawnXs:
+  - 2.5
+  - 4.5
+  - 6.5
+  - 13.5
+  - 15.5
+  - 17.5
   enemyList:
   - artyGameData: {fileID: 11400000, guid: 77a25fad67345454d9b586e22ce70dcf, type: 2}
     level: 8

@@ -7,6 +7,7 @@ using Mathlife.ProjectL.Gameplay.Play;
 using Mathlife.ProjectL.Gameplay.UI;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -17,21 +18,22 @@ namespace Mathlife.ProjectL.Gameplay
         // Alias
         private ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
         private BattleState BattleState => GameState.Inst.battleState;
-
-        // Depedency
-        [SerializeField]
-        private List<ArtyController> artyControllers = new();
-
+        
+        // Inspector
 #if UNITY_EDITOR
         [SerializeField]
-        private List<DevelopArtyData> developArtyList = new();
+        private List<TestArtyModel> developPlayers = new();
+        
+        [SerializeField]
+        private List<TestArtyModel> developEnemys = new();
 
         [SerializeField]
-        private Sprite developMapSprite;
+        private AssetReferenceT<StageGameData> developStageGameDataRef = null;
 #endif
 
         // Field
-        private List<ArtyController> battlers = new();
+        private bool developMode = false;
+        private readonly List<ArtyController> battlers = new();
 
         public override async UniTask InitializeScene(IProgress<float> progress)
         {
@@ -44,56 +46,73 @@ namespace Mathlife.ProjectL.Gameplay
             progress.Report(0.2f);
 
             // 2. 모드 세팅
-            bool developMode = (BattleState.StageGameData == null);
-
+            developMode = BattleState.StageGameData == false;
+            
+            StageGameData stageGameData = BattleState.StageGameData;
+            if (developMode)
+            {
+                stageGameData = await developStageGameDataRef.LoadAssetAsync();
+            }
+            
             // 3. 맵 생성
-            Sprite mapSprite = developMode ? developMapSprite : BattleState.StageGameData.mapSprite;
+            Sprite mapSprite = stageGameData.mapSprite;
             DestructibleTerrain.Inst.GenerateTerrain(mapSprite);
+            await UniTask.NextFrame();
             await UniTask.NextFrame();
             progress.Report(0.6f);
 
             // 3. 플레이어 및 적 준비
-            Debug.Assert(artyControllers.Count == 6);
+            battlers.Clear();
+
+            void InstantiateBattler(bool isPlayer, ArtyModel arty, int spawnIndex)
+            {
+                GameObject inst = Instantiate(arty.BattlerPrefab);
+                inst.transform.position = new Vector3(stageGameData.spawnXs[spawnIndex], 15f, 0f);
+                var battler = inst.GetComponent<ArtyController>();
+                battler.Setup(isPlayer, arty);
+                battlers.Add(battler);
+            }
+            
             if (developMode)
             {
-                Debug.Assert(developArtyList.Count == 6);
-
-                for (int i = 0; i < 6; ++i)
+                for (int i = 0; i < Mathf.Min(developPlayers.Count, 3); ++i)
                 {
-                    var arty = developArtyList[i];
-                    bool artyEmpty = (arty == null) || (arty.artyGameData == null);
-                    artyControllers[i].gameObject.SetActive(!artyEmpty);
-
-                    if (artyEmpty)
-                        continue;
-
-                    artyControllers[i].Setup(arty);
+                    var player = developPlayers[i];
+                    var arty = new ArtyModel(player.artyGameData, player.level, 0L);
+                    
+                    InstantiateBattler(true, arty, i);
+                }
+                
+                for (int i = 0; i < Mathf.Min(developEnemys.Count, 3); ++i)
+                {
+                    var enemy = developEnemys[i];
+                    var arty = new ArtyModel(enemy.artyGameData, enemy.level, 0L);
+                    
+                    InstantiateBattler(false, arty, i + 3);
                 }
             }
             else
             {
                 for (int i = 0; i < 3; ++i)
                 {
-                    ArtyModel playerArty = ArtyRosterState.Battery[i];
+                    ArtyModel arty = ArtyRosterState.Battery[i];
 
-                    artyControllers[i].gameObject.SetActive(playerArty != null);
-
-                    if (playerArty == null)
+                    if (arty == null)
                         continue;
 
-                    artyControllers[i].Setup(playerArty);
+                    InstantiateBattler(true, arty, i);
                 }
 
                 for (int i = 0; i < 3; ++i)
                 {
                     Enemy enemy = BattleState.StageGameData.enemyList.ElementAtOrDefault(i);
 
-                    artyControllers[i + 3].gameObject.SetActive(enemy != null);
-
                     if (enemy == null)
                         continue;
-
-                    artyControllers[i + 3].Setup(enemy);
+                    
+                    ArtyModel arty = new ArtyModel(enemy.artyGameData, enemy.level, 0L);
+                    
+                    InstantiateBattler(false, arty, i + 3);
                 }
             }
 
@@ -113,10 +132,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         private async UniTaskVoid BattleLoop()
         {
-            Debug.Assert(artyControllers.Count == 6);
-
-            battlers = artyControllers
-                .Where(ac => ac.gameObject.activeSelf)
+            List<ArtyController> aliveBattlers = battlers
+                .Where(bat => bat)
                 .ToList();
 
             int turn = 0;
@@ -129,7 +146,7 @@ namespace Mathlife.ProjectL.Gameplay
                 
                 // TODO: 턴 결과 집계
 
-                battlers.RemoveAll(battler => battler.gameObject.activeSelf == false);
+                aliveBattlers.RemoveAll(battler => !battler);
                 index = (index + 1) % battlers.Count;
                 ++turn;
             }
