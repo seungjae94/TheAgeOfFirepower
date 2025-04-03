@@ -11,8 +11,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         [SerializeField]
         private SpriteRenderer spriteRenderer;
-        
-        public FireGuideArrowRenderer FireGuideArrow { get; private set; }
+
+        private FireGuideArrowRenderer fireGuideArrow;
         
         // Settings
         [SerializeField]
@@ -42,6 +42,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private float verticalVelocity;
         private Vector2 prevNormal;
         private Vector2 prevTangent;
+        private float fireAngle;
+        private int firePower;
 
         public Vector2 Tangent => prevTangent;
 
@@ -76,9 +78,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             Ready = true;
             
-            FireGuideArrow = GetComponentInChildren<FireGuideArrowRenderer>(true);
-            FireGuideArrow.Setup();
-            FireGuideArrow.Off();
+            fireGuideArrow = GetComponentInChildren<FireGuideArrowRenderer>(true);
+            fireGuideArrow.Setup();
+            fireGuideArrow.Off();
         }
 
         private void ProjectToSurface()
@@ -92,7 +94,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Debug.Log($"Turn {turn} start!");
             
             HasTurn = true;
-            FireGuideArrow.On();
+            fireGuideArrow.On();
         }
 
         private void Update()
@@ -147,6 +149,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             float angle = clockWise ? Vector3.SignedAngle(Vector3.right, prevTangent, Vector3.forward) : Vector3.SignedAngle(Vector3.left, prevTangent, Vector3.forward);  
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
             
+            SetFireAngle(fireAngle);
+            
             DrawTangentNormal();
         }
 
@@ -173,6 +177,22 @@ namespace Mathlife.ProjectL.Gameplay.Play
             prevNormal = normal;
             prevTangent = tangent;
             UpdateRotation();
+        }
+        
+        public void SetFireAngle(float angle)
+        {
+            fireAngle = angle;
+            
+            if (clockWise)
+                fireGuideArrow.SetAngle(angle);
+            else
+                fireGuideArrow.SetAngle(180f - angle);
+        }
+
+        public void SetFirePower(int power)
+        {
+            firePower = power;
+            fireGuideArrow.SetPower(power);
         }
 
         public void Fire(float angle)

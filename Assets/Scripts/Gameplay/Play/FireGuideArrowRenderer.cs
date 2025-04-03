@@ -13,9 +13,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private SpriteRenderer spriteRenderer;
         
         // Field
-        public float Angle { get; private set; } // Angle from Vector2.right
-        public int Power { get; private set; }
-        
         public void Setup()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -31,18 +28,14 @@ namespace Mathlife.ProjectL.Gameplay.Play
             spriteRenderer.enabled = false;
         }
         
-        /// <param name="angle">int degree</param>
         public void SetAngle(float angle)
         {
-            Angle = angle;
-            transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            transform.localRotation = Quaternion.Euler(0f, 0f, angle);
         }
         
         /// <param name="power">int [1, 100]</param>
         public void SetPower(int power)
         {
-            Power = power;
-
             float length = DEFAULT_LENGTH + MAX_GAP * power / 100;
             spriteRenderer.size = new Vector2(length, spriteRenderer.size.y);
         }

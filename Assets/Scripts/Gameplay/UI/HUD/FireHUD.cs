@@ -69,8 +69,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             if (artyController != null)
             {
-                float artyAngle = Vector2.Angle(Vector2.right, artyController.Tangent);
-                artyController.FireGuideArrow.SetAngle(artyAngle + iAngle);    
+                artyController.SetFireAngle(iAngle);    
             }
         }
         
@@ -81,7 +80,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             powerText.text = iPower.ToString();
             
             if (artyController != null)
-                artyController.FireGuideArrow.SetPower(iPower);
+                artyController.SetFirePower(iPower);
         }
     }
 }
