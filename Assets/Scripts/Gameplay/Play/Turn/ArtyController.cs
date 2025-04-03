@@ -1,3 +1,4 @@
+using System;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -21,9 +22,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         [SerializeField]
         private float shellMaxSpeed = 15f;
-        
+
+        [SerializeField]
+        private float gravityScale = 0.1f;
+            
         [SerializeField]
         private GameObject testShellPrefab;
+        
         
 #if UNITY_EDITOR
         [SerializeField]
@@ -90,6 +95,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 ApplyGravity();
                 return;
             }
+
+            if (DestructibleTerrain.Inst.InGround(transform.position) == true)
+            {
+                verticalVelocity = 0f;
+            }
             
             if (false == HasTurn)
                 return;
@@ -107,7 +117,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         private void ApplyGravity()
         {
-            verticalVelocity += Physics2D.gravity.y * Time.deltaTime;
+            verticalVelocity += gravityScale * Physics2D.gravity.y * Time.deltaTime;
             Vector2 nextPosition = (Vector2) transform.position + verticalVelocity * Vector2.up;
 
             if (DestructibleTerrain.Inst.InGround(nextPosition))
@@ -187,6 +197,16 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 
             Vector2 shellVelocity = fireGuideArrow.GetVelocity() * shellMaxSpeed;
             shell.Fire(shellVelocity);
+        }
+
+        // private void OnTriggerEnter2D(Collider2D other)
+        // {
+        //     Debug.Log(other);
+        // }
+
+        private void OnParticleCollision(GameObject other)
+        {
+            Debug.Log(other.name);
         }
 
 #if UNITY_EDITOR

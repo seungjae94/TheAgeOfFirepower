@@ -9,6 +9,22 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.x
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Offset.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 7.04
       objectReference: {fileID: 0}
@@ -62,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: -4320137535729247827, guid: 9d9308eea77c0414c8dfbf7d3993cbd5, type: 3}
     - target: {fileID: 6828167055844809530, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_Name
-      value: Humvee Variant
+      value: Humvee
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

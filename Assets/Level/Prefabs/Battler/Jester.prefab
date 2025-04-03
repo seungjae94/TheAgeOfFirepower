@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.x
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Offset.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 7.51
       objectReference: {fileID: 0}
@@ -62,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: -7083545565698355939, guid: 5061ee6358482574bbeb097e4cceca5a, type: 3}
     - target: {fileID: 6828167055844809530, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_Name
-      value: Jester Variant
+      value: Jester
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

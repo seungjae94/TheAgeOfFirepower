@@ -8,6 +8,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Offset.y
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3834700181586529527, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
@@ -50,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6828167055844809530, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_Name
-      value: Player0 Variant
+      value: Chaser
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

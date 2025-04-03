@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.x
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.y
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Offset.y
+      value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 10.71
       objectReference: {fileID: 0}
@@ -62,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: -7040960777665541239, guid: d55120a582a46a543b10acafb0692b53, type: 3}
     - target: {fileID: 6828167055844809530, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_Name
-      value: Player1 Variant
+      value: Sniper
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

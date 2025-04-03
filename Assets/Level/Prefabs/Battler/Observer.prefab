@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Offset.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4070025891287255086, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 5.62
       objectReference: {fileID: 0}
@@ -62,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 1497113504130319039, guid: bf7731fd949cd944097117d1cf0519eb, type: 3}
     - target: {fileID: 6828167055844809530, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_Name
-      value: Observer Variant
+      value: Observer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

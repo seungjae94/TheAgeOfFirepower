@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.Play
@@ -9,7 +10,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         private ShellGameData shellGameData;
 
+        private SpriteRenderer spriteRenderer;
+        
         private Rigidbody2D rigidbody2D;
+        
+        private ParticleSystem particleSystem;
 
         // Field
         private bool toBeDestroyed = false;
@@ -24,8 +29,14 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Fire(Vector2 velocity)
         {
+            if (spriteRenderer == null)
+                spriteRenderer = GetComponent<SpriteRenderer>();
+            
             if (rigidbody2D == null)
                 rigidbody2D = GetComponent<Rigidbody2D>();
+            
+            if (particleSystem == null)
+                particleSystem = GetComponentInChildren<ParticleSystem>();
             
             rigidbody2D.linearVelocity = velocity;
         }
@@ -44,6 +55,16 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 Shape.Circle((int)shellGameData.explosionRadius), Color.clear);
 
             toBeDestroyed = true;
+            spriteRenderer.enabled = false;
+            rigidbody2D.simulated = false;
+            particleSystem.Play();
+            DestroyOnParticleDead().Forget();
+        }
+
+        private async UniTaskVoid DestroyOnParticleDead()
+        {
+            await UniTask.WaitWhile(particleSystem.IsAlive);
+            
             Destroy(gameObject);
         }
     }
