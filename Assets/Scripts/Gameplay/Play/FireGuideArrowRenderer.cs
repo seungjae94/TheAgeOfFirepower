@@ -39,5 +39,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
             float length = DEFAULT_LENGTH + MAX_GAP * power / 100;
             spriteRenderer.size = new Vector2(length, spriteRenderer.size.y);
         }
+
+        public Vector2 GetVelocity()
+        {
+            float power = (spriteRenderer.size.x - DEFAULT_LENGTH) / MAX_GAP;
+            return transform.right * (0.1f + 0.9f * power);
+        }
     }
 }

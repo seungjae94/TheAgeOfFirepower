@@ -1161,6 +1161,7 @@ MonoBehaviour:
   powerSlider: {fileID: 610198713}
   angleText: {fileID: 228722145}
   powerText: {fileID: 197189409}
+  fireButton: {fileID: 1897949884}
 --- !u!1 &610198711
 GameObject:
   m_ObjectHideFlags: 0
@@ -2115,10 +2116,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1081817287}
-  speed: 10
+  moveSpeed: 5
+  shellMaxSpeed: 15
   testShellPrefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}
-  testFireAngle: 30
-  testFireSpeed: 10
   drawTangentNormal: 0
 --- !u!1 &1133722081
 GameObject:
@@ -2251,10 +2251,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1165890923}
-  speed: 10
+  moveSpeed: 5
+  shellMaxSpeed: 15
   testShellPrefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}
-  testFireAngle: 30
-  testFireSpeed: 10
   drawTangentNormal: 0
 --- !u!212 &1165890923
 SpriteRenderer:
@@ -2448,10 +2447,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1268605577}
-  speed: 10
+  moveSpeed: 5
+  shellMaxSpeed: 15
   testShellPrefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}
-  testFireAngle: 30
-  testFireSpeed: 10
   drawTangentNormal: 0
 --- !u!212 &1268605577
 SpriteRenderer:
@@ -2702,10 +2700,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1363917834}
-  speed: 10
+  moveSpeed: 5
+  shellMaxSpeed: 15
   testShellPrefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}
-  testFireAngle: 30
-  testFireSpeed: 10
   drawTangentNormal: 0
 --- !u!212 &1363917834
 SpriteRenderer:
@@ -2856,10 +2853,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1467203965}
-  speed: 10
+  moveSpeed: 5
+  shellMaxSpeed: 15
   testShellPrefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}
-  testFireAngle: 30
-  testFireSpeed: 10
   drawTangentNormal: 0
 --- !u!212 &1467203965
 SpriteRenderer:
@@ -3028,10 +3024,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1613906427}
-  speed: 10
+  moveSpeed: 5
+  shellMaxSpeed: 15
   testShellPrefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}
-  testFireAngle: 30
-  testFireSpeed: 10
   drawTangentNormal: 0
 --- !u!212 &1613906427
 SpriteRenderer:

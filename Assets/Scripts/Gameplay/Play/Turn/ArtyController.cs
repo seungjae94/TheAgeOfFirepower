@@ -1,5 +1,6 @@
 using Mathlife.ProjectL.Gameplay.ObjectBase;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -16,16 +17,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         // Settings
         [SerializeField]
-        private float speed = 5f;
-
+        private float moveSpeed = 5f;
+        
+        [SerializeField]
+        private float shellMaxSpeed = 15f;
+        
         [SerializeField]
         private GameObject testShellPrefab;
-
-        [SerializeField]
-        private float testFireAngle = 30;
-
-        [SerializeField]
-        private float testFireSpeed = 1f;
         
 #if UNITY_EDITOR
         [SerializeField]
@@ -159,7 +157,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (axis == 0f)
                 return;
             
-            float slideAmount = axis * speed * Time.deltaTime;
+            float slideAmount = axis * moveSpeed * Time.deltaTime;
 
             bool slideResult = DestructibleTerrain.Inst.Slide(transform.position, slideAmount, out Vector2 endPosition,
                 out Vector2 normal,
@@ -195,7 +193,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             fireGuideArrow.SetPower(power);
         }
 
-        public void Fire(float angle)
+        public void Fire()
         {
             GameObject shellGameObject = Instantiate(testShellPrefab);
             shellGameObject.transform.position = transform.position + 0.4f * transform.up;
@@ -203,9 +201,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             IShell shell = shellGameObject.GetComponent<IShell>();
             shell.Init(GameState.Inst.gameDataLoader.GetShellData(0));
                 
-            Vector2 shellVelocity = new Vector2(
-                Mathf.Cos(testFireAngle *  Mathf.Deg2Rad), 
-                Mathf.Sin(testFireAngle * Mathf.Deg2Rad)) * testFireSpeed;
+            Vector2 shellVelocity = fireGuideArrow.GetVelocity() * shellMaxSpeed;
             shell.Fire(shellVelocity);
         }
 

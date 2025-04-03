@@ -21,6 +21,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField]
         private TextMeshProUGUI powerText;
 
+        [SerializeField]
+        private Button fireButton;
+        
         // Field
         private ArtyController artyController;
         private readonly CompositeDisposable disposables = new();
@@ -43,6 +46,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             powerSlider.OnValueChangedAsObservable()
                 .Subscribe(OnPowerSliderValueChanged)
+                .AddTo(disposables);
+            
+            fireButton.OnClickAsObservable()
+                .Subscribe(OnClickFireButton)
                 .AddTo(disposables);
         }
 
@@ -81,6 +88,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             if (artyController != null)
                 artyController.SetFirePower(iPower);
+        }
+
+        private void OnClickFireButton(Unit _)
+        {
+            if (artyController != null)
+                artyController.Fire();
         }
     }
 }
