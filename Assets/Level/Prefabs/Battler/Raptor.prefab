@@ -112,6 +112,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Raptor
       objectReference: {fileID: 0}
+    - target: {fileID: 8805677848417922164, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

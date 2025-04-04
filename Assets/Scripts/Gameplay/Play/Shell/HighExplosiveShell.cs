@@ -48,6 +48,18 @@ namespace Mathlife.ProjectL.Gameplay.Play
             rigidbody2D.linearVelocity = velocity;
         }
 
+        private void LateUpdate()
+        {
+            if (toBeDestroyed)
+                return;
+            
+            if (false == DestructibleTerrain.Inst.InTerrain(transform.position))
+            {
+                toBeDestroyed = true;
+                Destroy(gameObject);
+            }
+        }
+
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (toBeDestroyed)
