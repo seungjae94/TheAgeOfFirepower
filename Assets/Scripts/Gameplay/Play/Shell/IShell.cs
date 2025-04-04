@@ -6,5 +6,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
     {
         void Init(ArtyModel firer, ShellGameData shellGameData);
         void Fire(Vector2 velocity);
+
+        GameObject GetGameObject();
     }
 }

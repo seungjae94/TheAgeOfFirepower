@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Mathlife.ProjectL.Gameplay.UI;
 using Mathlife.ProjectL.Utils;
@@ -10,7 +13,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
     public class ArtyController : MonoBehaviour
     {
         // Component & Children
-        
+
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
@@ -19,36 +22,36 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         [SerializeField]
         private SlicedFilledImage hpBar;
-        
+
         // Settings
         [SerializeField]
         private float moveSpeed = 10f;
-        
+
         [SerializeField]
         private float shellMaxSpeed = 15f;
 
         [SerializeField]
         private float gravityScale = 0.1f;
-            
+
         [SerializeField]
         private GameObject testShellPrefab;
-        
-        
+
+
 #if UNITY_EDITOR
         [SerializeField]
         private bool drawTangentNormal = false;
 #endif
-        
+
         // Field
         public bool Ready { get; private set; } = false;
         public bool HasTurn { get; private set; } = false;
         public bool IsPlayer { get; private set; } = true;
         public int FireAngle { get; private set; } = 0;
         public int FirePower { get; private set; } = 50;
-        
+
         private int maxHp = 100;
         private int currentHp = 100;
-        
+
         private bool clockWise = true;
         private float verticalVelocity;
         private Vector2 prevNormal;
@@ -57,7 +60,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public Vector2 Tangent => prevTangent;
 
         private ArtyModel arty = null;
-        
+
         public void Setup(bool isPlayer, ArtyModel artyModel)
         {
             IsPlayer = isPlayer;
@@ -67,14 +70,14 @@ namespace Mathlife.ProjectL.Gameplay.Play
             clockWise = IsPlayer;
 
             ProjectToSurface();
-            
+
             fireGuideArrow.Setup();
             fireGuideArrow.Off();
 
             maxHp = artyModel.GetMaxHp();
             currentHp = artyModel.GetMaxHp();
-            hpBar.fillAmount = (float) currentHp / maxHp;
-            
+            hpBar.fillAmount = (float)currentHp / maxHp;
+
             Ready = true;
         }
 
@@ -86,8 +89,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void StartTurn(int turn)
         {
+            Debug.Log($"Turn {turn} start.");
             HasTurn = true;
-            
+
             // Enable HUD
             fireGuideArrow.On();
             Presenter.Find<FireHUD>().Enable();
@@ -98,7 +102,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             if (Ready == false)
                 return;
-            
+
             // 턴과 상관 없이 항상 중력 작용
             if (DestructibleTerrain.Inst.InGround(transform.position) == false)
             {
@@ -110,13 +114,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
             {
                 verticalVelocity = 0f;
             }
-            
+
             if (false == HasTurn)
                 return;
 
             float axis = Presenter.Find<MoveHUD>().Axis;
             Slide(axis);
-            
+
             // 이동 후 중력 작용
             if (DestructibleTerrain.Inst.InGround(transform.position) == false)
             {
@@ -127,18 +131,18 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private void ApplyGravity()
         {
             verticalVelocity += gravityScale * Physics2D.gravity.y * Time.deltaTime;
-            Vector2 nextPosition = (Vector2) transform.position + verticalVelocity * Vector2.up;
+            Vector2 nextPosition = (Vector2)transform.position + verticalVelocity * Vector2.up;
 
             if (DestructibleTerrain.Inst.InGround(nextPosition))
             {
                 DestructibleTerrain.Inst.VerticalSnapToSurface(transform.position, out nextPosition);
-                
+
                 DestructibleTerrain.Inst.ExtractNormalTangent(nextPosition, out prevNormal, out prevTangent);
-                
+
                 if (clockWise == false)
                     prevTangent = -prevTangent;
             }
-            
+
             transform.position = nextPosition;
 
             UpdateRotation();
@@ -147,11 +151,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private void UpdateRotation()
         {
             spriteRenderer.flipX = !clockWise;
-            float angle = clockWise ? Vector3.SignedAngle(Vector3.right, prevTangent, Vector3.forward) : Vector3.SignedAngle(Vector3.left, prevTangent, Vector3.forward);  
+            float angle = clockWise
+                ? Vector3.SignedAngle(Vector3.right, prevTangent, Vector3.forward)
+                : Vector3.SignedAngle(Vector3.left, prevTangent, Vector3.forward);
             spriteRenderer.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            
+
             SetFireAngle(FireAngle);
-            
+
             DrawTangentNormal();
         }
 
@@ -159,7 +165,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             if (axis == 0f)
                 return;
-            
+
             float slideAmount = axis * moveSpeed * Time.deltaTime;
             bool slideResult = DestructibleTerrain.Inst.Slide(transform.position, slideAmount, out Vector2 endPosition,
                 out Vector2 normal,
@@ -167,22 +173,22 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (false == slideResult)
             {
-                transform.position= (Vector2)transform.position + slideAmount * prevTangent;
+                transform.position = (Vector2)transform.position + slideAmount * prevTangent;
                 return;
             }
 
             clockWise = axis > 0f;
-            
+
             transform.position = endPosition;
             prevNormal = normal;
             prevTangent = tangent;
             UpdateRotation();
         }
-        
+
         public void SetFireAngle(int angle)
         {
             FireAngle = angle;
-            
+
             if (clockWise)
                 fireGuideArrow.SetAngle(angle);
             else
@@ -199,19 +205,27 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             GameObject shellGameObject = Instantiate(testShellPrefab);
             shellGameObject.transform.position = fireGuideArrow.transform.position;
-                
+
             IShell shell = shellGameObject.GetComponent<IShell>();
             shell.Init(arty, GameState.Inst.gameDataLoader.GetShellData(0));
-                
+
             Vector2 shellVelocity = fireGuideArrow.GetVelocity() * shellMaxSpeed;
             shell.Fire(shellVelocity);
-            
+
             // Disable HUD
             fireGuideArrow.Off();
             Presenter.Find<FireHUD>().Disable();
             Presenter.Find<MoveHUD>().Disable();
+
+            WaitUntilAllShellsExploded(new() { shellGameObject }).Forget();
         }
-        
+
+        private async UniTaskVoid WaitUntilAllShellsExploded(List<GameObject> objects)
+        {
+            await UniTask.WaitUntil(objects, value => value.All(obj => obj == null));
+            HasTurn = false;
+        }
+
         public void Damage(int damage)
         {
             DamageTextGenerator.Inst.Generate(this, damage);
@@ -226,8 +240,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (drawTangentNormal == false)
                 return;
 
-            DebugLineRenderer.Inst.DrawLine((Vector2) transform.position, (Vector2) transform.position + prevTangent, Color.red, 0.01f);
-            DebugLineRenderer.Inst.DrawLine((Vector2) transform.position, (Vector2) transform.position + prevNormal, Color.green, 0.01f);
+            DebugLineRenderer.Inst.DrawLine((Vector2)transform.position, (Vector2)transform.position + prevTangent,
+                Color.red, 0.01f);
+            DebugLineRenderer.Inst.DrawLine((Vector2)transform.position, (Vector2)transform.position + prevNormal,
+                Color.green, 0.01f);
         }
 #endif
     }

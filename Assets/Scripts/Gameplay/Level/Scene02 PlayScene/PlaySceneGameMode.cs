@@ -139,6 +139,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             int turn = 0;
             int index = 0;
+            const int turnDelayMilliSeconds = 1500;
             while (true)
             {
                 Presenter.Find<FireHUD>().Setup(battlers[index]);
@@ -150,6 +151,8 @@ namespace Mathlife.ProjectL.Gameplay
                 aliveBattlers.RemoveAll(battler => !battler);
                 index = (index + 1) % battlers.Count;
                 ++turn;
+
+                await UniTask.Delay(turnDelayMilliSeconds);
             }
 
             FinishBattle().Forget();

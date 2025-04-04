@@ -48,6 +48,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
             rigidbody2D.linearVelocity = velocity;
         }
 
+        public GameObject GetGameObject()
+        {
+            return gameObject;
+        }
+
         private void LateUpdate()
         {
             if (toBeDestroyed)
