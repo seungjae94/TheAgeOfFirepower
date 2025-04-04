@@ -236,6 +236,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
 
             CatmullRomSpline spline = new(clockWise, worldContour);
+            
+            #if UNITY_EDITOR
+            if (drawSpline)
+                spline.DrawSpline(DebugLineRenderer.Inst);
+            #endif
+            
             spline.GetPoint(Mathf.Abs(translation), out endPosition, out normal, out tangent);
             SnapToSurface(endPosition, normal, out endPosition);
             return true;

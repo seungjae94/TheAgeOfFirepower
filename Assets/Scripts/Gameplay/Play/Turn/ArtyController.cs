@@ -1,9 +1,7 @@
-using System;
 using DG.Tweening;
-using Mathlife.ProjectL.Gameplay.ObjectBase;
+using Mathlife.ProjectL.Gameplay.UI;
 using Mathlife.ProjectL.Utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -24,7 +22,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         // Settings
         [SerializeField]
-        private float moveSpeed = 5f;
+        private float moveSpeed = 10f;
         
         [SerializeField]
         private float shellMaxSpeed = 15f;
@@ -88,8 +86,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void StartTurn(int turn)
         {
-            Debug.Log($"Turn {turn} start!");
-            
             HasTurn = true;
             fireGuideArrow.On();
         }
@@ -113,9 +109,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             
             if (false == HasTurn)
                 return;
-            
-            // TODO: InputSystem 통합
-            float axis = Input.GetAxisRaw("Horizontal");
+
+            float axis = Presenter.Find<MoveHUD>().Axis;
             Slide(axis);
             
             // 이동 후 중력 작용
@@ -162,7 +157,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return;
             
             float slideAmount = axis * moveSpeed * Time.deltaTime;
-
             bool slideResult = DestructibleTerrain.Inst.Slide(transform.position, slideAmount, out Vector2 endPosition,
                 out Vector2 normal,
                 out Vector2 tangent);
@@ -200,7 +194,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public void Fire()
         {
             GameObject shellGameObject = Instantiate(testShellPrefab);
-            shellGameObject.transform.position = transform.position + 0.4f * transform.up;
+            shellGameObject.transform.position = fireGuideArrow.transform.position;
                 
             IShell shell = shellGameObject.GetComponent<IShell>();
             shell.Init(arty, GameState.Inst.gameDataLoader.GetShellData(0));

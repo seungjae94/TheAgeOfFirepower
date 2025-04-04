@@ -32,7 +32,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         private void DestroyEventCallback()
         {
-            Debug.Log("DestroyEventCallback");
             Destroy(gameObject);
         }
     }
