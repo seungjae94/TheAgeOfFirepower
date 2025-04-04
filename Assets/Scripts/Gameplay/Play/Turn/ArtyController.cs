@@ -206,7 +206,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Damage(int damage)
         {
-            Debug.Log(damage);
+            DamageTextGenerator.Inst.Generate(this, damage);
         }
 
 #if UNITY_EDITOR
