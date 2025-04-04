@@ -69,7 +69,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             foreach (var collider in colliders)
             {
-                collider.GetComponent<ArtyController>()?.Damage(10);
+                collider.transform.root.GetComponent<ArtyController>()?.Damage(10);
             }
             
             DestroyOnParticleDead().Forget();

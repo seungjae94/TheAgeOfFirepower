@@ -1,5 +1,7 @@
 using System;
+using DG.Tweening;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
+using Mathlife.ProjectL.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
@@ -14,7 +16,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
+        [SerializeField]
         private FireGuideArrowRenderer fireGuideArrow;
+
+        [SerializeField]
+        private SlicedFilledImage hpBar;
         
         // Settings
         [SerializeField]
@@ -36,14 +42,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
 #endif
         
         // Field
-        
         public bool Ready { get; private set; } = false;
         public bool HasTurn { get; private set; } = false;
         public bool IsPlayer { get; private set; } = true;
         public int FireAngle { get; private set; } = 0;
         public int FirePower { get; private set; } = 50;
         
-
+        private int maxHp = 100;
+        private int currentHp = 100;
+        
         private bool clockWise = true;
         private float verticalVelocity;
         private Vector2 prevNormal;
@@ -62,12 +69,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
             clockWise = IsPlayer;
 
             ProjectToSurface();
-
-            Ready = true;
             
-            fireGuideArrow = GetComponentInChildren<FireGuideArrowRenderer>(true);
             fireGuideArrow.Setup();
             fireGuideArrow.Off();
+
+            maxHp = artyModel.GetMaxHp();
+            currentHp = artyModel.GetMaxHp();
+            hpBar.fillAmount = (float) currentHp / maxHp;
+            
+            Ready = true;
         }
 
         private void ProjectToSurface()
@@ -198,15 +208,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Vector2 shellVelocity = fireGuideArrow.GetVelocity() * shellMaxSpeed;
             shell.Fire(shellVelocity);
         }
-
-        // private void OnTriggerEnter2D(Collider2D other)
-        // {
-        //     Debug.Log(other);
-        // }
-
+        
         public void Damage(int damage)
         {
             DamageTextGenerator.Inst.Generate(this, damage);
+
+            currentHp -= damage;
+            DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)currentHp / maxHp, 0.5f);
+            
+            Debug.Log(damage);
         }
 
 #if UNITY_EDITOR

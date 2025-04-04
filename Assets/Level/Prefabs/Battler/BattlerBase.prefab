@@ -403,6 +403,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3359308444079164497}
+  fireGuideArrow: {fileID: 5683205590603593613}
+  hpBar: {fileID: 3154140218261910234}
   moveSpeed: 5
   shellMaxSpeed: 15
   gravityScale: 0.1
