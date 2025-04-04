@@ -28,6 +28,34 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 5.18
       objectReference: {fileID: 0}
+    - target: {fileID: 1285078729386504393, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.x
+      value: 8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.y
+      value: 4.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Offset.y
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 10.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 5.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3359308444079164497, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7040960777665541239, guid: d55120a582a46a543b10acafb0692b53, type: 3}
     - target: {fileID: 3834700181586529527, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.5
@@ -72,6 +100,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -7040960777665541239, guid: d55120a582a46a543b10acafb0692b53, type: 3}
+    - target: {fileID: 5273337188098692839, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6828167055844809530, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_Name
       value: Sniper

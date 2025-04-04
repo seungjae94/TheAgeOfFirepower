@@ -32,6 +32,34 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 5.43
       objectReference: {fileID: 0}
+    - target: {fileID: 1285078729386504393, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Offset.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 7.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 5.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 3359308444079164497, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -4320137535729247827, guid: 9d9308eea77c0414c8dfbf7d3993cbd5, type: 3}
     - target: {fileID: 3834700181586529527, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.57
@@ -76,6 +104,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -4320137535729247827, guid: 9d9308eea77c0414c8dfbf7d3993cbd5, type: 3}
+    - target: {fileID: 5273337188098692839, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6828167055844809530, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_Name
       value: Humvee

@@ -139,7 +139,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             spriteRenderer.flipX = !clockWise;
             float angle = clockWise ? Vector3.SignedAngle(Vector3.right, prevTangent, Vector3.forward) : Vector3.SignedAngle(Vector3.left, prevTangent, Vector3.forward);  
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            spriteRenderer.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
             
             SetFireAngle(FireAngle);
             

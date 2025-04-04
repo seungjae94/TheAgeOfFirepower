@@ -28,6 +28,34 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 5.24
       objectReference: {fileID: 0}
+    - target: {fileID: 1285078729386504393, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Size.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Offset.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 7.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538935604951619500, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 5.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3359308444079164497, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7083545565698355939, guid: 5061ee6358482574bbeb097e4cceca5a, type: 3}
     - target: {fileID: 3834700181586529527, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.21
@@ -72,6 +100,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -7083545565698355939, guid: 5061ee6358482574bbeb097e4cceca5a, type: 3}
+    - target: {fileID: 5273337188098692839, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6828167055844809530, guid: b43594d228d5b244c89d6a2bcd5e45e8, type: 3}
       propertyPath: m_Name
       value: Jester

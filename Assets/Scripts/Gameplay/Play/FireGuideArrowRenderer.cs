@@ -6,9 +6,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
     [RequireComponent(typeof(SpriteRenderer))]
     public class FireGuideArrowRenderer : MonoBehaviour
     {
-        // 기본 길이 1, 최대 길이 2.5
-        private const float DEFAULT_LENGTH = 1f;
-        private const float MAX_GAP = 1.5f;
+        // 기본 길이 2.5, 최대 길이 5
+        private const float DEFAULT_LENGTH = 2.5f;
+        private const float MAX_GAP = 2.5f;
         
         private SpriteRenderer spriteRenderer;
         
