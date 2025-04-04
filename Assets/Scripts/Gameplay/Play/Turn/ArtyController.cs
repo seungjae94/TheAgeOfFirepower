@@ -203,7 +203,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             shellGameObject.transform.position = transform.position + 0.4f * transform.up;
                 
             IShell shell = shellGameObject.GetComponent<IShell>();
-            shell.Init(GameState.Inst.gameDataLoader.GetShellData(0));
+            shell.Init(arty, GameState.Inst.gameDataLoader.GetShellData(0));
                 
             Vector2 shellVelocity = fireGuideArrow.GetVelocity() * shellMaxSpeed;
             shell.Fire(shellVelocity);
@@ -213,10 +213,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             DamageTextGenerator.Inst.Generate(this, damage);
 
-            currentHp -= damage;
-            DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)currentHp / maxHp, 0.5f);
-            
-            Debug.Log(damage);
+            currentHp = Mathf.Max(0, currentHp - damage);
+            DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)currentHp / maxHp, 0.25f);
         }
 
 #if UNITY_EDITOR

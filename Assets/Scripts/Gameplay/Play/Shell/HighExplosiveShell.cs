@@ -10,7 +10,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private static int terrainLayerIndex = -1;
         private static int battlerLayer = -1;
         
-        private ShellGameData shellGameData;
 
         private SpriteRenderer spriteRenderer;
         
@@ -20,9 +19,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         // Field
         private bool toBeDestroyed = false;
+        private ArtyModel firer;
+        private ShellGameData shellGameData;
         
-        public void Init(ShellGameData shellGameData)
+        public void Init(ArtyModel firer, ShellGameData shellGameData)
         {
+            this.firer = firer;
             this.shellGameData = shellGameData;
             
             if (terrainLayerIndex < 0)
@@ -69,7 +71,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             foreach (var collider in colliders)
             {
-                collider.transform.root.GetComponent<ArtyController>()?.Damage(10);
+                collider.transform.root.GetComponent<ArtyController>()?.Damage(Mathf.CeilToInt(firer.GetAtk() * shellGameData.damage / 100f));
             }
             
             DestroyOnParticleDead().Forget();
