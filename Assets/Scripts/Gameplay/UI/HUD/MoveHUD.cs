@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class MoveHUD : Presenter
+    public class MoveHUD : Presenter, IInteractable
     {
         [SerializeField]
         private Button leftButton;
@@ -55,6 +55,18 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private void OnRBChanged(bool value)
         {
             RBPressed = value;
+        }
+
+        public void Enable()
+        {
+            leftButton.interactable = true;
+            rightButton.interactable = true;
+        }
+
+        public void Disable()
+        {
+            leftButton.interactable = false;
+            rightButton.interactable = false;
         }
     }
 }

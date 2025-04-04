@@ -87,7 +87,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public void StartTurn(int turn)
         {
             HasTurn = true;
+            
+            // Enable HUD
             fireGuideArrow.On();
+            Presenter.Find<FireHUD>().Enable();
+            Presenter.Find<MoveHUD>().Enable();
         }
 
         private void Update()
@@ -201,6 +205,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 
             Vector2 shellVelocity = fireGuideArrow.GetVelocity() * shellMaxSpeed;
             shell.Fire(shellVelocity);
+            
+            // Disable HUD
+            fireGuideArrow.Off();
+            Presenter.Find<FireHUD>().Disable();
+            Presenter.Find<MoveHUD>().Disable();
         }
         
         public void Damage(int damage)

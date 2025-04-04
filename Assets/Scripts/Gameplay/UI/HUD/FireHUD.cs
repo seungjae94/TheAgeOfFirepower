@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class FireHUD : Presenter
+    public class FireHUD : Presenter, IInteractable
     {
         [SerializeField]
         private Slider angleSlider;
@@ -61,6 +61,20 @@ namespace Mathlife.ProjectL.Gameplay.UI
             base.Deactivate();
 
             disposables.Clear();
+        }
+
+        public void Enable()
+        {
+            angleSlider.interactable = true;
+            powerSlider.interactable = true;
+            fireButton.interactable = true;
+        }
+        
+        public void Disable()
+        {
+            angleSlider.interactable = false;
+            powerSlider.interactable = false;
+            fireButton.interactable = false;
         }
 
         private void OnDestroy()
