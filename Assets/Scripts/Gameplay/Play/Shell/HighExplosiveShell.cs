@@ -55,16 +55,17 @@ namespace Mathlife.ProjectL.Gameplay.Play
             {
                 return;
             }
-            
-            DestructibleTerrain.Inst.Paint(other.contacts[0].point, 
-                Shape.Circle((int)shellGameData.explosionRadius), Color.clear);
+
+            Vector2 contactPoint = other.contacts[0].point;
+            DestructibleTerrain.Inst.Paint(contactPoint, Shape.Circle((int)shellGameData.explosionRadius), Color.clear);
 
             toBeDestroyed = true;
             spriteRenderer.enabled = false;
             rigidbody2D.simulated = false;
             particleSystem.Play();
-            
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2, battlerLayer);
+
+            float radius = shellGameData.explosionRadius / 64f;
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(contactPoint, radius, battlerLayer);
 
             foreach (var collider in colliders)
             {

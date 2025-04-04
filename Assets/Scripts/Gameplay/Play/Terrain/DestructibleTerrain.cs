@@ -91,6 +91,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
                     chunks[x, y] = chunk;
                 }
             }
+            
+            Destroy(chunkPrefab);
         }
 
         // 렌더링
