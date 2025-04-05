@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Mathlife.ProjectL.Gameplay.Play;
 using Mathlife.ProjectL.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -20,10 +21,20 @@ namespace Mathlife.ProjectL.Gameplay
 #endif
         public ArtyGameData artyGameData;
 
-        [HorizontalGroup("Enemy", Gap = 50, Width = 100)]
+        [HorizontalGroup("Enemy", Gap = 25, Width = 100)]
         [LabelText("레벨")]
         public int level;
 
+        [HorizontalGroup("Strategy", Gap = 25, Width = 225)]
+        [LabelText("이동 전략")]
+        [LabelWidth(75)]
+        public MoveStrategy moveStrategy;
+        
+        [HorizontalGroup("Strategy", Gap = 25, Width = 225)]
+        [LabelText("타겟팅 전략")]
+        [LabelWidth(75)]
+        public AttackTargetingStrategy targetingStrategy;
+        
 #if UNITY_EDITOR
         private Sprite GetPreview()
         {

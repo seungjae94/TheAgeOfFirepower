@@ -19,7 +19,7 @@ MonoBehaviour:
   - rid: 2505257151154094383
   - rid: 2505257151154094445
   - rid: 2505257151154094454
-  m_VersionTimestamp: 638794944192893028
+  m_VersionTimestamp: 638794983434347165
   m_DebugInfo: {fileID: 8982542302513122786}
   m_RuntimeGraph: {fileID: 3297642993514472168}
   AssetID:
@@ -106,8 +106,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 2505257151154094374
       type: {class: StartNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -235,7 +233,7 @@ MonoBehaviour:
         LocalValue:
           rid: 2505257151154094452
         LinkedVariable:
-          rid: -2
+          rid: 2505257151154094537
     - rid: 2505257151154094451
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -313,7 +311,7 @@ MonoBehaviour:
         LocalValue:
           rid: 2505257151154094460
         LinkedVariable:
-          rid: -2
+          rid: 2505257151154094538
     - rid: 2505257151154094459
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -369,6 +367,26 @@ MonoBehaviour:
         IsExposed: 1
         m_IsShared: 0
         m_Value: 0.99
+    - rid: 2505257151154094537
+      type: {class: 'TypedVariableModel`1[[Mathlife.ProjectL.Gameplay.Play.MoveStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 3208302512472199079
+          m_Value1: 975545206634080620
+        Name: Enemy Move Strategy
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 2505257151154094538
+      type: {class: 'TypedVariableModel`1[[Mathlife.ProjectL.Gameplay.Play.AttackTargetingStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 9101495549457811072
+          m_Value1: 4998100122126760373
+        Name: Enemy Attack Targeting Strategy
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
 --- !u!114 &3297642993514472168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,16 +400,16 @@ MonoBehaviour:
   m_Name: EnemyBehaviorGraph
   m_EditorClassIdentifier: 
   Graphs:
-  - rid: 2505257151154094489
+  - rid: 2505257151154094539
   RootGraph:
-    rid: 2505257151154094489
+    rid: 2505257151154094539
   m_DebugInfo: {fileID: 8982542302513122786}
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 2505257151154094489
+    - rid: 2505257151154094539
       type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         AuthoringAssetID:
@@ -399,94 +417,94 @@ MonoBehaviour:
           m_Value1: 15560224663401133320
         m_DebugInfo: {fileID: 0}
         Root:
-          rid: 2505257151154094490
+          rid: 2505257151154094540
         BlackboardReference:
-          rid: 2505257151154094491
+          rid: 2505257151154094541
         BlackboardGroupReferences: []
         ProcessedNodes: []
         m_RunningNodes: []
         m_NodesToEnd:
-          rid: 2505257151154094492
+          rid: 2505257151154094542
         m_EndedNodes:
-          rid: 2505257151154094493
-        m_VersionTimestamp: 638794944192893028
-    - rid: 2505257151154094490
+          rid: 2505257151154094543
+        m_VersionTimestamp: 638794983434347165
+    - rid: 2505257151154094540
       type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
           m_Value0: 3365645146981899620
           m_Value1: 3130590764035701477
         Graph:
-          rid: 2505257151154094489
+          rid: 2505257151154094539
         m_Parent:
           rid: -2
         m_Child:
-          rid: 2505257151154094494
+          rid: 2505257151154094544
         Repeat: 1
-    - rid: 2505257151154094491
+    - rid: 2505257151154094541
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Blackboard:
-          rid: 2505257151154094495
+          rid: 2505257151154094545
         m_Source: {fileID: 9012909360646848482}
-    - rid: 2505257151154094492
+    - rid: 2505257151154094542
       type: {class: 'Stack`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: mscorlib}
       data: 
-    - rid: 2505257151154094493
+    - rid: 2505257151154094543
       type: {class: 'HashSet`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: System.Core}
       data: 
-    - rid: 2505257151154094494
+    - rid: 2505257151154094544
       type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
           m_Value0: 16258433296764647169
           m_Value1: 2305809694509906605
         Graph:
-          rid: 2505257151154094489
+          rid: 2505257151154094539
         m_Parent:
-          rid: 2505257151154094490
+          rid: 2505257151154094540
         m_Children:
-        - rid: 2505257151154094496
-        - rid: 2505257151154094497
-    - rid: 2505257151154094495
+        - rid: 2505257151154094546
+        - rid: 2505257151154094547
+    - rid: 2505257151154094545
       type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Variables:
-        - rid: 2505257151154094498
-        - rid: 2505257151154094499
-        - rid: 2505257151154094500
-        - rid: 2505257151154094501
-    - rid: 2505257151154094496
+        - rid: 2505257151154094548
+        - rid: 2505257151154094549
+        - rid: 2505257151154094550
+        - rid: 2505257151154094551
+    - rid: 2505257151154094546
       type: {class: MoveAction, ns: Mathlife.ProjectL.Gameplay.Play, asm: ProjectL-Gameplay}
       data:
         ID:
           m_Value0: 8784643881440207377
           m_Value1: 14624260495118311529
         Graph:
-          rid: 2505257151154094489
+          rid: 2505257151154094539
         m_Parent:
-          rid: 2505257151154094494
+          rid: 2505257151154094544
         Agent:
-          rid: 2505257151154094498
+          rid: 2505257151154094548
         Strategy:
-          rid: 2505257151154094502
-    - rid: 2505257151154094497
+          rid: 2505257151154094549
+    - rid: 2505257151154094547
       type: {class: AimAction, ns: Mathlife.ProjectL.Gameplay.Play, asm: ProjectL-Gameplay}
       data:
         ID:
           m_Value0: 11655429132986286649
           m_Value1: 8573385201950995631
         Graph:
-          rid: 2505257151154094489
+          rid: 2505257151154094539
         m_Parent:
-          rid: 2505257151154094494
+          rid: 2505257151154094544
         Agent:
-          rid: 2505257151154094498
+          rid: 2505257151154094548
         Strategy:
-          rid: 2505257151154094503
+          rid: 2505257151154094550
         Accuracy:
-          rid: 2505257151154094501
-    - rid: 2505257151154094498
+          rid: 2505257151154094551
+    - rid: 2505257151154094548
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -494,7 +512,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 0}
-    - rid: 2505257151154094499
+    - rid: 2505257151154094549
       type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.MoveStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -502,7 +520,7 @@ MonoBehaviour:
           m_Value1: 975545206634080620
         Name: Enemy Move Strategy
         m_Value: 0
-    - rid: 2505257151154094500
+    - rid: 2505257151154094550
       type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.AttackTargetingStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -510,7 +528,7 @@ MonoBehaviour:
           m_Value1: 4998100122126760373
         Name: Enemy Attack Targeting Strategy
         m_Value: 0
-    - rid: 2505257151154094501
+    - rid: 2505257151154094551
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -518,22 +536,6 @@ MonoBehaviour:
           m_Value1: 18266593256825326892
         Name: Accuracy
         m_Value: 0.99
-    - rid: 2505257151154094502
-      type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.MoveStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 0
-    - rid: 2505257151154094503
-      type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.AttackTargetingStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 0
 --- !u!114 &4382653280589697920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -554,7 +556,7 @@ MonoBehaviour:
   - rid: 2505257151154094415
   - rid: 2505257151154094416
   - rid: 2505257151154094417
-  m_VersionTimestamp: 638794944192893028
+  m_VersionTimestamp: 638794983434347165
   m_CommandBuffer:
     m_Commands: []
   m_RuntimeBlackboardAsset: {fileID: 9012909360646848482}
@@ -626,7 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
   m_Name: EnemyBehaviorGraph Blackboard
   m_EditorClassIdentifier: 
-  VersionTimestamp: 638794943315073402
+  VersionTimestamp: 638794983434347165
   AssetID:
     m_Value0: 0
     m_Value1: 0

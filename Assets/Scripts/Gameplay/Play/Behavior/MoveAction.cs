@@ -33,7 +33,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
             
             Debug.Log("Move Action Started!");
-            // TODO: 목적지 설정
+            // TODO: 목적지 계산
             
             return Status.Running;
         }

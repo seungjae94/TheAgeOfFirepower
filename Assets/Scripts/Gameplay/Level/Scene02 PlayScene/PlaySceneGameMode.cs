@@ -18,14 +18,14 @@ namespace Mathlife.ProjectL.Gameplay
         // Alias
         private ArtyRosterState ArtyRosterState => GameState.Inst.artyRosterState;
         private BattleState BattleState => GameState.Inst.battleState;
-        
+
         // Inspector
 #if UNITY_EDITOR
         [SerializeField]
-        private List<TestArtyModel> developPlayers = new();
-        
+        private List<ArtyPreset> developPlayers = new();
+
         [SerializeField]
-        private List<TestArtyModel> developEnemys = new();
+        private List<Enemy> developEnemys = new();
 
         [SerializeField]
         private AssetReferenceT<StageGameData> developStageGameDataRef = null;
@@ -48,13 +48,13 @@ namespace Mathlife.ProjectL.Gameplay
 
             // 2. 모드 세팅
             developMode = BattleState.StageGameData == false;
-            
+
             StageGameData stageGameData = BattleState.StageGameData;
             if (developMode)
             {
                 stageGameData = await developStageGameDataRef.LoadAssetAsync();
             }
-            
+
             // 3. 맵 생성
             Sprite mapSprite = stageGameData.mapSprite;
             DestructibleTerrain.Inst.GenerateTerrain(mapSprite);
@@ -65,31 +65,34 @@ namespace Mathlife.ProjectL.Gameplay
             // 3. 플레이어 및 적 준비
             battlers.Clear();
 
-            void InstantiateBattler(bool isPlayer, ArtyModel arty, int spawnIndex)
+            void InstantiateBattler(int spawnIndex, ArtyModel arty, Enemy enemy)
             {
                 GameObject inst = Instantiate(arty.BattlerPrefab);
                 inst.transform.position = new Vector3(stageGameData.spawnXs[spawnIndex], 15f, 0f);
                 var battler = inst.GetComponent<ArtyController>();
-                battler.Setup(isPlayer, arty);
+                battler.Setup(arty, enemy);
                 battlers.Add(battler);
             }
-            
+
             if (developMode)
             {
                 for (int i = 0; i < Mathf.Min(developPlayers.Count, 3); ++i)
                 {
                     var player = developPlayers[i];
-                    var arty = new ArtyModel(player.artyGameData, player.level, 0L);
-                    
-                    InstantiateBattler(true, arty, i);
+                    var arty = new ArtyModel(player.arty, player.level, 0L);
+                    arty.Equip(EMechPartType.Barrel, player.barrel.id);
+                    arty.Equip(EMechPartType.Armor, player.armor.id);
+                    arty.Equip(EMechPartType.Engine, player.engine.id);
+
+                    InstantiateBattler(i, arty, null);
                 }
-                
+
                 for (int i = 0; i < Mathf.Min(developEnemys.Count, 3); ++i)
                 {
                     var enemy = developEnemys[i];
                     var arty = new ArtyModel(enemy.artyGameData, enemy.level, 0L);
-                    
-                    InstantiateBattler(false, arty, i + 3);
+
+                    InstantiateBattler(i + 3, arty, enemy);
                 }
             }
             else
@@ -101,7 +104,7 @@ namespace Mathlife.ProjectL.Gameplay
                     if (arty == null)
                         continue;
 
-                    InstantiateBattler(true, arty, i);
+                    InstantiateBattler(i, arty, null);
                 }
 
                 for (int i = 0; i < 3; ++i)
@@ -110,10 +113,10 @@ namespace Mathlife.ProjectL.Gameplay
 
                     if (enemy == null)
                         continue;
-                    
+
                     ArtyModel arty = new ArtyModel(enemy.artyGameData, enemy.level, 0L);
-                    
-                    InstantiateBattler(false, arty, i + 3);
+
+                    InstantiateBattler(i + 3, arty, enemy);
                 }
             }
 
@@ -146,7 +149,7 @@ namespace Mathlife.ProjectL.Gameplay
                 turnOwner = battlers[index];
                 turnOwner.StartTurn(turn);
                 await UniTask.WaitWhile(turnOwner, battler => battler.HasTurn);
-                
+
                 // TODO: 턴 결과 집계
 
                 aliveBattlers.RemoveAll(battler => !battler);

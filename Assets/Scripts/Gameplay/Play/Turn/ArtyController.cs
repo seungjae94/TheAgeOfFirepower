@@ -50,18 +50,18 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
 #if UNITY_EDITOR
         [SerializeField]
-        private bool drawTangentNormal = false;
+        private bool drawTangentNormal;
 #endif
 
         // Field
-        private float moveAxis = 0f;
+        private float moveAxis;
         public float MoveAxis
         {
             get => moveAxis;
             set => moveAxis = Mathf.Clamp(value, -1f, 1f);
         }
 
-        private int fireAngle = 0;
+        private int fireAngle;
 
         public int FireAngle
         {
@@ -77,8 +77,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             set => firePower = Mathf.Clamp(value, 1, 100);
         }
 
-        public bool Ready { get; private set; } = false;
-        public bool HasTurn { get; private set; } = false;
+        public bool Ready { get; private set; }
+        public bool HasTurn { get; private set; }
         public bool IsPlayer { get; private set; } = true;
         
         
@@ -93,11 +93,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public Vector2 Tangent => prevTangent;
 
-        private ArtyModel arty = null;
+        private ArtyModel arty;
 
-        public void Setup(bool isPlayer, ArtyModel artyModel)
+        public void Setup(ArtyModel artyModel, Enemy enemy)
         {
-            IsPlayer = isPlayer;
+            IsPlayer = enemy == null;
             arty = artyModel;
             spriteRenderer.sprite = IsPlayer ? arty.Sprite : arty.EnemySprite;
             spriteRenderer.flipX = !IsPlayer;
@@ -117,7 +117,14 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Ready = true;
 
             if (IsPlayer)
+            {
                 behaviorGraphAgent.enabled = false;
+            }
+            else
+            {
+                behaviorGraphAgent.SetVariableValue("Enemy Move Strategy", enemy!.moveStrategy);
+                behaviorGraphAgent.SetVariableValue("Enemy Attack Targeting Strategy", enemy!.targetingStrategy);
+            }
         }
 
         private void ProjectToSurface()
@@ -153,7 +160,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return;
             }
 
-            if (DestructibleTerrain.Inst.InGround(transform.position) == true)
+            if (DestructibleTerrain.Inst.InGround(transform.position))
             {
                 verticalVelocity = 0f;
             }
