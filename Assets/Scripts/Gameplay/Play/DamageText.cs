@@ -15,7 +15,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         private ArtyController owner;
 
-        private float localY = 0.75f;
+        private float localY = 2f;
         
         public void Setup(ArtyController owner, int damage)
         {

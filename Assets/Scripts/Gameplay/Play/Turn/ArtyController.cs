@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Mathlife.ProjectL.Gameplay.UI;
 using Mathlife.ProjectL.Utils;
+using TMPro;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -23,6 +24,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private SlicedFilledImage hpBar;
 
+        [SerializeField]
+        private TextMeshProUGUI hpText;
+        
+        [SerializeField]
+        private TextMeshProUGUI levelText;
+        
         // Settings
         [SerializeField]
         private float moveSpeed = 10f;
@@ -77,6 +84,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             maxHp = artyModel.GetMaxHp();
             currentHp = artyModel.GetMaxHp();
             hpBar.fillAmount = (float)currentHp / maxHp;
+            hpText.text = $"{currentHp}<space=0.2em>/<space=0.2em>{maxHp}";
+            levelText.text = $"Lv. {artyModel.levelRx.Value}";
 
             Ready = true;
         }
@@ -229,8 +238,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public void Damage(int damage)
         {
             DamageTextGenerator.Inst.Generate(this, damage);
-
             currentHp = Mathf.Max(0, currentHp - damage);
+            hpText.text = $"{currentHp}<space=0.2em>/<space=0.2em>{maxHp}";
             DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)currentHp / maxHp, 0.25f);
         }
 

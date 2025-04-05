@@ -2266,11 +2266,11 @@ MonoBehaviour:
   developPlayers:
   - isPlayer: 1
     artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 0
+    level: 99
   developEnemys:
   - isPlayer: 0
     artyGameData: {fileID: 11400000, guid: e858c33d5a0d4e64d9432444f4ef4ba9, type: 2}
-    level: 0
+    level: 2
   developStageGameDataRef:
     m_AssetGUID: 5f3e1fa1dfdc7d647b5fa6d72c8f0cd4
     m_SubObjectName: 

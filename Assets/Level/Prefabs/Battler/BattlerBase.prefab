@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 8058218664067511674}
   - component: {fileID: 1778401384752374670}
   m_Layer: 6
-  m_Name: Text (TMP)
+  m_Name: Level Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 1771737003124050230}
   - component: {fileID: 592470202906963191}
   m_Layer: 6
-  m_Name: Text (TMP)
+  m_Name: Hp Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -677,6 +677,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3359308444079164497}
   fireGuideArrow: {fileID: 5683205590603593613}
   hpBar: {fileID: 3154140218261910234}
+  hpText: {fileID: 592470202906963191}
+  levelText: {fileID: 1778401384752374670}
   moveSpeed: 5
   shellMaxSpeed: 15
   gravityScale: 0.1
