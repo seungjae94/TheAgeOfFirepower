@@ -1,0 +1,674 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad8f2220607dac4db5082ff333fafb8, type: 3}
+  m_Name: EnemyBehaviorGraph
+  m_EditorClassIdentifier: 
+  Blackboard: {fileID: 4382653280589697920}
+  m_Description: 
+  m_Nodes:
+  - rid: 2505257151154094374
+  - rid: 2505257151154094383
+  - rid: 2505257151154094445
+  - rid: 2505257151154094454
+  m_VersionTimestamp: 638794944192893028
+  m_DebugInfo: {fileID: 8982542302513122786}
+  m_RuntimeGraph: {fileID: 3297642993514472168}
+  AssetID:
+    m_Value0: 6115928697331121927
+    m_Value1: 15560224663401133320
+  Story:
+    Story: 
+    StoryVariableNames: []
+    Variables: []
+  m_NodeModelsInfo:
+  - Name: On Start
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 3335272451348827663
+      m_Value1: 11549843281177505721
+    Variables: []
+    NamedChildren: []
+  - Name: Sequence
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 10181448252506100447
+      m_Value1: 8737116843063128493
+    Variables: []
+    NamedChildren: []
+  - Name: Move
+    Story: '[Agent] move according to [Strategy]'
+    RuntimeTypeID:
+      m_Value0: 6079695416799349058
+      m_Value1: 16665765698146524099
+    Variables:
+    - Name: Agent
+      Type:
+        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Strategy
+      Type:
+        m_SerializableType: Mathlife.ProjectL.Gameplay.Play.MoveStrategy, ProjectL-Gameplay,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+  - Name: Aim
+    Story: '[Agent] aims according to [Strategy]'
+    RuntimeTypeID:
+      m_Value0: 9849729002650501114
+      m_Value1: 16294593648099788899
+    Variables:
+    - Name: Agent
+      Type:
+        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Strategy
+      Type:
+        m_SerializableType: Mathlife.ProjectL.Gameplay.Play.AttackTargetingStrategy,
+          ProjectL-Gameplay, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Accuracy
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    NamedChildren: []
+  - Name: Conditional Branch
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 12334964803190848789
+      m_Value1: 14608808926743427008
+    Variables: []
+    NamedChildren:
+    - True
+    - False
+  - Name: Succeeder
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 11118427888463720234
+      m_Value1: 7099678123072538779
+    Variables: []
+    NamedChildren: []
+  m_Blackboards: []
+  m_MainBlackboardAuthoringAsset: {fileID: 4382653280589697920}
+  m_CommandBuffer:
+    m_Commands: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 2505257151154094374
+      type: {class: StartNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -231.2, y: -33.6}
+        ID:
+          m_Value0: 3365645146981899620
+          m_Value1: 3130590764035701477
+        Parents: []
+        PortModels:
+        - rid: 2505257151154094375
+        NodeType:
+          m_SerializableType: Unity.Behavior.Start, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 3335272451348827663
+          m_Value1: 11549843281177505721
+        m_FieldValues: []
+        Repeat: 1
+    - rid: 2505257151154094375
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 2505257151154094374
+        m_Connections:
+        - rid: 2505257151154094384
+    - rid: 2505257151154094383
+      type: {class: CompositeNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -231.20001, y: 148.08397}
+        ID:
+          m_Value0: 16258433296764647169
+          m_Value1: 2305809694509906605
+        Parents: []
+        PortModels:
+        - rid: 2505257151154094384
+        - rid: 2505257151154094385
+        NodeType:
+          m_SerializableType: Unity.Behavior.SequenceComposite, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 10181448252506100447
+          m_Value1: 8737116843063128493
+        m_FieldValues: []
+    - rid: 2505257151154094384
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 2505257151154094383
+        m_Connections:
+        - rid: 2505257151154094375
+    - rid: 2505257151154094385
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 2505257151154094383
+        m_Connections:
+        - rid: 2505257151154094447
+        - rid: 2505257151154094455
+    - rid: 2505257151154094445
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -401.7, y: 236.084}
+        ID:
+          m_Value0: 8784643881440207377
+          m_Value1: 14624260495118311529
+        Parents: []
+        PortModels:
+        - rid: 2505257151154094447
+        - rid: 2505257151154094448
+        NodeType:
+          m_SerializableType: Mathlife.ProjectL.Gameplay.Play.MoveAction, ProjectL-Gameplay,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 6079695416799349058
+          m_Value1: 16665765698146524099
+        m_FieldValues:
+        - rid: 2505257151154094449
+        - rid: 2505257151154094450
+    - rid: 2505257151154094447
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 2505257151154094445
+        m_Connections:
+        - rid: 2505257151154094385
+    - rid: 2505257151154094448
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 2505257151154094445
+        m_Connections: []
+    - rid: 2505257151154094449
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Agent
+        Type:
+          m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 2505257151154094451
+        LinkedVariable:
+          rid: 2505257151154094477
+    - rid: 2505257151154094450
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Strategy
+        Type:
+          m_SerializableType: Mathlife.ProjectL.Gameplay.Play.MoveStrategy, ProjectL-Gameplay,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 2505257151154094452
+        LinkedVariable:
+          rid: -2
+    - rid: 2505257151154094451
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 2505257151154094452
+      type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.MoveStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 2505257151154094454
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -74.20001, y: 236.084}
+        ID:
+          m_Value0: 11655429132986286649
+          m_Value1: 8573385201950995631
+        Parents: []
+        PortModels:
+        - rid: 2505257151154094455
+        - rid: 2505257151154094456
+        NodeType:
+          m_SerializableType: Mathlife.ProjectL.Gameplay.Play.AimAction, ProjectL-Gameplay,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 9849729002650501114
+          m_Value1: 16294593648099788899
+        m_FieldValues:
+        - rid: 2505257151154094457
+        - rid: 2505257151154094458
+        - rid: 2505257151154094474
+    - rid: 2505257151154094455
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 2505257151154094454
+        m_Connections:
+        - rid: 2505257151154094385
+    - rid: 2505257151154094456
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 2505257151154094454
+        m_Connections: []
+    - rid: 2505257151154094457
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Agent
+        Type:
+          m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 2505257151154094459
+        LinkedVariable:
+          rid: 2505257151154094477
+    - rid: 2505257151154094458
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Strategy
+        Type:
+          m_SerializableType: Mathlife.ProjectL.Gameplay.Play.AttackTargetingStrategy,
+            ProjectL-Gameplay, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 2505257151154094460
+        LinkedVariable:
+          rid: -2
+    - rid: 2505257151154094459
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 2505257151154094460
+      type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.AttackTargetingStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 2505257151154094474
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Accuracy
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 2505257151154094475
+        LinkedVariable:
+          rid: 2505257151154094478
+    - rid: 2505257151154094475
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 2505257151154094477
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 2505257151154094478
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 5008381370537584217
+          m_Value1: 18266593256825326892
+        Name: Accuracy
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0.99
+--- !u!114 &3297642993514472168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db920e62f70f420bb33c771449926fa4, type: 3}
+  m_Name: EnemyBehaviorGraph
+  m_EditorClassIdentifier: 
+  Graphs:
+  - rid: 2505257151154094489
+  RootGraph:
+    rid: 2505257151154094489
+  m_DebugInfo: {fileID: 8982542302513122786}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 2505257151154094489
+      type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        AuthoringAssetID:
+          m_Value0: 6115928697331121927
+          m_Value1: 15560224663401133320
+        m_DebugInfo: {fileID: 0}
+        Root:
+          rid: 2505257151154094490
+        BlackboardReference:
+          rid: 2505257151154094491
+        BlackboardGroupReferences: []
+        ProcessedNodes: []
+        m_RunningNodes: []
+        m_NodesToEnd:
+          rid: 2505257151154094492
+        m_EndedNodes:
+          rid: 2505257151154094493
+        m_VersionTimestamp: 638794944192893028
+    - rid: 2505257151154094490
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 3365645146981899620
+          m_Value1: 3130590764035701477
+        Graph:
+          rid: 2505257151154094489
+        m_Parent:
+          rid: -2
+        m_Child:
+          rid: 2505257151154094494
+        Repeat: 1
+    - rid: 2505257151154094491
+      type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Blackboard:
+          rid: 2505257151154094495
+        m_Source: {fileID: 9012909360646848482}
+    - rid: 2505257151154094492
+      type: {class: 'Stack`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: mscorlib}
+      data: 
+    - rid: 2505257151154094493
+      type: {class: 'HashSet`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: System.Core}
+      data: 
+    - rid: 2505257151154094494
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 16258433296764647169
+          m_Value1: 2305809694509906605
+        Graph:
+          rid: 2505257151154094489
+        m_Parent:
+          rid: 2505257151154094490
+        m_Children:
+        - rid: 2505257151154094496
+        - rid: 2505257151154094497
+    - rid: 2505257151154094495
+      type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Variables:
+        - rid: 2505257151154094498
+        - rid: 2505257151154094499
+        - rid: 2505257151154094500
+        - rid: 2505257151154094501
+    - rid: 2505257151154094496
+      type: {class: MoveAction, ns: Mathlife.ProjectL.Gameplay.Play, asm: ProjectL-Gameplay}
+      data:
+        ID:
+          m_Value0: 8784643881440207377
+          m_Value1: 14624260495118311529
+        Graph:
+          rid: 2505257151154094489
+        m_Parent:
+          rid: 2505257151154094494
+        Agent:
+          rid: 2505257151154094498
+        Strategy:
+          rid: 2505257151154094502
+    - rid: 2505257151154094497
+      type: {class: AimAction, ns: Mathlife.ProjectL.Gameplay.Play, asm: ProjectL-Gameplay}
+      data:
+        ID:
+          m_Value0: 11655429132986286649
+          m_Value1: 8573385201950995631
+        Graph:
+          rid: 2505257151154094489
+        m_Parent:
+          rid: 2505257151154094494
+        Agent:
+          rid: 2505257151154094498
+        Strategy:
+          rid: 2505257151154094503
+        Accuracy:
+          rid: 2505257151154094501
+    - rid: 2505257151154094498
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 2505257151154094499
+      type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.MoveStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3208302512472199079
+          m_Value1: 975545206634080620
+        Name: Enemy Move Strategy
+        m_Value: 0
+    - rid: 2505257151154094500
+      type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.AttackTargetingStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9101495549457811072
+          m_Value1: 4998100122126760373
+        Name: Enemy Attack Targeting Strategy
+        m_Value: 0
+    - rid: 2505257151154094501
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 5008381370537584217
+          m_Value1: 18266593256825326892
+        Name: Accuracy
+        m_Value: 0.99
+    - rid: 2505257151154094502
+      type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.MoveStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 2505257151154094503
+      type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.AttackTargetingStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+--- !u!114 &4382653280589697920
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd922ae02c94c87a66e46a10a7319b9, type: 3}
+  m_Name: EnemyBehaviorGraph Blackboard
+  m_EditorClassIdentifier: 
+  AssetID:
+    m_Value0: 0
+    m_Value1: 0
+  m_Variables:
+  - rid: 2505257151154094376
+  - rid: 2505257151154094415
+  - rid: 2505257151154094416
+  - rid: 2505257151154094417
+  m_VersionTimestamp: 638794944192893028
+  m_CommandBuffer:
+    m_Commands: []
+  m_RuntimeBlackboardAsset: {fileID: 9012909360646848482}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2505257151154094376
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 2505257151154094415
+      type: {class: 'TypedVariableModel`1[[Mathlife.ProjectL.Gameplay.Play.MoveStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 3208302512472199079
+          m_Value1: 975545206634080620
+        Name: Enemy Move Strategy
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 2505257151154094416
+      type: {class: 'TypedVariableModel`1[[Mathlife.ProjectL.Gameplay.Play.AttackTargetingStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 9101495549457811072
+          m_Value1: 4998100122126760373
+        Name: Enemy Attack Targeting Strategy
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 2505257151154094417
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 5008381370537584217
+          m_Value1: 18266593256825326892
+        Name: Accuracy
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0.99
+--- !u!114 &8982542302513122786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b27bb6d9a2c8d540a10dff10acc543e, type: 3}
+  m_Name: EnemyBehaviorGraph Debug Info
+  m_EditorClassIdentifier: 
+  m_CodeBreakPointsList: []
+--- !u!114 &9012909360646848482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
+  m_Name: EnemyBehaviorGraph Blackboard
+  m_EditorClassIdentifier: 
+  VersionTimestamp: 638794943315073402
+  AssetID:
+    m_Value0: 0
+    m_Value1: 0
+  m_Blackboard:
+    m_Variables:
+    - rid: 2505257151154094397
+    - rid: 2505257151154094429
+    - rid: 2505257151154094430
+    - rid: 2505257151154094431
+  m_SharedBlackboardVariableGuids: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 2505257151154094397
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 2505257151154094429
+      type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.MoveStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3208302512472199079
+          m_Value1: 975545206634080620
+        Name: Enemy Move Strategy
+        m_Value: 0
+    - rid: 2505257151154094430
+      type: {class: 'BlackboardVariable`1[[Mathlife.ProjectL.Gameplay.Play.AttackTargetingStrategy, ProjectL-Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9101495549457811072
+          m_Value1: 4998100122126760373
+        Name: Enemy Attack Targeting Strategy
+        m_Value: 0
+    - rid: 2505257151154094431
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 5008381370537584217
+          m_Value1: 18266593256825326892
+        Name: Accuracy
+        m_Value: 0.99

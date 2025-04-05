@@ -638,6 +638,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3834700181586529527}
   - component: {fileID: 1648591696538501046}
+  - component: {fileID: 2834954738379499864}
   m_Layer: 6
   m_Name: BattlerBase
   m_TagString: Untagged
@@ -675,6 +676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3359308444079164497}
+  behaviorGraphAgent: {fileID: 2834954738379499864}
   fireGuideArrow: {fileID: 5683205590603593613}
   hpBar: {fileID: 3154140218261910234}
   hpText: {fileID: 592470202906963191}
@@ -684,6 +686,34 @@ MonoBehaviour:
   gravityScale: 0.1
   testShellPrefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}
   drawTangentNormal: 0
+--- !u!114 &2834954738379499864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6828167055844809530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Graph: {fileID: 3297642993514472168, guid: 07ff0924bf24e05408f54bc7e305f1d7, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 2505257151154094505
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 2505257151154094505
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 6828167055844809530}
 --- !u!1 &8037285090471193057
 GameObject:
   m_ObjectHideFlags: 0

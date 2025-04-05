@@ -5,6 +5,7 @@ using DG.Tweening;
 using Mathlife.ProjectL.Gameplay.UI;
 using Mathlife.ProjectL.Utils;
 using TMPro;
+using Unity.Behavior;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -18,6 +19,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
+        [SerializeField]
+        private BehaviorGraphAgent behaviorGraphAgent;
+        
         [SerializeField]
         private FireGuideArrowRenderer fireGuideArrow;
 
@@ -109,8 +113,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
             hpBar.fillAmount = (float)currentHp / maxHp;
             hpText.text = $"{currentHp}<space=0.2em>/<space=0.2em>{maxHp}";
             levelText.text = $"Lv. {artyModel.levelRx.Value}";
-
+            
             Ready = true;
+
+            if (IsPlayer)
+                behaviorGraphAgent.enabled = false;
         }
 
         private void ProjectToSurface()
@@ -126,8 +133,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             // Enable HUD
             fireGuideArrow.On();
-            Presenter.Find<FireHUD>().Enable();
-            Presenter.Find<MoveHUD>().Enable();
+
+            if (IsPlayer)
+            {
+                Presenter.Find<FireHUD>().Enable();
+                Presenter.Find<MoveHUD>().Enable();   
+            }
         }
 
         private void Update()
