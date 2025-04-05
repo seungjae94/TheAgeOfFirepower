@@ -30,8 +30,8 @@ MonoBehaviour:
   maxHp: 425
   maxHpGrowth: 21
   atk: 45
-  atkGrowth: 4.5
+  atkGrowth: 9
   def: 13
-  defGrowth: 1.3
+  defGrowth: 2.6
   mob: 100
   mobGrowth: 4

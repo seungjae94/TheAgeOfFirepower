@@ -2266,7 +2266,7 @@ MonoBehaviour:
   developPlayers:
   - isPlayer: 1
     artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 99
+    level: 30
   developEnemys:
   - isPlayer: 0
     artyGameData: {fileID: 11400000, guid: e858c33d5a0d4e64d9432444f4ef4ba9, type: 2}

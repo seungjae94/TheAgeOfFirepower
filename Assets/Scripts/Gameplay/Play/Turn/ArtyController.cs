@@ -235,10 +235,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
             HasTurn = false;
         }
 
-        public void Damage(int damage)
+        public void Damage(float damage)
         {
-            DamageTextGenerator.Inst.Generate(this, damage);
-            currentHp = Mathf.Max(0, currentHp - damage);
+            int finalDamage = Mathf.CeilToInt(100f *  damage / (100f + arty.GetDef()));
+            
+            DamageTextGenerator.Inst.Generate(this, finalDamage);
+            currentHp = Mathf.Max(0, currentHp - finalDamage);
             hpText.text = $"{currentHp}<space=0.2em>/<space=0.2em>{maxHp}";
             DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)currentHp / maxHp, 0.25f);
         }

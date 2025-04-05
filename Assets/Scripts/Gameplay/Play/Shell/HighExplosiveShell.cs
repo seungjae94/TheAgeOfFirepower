@@ -88,7 +88,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             foreach (var collider in colliders)
             {
-                collider.transform.root.GetComponent<ArtyController>()?.Damage(Mathf.CeilToInt(firer.GetAtk() * shellGameData.damage / 100f));
+                collider.transform.root.GetComponent<ArtyController>()?.Damage(firer.GetAtk() * shellGameData.damage / 100f);
             }
             
             DestroyOnParticleDead().Forget();
