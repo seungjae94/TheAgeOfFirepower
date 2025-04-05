@@ -50,11 +50,34 @@ namespace Mathlife.ProjectL.Gameplay.Play
 #endif
 
         // Field
+        private float moveAxis = 0f;
+        public float MoveAxis
+        {
+            get => moveAxis;
+            set => moveAxis = Mathf.Clamp(value, -1f, 1f);
+        }
+
+        private int fireAngle = 0;
+
+        public int FireAngle
+        {
+            get => fireAngle;
+            set => fireAngle = Mathf.Clamp(value, -15, 75);
+        }
+        
+        private int firePower = 50;
+
+        public int FirePower
+        {
+            get => firePower;
+            set => firePower = Mathf.Clamp(value, 1, 100);
+        }
+
         public bool Ready { get; private set; } = false;
         public bool HasTurn { get; private set; } = false;
         public bool IsPlayer { get; private set; } = true;
-        public int FireAngle { get; private set; } = 0;
-        public int FirePower { get; private set; } = 50;
+        
+        
 
         private int maxHp = 100;
         private int currentHp = 100;
@@ -126,9 +149,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (false == HasTurn)
                 return;
-
-            float axis = Presenter.Find<MoveHUD>().Axis;
-            Slide(axis);
+            
+            Slide(MoveAxis);
 
             // 이동 후 중력 작용
             if (DestructibleTerrain.Inst.InGround(transform.position) == false)

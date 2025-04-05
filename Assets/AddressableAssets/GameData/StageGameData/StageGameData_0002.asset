@@ -25,7 +25,7 @@ MonoBehaviour:
   id: 2
   worldNo: 1
   stageNo: 3
-  mapSprite: {fileID: 0}
+  mapSprite: {fileID: 21300000, guid: eaba7d1e7c9e9754583bc2eef6ea096f, type: 3}
   spawnXs:
   - 2.5
   - 4.5

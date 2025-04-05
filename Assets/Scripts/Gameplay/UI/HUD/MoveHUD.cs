@@ -14,9 +14,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private Button rightButton;
 
         // Field
-        public float Axis 
-            => Mathf.Clamp((LBPressed ? -1f : 0f) + (RBPressed ? 1f : 0f) + horAxis, -1f, 1f);
-
         private bool LBPressed = false;
         private bool RBPressed = false;
         private float horAxis = 0f;
@@ -43,18 +40,35 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             Observable.EveryUpdate()
                 .Select(_ => Input.GetAxis("Horizontal"))
-                .Subscribe(value => horAxis = value)
+                .DistinctUntilChanged()
+                .Subscribe(OnHorizontalAxisChanged)
                 .AddTo(gameObject);
         }
 
         private void OnLBChanged(bool value)
         {
             LBPressed = value;
+            UpdateAxis();
         }
         
         private void OnRBChanged(bool value)
         {
             RBPressed = value;
+            UpdateAxis();
+        }
+
+        private void OnHorizontalAxisChanged(float value)
+        {
+            horAxis = value;
+            UpdateAxis();
+        }
+
+        private void UpdateAxis()
+        {
+            var turnOwner = PlaySceneGameMode.Inst.turnOwner;
+            
+            if (turnOwner != null)
+                turnOwner.MoveAxis = (LBPressed ? -1f : 0f) + (RBPressed ? 1f : 0f) + horAxis;
         }
 
         public void Enable()

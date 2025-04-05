@@ -32,6 +32,7 @@ namespace Mathlife.ProjectL.Gameplay
 #endif
 
         // Field
+        public ArtyController turnOwner { get; private set; }
         private bool developMode = false;
         private readonly List<ArtyController> battlers = new();
 
@@ -142,9 +143,9 @@ namespace Mathlife.ProjectL.Gameplay
             const int turnDelayMilliSeconds = 1500;
             while (true)
             {
-                Presenter.Find<FireHUD>().Setup(battlers[index]);
-                battlers[index].StartTurn(turn);
-                await UniTask.WaitWhile(battlers[index], battler => battler.HasTurn);
+                turnOwner = battlers[index];
+                turnOwner.StartTurn(turn);
+                await UniTask.WaitWhile(turnOwner, battler => battler.HasTurn);
                 
                 // TODO: 턴 결과 집계
 
