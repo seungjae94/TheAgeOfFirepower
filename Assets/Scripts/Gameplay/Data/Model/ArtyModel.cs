@@ -81,6 +81,11 @@ namespace Mathlife.ProjectL.Gameplay
             return value;
         }
 
+        public int GetThreatLevel()
+        {
+            return Mathf.CeilToInt(GetAtk() * gameData.shell.damage / 100f);
+        }
+
         public void Equip(EMechPartType slotType, MechPartModel mechPart)
         {
             if (mechPart == null)

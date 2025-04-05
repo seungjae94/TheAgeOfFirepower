@@ -2270,11 +2270,17 @@ MonoBehaviour:
     barrel: {fileID: 11400000, guid: 426dcd72f60b7e44abf715e72fb5ade8, type: 2}
     armor: {fileID: 11400000, guid: d7cdf2582d10f8042b8c0426bc8e3da2, type: 2}
     engine: {fileID: 11400000, guid: d679ad340a5c9ce439639afd92f4eb11, type: 2}
+  - arty: {fileID: 11400000, guid: e858c33d5a0d4e64d9432444f4ef4ba9, type: 2}
+    level: 5
+    currentLevelExp: 0
+    barrel: {fileID: 0}
+    armor: {fileID: 0}
+    engine: {fileID: 0}
   developEnemys:
   - artyGameData: {fileID: 11400000, guid: e858c33d5a0d4e64d9432444f4ef4ba9, type: 2}
     level: 2
     moveStrategy: 0
-    targetingStrategy: 2
+    targetingStrategy: 1
   - artyGameData: {fileID: 11400000, guid: 73a35772b44a16841b49ccd5fc7788b7, type: 2}
     level: 3
     moveStrategy: 1

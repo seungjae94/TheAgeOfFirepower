@@ -7,6 +7,7 @@ using Mathlife.ProjectL.Utils;
 using TMPro;
 using Unity.Behavior;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -81,11 +82,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public bool HasTurn { get; private set; }
         public bool IsPlayer { get; private set; } = true;
         
-        
-
         private int maxHp = 100;
-        private int currentHp = 100;
+        public int CurrentHp { get; private set; } = 100;
+        public int ThreatLevel => arty.GetThreatLevel();
 
+        public string Description => $"{arty.DisplayName}(Lv. {arty.levelRx.Value})";
+        
         private bool clockWise = true;
         private float verticalVelocity;
         private Vector2 prevNormal;
@@ -109,9 +111,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
             fireGuideArrow.Off();
 
             maxHp = artyModel.GetMaxHp();
-            currentHp = artyModel.GetMaxHp();
-            hpBar.fillAmount = (float)currentHp / maxHp;
-            hpText.text = $"{currentHp}<space=0.2em>/<space=0.2em>{maxHp}";
+            CurrentHp = artyModel.GetMaxHp();
+            hpBar.fillAmount = (float)CurrentHp / maxHp;
+            hpText.text = $"{CurrentHp}<space=0.2em>/<space=0.2em>{maxHp}";
             levelText.text = $"Lv. {artyModel.levelRx.Value}";
             
             Ready = true;
@@ -280,9 +282,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
             int finalDamage = Mathf.CeilToInt(100f *  damage / (100f + arty.GetDef()));
             
             DamageTextGenerator.Inst.Generate(this, finalDamage);
-            currentHp = Mathf.Max(0, currentHp - finalDamage);
-            hpText.text = $"{currentHp}<space=0.2em>/<space=0.2em>{maxHp}";
-            DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)currentHp / maxHp, 0.25f);
+            CurrentHp = Mathf.Max(0, CurrentHp - finalDamage);
+            hpText.text = $"{CurrentHp}<space=0.2em>/<space=0.2em>{maxHp}";
+            DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)CurrentHp / maxHp, 0.25f);
         }
 
 #if UNITY_EDITOR

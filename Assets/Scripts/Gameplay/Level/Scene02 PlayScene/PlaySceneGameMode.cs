@@ -36,6 +36,10 @@ namespace Mathlife.ProjectL.Gameplay
         private bool developMode = false;
         private readonly List<ArtyController> battlers = new();
 
+        public ImmutableList<ArtyController> AlivePlayers => battlers
+            .Where(battler => battler.IsPlayer)
+            .ToImmutableList();
+        
         public override async UniTask InitializeScene(IProgress<float> progress)
         {
             // 0. 게임 모드 공통 초기화 로직 수행
@@ -80,9 +84,9 @@ namespace Mathlife.ProjectL.Gameplay
                 {
                     var player = developPlayers[i];
                     var arty = new ArtyModel(player.arty, player.level, 0L);
-                    arty.Equip(EMechPartType.Barrel, player.barrel.id);
-                    arty.Equip(EMechPartType.Armor, player.armor.id);
-                    arty.Equip(EMechPartType.Engine, player.engine.id);
+                    arty.Equip(EMechPartType.Barrel, player.barrel?.id ?? -1);
+                    arty.Equip(EMechPartType.Armor, player.armor?.id ?? -1);
+                    arty.Equip(EMechPartType.Engine, player.engine?.id ?? -1);
 
                     InstantiateBattler(i, arty, null);
                 }

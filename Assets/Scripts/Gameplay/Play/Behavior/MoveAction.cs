@@ -18,6 +18,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeReference]
         public BlackboardVariable<MoveStrategy> Strategy;
 
+        private ArtyController controller;
+        private float axis = 0f;
+        private float timer = 0f;
+        private float time = 0f;
+        
         protected override Status OnStart()
         {
             var currentBattler = PlaySceneGameMode.Inst?.turnOwner;
@@ -32,15 +37,28 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return Status.Failure;
             }
             
-            Debug.Log("Move Action Started!");
+            Debug.Log($"Move Strategy: {Strategy.Value}");
+            
             // TODO: 목적지 계산
+            time = 0.75f;
+            timer = 0f;
+            axis = -1f;
+            controller = Agent.Value.GetComponent<ArtyController>();
             
             return Status.Running;
         }
 
         protected override Status OnUpdate()
         {
-            Debug.Log("Move Action Update!");
+            timer += Time.deltaTime;
+            controller.MoveAxis = axis;            
+            
+            if (timer >= time)
+            {
+                controller.MoveAxis = 0f;
+                return Status.Success;
+            }
+            
             return Status.Running;
         }
 
