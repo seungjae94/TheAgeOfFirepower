@@ -10,6 +10,12 @@ using UnityEngine.UI.Extensions;
 
 namespace Mathlife.ProjectL.Gameplay.Play
 {
+    public enum SlideResult
+    {
+        Success,
+        ShortSegment,
+    }
+    
     public class DestructibleTerrain : MonoSingleton<DestructibleTerrain>
     {
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.Scene;
@@ -34,7 +40,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private QuadTree quadTree;
 
         private Texture2D originalTexture;
-        private float pixelsPerUnit = 64f;
+        public float PixelsPerUnit { get; private set; } = 64f;
 
         private Vector2Int chunkCount = new Vector2Int(1, 1);
         private Vector2Int lastChunkSize = new Vector2Int(0, 0);
@@ -47,7 +53,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             // 텍스쳐 데이터 저장
             originalTexture = sprite.texture;
-            pixelsPerUnit = sprite.pixelsPerUnit;
+            PixelsPerUnit = sprite.pixelsPerUnit;
 
             // 청크 데이터 저장
             chunkCount.x = (originalTexture.width + chunkSize.x - 1) / chunkSize.x;
@@ -82,11 +88,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
                     GameObject instance = Instantiate(chunkPrefab, transform);
                     instance.name = $"Chunk{x * chunkCount.y + y}";
                     instance.layer = terrainLayer;
-                    instance.transform.localPosition = new Vector3((float)x * chunkSize.x / pixelsPerUnit,
-                        (float)y * chunkSize.y / pixelsPerUnit, 0f);
+                    instance.transform.localPosition = new Vector3((float)x * chunkSize.x / PixelsPerUnit,
+                        (float)y * chunkSize.y / PixelsPerUnit, 0f);
 
                     QuadTreeChunk chunk = instance.GetComponent<QuadTreeChunk>();
-                    chunk.Init(chunkTexture, pixelsPerUnit);
+                    chunk.Init(chunkTexture, PixelsPerUnit);
 
                     chunks[x, y] = chunk;
                 }
@@ -166,7 +172,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             // width or height 중 더 큰 방향으로 최소 1 픽셀은 움직이도록 수정
             snapDirection.Normalize();
             Vector2 displacement = snapDirection / Mathf.Max(Mathf.Abs(snapDirection.x), Mathf.Abs(snapDirection.y));
-            displacement /= pixelsPerUnit;
+            displacement /= PixelsPerUnit;
 
             if (InGround(position) == false)
                 displacement = -displacement;
@@ -202,7 +208,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         /// <param name="translation">표면을 따라 이동할 거리 (방향 포함)</param>
         /// <param name="endPosition">[out] 도착 위치</param>
         /// <param name="normal">[out] 도착 위치에서의 노말</param>
-        public bool Slide(Vector2 startPosition, float translation, out Vector2 endPosition, out Vector2 normal,
+        public SlideResult Slide(Vector2 startPosition, float translation, out Vector2 endPosition, out Vector2 normal,
             out Vector2 tangent)
         {
             endPosition = Vector3.zero;
@@ -214,7 +220,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 VerticalSnapToSurface(startPosition, out startPosition);
 
             bool clockWise = translation > 0f;
-            int contourLength = Mathf.RoundToInt(Mathf.Abs(translation) * pixelsPerUnit) + 1;
+            int contourLength = Mathf.RoundToInt(Mathf.Abs(translation) * PixelsPerUnit) + 1;
             contourLength = Mathf.Clamp(contourLength, minContourLength, contourLength);
 
             // 시작 위치 찾기
@@ -224,7 +230,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             List<Vector2Int> contour = MyMathf.MooreNeighbor(startOffset, clockWise, contourLength, GetTexel);
 
             List<Vector2> worldContour = contour
-                .Select(posPx => new Vector2(posPx.x + 0.5f, posPx.y + 0.5f) / pixelsPerUnit)
+                .Select(posPx => new Vector2(posPx.x + 0.5f, posPx.y + 0.5f) / PixelsPerUnit)
                 .ToList();
 
             // 스플라인 보간
@@ -232,7 +238,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (n < contourLength)
             {
-                return false;
+                return SlideResult.ShortSegment;
             }
 
             CatmullRomSpline spline = new(clockWise, worldContour);
@@ -244,7 +250,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             
             spline.GetPoint(Mathf.Abs(translation), out endPosition, out normal, out tangent);
             SnapToSurface(endPosition, normal, out endPosition);
-            return true;
+            return SlideResult.Success;
         }
 
         public bool ExtractNormalTangent(Vector2 startPosition, out Vector2 normal, out Vector2 tangent)
@@ -265,7 +271,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             contourCCW.AddRange(contourCW);
             
             List<Vector2> worldContour = contourCCW
-                .Select(posPx => new Vector2(posPx.x + 0.5f, posPx.y + 0.5f) / pixelsPerUnit)
+                .Select(posPx => new Vector2(posPx.x + 0.5f, posPx.y + 0.5f) / PixelsPerUnit)
                 .ToList();
             
             CatmullRomSpline spline = new(true, worldContour);
@@ -293,13 +299,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         private Vector2Int WorldPositionToTexCoord(Vector2 worldPosition)
         {
-            Vector2 texCoordFloat = (worldPosition - (Vector2)transform.position) * pixelsPerUnit;
+            Vector2 texCoordFloat = (worldPosition - (Vector2)transform.position) * PixelsPerUnit;
             return Vector2Int.FloorToInt(texCoordFloat);
         }
 
         private Vector3 TexCoordToWorldPosition(Vector2Int texCoord)
         {
-            Vector3 localPosition = new Vector2(texCoord.x + 0.5f, texCoord.y + 0.5f) / pixelsPerUnit;
+            Vector3 localPosition = new Vector2(texCoord.x + 0.5f, texCoord.y + 0.5f) / PixelsPerUnit;
             return localPosition + transform.position;
         }
 
