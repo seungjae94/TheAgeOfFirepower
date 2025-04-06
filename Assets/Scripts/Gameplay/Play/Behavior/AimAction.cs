@@ -52,12 +52,18 @@ namespace Mathlife.ProjectL.Gameplay.Play
             
             Debug.Log($"Target is {target.Description}");
             
+            // 1. 파워 100을 기준으로 물리적 theta 계산 (높, 낮)
+            // 2. 바라보는 방향에 대한 상대적 theta 계산 (높, 낮)
+            // -> case 1: 상대적 theta를 75도 보다 더 높혀야 닿는다 = 사거리 부족 = 파워를 50으로 낮추고 (이분 탐색) 1로 돌아간다.
+            // -> case 2: 상대적 theta를 -15도 보다 더 낮춰야 닿는다 = 사거리 초과 = 이동 필요  
+            // 3. 낮은 각도로 먼저 시뮬레이션. 중간에 장애물이 있을 경우 높은 각도로 발사. 
+            
             return Status.Running;
         }
 
         protected override Status OnUpdate()
         {
-            return Status.Running;
+            return Status.Success;
         }
 
         protected override void OnEnd()

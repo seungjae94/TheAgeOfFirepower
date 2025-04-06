@@ -37,7 +37,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         // Settings
         [SerializeField]
-        private float moveSpeed = 10f;
+        private float moveSpeed = 5f;
 
         [SerializeField]
         private float shellMaxSpeed = 15f;
@@ -77,6 +77,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
             get => firePower;
             set => firePower = Mathf.Clamp(value, 1, 100);
         }
+
+        private float currentFuel;
+        private const float FUEL_CONSUME_SPEED = 50f;
 
         public bool Ready { get; private set; }
         public bool HasTurn { get; private set; }
@@ -139,6 +142,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             Debug.Log($"Turn {turn} start.");
             HasTurn = true;
+            currentFuel = arty.GetMobility();
 
             // Enable HUD
             fireGuideArrow.On();
@@ -146,8 +150,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (IsPlayer)
             {
                 Presenter.Find<FireHUD>().Enable();
-                Presenter.Find<MoveHUD>().Enable();   
+                Presenter.Find<MoveHUD>().Enable();
             }
+            
+            Presenter.Find<FuelHUD>().SetFuel(currentFuel, arty.GetMobility());
         }
 
         private void Update()
@@ -169,6 +175,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (false == HasTurn)
                 return;
+            
+            if (currentFuel <= 0f)
+            {
+                Presenter.Find<MoveHUD>().Disable();
+                return;
+            }
             
             Slide(MoveAxis);
 
@@ -222,6 +234,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 out Vector2 normal,
                 out Vector2 tangent);
 
+            currentFuel -= Mathf.Abs(slideAmount) * FUEL_CONSUME_SPEED;
+            currentFuel =  Mathf.Max(currentFuel, 0f);
+            Presenter.Find<FuelHUD>().SetFuel(currentFuel, arty.GetMobility());
+            
             if (false == slideResult)
             {
                 transform.position = (Vector2)transform.position + slideAmount * prevTangent;

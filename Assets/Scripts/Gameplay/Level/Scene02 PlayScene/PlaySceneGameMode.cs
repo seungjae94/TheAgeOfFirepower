@@ -129,6 +129,7 @@ namespace Mathlife.ProjectL.Gameplay
             // 4. HUD 준비
             Presenter.Find<FireHUD>().Activate();
             Presenter.Find<MoveHUD>().Activate();
+            Presenter.Find<FuelHUD>().Activate();
             progress.Report(0.8f);
 
             // 5. 딜레이

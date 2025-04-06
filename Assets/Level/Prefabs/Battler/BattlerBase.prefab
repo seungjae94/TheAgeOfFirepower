@@ -681,7 +681,7 @@ MonoBehaviour:
   hpBar: {fileID: 3154140218261910234}
   hpText: {fileID: 592470202906963191}
   levelText: {fileID: 1778401384752374670}
-  moveSpeed: 5
+  moveSpeed: 4
   shellMaxSpeed: 15
   gravityScale: 0.1
   testShellPrefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}
