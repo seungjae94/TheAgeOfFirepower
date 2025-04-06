@@ -27,12 +27,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         private ArtyController controller;
         private ArtyController target;
-        
+
         protected override Status OnStart()
         {
             Func<ArtyController, int> keySelector = null;
 
-            switch (Strategy.Value)     
+            switch (Strategy.Value)
             {
                 case AttackTargetingStrategy.LowestHpFirst:
                     keySelector = player => player.CurrentHp;
@@ -41,7 +41,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
                     keySelector = player => int.MaxValue - player.ThreatLevel;
                     break;
                 case AttackTargetingStrategy.NearestFirst:
-                    keySelector = player => (int)Vector3.SqrMagnitude(Agent.Value.transform.position - player.transform.position);
+                    keySelector = player =>
+                        (int)Vector3.SqrMagnitude(Agent.Value.transform.position - player.transform.position);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -51,15 +52,77 @@ namespace Mathlife.ProjectL.Gameplay.Play
             target = PlaySceneGameMode.Inst.AlivePlayers
                 .OrderBy(keySelector)
                 .FirstOrDefault();
-            
+
             Debug.Log($"Target is {target.Description}");
-            
+
+            if (target.transform.position.x < controller.transform.position.x)
+            {
+                controller.SetDirection(false);
+            }
+            else
+            {
+                controller.SetDirection(true);
+            }
+
+            // 방향 설정
+            controller.SetDirection(controller.transform.position.x < target.transform.position.x);
+
             // 1. 파워 100을 기준으로 물리적 theta 계산 (높, 낮)
             // 2. 바라보는 방향에 대한 상대적 theta 계산 (높, 낮)
             // -> case 1: 상대적 theta를 75도 보다 더 높혀야 닿는다 = 사거리 부족 = 파워를 50으로 낮추고 (이분 탐색) 1로 돌아간다.
             // -> case 2: 상대적 theta를 -15도 보다 더 낮춰야 닿는다 = 사거리 초과 = 이동 필요  
             // 3. 낮은 각도로 먼저 시뮬레이션. 중간에 장애물이 있을 경우 높은 각도로 발사. 
+
+            int power = 70;
+            float s = (0.1f + 0.9f * power / 100f) * controller.shellMaxSpeed;
+            float g = Mathf.Abs(Physics2D.gravity.y);
+            float d = Mathf.Abs(controller.transform.position.x - target.transform.position.x);
+            float y = target.transform.position.y - controller.transform.position.y;
             
+            float angleOfTangent = controller.GetDirection() ? Vector2.SignedAngle(Vector2.right, controller.Tangent) : -Vector2.SignedAngle(Vector2.left, controller.Tangent);
+            
+            // 사거리가 닿지 않는다.
+            float det = Mathf.Pow(s, 4f) - g * (g * d * d + 2 * y * s * s);
+
+            if (det < 0f)
+            {
+                float targetAngle = Mathf.Clamp(45f - angleOfTangent, -15f, 75f);
+                Debug.Log($"[det < 0] angle = {targetAngle}");
+                controller.SetFireAngle((int) targetAngle);
+                controller.SetFirePower(power);
+                return Status.Running;
+            }
+            
+            float thetaH = Mathf.Atan2((s * s + Mathf.Sqrt(det)), g * d) * Mathf.Rad2Deg;
+            float thetaL = Mathf.Atan2((s * s - Mathf.Sqrt(det)), g * d) * Mathf.Rad2Deg;
+            
+            Debug.Log($"Low = {thetaL}, High = {thetaH}");
+            
+            thetaH -= angleOfTangent;
+            thetaL -= angleOfTangent;
+
+            Debug.Log($"aot = {angleOfTangent} => Low = {thetaL}, High = {thetaH}");
+            
+            if ((thetaH < -15f || thetaH > 75f) && (thetaL > 75f || thetaL < -15f))
+            {
+                Debug.Log($"[tH, tL out of range] angle = {75}");
+                controller.SetFireAngle(75);
+                controller.SetFirePower(power);
+                return Status.Running;
+            }
+
+            if (thetaL >= -15f)
+            {
+                Debug.Log($"[tL] angle = {thetaL}");
+                controller.SetFireAngle((int)thetaL);
+            }
+            else
+            {
+                Debug.Log($"[tH] angle = {thetaH}");
+                controller.SetFireAngle((int)thetaH);
+            }
+            
+            controller.SetFirePower(power);
             return Status.Running;
         }
 

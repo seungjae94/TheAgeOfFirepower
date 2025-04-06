@@ -20,8 +20,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         private ArtyController controller;
         private float axis = 0f;
-        private float timer = 0f;
-        private float time = 0f;
+
+        private float moveTime = 1.5f;
+        private float moveTimer = 1.5f;
         
         protected override Status OnStart()
         {
@@ -36,24 +37,27 @@ namespace Mathlife.ProjectL.Gameplay.Play
             {
                 return Status.Failure;
             }
+
+            if (Strategy.Value == MoveStrategy.InFighter)
+            {
+                axis = -1f;
+            }
+            else if (Strategy.Value == MoveStrategy.OutBoxer)
+            {
+                axis = 1f;
+            }
             
-            Debug.Log($"Move Strategy: {Strategy.Value}");
-            
-            // TODO: 목적지 계산
-            time = 0.75f;
-            timer = 0f;
-            axis = -1f;
             controller = Agent.Value.GetComponent<ArtyController>();
-            
+            moveTimer = moveTime;
             return Status.Running;
         }
 
         protected override Status OnUpdate()
         {
-            timer += Time.deltaTime;
             controller.MoveAxis = axis;            
+            moveTimer -= Time.deltaTime;
             
-            if (timer >= time)
+            if (controller.CurrentFuel <= 0f || moveTimer <= 0f)
             {
                 controller.MoveAxis = 0f;
                 return Status.Success;

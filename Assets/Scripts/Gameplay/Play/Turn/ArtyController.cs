@@ -40,9 +40,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
         // Settings
         [SerializeField]
         private float moveSpeed = 5f;
-
-        [SerializeField]
-        private float shellMaxSpeed = 15f;
+        
+        public readonly float shellMaxSpeed = 15f;
         
         private static float gravityScale = 0.05f;
 
@@ -79,10 +78,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
             set => firePower = Mathf.Clamp(value, 1, 100);
         }
 
-        private float currentFuel;
+        public float CurrentFuel { get; private set; }
         
-        //private const float FUEL_CONSUME_SPEED = 50f; // 실제 서비스용
-        private const float FUEL_CONSUME_SPEED = 1f; // 디버그용
+        private const float FUEL_CONSUME_SPEED = 50f; // 실제 서비스용
+        //private const float FUEL_CONSUME_SPEED = 1f; // 이동 테스트용
 
         public bool Ready { get; private set; }
         public bool HasTurn { get; private set; }
@@ -149,7 +148,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Debug.Log($"Turn {turn} start.");
             HasTurn = true;
             MoveAxis = 0f;
-            currentFuel = arty.GetMobility();
+            CurrentFuel = arty.GetMobility();
 
             // Enable HUD
             fireGuideArrow.On();
@@ -164,7 +163,21 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 behaviorGraphAgent.Restart();
             }
             
-            Presenter.Find<FuelHUD>().SetFuel(currentFuel, arty.GetMobility());
+            Presenter.Find<FuelHUD>().SetFuel(CurrentFuel, arty.GetMobility());
+        }
+
+        public bool GetDirection()
+        {
+            return clockWise;
+        }
+        
+        public void SetDirection(bool clockWise)
+        {
+            if (clockWise != this.clockWise)
+                prevTangent = -prevTangent;
+            
+            this.clockWise = clockWise;
+            UpdateRotation();
         }
 
         private void Update()
@@ -208,7 +221,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (false == HasTurn)
                 return;
             
-            if (currentFuel <= 0f)
+            if (CurrentFuel <= 0f)
             {
                 Presenter.Find<MoveHUD>().Disable();
                 return;
@@ -299,14 +312,19 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return;
 
             float slideAmount = axis * moveSpeed * Time.deltaTime;
+
+            // 범위 바깥으로 나가는 움직임은 무시한다.
+            if (DestructibleTerrain.Inst.InTerrain((Vector2)transform.position + prevTangent * Mathf.Abs(slideAmount)) == false)
+            {
+                return;
+            }
+            
             SlideResult slideResult = DestructibleTerrain.Inst.Slide(transform.position, slideAmount, out Vector2 endPosition,
                 out Vector2 normal,
                 out Vector2 tangent);
             
             if (slideResult is SlideResult.ShortSpline or SlideResult.WrongSpline)
             {
-                Debug.Log(slideResult);
-                
                 endPosition = (Vector2)transform.position + slideAmount * prevTangent;
                 DestructibleTerrain.Inst.SnapToSurface(endPosition, prevNormal, out endPosition);
                 DestructibleTerrain.Inst.ExtractNormalTangent(endPosition, out prevNormal, out prevTangent);
@@ -335,9 +353,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         private void ConsumeFuel(float amount)
         {
-            currentFuel -= Mathf.Abs(amount) * FUEL_CONSUME_SPEED;
-            currentFuel =  Mathf.Max(currentFuel, 0f);
-            Presenter.Find<FuelHUD>().SetFuel(currentFuel, arty.GetMobility());
+            CurrentFuel -= Mathf.Abs(amount) * FUEL_CONSUME_SPEED;
+            CurrentFuel =  Mathf.Max(CurrentFuel, 0f);
+            Presenter.Find<FuelHUD>().SetFuel(CurrentFuel, arty.GetMobility());
         }
         
         public void SetFireAngle(int angle)
