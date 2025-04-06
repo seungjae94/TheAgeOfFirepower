@@ -86,18 +86,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (det < 0f)
             {
-                float targetAngle = Mathf.Clamp(45f - angleOfTangent, -15f, 75f);
-                Debug.Log($"[det < 0] angle = {targetAngle}");
-                controller.SetFireAngle((int) targetAngle);
-                controller.SetFirePower(power);
-                return Status.Running;
+                controller.Skip();
+                return Status.Success;
             }
             
             float thetaH = Mathf.Atan2((s * s + Mathf.Sqrt(det)), g * d) * Mathf.Rad2Deg;
             float thetaL = Mathf.Atan2((s * s - Mathf.Sqrt(det)), g * d) * Mathf.Rad2Deg;
-            
-            Debug.Log($"Low = {thetaL}, High = {thetaH}");
-            
+
             thetaH -= angleOfTangent;
             thetaL -= angleOfTangent;
 
@@ -105,10 +100,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             
             if ((thetaH < -15f || thetaH > 75f) && (thetaL > 75f || thetaL < -15f))
             {
-                Debug.Log($"[tH, tL out of range] angle = {75}");
-                controller.SetFireAngle(75);
-                controller.SetFirePower(power);
-                return Status.Running;
+                controller.Skip();
+                return Status.Success;
             }
 
             if (thetaL >= -15f)
@@ -123,12 +116,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
             
             controller.SetFirePower(power);
-            return Status.Running;
+            controller.Fire();
+            return Status.Success;
         }
 
         protected override Status OnUpdate()
         {
-            controller.Fire();
             return Status.Success;
         }
 

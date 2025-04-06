@@ -393,6 +393,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
             WaitUntilAllShellsExploded(new() { shellGameObject }).Forget();
         }
 
+        public void Skip()
+        {
+            HasTurn = false;
+        }
+
         private async UniTaskVoid WaitUntilAllShellsExploded(List<GameObject> objects)
         {
             await UniTask.WaitUntil(objects, value => value.All(obj => obj == null));
