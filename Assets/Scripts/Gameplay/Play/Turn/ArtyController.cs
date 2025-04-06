@@ -223,7 +223,14 @@ namespace Mathlife.ProjectL.Gameplay.Play
             
             if (CurrentFuel <= 0f)
             {
-                Presenter.Find<MoveHUD>().Disable();
+                if (MoveAxis < 0f)
+                {
+                    SetDirection(false);
+                }
+                else if (MoveAxis > 0f)
+                {
+                    SetDirection(true);
+                }
                 return;
             }
 

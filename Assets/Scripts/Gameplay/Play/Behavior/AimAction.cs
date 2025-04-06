@@ -95,8 +95,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             thetaH -= angleOfTangent;
             thetaL -= angleOfTangent;
-
-            Debug.Log($"aot = {angleOfTangent} => Low = {thetaL}, High = {thetaH}");
             
             if ((thetaH < -15f || thetaH > 75f) && (thetaL > 75f || thetaL < -15f))
             {
@@ -106,12 +104,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (thetaL >= -15f)
             {
-                Debug.Log($"[tL] angle = {thetaL}");
                 controller.SetFireAngle((int)thetaL);
             }
             else
             {
-                Debug.Log($"[tH] angle = {thetaH}");
                 controller.SetFireAngle((int)thetaH);
             }
             

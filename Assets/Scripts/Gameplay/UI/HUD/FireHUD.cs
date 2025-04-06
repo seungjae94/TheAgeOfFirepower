@@ -24,6 +24,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField]
         private Button fireButton;
 
+        [SerializeField]
+        private Button skipButton;
+
+        
         // Field
         private static ArtyController TurnOwner => PlaySceneGameMode.Inst.turnOwner;
         private readonly CompositeDisposable disposables = new();
@@ -41,8 +45,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(disposables);
 
             fireButton.OnClickAsObservable()
-                .Subscribe(OnClickFireButton)
+                .Subscribe(_ => TurnOwner?.Fire())
                 .AddTo(disposables);
+
+            skipButton.OnClickAsObservable()
+                .Subscribe(_ => TurnOwner?.Skip());
         }
 
         public override void Deactivate()
@@ -57,6 +64,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             angleSlider.interactable = true;
             powerSlider.interactable = true;
             fireButton.interactable = true;
+            skipButton.interactable = true;
 
             int iFireAngle = TurnOwner.FireAngle;
             int iFirePower = TurnOwner.FirePower;
@@ -70,6 +78,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             angleSlider.interactable = false;
             powerSlider.interactable = false;
             fireButton.interactable = false;
+            skipButton.interactable = false;
         }
 
         private void OnDestroy()
@@ -96,11 +105,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             powerText.text = iPower.ToString();
 
             TurnOwner?.SetFirePower(iPower);
-        }
-
-        private void OnClickFireButton(Unit _)
-        {
-            TurnOwner?.Fire();
         }
     }
 }
