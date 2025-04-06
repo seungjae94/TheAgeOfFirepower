@@ -1224,7 +1224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &423800816
 Transform:
   m_ObjectHideFlags: 0
@@ -2527,7 +2527,7 @@ MonoBehaviour:
     engine: {fileID: 0}
   developEnemys: []
   developStageGameDataRef:
-    m_AssetGUID: acb591c854c157c439319cd82789d3df
+    m_AssetGUID: db4fe1784b5cc8147ba96ac06bc185a6
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
@@ -3512,7 +3512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chunkSize: {x: 64, y: 64}
   minContourLength: 36
-  drawSpline: 1
+  drawSpline: 0
 --- !u!1 &1438283506
 GameObject:
   m_ObjectHideFlags: 0
@@ -4740,7 +4740,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1499546555865102564, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: m_NormalizedViewPortRect.y

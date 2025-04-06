@@ -13,7 +13,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
     public enum SlideResult
     {
         Success,
-        ShortSegment,
+        ShortSpline,
+        WrongSpline,
     }
     
     public class DestructibleTerrain : MonoSingleton<DestructibleTerrain>
@@ -190,7 +191,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 if (OnSurface(testPosition))
                 {
                     surfacePosition = testPosition;
-                    //Debug.Log($"{testPosition.x:F6} {testPosition.y:F6}");
                     return true;
                 }
 
@@ -237,9 +237,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             int n = worldContour.Count;
 
             if (n < contourLength)
-            {
-                return SlideResult.ShortSegment;
-            }
+                return SlideResult.ShortSpline;
 
             CatmullRomSpline spline = new(clockWise, worldContour);
             
@@ -248,7 +246,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 spline.DrawSpline(DebugLineRenderer.Inst);
             #endif
             
-            spline.GetPoint(Mathf.Abs(translation), out endPosition, out normal, out tangent);
+            bool splineResult = spline.GetPoint(Mathf.Abs(translation), out endPosition, out normal, out tangent);
+
+            if (false == splineResult)
+                return SlideResult.WrongSpline;
+            
             SnapToSurface(endPosition, normal, out endPosition);
             return SlideResult.Success;
         }
@@ -275,7 +277,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 .ToList();
             
             CatmullRomSpline spline = new(true, worldContour);
-            spline.GetCenterPoint(out Vector2 point, out normal, out tangent);
+            bool splineResult = spline.GetCenterPoint(out Vector2 point, out normal, out tangent);
+
+            if (false == splineResult)
+                return false;
+            
             return true;
         }
 

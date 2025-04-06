@@ -38,42 +38,49 @@ namespace Mathlife.ProjectL.Utils
             }
         }
 
-        public void GetPoint(float length, out Vector2 point, out Vector2 normal, out Vector2 tangent)
+        public bool GetPoint(float length, out Vector2 point, out Vector2 normal, out Vector2 tangent)
         {
             if (length <= 0)
             {
                 point = segments[0].GetPoint(0f);
                 normal = segments[0].GetNormal(0f);
                 tangent = segments[0].GetTangent(0f);
-                return;
             }
-
-            if (length >= accArcLengths[^1])
+            else if (length >= accArcLengths[^1])
             {
                 point = segments[^1].GetPoint(1f);
                 normal = segments[^1].GetNormal(1f);
                 tangent = segments[^1].GetTangent(1f);
-                return;
             }
+            else
+            {
+                // acc = [0.02, 0.04, 0.06]
+                // length = 0.01 -> index = 0 (acc[index] > length) 
+                // length = 0.03 -> index = 1 (acc[index] > length)
+                // length = 0.05 -> index = 2 (acc[index] > length)
 
-            // acc = [0.02, 0.04, 0.06]
-            // length = 0.01 -> index = 0 (acc[index] > length) 
-            // length = 0.03 -> index = 1 (acc[index] > length)
-            // length = 0.05 -> index = 2 (acc[index] > length)
+                int index = accArcLengths.FindIndex(acc => length < acc);
 
-            int index = accArcLengths.FindIndex(acc => length < acc);
+                float accPrev = (index > 0) ? accArcLengths[index - 1] : 0;
+                float accNext = accArcLengths[index];
+            
+                float t = (length - accPrev) / (accNext - accPrev);
 
-            float accPrev = (index > 0) ? accArcLengths[index - 1] : 0;
-            float accNext = accArcLengths[index];
-            float t = (length - accPrev) / (accNext - accPrev);
-
-            CatmullRomSegment segment = segments[index];
-            point = segment.GetPoint(t);
-            normal = segment.GetNormal(t);
-            tangent = segment.GetTangent(t);
+                CatmullRomSegment segment = segments[index];
+                point = segment.GetPoint(t);
+                normal = segment.GetNormal(t);
+                tangent = segment.GetTangent(t);
+            }
+            
+            if (float.IsNaN(point.x) || float.IsNaN(point.y))
+            {
+                return false;
+            }
+            
+            return true;
         }
 
-        public void GetCenterPoint(out Vector2 point, out Vector2 normal, out Vector2 tangent)
+        public bool GetCenterPoint(out Vector2 point, out Vector2 normal, out Vector2 tangent)
         {
             int index = segments.Count / 2;
             float t = (segments.Count % 2 == 0) ? 0f : 0.5f; 
@@ -82,6 +89,13 @@ namespace Mathlife.ProjectL.Utils
             point = segment.GetPoint(t);
             normal = segment.GetNormal(t);
             tangent = segment.GetTangent(t);
+            
+            if (float.IsNaN(point.x) || float.IsNaN(point.y))
+            {
+                return false;
+            }
+
+            return true;
         }
 
 #if UNITY_EDITOR

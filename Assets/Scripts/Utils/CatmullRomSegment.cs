@@ -92,32 +92,5 @@ namespace Mathlife.ProjectL.Utils
         {
             return Mathf.Pow((p1 - p0).sqrMagnitude, alpha / 2f) + t;
         }
-
-//         private void Sampling()
-//         {
-//             arcLengthSamples.Add(0);
-//             Vector2 prev = GetPointAt(0);
-//
-// #if UNITY_EDITOR
-//             debugLineRenderer.Clear();
-// #endif
-//
-//             for (int i = 1; i < sampleCount; i++)
-//             {
-//                 float t = t2 * i / (sampleCount - 1);
-//                 Vector2 cur = GetPointAt(t);
-//
-// #if UNITY_EDITOR
-//                 debugLineRenderer.DrawLine(prev, cur, Color.magenta);
-// #endif
-//
-//                 arcLengthSamples.Add(arcLengthSamples[^1] + Vector2.Distance(prev, cur));
-//                 prev = cur;
-//             }
-//         }
-
-// #if UNITY_EDITOR
-//         public static IDebugLineRenderer debugLineRenderer;
-// #endif
     }
 }

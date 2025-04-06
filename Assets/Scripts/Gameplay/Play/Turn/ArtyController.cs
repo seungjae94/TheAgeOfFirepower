@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -7,7 +8,6 @@ using Mathlife.ProjectL.Utils;
 using TMPro;
 using Unity.Behavior;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -34,6 +34,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         [SerializeField]
         private TextMeshProUGUI levelText;
+
+        private Camera mainCamera;
         
         // Settings
         [SerializeField]
@@ -103,6 +105,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Setup(ArtyModel artyModel, Enemy enemy)
         {
+            mainCamera = Cameras.Inst.MainCamera;
+            
             // 데이터 세팅
             IsPlayer = enemy == null;
             arty = artyModel;
@@ -144,6 +148,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             Debug.Log($"Turn {turn} start.");
             HasTurn = true;
+            MoveAxis = 0f;
             currentFuel = arty.GetMobility();
 
             // Enable HUD
@@ -179,9 +184,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (DestructibleTerrain.Inst.OnSurface(transform.position) == false)
             {
                 DestructibleTerrain.Inst.SnapToSurface(transform.position, prevNormal, out Vector2 surfacePosition);
-                DestructibleTerrain.Inst.ExtractNormalTangent(surfacePosition,  out prevNormal, out prevTangent);
-                if (clockWise == false)
-                    prevTangent = -prevTangent;
+                
+                bool extractResult = DestructibleTerrain.Inst.ExtractNormalTangent(surfacePosition,  out Vector2 extNormal, out Vector2 extTangent);
+
+                if (extractResult)
+                {
+                    prevNormal = extNormal;
+                    prevTangent = clockWise ? extTangent : -extTangent;
+                }
+                
                 transform.position = surfacePosition;
             }
             
@@ -248,7 +259,20 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 --iter;
                 if (iter < 0)
                 {
-                    transform.position = (Vector2)transform.position + minimalDisplacement * prevNormal;
+                    iter = 5;
+                    nextPosition = (Vector2)transform.position + minimalDisplacement * prevNormal;
+                    while (DestructibleTerrain.Inst.InGround(nextPosition))
+                    {
+                        nextPosition += minimalDisplacement * prevNormal;
+
+                        --iter;
+                        if (iter < 0)
+                        {
+                            Debug.Log(prevNormal);
+                            throw new OverflowException("");
+                        }
+                    }
+                    transform.position = nextPosition;
                     return;
                 }
             }
@@ -279,8 +303,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 out Vector2 normal,
                 out Vector2 tangent);
             
-            if (SlideResult.ShortSegment == slideResult)
+            if (slideResult is SlideResult.ShortSpline or SlideResult.WrongSpline)
             {
+                Debug.Log(slideResult);
+                
                 endPosition = (Vector2)transform.position + slideAmount * prevTangent;
                 DestructibleTerrain.Inst.SnapToSurface(endPosition, prevNormal, out endPosition);
                 DestructibleTerrain.Inst.ExtractNormalTangent(endPosition, out prevNormal, out prevTangent);
@@ -289,20 +315,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return;
             }
             
+            if (float.IsNaN(endPosition.x) || float.IsNaN(endPosition.y) || float.IsNaN(normal.x) || float.IsNaN(normal.y))
+                Debug.Log("WR");
+            
             // 절벽 못올라가게 막기
             if (normal.y <= 0f && endPosition.y > transform.position.y)
             {
                 return;
             }
-            
-            // 플랫폼 내려가기
-            // if (prevNormal.y > 0f && normal.y <= 0f && endPosition.y < transform.position.y)
-            // {
-            //     transform.position = endPosition;
-            //      ApplyGravity();     
-            //     return;
-            // }
-            
+
             clockWise = axis > 0f;
 
             transform.position = endPosition;
@@ -370,6 +391,20 @@ namespace Mathlife.ProjectL.Gameplay.Play
             DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)CurrentHp / maxHp, 0.25f);
         }
 
+        private void LateUpdate()
+        {
+            if (HasTurn == false)
+                return;
+            
+            AttractCamera();
+        }
+
+        private void AttractCamera()
+        {
+            var cameraPosition = transform.position + 2f * Vector3.down;
+            mainCamera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, mainCamera.transform.position.z);
+        }
+        
 #if UNITY_EDITOR
         private void DrawTangentNormal()
         {
