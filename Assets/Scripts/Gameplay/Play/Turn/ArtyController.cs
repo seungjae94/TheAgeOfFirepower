@@ -152,6 +152,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 Presenter.Find<FireHUD>().Enable();
                 Presenter.Find<MoveHUD>().Enable();
             }
+            else
+            {
+                behaviorGraphAgent.Restart();
+            }
             
             Presenter.Find<FuelHUD>().SetFuel(currentFuel, arty.GetMobility());
         }
@@ -238,7 +242,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             currentFuel =  Mathf.Max(currentFuel, 0f);
             Presenter.Find<FuelHUD>().SetFuel(currentFuel, arty.GetMobility());
             
-            if (false == slideResult)
+            if (false == slideResult || normal.y <= 0f)
             {
                 transform.position = (Vector2)transform.position + slideAmount * prevTangent;
                 return;

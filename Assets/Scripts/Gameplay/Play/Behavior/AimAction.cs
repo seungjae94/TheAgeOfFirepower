@@ -24,7 +24,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         private float fireAngle;
         private float firePower;
-        
+
+        private ArtyController controller;
         private ArtyController target;
         
         protected override Status OnStart()
@@ -46,6 +47,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                     throw new ArgumentOutOfRangeException();
             }
 
+            controller = Agent.Value.GetComponent<ArtyController>();
             target = PlaySceneGameMode.Inst.AlivePlayers
                 .OrderBy(keySelector)
                 .FirstOrDefault();
@@ -63,6 +65,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         protected override Status OnUpdate()
         {
+            controller.Fire();
             return Status.Success;
         }
 
