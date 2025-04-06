@@ -1,5 +1,6 @@
 using Mathlife.ProjectL.Gameplay.Play;
 using System;
+using System.Linq;
 using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
@@ -38,14 +39,32 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return Status.Failure;
             }
 
-            if (Strategy.Value == MoveStrategy.InFighter)
+            float averageX = PlaySceneGameMode.Inst.AlivePlayers.Average(player => player.transform.position.x);
+
+            // 플레이어가 더 왼쪽에 있는 경우
+            if (averageX < Agent.Value.transform.position.x)
             {
-                axis = -1f;
+                if (Strategy.Value == MoveStrategy.InFighter)
+                {
+                    axis = -1f;
+                }
+                else if (Strategy.Value == MoveStrategy.OutBoxer)
+                {
+                    axis = 1f;
+                }                
             }
-            else if (Strategy.Value == MoveStrategy.OutBoxer)
+            else
             {
-                axis = 1f;
+                if (Strategy.Value == MoveStrategy.InFighter)
+                {
+                    axis = 1f;
+                }
+                else if (Strategy.Value == MoveStrategy.OutBoxer)
+                {
+                    axis = -1f;
+                }
             }
+            
             
             controller = Agent.Value.GetComponent<ArtyController>();
             moveTimer = moveTime;
