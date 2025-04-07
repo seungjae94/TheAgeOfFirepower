@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Mathlife.ProjectL.Gameplay.Play
 {
@@ -24,10 +25,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
         // Override
         public bool ShouldBeDestroyed { get; protected set; }
         
-        public virtual void Init(ArtyModel firer, ShellGameData shellGameData)
+        public virtual void Init(ArtyModel firer)
         {
             this.firer = firer;
-            this.shellGameData = shellGameData;
+            this.shellGameData = firer.Shell;
 
             if (terrainLayerIndex == -1)
             {
@@ -75,8 +76,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             foreach (var collider in colliders)
             {
-                collider.transform.root.GetComponent<ArtyController>()?.Damage(firer.GetAtk() * shellGameData.damage / 100f);
+                collider.transform.root.GetComponent<ArtyController>()?.Damage(CalculateDamage());
             }
+        }
+
+        protected virtual float CalculateDamage()
+        {
+            return firer.GetAtk() * shellGameData.damage / 100f;
         }
         
         protected async UniTask WaitForExplosionParticleSystem()

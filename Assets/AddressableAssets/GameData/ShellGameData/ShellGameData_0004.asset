@@ -28,5 +28,6 @@ MonoBehaviour:
     \uD53C\uD574\uB97C \uC8FC\uB294 \uD3EC\uD0C4.\n\uC774\uB3D9 \uAC70\uB9AC\uC5D0
     \uB530\uB77C \uB370\uBBF8\uC9C0\uAC00 \uCD5C\uB300 300\uAE4C\uC9C0 \uC99D\uAC00\uD55C\uB2E4."
   damage: 200
-  shouldExplode: 0
-  explosionRadius: 0
+  shouldDestructTerrain: 0
+  explosionRadius: 10
+  prefab: {fileID: 4984052143656669819, guid: 2c5bb5cd94fe83548ad9412631725be4, type: 3}

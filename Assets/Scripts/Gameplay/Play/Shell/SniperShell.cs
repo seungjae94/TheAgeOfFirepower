@@ -3,16 +3,43 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.Play
 {
-    public class HighExplosiveShell : ShellBase
+    // 저격탄
+    public class SniperShell : ShellBase
     {
+        private const float DAMAGE_VARIANT = 1f; // +100%p
+        private const float MAX_DAMAGE_DISTANCE = 10f;
+        
         // Field
         private bool firstTouch = false;
+
+        private Vector2 prevPoint = Vector2.zero;
+        private float flyingDistance = 0f; 
+            
+
+        // Method
+        public override void Fire(Vector2 velocity)
+        {
+            base.Fire(velocity);
+            prevPoint = transform.position;
+        }
+        
+        protected override float CalculateDamage()
+        {
+            Debug.Log($"FD: {flyingDistance}, MAX: {MAX_DAMAGE_DISTANCE}");
+            flyingDistance = Mathf.Clamp(flyingDistance, 0f, MAX_DAMAGE_DISTANCE);
+            
+            float shellDamage = shellGameData.damage + 100f * DAMAGE_VARIANT * flyingDistance / MAX_DAMAGE_DISTANCE;
+            return firer.GetAtk() * shellDamage / 100f;
+        }
 
         // Event Func
         private void LateUpdate()
         {
             if (ShouldBeDestroyed)
                 return;
+            
+            flyingDistance += Vector2.Distance(prevPoint, transform.position);
+            prevPoint = transform.position;
             
             if (false == DestructibleTerrain.Inst.InFairArea(transform.position))
             {
@@ -36,7 +63,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             partSysExplosion.Play();
             DestructTerrain(other);
             DamageBattlersInRange(other);
-
+            
             WaitForExplosionParticleSystem()
                 .ContinueWith(() => ShouldBeDestroyed = true)
                 .Forget();

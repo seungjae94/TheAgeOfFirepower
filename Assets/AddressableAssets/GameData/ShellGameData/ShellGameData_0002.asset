@@ -26,5 +26,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 7d28b63835ef77347992f13000eb75d0, type: 3}
   description: "\uBC1C\uC0AC\uC2DC 5\uBC1C\uB85C \uAC08\uB77C\uC9C0\uB294 \uD3EC\uD0C4."
   damage: 30
-  shouldExplode: 1
-  explosionRadius: 15
+  shouldDestructTerrain: 1
+  explosionRadius: 20
+  prefab: {fileID: 4984052143656669819, guid: 6e549c99697754e459bbf751e5709db2, type: 3}

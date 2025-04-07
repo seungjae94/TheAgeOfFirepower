@@ -383,11 +383,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Fire()
         {
-            GameObject shellGameObject = Instantiate(testShellPrefab);
+            GameObject shellGameObject = Instantiate(arty.Shell.prefab);
             shellGameObject.transform.position = fireGuideArrow.transform.position;
 
             IShell shell = shellGameObject.GetComponent<IShell>();
-            shell.Init(arty, GameState.Inst.gameDataLoader.GetShellData(0));
+            shell.Init(arty);
 
             Vector2 shellVelocity = fireGuideArrow.GetVelocity() * shellMaxSpeed;
             shell.Fire(shellVelocity);
@@ -397,7 +397,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Presenter.Find<FireHUD>().Disable();
             Presenter.Find<MoveHUD>().Disable();
 
-            WaitUntilAllShellsExploded(shell).Forget();
+            WaitUntilAllShellsExploded(shell)
+                .ContinueWith(() => Destroy(shellGameObject))
+                .Forget();
         }
 
         public void Skip()
@@ -405,7 +407,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             HasTurn = false;
         }
 
-        private async UniTaskVoid WaitUntilAllShellsExploded(IShell rootShell)
+        private async UniTask WaitUntilAllShellsExploded(IShell rootShell)
         {
             await UniTask.WaitUntil(rootShell, root => root.ShouldBeDestroyed);
             HasTurn = false;
@@ -414,6 +416,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public void Damage(float damage)
         {
             int finalDamage = Mathf.CeilToInt(100f *  damage / (100f + arty.GetDef()));
+            Debug.Log($"final damage: {finalDamage}");
             
             DamageTextGenerator.Inst.Generate(this, finalDamage);
             CurrentHp = Mathf.Max(0, CurrentHp - finalDamage);

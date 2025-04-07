@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -20,16 +21,20 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("데미지")]
         public int damage;
 
+        [FormerlySerializedAs("shouldExplode")]
         [LabelWidth(100)]
-        [LabelText("폭발 여부")]
-        public bool shouldExplode = true;
+        [LabelText("지형 파괴 여부")]
+        public bool shouldDestructTerrain = true;
 
         [LabelWidth(100)]
         [LabelText("폭발 반경")]
         [Range(0f, 200f)]
-        [ShowIf("@shouldExplode==true")]
         public float explosionRadius = 0f;
-
+        
+        [LabelWidth(100)]
+        [LabelText("프리팹")]
+        public GameObject prefab;
+        
 #if UNITY_EDITOR
         public override void SetMenuItem(ref OdinMenuItem menuItem)
         {
