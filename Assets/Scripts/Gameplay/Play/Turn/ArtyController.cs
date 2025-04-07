@@ -139,6 +139,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
             
             fireGuideArrow.Setup();
             fireGuideArrow.Off();
+            SetFireAngle(0);
+            SetFirePower(50);
+
+            DestructibleTerrain.Inst.VerticalSnapToSurface(transform.position, out Vector2 surfacePosition);
+            transform.position = surfacePosition;
             
             // 준비 완료
             Ready = true;
