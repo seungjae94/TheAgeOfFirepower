@@ -4758,6 +4758,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1802641640}
   - component: {fileID: 1802641641}
+  - component: {fileID: 1802641642}
   m_Layer: 5
   m_Name: World Background Layer
   m_TagString: Untagged
@@ -4808,6 +4809,23 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: -1
   m_TargetDisplay: 0
+--- !u!114 &1802641642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802641639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1832241973
 GameObject:
   m_ObjectHideFlags: 0
@@ -5101,6 +5119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6394b2837a6d4f25a1b6f695a421679a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragInputCaptureGraphic: {fileID: 786586945}
 --- !u!1 &1944002766
 GameObject:
   m_ObjectHideFlags: 0

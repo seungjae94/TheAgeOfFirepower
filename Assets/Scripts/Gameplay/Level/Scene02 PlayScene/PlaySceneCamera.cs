@@ -1,7 +1,12 @@
 using System;
+using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
 using Mathlife.ProjectL.Gameplay.Play;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -11,18 +16,33 @@ namespace Mathlife.ProjectL.Gameplay
 
         private const float TRACK_CAMERA_SPEED = 50f;
         private const float VERTICAL_OFFSET = 0.75f;
-        
+        private const float DRAG_SPEED = 1f;
+
         // Alias
         private float HalfHeight => camera.orthographicSize;
         private float HalfWidth => camera.aspect * HalfHeight;
-        
+
+        // Component
+        [SerializeField]
+        private Graphic dragInputCaptureGraphic;
+
         // Field
         private new Camera camera;
         private Transform trackingTarget;
 
+        private bool isDragging;
+        private Vector3 mousePositionOnDragStart;
+        private Vector3 cameraPositionOnDragStart;
+        private Vector3 dragOffset;
+
         protected override void OnRegistered()
         {
             camera = GetComponent<Camera>();
+
+            dragInputCaptureGraphic
+                .OnPointerDownAsObservable()
+                .Subscribe(OnPointerDown)
+                .AddTo(gameObject);
         }
 
         public void SetTracking(Transform target)
@@ -30,24 +50,78 @@ namespace Mathlife.ProjectL.Gameplay
             trackingTarget = target;
         }
 
-        private void Update()
+        private void OnPointerDown(PointerEventData ev)
         {
-            // TODO: 드래깅 하면 트래킹 풀리도록 처리
+            DragStart();
+        }
+
+        private void DragStart()
+        {
+            isDragging = true;
+            mousePositionOnDragStart = Input.mousePosition;
+            cameraPositionOnDragStart = transform.position;
+            trackingTarget = null;
         }
         
+        private void Update()
+        {
+#if UNITY_ANDROID || UNITY_IOS
+            bool mouseButtonUp = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended;
+#else
+            bool mouseButtonUp = Input.GetMouseButtonUp(0);
+#endif
+            
+            if (isDragging)
+            {
+                if (mouseButtonUp)
+                {
+                    isDragging = false;
+                    return;
+                }
+                
+                //Vector3 dragOffsetRaw = camera.ScreenToViewportPoint(mousePositionOnDragStart - Input.mousePosition);
+                Vector3 dragOffsetRaw = camera.ScreenToWorldPoint(mousePositionOnDragStart) - camera.ScreenToWorldPoint(Input.mousePosition);
+                dragOffset = new Vector3(dragOffsetRaw.x * DRAG_SPEED, dragOffsetRaw.y * DRAG_SPEED);
+                return;
+            }
+
+#if UNITY_ANDROID || UNITY_IOS
+            bool mouseButtonDown = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
+#else
+            bool mouseButtonDown = Input.GetMouseButtonDown(0);
+#endif
+
+            if (mouseButtonDown && EventSystem.current.IsPointerOverGameObject(0) == false)
+            {
+                DragStart();
+            }
+        }
+
         private void LateUpdate()
         {
+            if (isDragging)
+            {
+                MoveTowards(cameraPositionOnDragStart + dragOffset);
+                return;
+            }
+
             if (trackingTarget == null)
                 return;
-            
+
             Vector3 trackingPosition = trackingTarget.position + Vector3.up * VERTICAL_OFFSET;
-            
+            MoveTowards(trackingPosition);
+        }
+
+        private void MoveTowards(Vector3 position)
+        {
             // Clamp
-            float targetX = Mathf.Clamp(trackingPosition.x, HalfWidth, DestructibleTerrain.Inst.MapWidth - HalfWidth);
-            float targetY = Mathf.Clamp(trackingPosition.y, HalfHeight, DestructibleTerrain.Inst.MapHeight + 10f - HalfWidth);
+            float targetX = Mathf.Clamp(position.x, HalfWidth, DestructibleTerrain.Inst.MapWidth - HalfWidth);
+            float targetY = Mathf.Clamp(position.y, HalfHeight, DestructibleTerrain.Inst.MapHeight + 10f - HalfWidth);
             Vector3 targetPosition = new Vector3(targetX, targetY, transform.position.z);
-            
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * TRACK_CAMERA_SPEED);
+
+            // Move towards
+            transform.position =
+                Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * TRACK_CAMERA_SPEED);
         }
     }
 }

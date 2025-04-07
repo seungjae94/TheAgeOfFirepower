@@ -245,7 +245,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return;
             }
 
+            if (MoveAxis == 0f)
+            {
+                return;
+            }
+
             Slide(MoveAxis);
+            PlaySceneCamera.Inst.SetTracking(transform);
 
             // 이동 후 중력 작용
             if (DestructibleTerrain.Inst.InGround(transform.position) == false)
