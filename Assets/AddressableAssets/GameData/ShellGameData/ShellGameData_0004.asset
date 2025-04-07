@@ -24,10 +24,10 @@ MonoBehaviour:
   displayName: "\uC800\uACA9\uD0C4"
   id: 4
   icon: {fileID: 21300000, guid: a82ece51658038944b2bae105cd7ec3d, type: 3}
-  description: "\uC774\uB3D9 \uAC70\uB9AC\uAC00 \uAE38\uC218\uB85D \uB354 \uD070
-    \uD53C\uD574\uB97C \uC8FC\uB294 \uD3EC\uD0C4.\n\uC774\uB3D9 \uAC70\uB9AC\uC5D0
-    \uB530\uB77C \uB370\uBBF8\uC9C0\uAC00 \uCD5C\uB300 300\uAE4C\uC9C0 \uC99D\uAC00\uD55C\uB2E4."
-  damage: 200
+  description: "\uC9C0\uD615\uC744 \uD30C\uAD34\uD558\uC9C0 \uC54A\uB294 150% \uB370\uBBF8\uC9C0\uC758
+    \uD3EC\uD0C4\uC744 \uBC1C\uC0AC\uD55C\uB2E4.\n\uBE44\uAC70\uB9AC\uC5D0 \uB530\uB77C
+    \uB370\uBBF8\uC9C0\uAC00 \uCD5C\uB300 350%\uAE4C\uC9C0 \uC99D\uAC00\uD55C\uB2E4."
+  damage: 150
   shouldDestructTerrain: 0
   explosionRadius: 10
   prefab: {fileID: 4984052143656669819, guid: 2c5bb5cd94fe83548ad9412631725be4, type: 3}

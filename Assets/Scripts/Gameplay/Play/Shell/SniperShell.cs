@@ -6,8 +6,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
     // 저격탄
     public class SniperShell : ShellBase
     {
-        private const float DAMAGE_VARIANT = 1f; // +100%p
-        private const float MAX_DAMAGE_DISTANCE = 10f;
+        private const float DAMAGE_VARIANT = 2f; // +200%p
+        private const float MAX_DAMAGE_DISTANCE = 15f;
         
         // Field
         private bool firstTouch = false;
@@ -25,9 +25,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         protected override float CalculateDamage()
         {
-            Debug.Log($"FD: {flyingDistance}, MAX: {MAX_DAMAGE_DISTANCE}");
             flyingDistance = Mathf.Clamp(flyingDistance, 0f, MAX_DAMAGE_DISTANCE);
-            
             float shellDamage = shellGameData.damage + 100f * DAMAGE_VARIANT * flyingDistance / MAX_DAMAGE_DISTANCE;
             return firer.GetAtk() * shellDamage / 100f;
         }
@@ -61,7 +59,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
             firstTouch = true;
             HideBody();
             partSysExplosion.Play();
-            DestructTerrain(other);
             DamageBattlersInRange(other);
             
             WaitForExplosionParticleSystem()

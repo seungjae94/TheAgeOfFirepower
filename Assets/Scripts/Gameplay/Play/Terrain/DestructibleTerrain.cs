@@ -175,23 +175,27 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Vector2 displacement = snapDirection / Mathf.Max(Mathf.Abs(snapDirection.x), Mathf.Abs(snapDirection.y));
             displacement /= PixelsPerUnit;
 
-            if (InGround(position) == false)
-                displacement = -displacement;
-
             int k = 1;
             while (true)
             {
-                Vector2 testPosition = position + k * displacement;
+                Vector2 testPosition0 = position + k * displacement;
+                Vector2 testPosition1 = position - k * displacement;
 
-                if (InTerrain(testPosition) == false)
+                if (OnSurface(testPosition0))
+                {
+                    surfacePosition = testPosition0;
+                    return true;
+                }
+                
+                if (OnSurface(testPosition1))
+                {
+                    surfacePosition = testPosition1;
+                    return true;
+                }
+                
+                if (InTerrain(testPosition0) == false && InTerrain(testPosition1) == false)
                 {
                     break;
-                }
-
-                if (OnSurface(testPosition))
-                {
-                    surfacePosition = testPosition;
-                    return true;
                 }
 
                 ++k;
