@@ -70,7 +70,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 float x = baseX + X_INTERVAL * i;
                 
                 GameObject shellGameObject = Instantiate(childShellPrefab);
-                shellGameObject.transform.position = new Vector3(x, 15f);
+                shellGameObject.transform.position = new Vector3(x, DestructibleTerrain.Inst.MapHeight + 10f);
+                
+                if (i == 1)
+                    PlaySceneCamera.Inst.SetTracking(shellGameObject.transform);
 
                 AirStrikeChildShell shell = shellGameObject.GetComponent<AirStrikeChildShell>();
                 shell.Init(firer);

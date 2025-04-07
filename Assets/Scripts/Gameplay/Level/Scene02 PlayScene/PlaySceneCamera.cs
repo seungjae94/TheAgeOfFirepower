@@ -44,7 +44,7 @@ namespace Mathlife.ProjectL.Gameplay
             
             // Clamp
             float targetX = Mathf.Clamp(trackingPosition.x, HalfWidth, DestructibleTerrain.Inst.MapWidth - HalfWidth);
-            float targetY = Mathf.Clamp(trackingPosition.y, HalfHeight, DestructibleTerrain.Inst.MapHeight + 1f - HalfWidth);
+            float targetY = Mathf.Clamp(trackingPosition.y, HalfHeight, DestructibleTerrain.Inst.MapHeight + 10f - HalfWidth);
             Vector3 targetPosition = new Vector3(targetX, targetY, transform.position.z);
             
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * TRACK_CAMERA_SPEED);
