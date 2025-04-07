@@ -27,7 +27,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             flyingDistance = Mathf.Clamp(flyingDistance, 0f, MAX_DAMAGE_DISTANCE);
             float shellDamage = shellGameData.damage + 100f * DAMAGE_VARIANT * flyingDistance / MAX_DAMAGE_DISTANCE;
-            return firer.GetAtk() * shellDamage / 100f;
+            return firer.Model.GetAtk() * shellDamage / 100f;
         }
 
         // Event Func

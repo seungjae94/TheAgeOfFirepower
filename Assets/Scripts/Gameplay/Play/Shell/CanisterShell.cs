@@ -19,7 +19,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private List<CanisterShell> children = null;
 
         // Method
-        public override void Init(ArtyModel firer)
+        public override void Init(ArtyController firer)
         {
             base.Init(firer);
 

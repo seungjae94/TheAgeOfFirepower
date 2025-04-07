@@ -19,16 +19,16 @@ namespace Mathlife.ProjectL.Gameplay.Play
         protected ParticleSystem partSysExplosion;
         
         // Field
-        protected ArtyModel firer;
+        protected ArtyController firer;
         protected ShellGameData shellGameData;
         
         // Override
         public bool ShouldBeDestroyed { get; protected set; }
         
-        public virtual void Init(ArtyModel firer)
+        public virtual void Init(ArtyController firer)
         {
             this.firer = firer;
-            this.shellGameData = firer.Shell;
+            this.shellGameData = firer.Model.Shell;
 
             if (terrainLayerIndex == -1)
             {
@@ -82,7 +82,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         protected virtual float CalculateDamage()
         {
-            return firer.GetAtk() * shellGameData.damage / 100f;
+            return firer.Model.GetAtk() * shellGameData.damage / 100f;
         }
         
         protected async UniTask WaitForExplosionParticleSystem()

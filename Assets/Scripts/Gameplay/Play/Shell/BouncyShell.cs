@@ -17,7 +17,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private Vector2 velocity;
 
         // Method
-        public override void Init(ArtyModel firer)
+        public override void Init(ArtyController firer)
         {
             base.Init(firer);
             collider = GetComponent<Collider2D>();

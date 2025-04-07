@@ -44,11 +44,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public readonly float shellMaxSpeed = 15f;
         
         private static float gravityScale = 0.05f;
-
-        [SerializeField]
-        private GameObject testShellPrefab;
-
-
+        
 #if UNITY_EDITOR
         [SerializeField]
         private bool drawTangentNormal;
@@ -89,9 +85,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         private int maxHp = 100;
         public int CurrentHp { get; private set; } = 100;
-        public int ThreatLevel => arty.GetThreatLevel();
+        public int ThreatLevel => Model.GetThreatLevel();
 
-        public string Description => $"{arty.DisplayName}(Lv. {arty.levelRx.Value})";
+        public string Description => $"{Model.DisplayName}(Lv. {Model.levelRx.Value})";
         
         private bool clockWise = true;
         private float verticalVelocity;
@@ -100,7 +96,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public Vector2 Tangent => prevTangent;
 
-        private ArtyModel arty;
+        public ArtyModel Model { get; private set; }
 
         public void Setup(ArtyModel artyModel, Enemy enemy)
         {
@@ -108,10 +104,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
             
             // 데이터 세팅
             IsPlayer = enemy == null;
-            arty = artyModel;
+            Model = artyModel;
             
             // 렌더링 세팅
-            spriteRenderer.sprite = IsPlayer ? arty.Sprite : arty.EnemySprite;
+            spriteRenderer.sprite = IsPlayer ? Model.Sprite : Model.EnemySprite;
             spriteRenderer.flipX = !IsPlayer;
             clockWise = IsPlayer;
 
@@ -148,7 +144,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Debug.Log($"Turn {turn} start.");
             HasTurn = true;
             MoveAxis = 0f;
-            CurrentFuel = arty.GetMobility();
+            CurrentFuel = Model.GetMobility();
 
             // Enable HUD
             fireGuideArrow.On();
@@ -163,7 +159,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 behaviorGraphAgent.Restart();
             }
             
-            Presenter.Find<FuelHUD>().SetFuel(CurrentFuel, arty.GetMobility());
+            Presenter.Find<FuelHUD>().SetFuel(CurrentFuel, Model.GetMobility());
         }
 
         public bool GetDirection()
@@ -362,7 +358,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             CurrentFuel -= Mathf.Abs(amount) * FUEL_CONSUME_SPEED;
             CurrentFuel =  Mathf.Max(CurrentFuel, 0f);
-            Presenter.Find<FuelHUD>().SetFuel(CurrentFuel, arty.GetMobility());
+            Presenter.Find<FuelHUD>().SetFuel(CurrentFuel, Model.GetMobility());
         }
         
         public void SetFireAngle(int angle)
@@ -383,11 +379,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Fire()
         {
-            GameObject shellGameObject = Instantiate(arty.Shell.prefab);
+            GameObject shellGameObject = Instantiate(Model.Shell.prefab);
             shellGameObject.transform.position = fireGuideArrow.transform.position;
 
             IShell shell = shellGameObject.GetComponent<IShell>();
-            shell.Init(arty);
+            shell.Init(this);
 
             Vector2 shellVelocity = fireGuideArrow.GetVelocity() * shellMaxSpeed;
             shell.Fire(shellVelocity);
@@ -420,7 +416,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Damage(float damage)
         {
-            int finalDamage = Mathf.CeilToInt(100f *  damage / (100f + arty.GetDef()));
+            int finalDamage = Mathf.CeilToInt(100f *  damage / (100f + Model.GetDef()));
             Debug.Log($"final damage: {finalDamage}");
             
             DamageTextGenerator.Inst.Generate(this, finalDamage);
