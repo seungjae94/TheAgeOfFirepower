@@ -66,11 +66,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public void Apply()
         {
-            if (gameObject.name == "Page Layout")
-            {
-                int a = 0;
-            }
-            
             // 원본 사이즈 계산
             Vector2 originalSize = new Vector2(rectTransform.rect.width, rectTransform.rect.height);
             
@@ -82,6 +77,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 top = (Screen.height - canvasRectTransform.rect.height) / 2 + minimalOffset.top,
                 bottom = (Screen.height - canvasRectTransform.rect.height) / 2 + minimalOffset.bottom
             };
+            
+            Debug.Log("left, right, top, bottom");
 
             // 스크린 경계와 안전 영역의 사이의 마진을 계산한다.
             Margin screenToSafeAreaMargin = new()
