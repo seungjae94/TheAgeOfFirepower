@@ -315,6 +315,16 @@ namespace Mathlife.ProjectL.Gameplay.Play
             return localPosition + transform.position;
         }
 
+        public bool InFairArea(Vector2 worldPosition)
+        {
+            Vector2 position = worldPosition - (Vector2) transform.position;
+            
+            Camera mainCamera = Cameras.Inst.MainCamera;
+            float vSize = mainCamera.orthographicSize;
+            float hSize = vSize * mainCamera.aspect;
+            return position.y >= -vSize && position.x >= -hSize &&  position.x <= originalTexture.width / PixelsPerUnit + hSize;
+        }
+        
         public bool InTerrain(Vector2 worldPosition)
         {
             return InTerrain(WorldPositionToTexCoord(worldPosition));

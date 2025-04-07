@@ -58,7 +58,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (toBeDestroyed)
                 return;
             
-            if (false == DestructibleTerrain.Inst.InTerrain(transform.position))
+            if (false == DestructibleTerrain.Inst.InFairArea(transform.position))
             {
                 toBeDestroyed = true;
                 Destroy(gameObject);

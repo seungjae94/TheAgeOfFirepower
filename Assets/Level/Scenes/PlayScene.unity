@@ -5000,11 +5000,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1499546555865102564, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: orthographic size
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
