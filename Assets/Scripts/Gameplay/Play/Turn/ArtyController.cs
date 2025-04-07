@@ -405,6 +405,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public void Skip()
         {
             HasTurn = false;
+            
+            // Disable HUD
+            fireGuideArrow.Off();
+            Presenter.Find<FireHUD>().Disable();
+            Presenter.Find<MoveHUD>().Disable();
         }
 
         private async UniTask WaitUntilAllShellsExploded(IShell rootShell)
