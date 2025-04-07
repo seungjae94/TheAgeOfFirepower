@@ -29,12 +29,16 @@ namespace Mathlife.ProjectL.Gameplay
             trackingTarget = target;
         }
 
+        private void Update()
+        {
+            // TODO: 드래깅 하면 트래킹 풀리도록 처리
+        }
+        
         private void LateUpdate()
         {
             if (trackingTarget == null)
                 return;
             
-            // 특별한 일이 없다면...
             Vector3 trackingPosition = trackingTarget.position;
             
             // Clamp

@@ -397,6 +397,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             Vector2 shellVelocity = fireGuideArrow.GetVelocity() * shellMaxSpeed;
             shell.Fire(shellVelocity);
+            
+            // 카메라가 포탄을 추적하도록 변경
+            PlaySceneCamera.Inst.SetTracking(shellGameObject.transform);
 
             // Disable UI and HUD
             fireGuideArrow.Off();
