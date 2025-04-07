@@ -397,7 +397,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Presenter.Find<FireHUD>().Disable();
             Presenter.Find<MoveHUD>().Disable();
 
-            WaitUntilAllShellsExploded(new() { shellGameObject }).Forget();
+            WaitUntilAllShellsExploded(shell).Forget();
         }
 
         public void Skip()
@@ -405,9 +405,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
             HasTurn = false;
         }
 
-        private async UniTaskVoid WaitUntilAllShellsExploded(List<GameObject> objects)
+        private async UniTaskVoid WaitUntilAllShellsExploded(IShell rootShell)
         {
-            await UniTask.WaitUntil(objects, value => value.All(obj => obj == null));
+            await UniTask.WaitUntil(rootShell, root => root.ShouldBeDestroyed);
             HasTurn = false;
         }
 

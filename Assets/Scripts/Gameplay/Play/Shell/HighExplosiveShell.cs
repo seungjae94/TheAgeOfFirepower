@@ -1,106 +1,45 @@
-using System;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.Play
 {
-    public class HighExplosiveShell : MonoBehaviour, IShell
+    public class HighExplosiveShell : ShellBase
     {
-        private static int terrainLayerIndex = -1;
-        private static int battlerLayer = -1;
-        
+        // Override
+        private bool firstTouch = false;
 
-        private SpriteRenderer spriteRenderer;
-        
-        private Rigidbody2D rigidbody2D;
-        
-        private ParticleSystem particleSystem;
-
-        // Field
-        private bool toBeDestroyed = false;
-        private ArtyModel firer;
-        private ShellGameData shellGameData;
-        
-        public void Init(ArtyModel firer, ShellGameData shellGameData)
-        {
-            this.firer = firer;
-            this.shellGameData = shellGameData;
-            
-            if (terrainLayerIndex < 0)
-                terrainLayerIndex = LayerMask.NameToLayer("Terrain");
-            
-            if (battlerLayer < 0)
-                battlerLayer = LayerMask.GetMask("Battler");
-        }
-
-        public void Fire(Vector2 velocity)
-        {
-            if (spriteRenderer == null)
-                spriteRenderer = GetComponent<SpriteRenderer>();
-            
-            if (rigidbody2D == null)
-                rigidbody2D = GetComponent<Rigidbody2D>();
-            
-            if (particleSystem == null)
-                particleSystem = GetComponentInChildren<ParticleSystem>();
-            
-            rigidbody2D.linearVelocity = velocity;
-        }
-
-        public GameObject GetGameObject()
-        {
-            return gameObject;
-        }
-
+        // Event Func
         private void LateUpdate()
         {
-            if (toBeDestroyed)
+            if (firstTouch || ShouldBeDestroyed)
                 return;
             
             if (false == DestructibleTerrain.Inst.InFairArea(transform.position))
             {
-                toBeDestroyed = true;
-                Destroy(gameObject);
+                ShouldBeDestroyed = true;
             }
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (toBeDestroyed)
+            if (firstTouch)
                 return;
             
-            if (other.gameObject.layer != terrainLayerIndex)
+            // 지형과 충돌할 때만 처리
+            if (false == IsCollisionWithTerrain(other))
             {
                 return;
             }
-
-            Vector2 contactPoint = other.contacts[0].point;
-            DestructibleTerrain.Inst.Paint(contactPoint, Shape.Circle((int)shellGameData.explosionRadius), Color.clear);
-
-            toBeDestroyed = true;
-            spriteRenderer.enabled = false;
-            rigidbody2D.simulated = false;
-            particleSystem.Play();
-
-            float radius = shellGameData.explosionRadius / 64f;
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(contactPoint, radius, battlerLayer);
-
-            foreach (var collider in colliders)
-            {
-                collider.transform.root.GetComponent<ArtyController>()?.Damage(firer.GetAtk() * shellGameData.damage / 100f);
-            }
             
-            DestroyOnParticleDead().Forget();
-        }
-
-        private async UniTaskVoid DestroyOnParticleDead()
-        {
-            await UniTask.WaitWhile(particleSystem.IsAlive);
+            firstTouch = true;
+            HideBody();
+            partSysExplosion.Play();
+            DestructTerrain(other);
+            DamageBattlersInRange(other);
             
-            Destroy(gameObject);
+            WaitForExplosionParticleSystem()
+                .ContinueWith(() => ShouldBeDestroyed = true)
+                .Forget();
         }
-        
-        
     }
 }
