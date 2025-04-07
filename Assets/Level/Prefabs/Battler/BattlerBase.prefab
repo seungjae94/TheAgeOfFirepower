@@ -499,7 +499,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7822231473254092506, guid: f863de0c6b653f3409fc2f26f0f9af76, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -682,9 +682,6 @@ MonoBehaviour:
   hpText: {fileID: 592470202906963191}
   levelText: {fileID: 1778401384752374670}
   moveSpeed: 4
-  shellMaxSpeed: 15
-  gravityScale: 0.1
-  testShellPrefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}
   drawTangentNormal: 0
 --- !u!114 &2834954738379499864
 MonoBehaviour:
