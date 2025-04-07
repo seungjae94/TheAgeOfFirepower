@@ -1,0 +1,48 @@
+using System;
+using Mathlife.ProjectL.Gameplay.ObjectBase;
+using Mathlife.ProjectL.Gameplay.Play;
+using UnityEngine;
+
+namespace Mathlife.ProjectL.Gameplay
+{
+    public class PlaySceneCamera : MonoSingleton<PlaySceneCamera>
+    {
+        protected override SingletonLifeTime LifeTime => SingletonLifeTime.Scene;
+
+        private const float TRACK_CAMERA_SPEED = 50f;
+        
+        // Alias
+        private float HalfHeight => camera.orthographicSize;
+        private float HalfWidth => camera.aspect * HalfHeight;
+        
+        // Field
+        private new Camera camera;
+        private Transform trackingTarget;
+
+        protected override void OnRegistered()
+        {
+            camera = GetComponent<Camera>();
+        }
+
+        public void SetTracking(Transform target)
+        {
+            trackingTarget = target;
+        }
+
+        private void LateUpdate()
+        {
+            if (trackingTarget == null)
+                return;
+            
+            // 특별한 일이 없다면...
+            Vector3 trackingPosition = trackingTarget.position;
+            
+            // Clamp
+            float targetX = Mathf.Clamp(trackingPosition.x, HalfWidth, DestructibleTerrain.Inst.MapWidth - HalfWidth);
+            float targetY = Mathf.Clamp(trackingPosition.y, HalfHeight, DestructibleTerrain.Inst.MapHeight + 1f - HalfWidth);
+            Vector3 targetPosition = new Vector3(targetX, targetY, transform.position.z);
+            
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * TRACK_CAMERA_SPEED);
+        }
+    }
+}

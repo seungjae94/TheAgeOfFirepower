@@ -2532,7 +2532,7 @@ MonoBehaviour:
     moveStrategy: 0
     targetingStrategy: 0
   developStageGameDataRef:
-    m_AssetGUID: 5f3e1fa1dfdc7d647b5fa6d72c8f0cd4
+    m_AssetGUID: acb591c854c157c439319cd82789d3df
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
@@ -2933,6 +2933,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageTextPrefab: {fileID: 1405931710588287342, guid: 564be2131c6d69e4e8a0b8036828ab45, type: 3}
+--- !u!1 &1140943948 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4960052373646572192, guid: 8c493102392add8409eab89a5843f963, type: 3}
+  m_PrefabInstance: {fileID: 1899075551}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1157315092
 GameObject:
   m_ObjectHideFlags: 0
@@ -5075,12 +5080,27 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1353286964897475400, guid: 8c493102392add8409eab89a5843f963, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1014636399}
+    - targetCorrespondingSourceObject: {fileID: 4960052373646572192, guid: 8c493102392add8409eab89a5843f963, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1899075557}
   m_SourcePrefab: {fileID: 100100000, guid: 8c493102392add8409eab89a5843f963, type: 3}
 --- !u!20 &1899075552 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
   m_PrefabInstance: {fileID: 1899075551}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1899075557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140943948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6394b2837a6d4f25a1b6f695a421679a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1944002766
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,6 +47,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private Vector2Int lastChunkSize = new Vector2Int(0, 0);
 
         private QuadTreeChunk[,] chunks;
+
+        public float MapWidth => originalTexture.width * PixelsPerUnit;
+        public float MapHeight => originalTexture.height * PixelsPerUnit;
         
         public void GenerateTerrain(Sprite sprite)
         {

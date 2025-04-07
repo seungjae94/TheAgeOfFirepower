@@ -43,8 +43,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private Sprite enemyTurnSprite;
         
-        private Camera mainCamera;
-        
         // Settings
         [SerializeField]
         private float moveSpeed = 5f;
@@ -108,8 +106,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Setup(ArtyModel artyModel, Enemy enemy)
         {
-            mainCamera = Cameras.Inst.MainCamera;
-            
             // 데이터 세팅
             IsPlayer = enemy == null;
             Model = artyModel;
@@ -171,6 +167,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
             
             Presenter.Find<FuelHUD>().SetFuel(CurrentFuel, Model.GetMobility());
+            
+            // Camera Tracking Start
+            PlaySceneCamera.Inst.SetTracking(transform);
         }
 
         public bool GetDirection()
@@ -439,20 +438,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
             CurrentHp = Mathf.Max(0, CurrentHp - finalDamage);
             hpText.text = $"{CurrentHp}<space=0.2em>/<space=0.2em>{maxHp}";
             DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)CurrentHp / maxHp, 0.25f);
-        }
-
-        private void LateUpdate()
-        {
-            if (HasTurn == false)
-                return;
-            
-            AttractCamera();
-        }
-
-        private void AttractCamera()
-        {
-            var cameraPosition = transform.position + 2f * Vector3.down;
-            mainCamera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, mainCamera.transform.position.z);
         }
         
 #if UNITY_EDITOR
