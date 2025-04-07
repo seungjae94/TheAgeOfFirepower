@@ -51,7 +51,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public float MapWidth => originalTexture.width / PixelsPerUnit;
         public float MapHeight => originalTexture.height / PixelsPerUnit;
         
-        public void GenerateTerrain(Sprite sprite)
+        public async UniTask GenerateTerrain(Sprite sprite, IProgress<float> progress)
         {
             terrainLayer = LayerMask.NameToLayer("Terrain");
 
@@ -99,6 +99,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
                     chunk.Init(chunkTexture, PixelsPerUnit);
 
                     chunks[x, y] = chunk;
+                }
+
+                if (x % 2 == 0)
+                {
+                    await UniTask.NextFrame();
+                    progress.Report((float)(x + 1) / chunkCount.x);
                 }
             }
             

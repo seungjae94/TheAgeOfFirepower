@@ -48,7 +48,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             // 1. 모든 UI 닫아놓기
             PlayCanvas.Inst.DeactivateAllPresenters();
-            progress.Report(0.2f);
+            progress.Report(0.05f);
 
             // 2. 모드 세팅
             developMode = BattleState.StageGameData == false;
@@ -60,13 +60,19 @@ namespace Mathlife.ProjectL.Gameplay
             }
 
             // 3. 맵 생성
+            LoadingScreenManager.Inst.SetMessage("맵을 생성하는 중...");
+
+            float start = 0.05f;
+            float end = 0.95f;
+            IProgress<float> mapLoadingProgress = Progress.Create<float>(value => progress.Report(Mathf.Lerp(start, end, value)));
+            
             Sprite mapSprite = stageGameData.mapSprite;
-            DestructibleTerrain.Inst.GenerateTerrain(mapSprite);
-            await UniTask.NextFrame();
-            await UniTask.NextFrame();
-            progress.Report(0.6f);
+            await DestructibleTerrain.Inst.GenerateTerrain(mapSprite, mapLoadingProgress);
+            progress.Report(0.95f);
 
             // 3. 플레이어 및 적 준비
+            LoadingScreenManager.Inst.SetMessage("화포를 생성하는 중...");
+            
             battlers.Clear();
 
             void InstantiateBattler(int spawnIndex, ArtyModel arty, Enemy enemy)
@@ -123,14 +129,14 @@ namespace Mathlife.ProjectL.Gameplay
                     InstantiateBattler(i + 3, arty, enemy);
                 }
             }
-
-            progress.Report(0.7f);
+            progress.Report(0.98f);
 
             // 4. HUD 준비
+            LoadingScreenManager.Inst.SetMessage("HUD를 준비하는 중...");
             Presenter.Find<FireHUD>().Activate();
             Presenter.Find<MoveHUD>().Activate();
             Presenter.Find<FuelHUD>().Activate();
-            progress.Report(0.8f);
+            progress.Report(0.99f);
 
             // 5. 딜레이
             await UniTask.Delay(100);

@@ -74,6 +74,7 @@ namespace Mathlife.ProjectL.Gameplay
             // 씬 초기화
             LoadingScreenManager.Inst.Show();
 
+            LoadingScreenManager.Inst.SetMessage("씬을 초기화하는 중...");
             IProgress<float> progress = isProgressSeparated ? CreateProgress(0.5f, 1.0f) : CreateProgress(0.0f, 1.0f);
             await CurrentGameMode.InitializeScene(progress);
             

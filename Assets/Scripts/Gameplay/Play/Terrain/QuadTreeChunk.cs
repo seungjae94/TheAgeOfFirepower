@@ -24,8 +24,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero,
                 pixelsPerUnit);
-
-            dirty = true;
+            
+            RefreshColliders();
         }
 
         public void Paint(int texelX, int texelY, int height, Color paintColor)
@@ -96,22 +96,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
             {
                 RefreshColliders();
                 dirty = false;
-            }
-        }
-
-        public void Copy(int x, int y, int width, int height, ref bool[,] texels)
-        {
-            if (width < 0 || height < 0 || x < 0 || x + width > Width || y < 0 || y + height > Height)
-                throw new IndexOutOfRangeException("Given texels are out of bounds.");
-            
-            Texture2D texture = spriteRenderer.sprite.texture;
-
-            for (int i = x; i < x + width; ++i)
-            {
-                for (int j = y; j < y + height; ++j)
-                {
-                    texels[i, j] = texture.GetPixel(i, j).a > float.Epsilon;
-                }
             }
         }
 
