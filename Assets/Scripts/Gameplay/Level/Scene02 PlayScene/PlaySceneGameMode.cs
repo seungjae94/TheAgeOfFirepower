@@ -154,9 +154,9 @@ namespace Mathlife.ProjectL.Gameplay
                 turnOwner = battlers[index];
                 turnOwner.StartTurn(turn);
                 await UniTask.WaitWhile(turnOwner, battler => battler.HasTurn);
-
+                turnOwner.EndTurn();
+                
                 // TODO: 턴 결과 집계
-
                 aliveBattlers.RemoveAll(battler => !battler);
                 index = (index + 1) % battlers.Count;
                 ++turn;

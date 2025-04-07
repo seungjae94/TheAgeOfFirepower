@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Mathlife.ProjectL.Gameplay.UI;
@@ -8,6 +6,7 @@ using Mathlife.ProjectL.Utils;
 using TMPro;
 using Unity.Behavior;
 using UnityEngine;
+using UnityEngine.UI;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -35,6 +34,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private TextMeshProUGUI levelText;
 
+        [SerializeField]
+        private Image turnMarker;
+
+        [SerializeField]
+        private Sprite playerTurnSprite;
+        
+        [SerializeField]
+        private Sprite enemyTurnSprite;
+        
         private Camera mainCamera;
         
         // Settings
@@ -121,6 +129,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             hpBar.fillAmount = (float)CurrentHp / maxHp;
             hpText.text = $"{CurrentHp}<space=0.2em>/<space=0.2em>{maxHp}";
             levelText.text = $"Lv. {artyModel.levelRx.Value}";
+            turnMarker.enabled = false;
             
             if (IsPlayer)
             {
@@ -146,8 +155,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
             MoveAxis = 0f;
             CurrentFuel = Model.GetMobility();
 
-            // Enable HUD
+            // Enable UI
             fireGuideArrow.On();
+            turnMarker.sprite = IsPlayer ? playerTurnSprite : enemyTurnSprite;
+            turnMarker.enabled = true;
 
             if (IsPlayer)
             {
@@ -388,7 +399,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Vector2 shellVelocity = fireGuideArrow.GetVelocity() * shellMaxSpeed;
             shell.Fire(shellVelocity);
 
-            // Disable HUD
+            // Disable UI and HUD
             fireGuideArrow.Off();
             Presenter.Find<FireHUD>().Disable();
             Presenter.Find<MoveHUD>().Disable();
@@ -402,10 +413,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             HasTurn = false;
             
-            // Disable HUD
+            // Disable UI and HUD
             fireGuideArrow.Off();
             Presenter.Find<FireHUD>().Disable();
             Presenter.Find<MoveHUD>().Disable();
+        }
+
+        public void EndTurn()
+        {
+            turnMarker.enabled = false;
         }
 
         private async UniTask WaitUntilAllShellsExploded(IShell rootShell)
