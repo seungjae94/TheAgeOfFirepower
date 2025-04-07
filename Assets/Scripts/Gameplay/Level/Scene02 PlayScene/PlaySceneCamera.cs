@@ -10,6 +10,7 @@ namespace Mathlife.ProjectL.Gameplay
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.Scene;
 
         private const float TRACK_CAMERA_SPEED = 50f;
+        private const float VERTICAL_OFFSET = 0.75f;
         
         // Alias
         private float HalfHeight => camera.orthographicSize;
@@ -39,7 +40,7 @@ namespace Mathlife.ProjectL.Gameplay
             if (trackingTarget == null)
                 return;
             
-            Vector3 trackingPosition = trackingTarget.position;
+            Vector3 trackingPosition = trackingTarget.position + Vector3.up * VERTICAL_OFFSET;
             
             // Clamp
             float targetX = Mathf.Clamp(trackingPosition.x, HalfWidth, DestructibleTerrain.Inst.MapWidth - HalfWidth);

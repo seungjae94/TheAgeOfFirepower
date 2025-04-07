@@ -148,7 +148,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             int turn = 0;
             int index = 0;
-            const int turnDelayMilliSeconds = 1500;
+            const int turnDelayMilliSeconds = 1000;
             while (true)
             {
                 turnOwner = battlers[index];
