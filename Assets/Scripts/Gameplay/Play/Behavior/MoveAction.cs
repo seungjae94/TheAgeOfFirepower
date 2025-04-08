@@ -29,12 +29,19 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             var currentBattler = PlaySceneGameMode.Inst?.turnOwner;
             
-            if (Agent.Value != currentBattler?.gameObject)
+            if (currentBattler == null)
             {
+                Debug.LogWarning("currentBattler == null");
                 return Status.Failure;
             }
 
-            if (currentBattler?.HasTurn == false)
+            if (currentBattler.gameObject == false)
+            {
+                Debug.LogWarning("currentBattler.gameObject == null");
+                return Status.Failure;
+            }
+
+            if (Agent.Value != currentBattler.gameObject)
             {
                 return Status.Failure;
             }

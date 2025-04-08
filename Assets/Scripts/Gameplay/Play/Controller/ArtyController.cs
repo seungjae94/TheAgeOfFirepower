@@ -108,8 +108,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public float CurrentFuel { get; private set; }
         
-        private const float FUEL_CONSUME_SPEED = 25f; // 실제 서비스용
-        //private const float FUEL_CONSUME_SPEED = 1f; // 이동 테스트용
+        //private const float FUEL_CONSUME_SPEED = 25f; // 실제 서비스용
+        private const float FUEL_CONSUME_SPEED = 1f; // 이동 테스트용
 
         public bool Ready { get; private set; }
         public bool HasTurn { get; private set; }
@@ -228,6 +228,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
             // 준비가 끝난 뒤부터 물리 계산 시작 
             if (Ready == false)
                 return;
+
+            // 0. 유효 범위 바깥으로 나간 경우 낙사
+            if (DestructibleTerrain.Inst.InFairArea(transform.position) == false)
+            {
+                Skip();
+                return;
+            }
             
             // 1. 공중에 떠 있는 경우 중력 적용
             if (DestructibleTerrain.Inst.InGround(transform.position) == false)
@@ -288,6 +295,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             // 이동 후 중력 작용
             if (DestructibleTerrain.Inst.InGround(transform.position) == false)
             {
+                Debug.Log("이동 후 중력");
                 FallFromAir();
             }
         }
@@ -368,24 +376,26 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return;
 
             float slideAmount = axis * moveSpeed * Time.deltaTime;
-
-            // 범위 바깥으로 나가는 움직임은 무시한다.
-            if (DestructibleTerrain.Inst.InTerrain((Vector2)transform.position + prevTangent * Mathf.Abs(slideAmount)) == false)
-            {
-                return;
-            }
-            
             SlideResult slideResult = DestructibleTerrain.Inst.Slide(transform.position, slideAmount, out Vector2 endPosition,
                 out Vector2 normal,
                 out Vector2 tangent);
             
             if (slideResult is SlideResult.ShortSpline or SlideResult.WrongSpline)
             {
+                Debug.Log("슬라이드 실패");
+                
                 endPosition = (Vector2)transform.position + slideAmount * prevTangent;
                 DestructibleTerrain.Inst.SnapToSurface(endPosition, prevNormal, out endPosition);
                 DestructibleTerrain.Inst.ExtractNormalTangent(endPosition, out prevNormal, out prevTangent);
                 transform.position = endPosition;
                 ConsumeFuel(slideAmount);
+                return;
+            }
+
+            // 유효 범위 바깥으로 나가는 움직임은 무시한다.
+            if (DestructibleTerrain.Inst.InFairArea(endPosition) == false || DestructibleTerrain.Inst.IsBoundary(endPosition))
+            {
+                Debug.Log("유효 범위 바깥으로 슬라이드 시도 차단");
                 return;
             }
             
@@ -395,6 +405,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             // 절벽 못올라가게 막기
             if (normal.y <= 0f && endPosition.y > transform.position.y)
             {
+                Debug.Log("절벽 올라가려는 시도 차단");
                 return;
             }
 

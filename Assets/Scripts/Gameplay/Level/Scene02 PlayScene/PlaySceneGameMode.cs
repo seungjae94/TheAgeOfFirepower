@@ -36,7 +36,9 @@ namespace Mathlife.ProjectL.Gameplay
         private bool developMode = false;
         private readonly List<ArtyController> battlers = new();
 
-        public ImmutableList<ArtyController> AlivePlayers => battlers
+        private readonly List<ArtyController> aliveBattlers = new();
+        
+        public ImmutableList<ArtyController> AlivePlayers => aliveBattlers
             .Where(battler => battler.IsPlayer)
             .ToImmutableList();
         
@@ -148,9 +150,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         private async UniTaskVoid BattleLoop()
         {
-            List<ArtyController> aliveBattlers = battlers
-                .Where(bat => bat)
-                .ToList();
+            aliveBattlers.Clear();
+            aliveBattlers.AddRange(battlers.Where(bat => bat));
 
             int turn = 0;
             int index = 0;
@@ -165,8 +166,11 @@ namespace Mathlife.ProjectL.Gameplay
                 turnOwner.StartTurn(turn);
                 await UniTask.WaitWhile(turnOwner, battler => battler.HasTurn);
                 turnOwner.EndTurn();
-
-                aliveBattlers.ForEach(DestroyFallenBattler);
+                
+                await UniTask.Delay(turnDelayMilliSeconds);
+                
+                aliveBattlers.ForEach(DestroyOuter);
+                await UniTask.NextFrame();  // 삭제 처리 대기
                 
                 aliveBattlers.RemoveAll(IsDead);
 
@@ -178,24 +182,36 @@ namespace Mathlife.ProjectL.Gameplay
                     
                 index = (index + 1) % aliveBattlers.Count;
                 ++turn;
-                
-                await UniTask.Delay(turnDelayMilliSeconds);
             }
 
             FinishBattle(playerCount, enemyCount).Forget();
             return;
 
-            void DestroyFallenBattler(ArtyController battler)
+            void DestroyOuter(ArtyController battler)
             {
-                if (battler.transform.position.y < 0f)
+                if (DestructibleTerrain.Inst.InFairArea(battler.transform.position) == false)
                 {
+                    Debug.Log($"배틀러 {battler.Model.DisplayName}(Lv. {battler.Model.levelRx.Value}) 낙사로 인한 삭제 처리");
                     Destroy(battler);
                 }
             }
             
             bool IsDead(ArtyController battler)
             {
-                return battler == false || battler.CurrentHp <= 0;
+                if (battler == null) 
+                {
+                    Debug.Log($"Dead Check Type 1: Component has been destroyed.");
+                }
+                else if (battler.gameObject == null)
+                {
+                    Debug.Log($"Dead Check Type 2: GameObject has been destroyed.");
+                }
+                else if (battler.CurrentHp <= 0)
+                {
+                    Debug.Log($"Dead Check Type 3: CurrentHp <= 0.");
+                }
+
+                return battler == null || battler.gameObject == null || battler.CurrentHp <= 0;
             }
         }
 

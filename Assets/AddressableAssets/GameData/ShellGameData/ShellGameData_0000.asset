@@ -27,5 +27,5 @@ MonoBehaviour:
   description: "100% \uB370\uBBF8\uC9C0\uC758 \uD3EC\uD0C4\uC744 \uBC1C\uC0AC\uD55C\uB2E4."
   damage: 100
   shouldDestructTerrain: 1
-  explosionRadius: 40
+  explosionRadius: 200
   prefab: {fileID: 4984052143656669819, guid: 2501eb02c83207c44bcd2cbbc116d861, type: 3}

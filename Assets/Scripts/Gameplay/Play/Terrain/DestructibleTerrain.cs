@@ -337,6 +337,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
             float hSize = vSize * mainCamera.aspect;
             return position.y >= -vSize && position.x >= -hSize &&  position.x <= originalTexture.width / PixelsPerUnit + hSize;
         }
+
+        public bool IsBoundary(Vector2 worldPosition)
+        {
+            Vector2Int texCoord = WorldPositionToTexCoord(worldPosition);
+            return texCoord.x == 0 || texCoord.x == originalTexture.width;
+        }
         
         public bool InTerrain(Vector2 worldPosition)
         {
