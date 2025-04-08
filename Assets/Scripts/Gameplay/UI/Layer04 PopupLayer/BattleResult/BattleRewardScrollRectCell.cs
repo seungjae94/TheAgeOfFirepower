@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class StageInfoRewardScrollRectCell
-        : SimpleScrollRectCell<Reward, SimpleScrollRectContext>
+    public class BattleRewardScrollRectCell
+    : SimpleScrollRectCell<Reward, SimpleScrollRectContext>
     {
         [SerializeField]
         private UIEffect uiEffect;
@@ -21,16 +21,28 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private Sprite goldIcon;
         
         [SerializeField]
+        private Sprite expIcon;
+        
+        [SerializeField]
         private Sprite diamondIcon;
         
         public override void UpdateContent(Reward itemData)
         {
-            if (itemData.gold > 0)
+            if (itemData == null)
+                DrawExp();
+            else if (itemData.gold > 0)
                 DrawGold(itemData);
             else if (itemData.diamond > 0)
                 DrawDiamond(itemData);
             else
                 DrawItem(itemData);
+        }
+
+        private void DrawExp()
+        {
+            uiEffect.LoadPreset("GradientN");
+            iconImage.sprite = expIcon;
+            //amountText.text = PlaySceneGameMode.Inst.Stage;
         }
 
         private void DrawGold(Reward reward)
