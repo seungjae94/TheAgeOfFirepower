@@ -181,7 +181,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             // width or height 중 더 큰 방향으로 최소 1 픽셀은 움직이도록 수정
             snapDirection.Normalize();
-            Vector2 displacement = snapDirection / Mathf.Max(Mathf.Abs(snapDirection.x), Mathf.Abs(snapDirection.y));
+            //Vector2 displacement = snapDirection / Mathf.Max(Mathf.Abs(snapDirection.x), Mathf.Abs(snapDirection.y));
+            Vector2 displacement = snapDirection;
             displacement /= PixelsPerUnit;
 
             int k = 1;
@@ -264,7 +265,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (false == splineResult)
                 return SlideResult.WrongSpline;
             
+            var tempEndPosition = endPosition;
+            
             SnapToSurface(endPosition, normal, out endPosition);
+
+            if (Vector2.Distance(endPosition, startPosition) > 1f)
+            {
+                Debug.Log("순간 이동 in Slide");
+            }
+            
             return SlideResult.Success;
         }
 
@@ -341,7 +350,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public bool IsBoundary(Vector2 worldPosition)
         {
             Vector2Int texCoord = WorldPositionToTexCoord(worldPosition);
-            return texCoord.x == 0 || texCoord.x == originalTexture.width;
+            return texCoord.x == 0 || texCoord.x == originalTexture.width - 1;
         }
         
         public bool InTerrain(Vector2 worldPosition)
@@ -386,10 +395,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                     int x = texCoord.x + dx;
                     int y = texCoord.y + dy;
 
-                    if (InTerrain(x, y) == false)
-                        continue;
-
-                    if (GetTexel(x, y) == false)
+                    if (InTerrain(x, y) == false || GetTexel(x, y) == false)
                         return true;
                 }
             }

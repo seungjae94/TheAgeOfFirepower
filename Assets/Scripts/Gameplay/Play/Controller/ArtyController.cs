@@ -222,13 +222,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
             this.clockWise = clockWise;
             UpdateRotation();
         }
-
+        
         private void Update()
         {
             // 준비가 끝난 뒤부터 물리 계산 시작 
             if (Ready == false)
                 return;
-
+            
             // 0. 유효 범위 바깥으로 나간 경우 낙사
             if (DestructibleTerrain.Inst.InFairArea(transform.position) == false)
             {
@@ -295,7 +295,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
             // 이동 후 중력 작용
             if (DestructibleTerrain.Inst.InGround(transform.position) == false)
             {
-                Debug.Log("이동 후 중력");
                 FallFromAir();
             }
         }
@@ -393,7 +392,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
 
             // 유효 범위 바깥으로 나가는 움직임은 무시한다.
-            if (DestructibleTerrain.Inst.InFairArea(endPosition) == false || DestructibleTerrain.Inst.IsBoundary(endPosition))
+            if (DestructibleTerrain.Inst.InTerrain(endPosition) == false || DestructibleTerrain.Inst.IsBoundary(endPosition))
             {
                 Debug.Log("유효 범위 바깥으로 슬라이드 시도 차단");
                 return;
@@ -408,7 +407,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 Debug.Log("절벽 올라가려는 시도 차단");
                 return;
             }
-
+            
             clockWise = axis > 0f;
 
             transform.position = endPosition;
