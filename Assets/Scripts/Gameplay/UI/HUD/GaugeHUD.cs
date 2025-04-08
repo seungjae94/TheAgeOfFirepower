@@ -1,5 +1,6 @@
 using System;
 using Mathlife.ProjectL.Gameplay.Play;
+using Mathlife.ProjectL.Utils;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class FireHUD : Presenter, IInteractable
+    public class GaugeHUD : Presenter, IInteractable
     {
         [SerializeField]
         private Slider angleSlider;
@@ -26,7 +27,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         [SerializeField]
         private Button skipButton;
+        
+        [SerializeField]
+        private SlicedFilledImage fuelSlider;
 
+        [SerializeField]
+        private TextMeshProUGUI fuelText;
         
         // Field
         private static ArtyController TurnOwner => PlaySceneGameMode.Inst.turnOwner;
@@ -36,20 +42,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             base.Activate();
 
-            angleSlider.OnValueChangedAsObservable()
-                .Subscribe(OnAngleSliderValueChanged)
-                .AddTo(disposables);
-
-            powerSlider.OnValueChangedAsObservable()
-                .Subscribe(OnPowerSliderValueChanged)
-                .AddTo(disposables);
-
-            fireButton.OnClickAsObservable()
-                .Subscribe(_ => TurnOwner?.Fire())
-                .AddTo(disposables);
-
-            skipButton.OnClickAsObservable()
-                .Subscribe(_ => TurnOwner?.Skip());
+            
         }
 
         public override void Deactivate()
@@ -71,6 +64,22 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             angleSlider.value = (iFireAngle + 30f) / 105f;
             powerSlider.value = (iFirePower - 1) / 99f;
+            
+            angleSlider.OnValueChangedAsObservable()
+                .Subscribe(OnAngleSliderValueChanged)
+                .AddTo(disposables);
+
+            powerSlider.OnValueChangedAsObservable()
+                .Subscribe(OnPowerSliderValueChanged)
+                .AddTo(disposables);
+
+            fireButton.OnClickAsObservable()
+                .Subscribe(_ => TurnOwner?.Fire())
+                .AddTo(disposables);
+
+            skipButton.OnClickAsObservable()
+                .Subscribe(_ => TurnOwner?.Skip())
+                .AddTo(disposables);
         }
 
         public void Disable()
@@ -79,6 +88,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
             powerSlider.interactable = false;
             fireButton.interactable = false;
             skipButton.interactable = false;
+
+            disposables.Clear();
         }
 
         private void OnDestroy()
@@ -105,6 +116,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
             powerText.text = iPower.ToString();
 
             TurnOwner?.SetFirePower(iPower);
+        }
+        
+        public void SetFuel(float currentFuel, int maxFuel)
+        {
+            fuelSlider.fillAmount = currentFuel / maxFuel;
+            fuelText.text = $"{Mathf.CeilToInt(currentFuel)}";
         }
     }
 }

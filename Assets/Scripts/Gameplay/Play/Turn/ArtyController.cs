@@ -163,7 +163,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (IsPlayer)
             {
-                Presenter.Find<FireHUD>().Enable();
+                Presenter.Find<GaugeHUD>().Enable();
                 Presenter.Find<MoveHUD>().Enable();
             }
             else
@@ -171,7 +171,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 behaviorGraphAgent.Restart();
             }
             
-            Presenter.Find<FuelHUD>().SetFuel(CurrentFuel, Model.GetMobility());
+            Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
             
             // Camera Tracking Start
             PlaySceneCamera.Inst.SetTracking(transform);
@@ -379,7 +379,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             CurrentFuel -= Mathf.Abs(amount) * FUEL_CONSUME_SPEED;
             CurrentFuel =  Mathf.Max(CurrentFuel, 0f);
-            Presenter.Find<FuelHUD>().SetFuel(CurrentFuel, Model.GetMobility());
+            Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
         }
         
         public void SetFireAngle(int angle)
@@ -414,7 +414,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             // Disable UI and HUD
             fireGuideArrow.Off();
-            Presenter.Find<FireHUD>().Disable();
+            Presenter.Find<GaugeHUD>().Disable();
             Presenter.Find<MoveHUD>().Disable();
 
             WaitUntilAllShellsExploded(shell)
@@ -428,7 +428,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             
             // Disable UI and HUD
             fireGuideArrow.Off();
-            Presenter.Find<FireHUD>().Disable();
+            Presenter.Find<GaugeHUD>().Disable();
             Presenter.Find<MoveHUD>().Disable();
         }
 
