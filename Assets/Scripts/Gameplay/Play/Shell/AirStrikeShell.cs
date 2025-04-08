@@ -25,7 +25,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         // Method
         
         // Event Func
-        private void LateUpdate()
+        private void Update()
         {
             if (firstTouch || ShouldBeDestroyed)
             {

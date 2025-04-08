@@ -9,7 +9,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private bool firstTouch = false;
 
         // Event Func
-        private void LateUpdate()
+        private void Update()
         {
             if (ShouldBeDestroyed)
                 return;

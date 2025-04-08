@@ -30,7 +30,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             velocity = rgbShellBody.linearVelocity;
         }
 
-        private void LateUpdate()
+        private void Update()
         {
             if (ShouldBeDestroyed || touchCount == BOUNCE_COUNT + 1)
             {

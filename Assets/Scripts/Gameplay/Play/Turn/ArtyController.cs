@@ -396,25 +396,18 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Refuel(float amount)
         {
-            GameObject particleInstance = Instantiate(refuelParticlePrefab);
-            particleInstance.transform.position = transform.position;
+            GameObject particleInstance = Instantiate(refuelParticlePrefab, transform);
+            DisposeVFX(particleInstance.GetComponent<ParticleSystem>()).Forget();
             
             CurrentFuel += Mathf.Abs(amount);
             Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
-
-            DisposeRefuelVFX(particleInstance.GetComponent<ParticleSystem>()).Forget();
-        }
-
-        private async UniTaskVoid DisposeRefuelVFX(ParticleSystem ps)
-        {
-            await UniTask.WaitWhile(ps.IsAlive);
-            Destroy(ps.gameObject);
         }
 
         public void Repair(float ratio)
         {
-            // TODO: 파티클 이펙트
-
+            GameObject particleInstance = Instantiate(repairParticlePrefab, transform);
+            DisposeVFX(particleInstance.GetComponent<ParticleSystem>()).Forget();
+            
             int prevHp = CurrentHp;
             float finalHp = Mathf.Min(prevHp + maxHp * ratio, maxHp);
             CurrentHp = Mathf.CeilToInt(finalHp);
@@ -422,6 +415,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
             DamageTextGenerator.Inst.Generate(this, CurrentHp - prevHp); // TODO: 힐은 초록색으로 표시
             hpText.text = $"{CurrentHp}<space=0.2em>/<space=0.2em>{maxHp}";
             DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)CurrentHp / maxHp, 0.25f);
+        }
+        
+        private async UniTaskVoid DisposeVFX(ParticleSystem ps)
+        {
+            await UniTask.WaitWhile(ps.IsAlive);
+            Destroy(ps.gameObject);
         }
 
         public void DoubleFireBuff()

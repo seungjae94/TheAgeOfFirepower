@@ -56,7 +56,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         }
 
         // Event Func
-        private void LateUpdate()
+        private void Update()
         {
             if (false == isChild && false == ShouldBeDestroyed)
             {
