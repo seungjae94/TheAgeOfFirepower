@@ -5409,6 +5409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragInputCaptureGraphic: {fileID: 786586945}
+  hudTrans: {fileID: 1973031757}
 --- !u!114 &1916916652 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4904990112518956337, guid: e91d104dbfa81e845a22097d367d914f, type: 3}

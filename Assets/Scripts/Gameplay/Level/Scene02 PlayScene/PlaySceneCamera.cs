@@ -15,7 +15,7 @@ namespace Mathlife.ProjectL.Gameplay
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.Scene;
 
         private const float TRACK_CAMERA_SPEED = 50f;
-        private const float VERTICAL_OFFSET = 0.75f;
+        private const float VERTICAL_OFFSET = 0.25f;
         private const float DRAG_SPEED = 1f;
 
         // Alias
@@ -26,15 +26,20 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField]
         private Graphic dragInputCaptureGraphic;
 
+        [SerializeField]
+        private RectTransform hudTrans;
+        
         // Field
         private new Camera camera;
         private Transform trackingTarget;
-
+        
         private bool isDragging;
         private Vector3 mousePositionOnDragStart;
         private Vector3 cameraPositionOnDragStart;
         private Vector3 dragOffset;
 
+        private float canvasHeight = 0f;
+            
         protected override void OnRegistered()
         {
             camera = GetComponent<Camera>();
@@ -43,6 +48,9 @@ namespace Mathlife.ProjectL.Gameplay
                 .OnPointerDownAsObservable()
                 .Subscribe(OnPointerDown)
                 .AddTo(gameObject);
+
+            var canvasTrans = hudTrans.root as RectTransform;
+            canvasHeight = canvasTrans?.rect.height ?? 1080;
         }
 
         public void SetTracking(Transform target)
@@ -114,9 +122,13 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void MoveTowards(Vector3 position)
         {
+            float hudPixelHeight = hudTrans.sizeDelta.y;
+            float hudHeight = hudPixelHeight / canvasHeight * 2f * HalfHeight;
+            Debug.Log($"HH: {hudHeight}");
+            
             // Clamp
             float targetX = Mathf.Clamp(position.x, HalfWidth, DestructibleTerrain.Inst.MapWidth - HalfWidth);
-            float targetY = Mathf.Clamp(position.y, HalfHeight, DestructibleTerrain.Inst.MapHeight + 10f - HalfWidth);
+            float targetY = Mathf.Clamp(position.y, HalfHeight - hudHeight, DestructibleTerrain.Inst.MapHeight + 10f - HalfWidth);
             Vector3 targetPosition = new Vector3(targetX, targetY, transform.position.z);
 
             // Move towards
