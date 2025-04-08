@@ -14,6 +14,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 {
     public class ArtyController : MonoBehaviour
     {
+        private const int DOUBLE_FIRE_DELAY_MS = 1000;
+        
         // Component & Children
 
         [SerializeField]
@@ -67,6 +69,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         // Field
         private GameObject doubleFireParticleInstance;
+        private int fireChance = 1;
         
         private float moveAxis;
         public float MoveAxis
@@ -130,9 +133,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
             prevTangent = IsPlayer ? Vector2.right : Vector2.left;
             prevNormal = Vector2.up;
 
-            // UI 및 컴포넌트 세팅
+            // 상태 초기화
             maxHp = artyModel.GetMaxHp();
             CurrentHp = artyModel.GetMaxHp();
+            
+            // UI 및 컴포넌트 세팅
             hpBar.fillAmount = (float)CurrentHp / maxHp;
             hpText.text = $"{CurrentHp}<space=0.2em>/<space=0.2em>{maxHp}";
             levelText.text = $"Lv. {artyModel.levelRx.Value}";
@@ -164,8 +169,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             Debug.Log($"Turn {turn} start.");
             HasTurn = true;
+            
+            // 상태 초기화
             MoveAxis = 0f;
             CurrentFuel = Model.GetMobility();
+            fireChance = 1;
 
             // Enable UI
             fireGuideArrow.On();
@@ -425,7 +433,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void DoubleFireBuff()
         {
-            
+            fireChance = 2;
         }
         
         public void SetFireAngle(int angle)
@@ -446,6 +454,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Fire()
         {
+            --fireChance;
+            
             GameObject shellGameObject = Instantiate(Model.Shell.prefab);
             shellGameObject.transform.position = fireGuideArrow.transform.position;
 
@@ -489,6 +499,14 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private async UniTask WaitUntilAllShellsExploded(IShell rootShell)
         {
             await UniTask.WaitUntil(rootShell, root => root.ShouldBeDestroyed);
+
+            if (fireChance > 0)
+            {
+                await UniTask.Delay(DOUBLE_FIRE_DELAY_MS);
+                Fire();
+                return;
+            }
+            
             HasTurn = false;
         }
 
