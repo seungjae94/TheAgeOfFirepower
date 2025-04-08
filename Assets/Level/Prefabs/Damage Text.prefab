@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -809564406504197238, guid: f89afae9f23869246bbcff8cdb85d01e, type: 2}
+  - {fileID: 2100000, guid: b2be9b2e44684ee4193fbeb283e333ad, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_text: 12345
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f89afae9f23869246bbcff8cdb85d01e, type: 2}
-  m_sharedMaterial: {fileID: -809564406504197238, guid: f89afae9f23869246bbcff8cdb85d01e, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: b2be9b2e44684ee4193fbeb283e333ad, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
+  m_overrideHtmlColors: 1
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
@@ -190,7 +190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b11aada8ead42dc9be4ae1b49964554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 5500097705236886017}
+  textMesh: {fileID: 5500097705236886017}
+  healTextMaterial: {fileID: 2100000, guid: 13cbfc1c8f70717429f11f5f361c32bf, type: 2}
 --- !u!95 &7217025508497062612
 Animator:
   serializedVersion: 7

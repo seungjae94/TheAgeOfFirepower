@@ -10,11 +10,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private GameObject damageTextPrefab;
 
-        public void Generate(ArtyController owner, int damage)
+        public void Generate(ArtyController owner, int damage, bool isHeal)
         {
             var inst = Instantiate(damageTextPrefab, transform);
             var damageText = inst.GetComponent<DamageText>();
-            damageText.Setup(owner, damage);
+            damageText.Setup(owner, damage, isHeal);
         }
     }
 }

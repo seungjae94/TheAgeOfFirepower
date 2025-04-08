@@ -421,7 +421,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             float finalHp = Mathf.Min(prevHp + maxHp * ratio, maxHp);
             CurrentHp = Mathf.CeilToInt(finalHp);
             
-            DamageTextGenerator.Inst.Generate(this, CurrentHp - prevHp); // TODO: 힐은 초록색으로 표시
+            DamageTextGenerator.Inst.Generate(this, CurrentHp - prevHp, true); // TODO: 힐은 초록색으로 표시
             hpText.text = $"{CurrentHp}<space=0.2em>/<space=0.2em>{maxHp}";
             DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)CurrentHp / maxHp, 0.25f);
         }
@@ -523,7 +523,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             int finalDamage = Mathf.CeilToInt(100f *  damage / (100f + Model.GetDef()));
             Debug.Log($"final damage: {finalDamage}");
             
-            DamageTextGenerator.Inst.Generate(this, finalDamage);
+            DamageTextGenerator.Inst.Generate(this, finalDamage, false);
             CurrentHp = Mathf.Max(0, CurrentHp - finalDamage);
             hpText.text = $"{CurrentHp}<space=0.2em>/<space=0.2em>{maxHp}";
             DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)CurrentHp / maxHp, 0.25f);
