@@ -302,7 +302,6 @@ namespace Mathlife.ProjectL.Gameplay
                 return;
             }
             
-            Debug.Log($"{artyController.Model.DisplayName}가 배틀 아이템 {itemData.displayName}를 사용합니다!");
             itemData.effect.Apply(artyController);
         }
     }

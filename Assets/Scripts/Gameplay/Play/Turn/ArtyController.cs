@@ -42,6 +42,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         [SerializeField]
         private Sprite enemyTurnSprite;
+
+        [SerializeField]
+        private GameObject refuelParticlePrefab;
+        
+        [SerializeField]
+        private GameObject repairParticlePrefab;
+        
+        [SerializeField]
+        private GameObject doubleFireParticlePrefab;
         
         // Settings
         [SerializeField]
@@ -57,6 +66,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 #endif
 
         // Field
+        private GameObject doubleFireParticleInstance;
+        
         private float moveAxis;
         public float MoveAxis
         {
@@ -385,10 +396,19 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Refuel(float amount)
         {
-            // TODO: 파티클 이펙트
+            GameObject particleInstance = Instantiate(refuelParticlePrefab);
+            particleInstance.transform.position = transform.position;
             
             CurrentFuel += Mathf.Abs(amount);
             Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
+
+            DisposeRefuelVFX(particleInstance.GetComponent<ParticleSystem>()).Forget();
+        }
+
+        private async UniTaskVoid DisposeRefuelVFX(ParticleSystem ps)
+        {
+            await UniTask.WaitWhile(ps.IsAlive);
+            Destroy(ps.gameObject);
         }
 
         public void Repair(float ratio)
