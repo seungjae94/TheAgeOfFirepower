@@ -124,7 +124,6 @@ namespace Mathlife.ProjectL.Gameplay
         {
             float hudPixelHeight = hudTrans.sizeDelta.y;
             float hudHeight = hudPixelHeight / canvasHeight * 2f * HalfHeight;
-            Debug.Log($"HH: {hudHeight}");
             
             // Clamp
             float targetX = Mathf.Clamp(position.x, HalfWidth, DestructibleTerrain.Inst.MapWidth - HalfWidth);

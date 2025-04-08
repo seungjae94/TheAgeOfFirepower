@@ -303,6 +303,12 @@ namespace Mathlife.ProjectL.Gameplay
             }
             
             itemData.effect.Apply(artyController);
+            itemStack.Remove(1);
+
+            if (itemStack.Amount == 0)
+            {
+                battleItemInventory.Remove(battleItemId);
+            }
         }
     }
 }
