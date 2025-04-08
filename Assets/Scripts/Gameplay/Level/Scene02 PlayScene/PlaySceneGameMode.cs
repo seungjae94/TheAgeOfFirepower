@@ -154,27 +154,55 @@ namespace Mathlife.ProjectL.Gameplay
 
             int turn = 0;
             int index = 0;
+
+            int playerCount = 0; 
+            int enemyCount = 0;
+            
             const int turnDelayMilliSeconds = 1000;
             while (true)
             {
-                turnOwner = battlers[index];
+                turnOwner = aliveBattlers[index];
                 turnOwner.StartTurn(turn);
                 await UniTask.WaitWhile(turnOwner, battler => battler.HasTurn);
                 turnOwner.EndTurn();
-                
-                // TODO: 턴 결과 집계
-                aliveBattlers.RemoveAll(battler => !battler);
-                index = (index + 1) % battlers.Count;
-                ++turn;
 
+                aliveBattlers.ForEach(DestroyFallenBattler);
+                
+                aliveBattlers.RemoveAll(IsDead);
+
+                playerCount = aliveBattlers.Count(battler => battler.IsPlayer);
+                enemyCount = aliveBattlers.Count - playerCount;
+                
+                if (playerCount == 0 || enemyCount == 0)
+                    break;
+                    
+                index = (index + 1) % aliveBattlers.Count;
+                ++turn;
+                
                 await UniTask.Delay(turnDelayMilliSeconds);
             }
 
-            FinishBattle().Forget();
+            FinishBattle(playerCount, enemyCount).Forget();
+            return;
+
+            void DestroyFallenBattler(ArtyController battler)
+            {
+                if (battler.transform.position.y < 0f)
+                {
+                    Destroy(battler);
+                }
+            }
+            
+            bool IsDead(ArtyController battler)
+            {
+                return battler == false || battler.CurrentHp <= 0;
+            }
         }
 
-        private async UniTaskVoid FinishBattle()
+        private async UniTaskVoid FinishBattle(int playerCount, int enemyCount)
         {
+            // TODO: UI 띄우기
+            Debug.Log(playerCount == 0 ? "LOSE" : "WIN");
         }
     }
 }

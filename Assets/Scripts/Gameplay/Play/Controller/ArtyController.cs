@@ -6,6 +6,7 @@ using Mathlife.ProjectL.Utils;
 using TMPro;
 using Unity.Behavior;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -27,6 +28,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private FireGuideArrowRenderer fireGuideArrow;
 
         [SerializeField]
+        private GameObject battlerCanvasGameObject;
+        
+        [SerializeField]
         private SlicedFilledImage hpBar;
 
         [SerializeField]
@@ -44,14 +48,23 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private Sprite enemyTurnSprite;
 
+        [FormerlySerializedAs("refuelParticlePrefab")]
         [SerializeField]
-        private GameObject refuelParticlePrefab;
+        private GameObject refuelVFXPrefab;
+        
+        [FormerlySerializedAs("repairParticlePrefab")]
+        [SerializeField]
+        private GameObject repairVFXPrefab;
+        
+        [FormerlySerializedAs("doubleFireParticlePrefab")]
+        [SerializeField]
+        private GameObject doubleFireVFXPrefab;
         
         [SerializeField]
-        private GameObject repairParticlePrefab;
+        private GameObject destroyVFXPrefab;
         
         [SerializeField]
-        private GameObject doubleFireParticlePrefab;
+        private GameObject smokeVFXPrefab;
         
         // Settings
         [SerializeField]
@@ -403,7 +416,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Refuel(float amount)
         {
-            GameObject particleInstance = Instantiate(refuelParticlePrefab, spriteRenderer.transform);
+            GameObject particleInstance = Instantiate(refuelVFXPrefab, spriteRenderer.transform);
             particleInstance.transform.localScale /= spriteRenderer.transform.localScale.x;
             DisposeVFX(particleInstance.GetComponent<ParticleSystem>()).Forget();
             
@@ -413,7 +426,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Repair(float ratio)
         {
-            GameObject particleInstance = Instantiate(repairParticlePrefab, spriteRenderer.transform);
+            GameObject particleInstance = Instantiate(repairVFXPrefab, spriteRenderer.transform);
             particleInstance.transform.localScale /= spriteRenderer.transform.localScale.x;
             DisposeVFX(particleInstance.GetComponent<ParticleSystem>()).Forget();
             
@@ -426,7 +439,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)CurrentHp / maxHp, 0.25f);
         }
         
-        private async UniTaskVoid DisposeVFX(ParticleSystem ps)
+        private async UniTask DisposeVFX(ParticleSystem ps)
         {
             await UniTask.WaitWhile(ps.IsAlive);
             Destroy(ps.gameObject);
@@ -434,7 +447,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void DoubleFireBuff()
         {
-            doubleFireParticleInstance = Instantiate(doubleFireParticlePrefab, spriteRenderer.transform);
+            doubleFireParticleInstance = Instantiate(doubleFireVFXPrefab, spriteRenderer.transform);
             doubleFireParticleInstance.transform.localScale /= spriteRenderer.transform.localScale.x;
             fireChance = 2;
         }
@@ -457,6 +470,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Fire()
         {
+            if (CurrentHp <= 0)
+            {
+                return;
+            }
+            
             --fireChance;
             
             GameObject shellGameObject = Instantiate(Model.Shell.prefab);
@@ -527,6 +545,33 @@ namespace Mathlife.ProjectL.Gameplay.Play
             CurrentHp = Mathf.Max(0, CurrentHp - finalDamage);
             hpText.text = $"{CurrentHp}<space=0.2em>/<space=0.2em>{maxHp}";
             DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)CurrentHp / maxHp, 0.25f);
+
+            if (CurrentHp == 0)
+            {
+                PlayDestroyEffects().Forget();
+            }
+        }
+
+        private async UniTaskVoid PlayDestroyEffects()
+        {
+            GameObject destroyParticleInstance = Instantiate(destroyVFXPrefab, spriteRenderer.transform);
+            destroyParticleInstance.transform.localScale /= spriteRenderer.transform.localScale.x;
+
+            Color grayColor = new Color(50f / 255f, 50f / 255f, 50f / 255f, 1f);
+            spriteRenderer.DOColor(grayColor, 0.5f);
+            
+            await DisposeVFX(destroyParticleInstance.GetComponent<ParticleSystem>());
+            
+            fireGuideArrow.Off();
+            battlerCanvasGameObject.SetActive(false);
+            
+            GameObject smokeParticleInstance = Instantiate(smokeVFXPrefab, spriteRenderer.transform);
+            smokeParticleInstance.transform.localScale /= spriteRenderer.transform.localScale.x;
+
+            await UniTask.Delay(500);
+
+            if (HasTurn)
+                HasTurn = false;
         }
         
 #if UNITY_EDITOR
