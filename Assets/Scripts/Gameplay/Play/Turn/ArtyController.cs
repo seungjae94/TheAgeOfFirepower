@@ -17,7 +17,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private const int DOUBLE_FIRE_DELAY_MS = 1000;
         
         // Component & Children
-
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
@@ -404,7 +403,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Refuel(float amount)
         {
-            GameObject particleInstance = Instantiate(refuelParticlePrefab, transform);
+            GameObject particleInstance = Instantiate(refuelParticlePrefab, spriteRenderer.transform);
+            particleInstance.transform.localScale /= spriteRenderer.transform.localScale.x;
             DisposeVFX(particleInstance.GetComponent<ParticleSystem>()).Forget();
             
             CurrentFuel += Mathf.Abs(amount);
@@ -413,7 +413,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Repair(float ratio)
         {
-            GameObject particleInstance = Instantiate(repairParticlePrefab, transform);
+            GameObject particleInstance = Instantiate(repairParticlePrefab, spriteRenderer.transform);
+            particleInstance.transform.localScale /= spriteRenderer.transform.localScale.x;
             DisposeVFX(particleInstance.GetComponent<ParticleSystem>()).Forget();
             
             int prevHp = CurrentHp;
@@ -433,6 +434,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void DoubleFireBuff()
         {
+            doubleFireParticleInstance = Instantiate(doubleFireParticlePrefab, spriteRenderer.transform);
+            doubleFireParticleInstance.transform.localScale /= spriteRenderer.transform.localScale.x;
             fireChance = 2;
         }
         
@@ -494,6 +497,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public void EndTurn()
         {
             turnMarker.enabled = false;
+            
+            if (doubleFireParticleInstance)
+                Destroy(doubleFireParticleInstance);
         }
 
         private async UniTask WaitUntilAllShellsExploded(IShell rootShell)
@@ -502,6 +508,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (fireChance > 0)
             {
+                await UniTask.Delay(DOUBLE_FIRE_DELAY_MS);
+                PlaySceneCamera.Inst.SetTracking(transform);
                 await UniTask.Delay(DOUBLE_FIRE_DELAY_MS);
                 Fire();
                 return;
