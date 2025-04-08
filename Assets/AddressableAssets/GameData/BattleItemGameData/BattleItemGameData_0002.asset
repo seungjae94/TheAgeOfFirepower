@@ -20,11 +20,18 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: effect
+      Entry: 7
+      Data: 0|Mathlife.ProjectL.Gameplay.RefuelEffect, ProjectL-Gameplay
+    - Name: amount
+      Entry: 3
+      Data: 50
+    - Name: 
+      Entry: 8
+      Data: 
   displayName: "\uBC30\uD130\uB9AC"
   id: 2
   rarity: 1
   icon: {fileID: 21300000, guid: 6e6ae8a10efe8ce468afaae71935c19d, type: 3}
-  description: "\uAE30\uB3D9\uB825\uC744 30 \uB9CC\uD07C \uD68C\uBCF5\uD569\uB2C8\uB2E4."
-  shopPrice: 300
-  maxStack: 10
+  description: "\uC0AC\uC6A9\uC2DC \uAE30\uB3D9\uB825\uC744 50 \uD68C\uBCF5\uD569\uB2C8\uB2E4."

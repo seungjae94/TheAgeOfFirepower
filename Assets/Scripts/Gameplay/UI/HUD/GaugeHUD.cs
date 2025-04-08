@@ -10,6 +10,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class GaugeHUD : Presenter, IInteractable
     {
+        // Alias
+        private static ArtyController TurnOwner => PlaySceneGameMode.Inst.turnOwner;
+        
+        // Component
         [SerializeField]
         private Slider angleSlider;
 
@@ -35,16 +39,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private TextMeshProUGUI fuelText;
         
         // Field
-        private static ArtyController TurnOwner => PlaySceneGameMode.Inst.turnOwner;
         private readonly CompositeDisposable disposables = new();
-
-        public override void Activate()
-        {
-            base.Activate();
-
-            
-        }
-
+        
         public override void Deactivate()
         {
             base.Deactivate();
@@ -120,7 +116,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         public void SetFuel(float currentFuel, int maxFuel)
         {
-            fuelSlider.fillAmount = currentFuel / maxFuel;
+            fuelSlider.fillAmount = Mathf.Min(currentFuel, maxFuel) / maxFuel;
             fuelText.text = $"{Mathf.CeilToInt(currentFuel)}";
         }
     }

@@ -44,5 +44,7 @@ namespace Mathlife.ProjectL.Gameplay
         public string Description => gameData.description;
         
         public Sprite Icon => gameData.icon;
+        
+        public BattleItemGameData BattleItemGameData => gameData as BattleItemGameData;
     }
 }

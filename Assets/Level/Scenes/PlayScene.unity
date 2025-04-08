@@ -1177,7 +1177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 651762600151542355, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9719.998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 651762600151542355, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1222,6 +1222,14 @@ PrefabInstance:
     - target: {fileID: 3766752280356707577, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
       propertyPath: m_Name
       value: BattleItem Button 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904990112518956337, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
+      propertyPath: itemDataRef.m_AssetGUID
+      value: 42ca2c5aa5f94e1458ca29250d31efd3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904990112518956337, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
+      propertyPath: itemDataRef.m_EditorAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1292,6 +1300,17 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &420153054 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4904990112518956337, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
+  m_PrefabInstance: {fileID: 361151495}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ec7d9e1f1243d4ab1a43e341e91307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &423800815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1513,6 +1532,7 @@ GameObject:
   - component: {fileID: 514992805}
   - component: {fileID: 514992807}
   - component: {fileID: 514992806}
+  - component: {fileID: 514992808}
   m_Layer: 5
   m_Name: UI_ItemHUD
   m_TagString: Untagged
@@ -1606,6 +1626,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 514992803}
   m_CullTransparentMesh: 1
+--- !u!114 &514992808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514992803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9c472969864ae38b830b91911f18bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons:
+  - {fileID: 1030066408}
+  - {fileID: 420153054}
+  - {fileID: 1916916652}
 --- !u!1 &562808512
 GameObject:
   m_ObjectHideFlags: 0
@@ -2916,6 +2952,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 651762600151542355, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
   m_PrefabInstance: {fileID: 2700175752697482869}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1030066408 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4904990112518956337, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
+  m_PrefabInstance: {fileID: 2700175752697482869}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ec7d9e1f1243d4ab1a43e341e91307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1092356912
 GameObject:
   m_ObjectHideFlags: 0
@@ -4562,7 +4609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 651762600151542355, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9719.998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 651762600151542355, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4603,6 +4650,14 @@ PrefabInstance:
     - target: {fileID: 3766752280356707577, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
       propertyPath: m_Name
       value: BattleItem Button 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904990112518956337, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
+      propertyPath: itemDataRef.m_AssetGUID
+      value: 715879cc4e6f0a64e9c528ba65882130
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904990112518956337, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
+      propertyPath: itemDataRef.m_EditorAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5354,6 +5409,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragInputCaptureGraphic: {fileID: 786586945}
+--- !u!114 &1916916652 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4904990112518956337, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
+  m_PrefabInstance: {fileID: 1730357761}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ec7d9e1f1243d4ab1a43e341e91307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1944002766
 GameObject:
   m_ObjectHideFlags: 0
@@ -5995,7 +6061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 651762600151542355, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9719.998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 651762600151542355, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6043,6 +6109,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3766752280356707577, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904990112518956337, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
+      propertyPath: itemDataRef.m_AssetGUID
+      value: 736c025dc6d2b62468610d76110af19f
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904990112518956337, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
+      propertyPath: itemDataRef.m_EditorAssetChanged
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

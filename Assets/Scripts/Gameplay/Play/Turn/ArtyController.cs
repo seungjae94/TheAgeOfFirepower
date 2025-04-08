@@ -82,7 +82,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public float CurrentFuel { get; private set; }
         
-        private const float FUEL_CONSUME_SPEED = 50f; // 실제 서비스용
+        private const float FUEL_CONSUME_SPEED = 25f; // 실제 서비스용
         //private const float FUEL_CONSUME_SPEED = 1f; // 이동 테스트용
 
         public bool Ready { get; private set; }
@@ -165,6 +165,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             {
                 Presenter.Find<GaugeHUD>().Enable();
                 Presenter.Find<MoveHUD>().Enable();
+                Presenter.Find<ItemHUD>().Enable();
             }
             else
             {
@@ -381,6 +382,32 @@ namespace Mathlife.ProjectL.Gameplay.Play
             CurrentFuel =  Mathf.Max(CurrentFuel, 0f);
             Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
         }
+
+        public void Refuel(float amount)
+        {
+            // TODO: 파티클 이펙트
+            
+            CurrentFuel += Mathf.Abs(amount);
+            Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
+        }
+
+        public void Repair(float ratio)
+        {
+            // TODO: 파티클 이펙트
+
+            int prevHp = CurrentHp;
+            float finalHp = Mathf.Min(prevHp + maxHp * ratio, maxHp);
+            CurrentHp = Mathf.CeilToInt(finalHp);
+            
+            DamageTextGenerator.Inst.Generate(this, CurrentHp - prevHp); // TODO: 힐은 초록색으로 표시
+            hpText.text = $"{CurrentHp}<space=0.2em>/<space=0.2em>{maxHp}";
+            DOTween.To(() => hpBar.fillAmount, (float v) => hpBar.fillAmount = v, (float)CurrentHp / maxHp, 0.25f);
+        }
+
+        public void DoubleFireBuff()
+        {
+            
+        }
         
         public void SetFireAngle(int angle)
         {
@@ -413,9 +440,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             PlaySceneCamera.Inst.SetTracking(shellGameObject.transform);
 
             // Disable UI and HUD
-            fireGuideArrow.Off();
-            Presenter.Find<GaugeHUD>().Disable();
-            Presenter.Find<MoveHUD>().Disable();
+            DisableUIAndHUD();
 
             WaitUntilAllShellsExploded(shell)
                 .ContinueWith(() => Destroy(shellGameObject))
@@ -425,11 +450,16 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public void Skip()
         {
             HasTurn = false;
-            
+            DisableUIAndHUD();
+        }
+
+        private void DisableUIAndHUD()
+        {
             // Disable UI and HUD
             fireGuideArrow.Off();
             Presenter.Find<GaugeHUD>().Disable();
             Presenter.Find<MoveHUD>().Disable();
+            Presenter.Find<ItemHUD>().Disable();
         }
 
         public void EndTurn()

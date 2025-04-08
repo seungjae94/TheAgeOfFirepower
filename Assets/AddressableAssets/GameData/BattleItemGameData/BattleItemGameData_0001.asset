@@ -20,9 +20,15 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: effect
+      Entry: 7
+      Data: 0|Mathlife.ProjectL.Gameplay.DoubleFireEffect, ProjectL-Gameplay
+    - Name: 
+      Entry: 8
+      Data: 
   displayName: "\uD3EC\uD0C4 \uBC15\uC2A4"
   id: 1
-  rarity: 2
+  rarity: 1
   icon: {fileID: 3466708323539895016, guid: 257332440c5f1bd478e2d9d5b8ccc203, type: 3}
   description: "\uC774\uBC88 \uD134\uC5D0 \uD3EC\uD0C4\uC744 2\uBC88 \uBC1C\uC0AC\uD569\uB2C8\uB2E4."

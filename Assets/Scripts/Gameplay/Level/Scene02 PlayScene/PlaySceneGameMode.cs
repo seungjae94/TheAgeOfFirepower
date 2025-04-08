@@ -135,7 +135,7 @@ namespace Mathlife.ProjectL.Gameplay
             LoadingScreenManager.Inst.SetMessage("HUD를 준비하는 중...");
             Presenter.Find<GaugeHUD>().Activate();
             Presenter.Find<MoveHUD>().Activate();
-            Presenter.Find<GaugeHUD>().Activate();
+            Presenter.Find<ItemHUD>().Activate();
             progress.Report(0.99f);
 
             // 5. 딜레이

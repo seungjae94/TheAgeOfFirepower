@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Mathlife.ProjectL.Gameplay.Play;
 using UniRx;
+using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -274,6 +276,34 @@ namespace Mathlife.ProjectL.Gameplay
                 .ThenByDescending(mechPart => mechPart.Rarity)
                 .ThenBy(mechPart => mechPart.Id)
                 .ToList();
+        }
+        
+        // 배틀 아이템 관리
+        public ItemStackModel GetBattleItemStack(int battleItemId)
+        {
+            bool result = battleItemInventory.TryGetValue(battleItemId, out ItemStackModel itemStack);
+            return result ? itemStack : null;
+        }
+
+        public void UseBattleItem(int battleItemId, ArtyController artyController)
+        {
+            bool result = battleItemInventory.TryGetValue(battleItemId, out ItemStackModel itemStack);
+
+            if (result == false)
+            {
+                Debug.LogError("배틀 아이템 사용 실패...");
+                return;
+            }
+
+            BattleItemGameData itemData = itemStack.BattleItemGameData;
+            if (itemData == null)
+            {
+                Debug.LogError("배틀 아이템 사용 실패...");
+                return;
+            }
+            
+            Debug.Log($"{artyController.Model.DisplayName}가 배틀 아이템 {itemData.displayName}를 사용합니다!");
+            itemData.effect.Apply(artyController);
         }
     }
 }
