@@ -21,6 +21,10 @@ namespace Mathlife.ProjectL.Gameplay
             
             // 2. 홈 페이지 열기
             Presenter.Find<HomePage>().Open();
+            if (GameManager.Inst.PrevSceneName == SceneNames.PlayScene)
+            {
+                Presenter.Find<StageSelectionPage>().Open();
+            }
             progress.Report(0.6f);
             
             // 3. 딜레이

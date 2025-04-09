@@ -12,6 +12,7 @@ namespace Mathlife.ProjectL.Gameplay
     {
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.App;
 
+        public string PrevSceneName { get; private set; }= null;
         private Scene currentScene;
         public IGameMode CurrentGameMode { get; private set; }
         public IMainCanvas CurrentCanvas { get; private set; }
@@ -84,6 +85,7 @@ namespace Mathlife.ProjectL.Gameplay
         public async UniTaskVoid ChangeScene(string sceneName)
         {
             LoadingScreenManager.Inst.Show();
+            PrevSceneName = currentScene.name;
 
             // 기존 씬 언로드 & 새로운 씬 로드
             await SceneManager.UnloadSceneAsync(currentScene).ToUniTask();

@@ -75,12 +75,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
             else if (GameProgressState.unlockStageRx.Value >= stageGameData.stageNo)
             {
-                Debug.Log($"Show Stage {stageGameData.stageNo}");
                 canvasGroup.Show();
             }
             else
             {
-                Debug.Log($"Hide Stage {stageGameData.stageNo}, as unlock is {GameProgressState.unlockWorldRx.Value}-{GameProgressState.unlockStageRx.Value}");
                 canvasGroup.Hide();
             }
         }
