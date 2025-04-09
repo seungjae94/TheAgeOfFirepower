@@ -47,6 +47,9 @@ namespace Mathlife.ProjectL.Gameplay
 
         [SerializeField]
         private ArtyPageMechPartSlot[] mechPartSlots;
+
+        [SerializeField]
+        private Button levelUpButton;
         
         // Field
         private readonly CompositeDisposable disposables = new();
@@ -60,6 +63,10 @@ namespace Mathlife.ProjectL.Gameplay
             ArtyPage.selectedArtyIndexRx
                 .DistinctUntilChanged()
                 .Subscribe(index => UpdateView())
+                .AddTo(disposables);
+
+            levelUpButton.OnClickAsObservable()
+                .Subscribe(_ => Presenter.Find<ArtyPageLevelUpPopup>().OpenWithAnimation().Forget())
                 .AddTo(disposables);
 
             UpdateView();
