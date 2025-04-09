@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class BattleRewardScrollRectCell
-    : SimpleScrollRectCell<Reward, SimpleScrollRectContext>
+    : SimpleScrollRectCell<RewardOrExp, SimpleScrollRectContext>
     {
         [SerializeField]
         private UIEffect uiEffect;
@@ -26,37 +26,37 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField]
         private Sprite diamondIcon;
         
-        public override void UpdateContent(Reward itemData)
+        public override void UpdateContent(RewardOrExp itemData)
         {
-            if (itemData == null)
-                DrawExp();
-            else if (itemData.gold > 0)
-                DrawGold(itemData);
-            else if (itemData.diamond > 0)
-                DrawDiamond(itemData);
+            if (itemData.reward == null)
+                DrawExp(itemData.exp);
+            else if (itemData.reward.gold > 0)
+                DrawGold(itemData.reward.gold);
+            else if (itemData.reward.diamond > 0)
+                DrawDiamond(itemData.reward.diamond);
             else
-                DrawItem(itemData);
+                DrawItem(itemData.reward);
         }
 
-        private void DrawExp()
+        private void DrawExp(long exp)
         {
             uiEffect.LoadPreset("GradientN");
             iconImage.sprite = expIcon;
-            //amountText.text = PlaySceneGameMode.Inst.Stage;
+            amountText.text = exp.ToString();
         }
 
-        private void DrawGold(Reward reward)
+        private void DrawGold(int gold)
         {
             uiEffect.LoadPreset("GradientN");
             iconImage.sprite = goldIcon;
-            amountText.text = reward.gold.ToString();
+            amountText.text = gold.ToString();
         }
         
-        private void DrawDiamond(Reward reward)
+        private void DrawDiamond(int diamond)
         {
             uiEffect.LoadPreset("GradientR");
             iconImage.sprite = diamondIcon;
-            amountText.text = reward.diamond.ToString();
+            amountText.text = diamond.ToString();
         }
         
         private void DrawItem(Reward reward)

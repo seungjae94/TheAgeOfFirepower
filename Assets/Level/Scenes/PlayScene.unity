@@ -708,6 +708,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8845284693707980072, guid: 08ae7696a6f7aa64692bbf18a6aea500, type: 3}
   m_PrefabInstance: {fileID: 144031038}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &144031040 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1123985066033437544, guid: 08ae7696a6f7aa64692bbf18a6aea500, type: 3}
+  m_PrefabInstance: {fileID: 144031038}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17604269ab94311994578224ab6bb31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &182136392
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,6 +1404,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8845284693707980072, guid: 08ae7696a6f7aa64692bbf18a6aea500, type: 3}
   m_PrefabInstance: {fileID: 299840371}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &299840373 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1123985066033437544, guid: 08ae7696a6f7aa64692bbf18a6aea500, type: 3}
+  m_PrefabInstance: {fileID: 299840371}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17604269ab94311994578224ab6bb31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &305434881
 GameObject:
   m_ObjectHideFlags: 0
@@ -3403,14 +3425,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   developPlayers:
   - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 1
+    level: 99
     currentLevelExp: 0
     barrel: {fileID: 11400000, guid: 8ab59246e94d5ad4092310afbeb822fa, type: 2}
     armor: {fileID: 0}
     engine: {fileID: 0}
   developEnemys:
   - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 99
+    level: 1
     moveStrategy: 0
     targetingStrategy: 0
   developStageGameDataRef:
@@ -4591,6 +4613,12 @@ MonoBehaviour:
   titleText: {fileID: 5099359528351516885}
   winBoxObject: {fileID: 1414816630}
   loseBoxObject: {fileID: 305434881}
+  artyViews:
+  - {fileID: 5548188430250599388}
+  - {fileID: 144031040}
+  - {fileID: 299840373}
+  rewardScrollRect: {fileID: 8782036467187957627}
+  backToLobbyButton: {fileID: 16334315}
 --- !u!1001 &1378949596
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7577,7 +7605,6 @@ GameObject:
   - component: {fileID: 4952445734605300789}
   - component: {fileID: 1214248459642840232}
   - component: {fileID: 3359042386658328195}
-  - component: {fileID: 8782036467187957626}
   - component: {fileID: 8782036467187957627}
   m_Layer: 5
   m_Name: BattleRewardScrollRect
@@ -7691,6 +7718,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08ae7696a6f7aa64692bbf18a6aea500, type: 3}
+--- !u!114 &5548188430250599388 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1123985066033437544, guid: 08ae7696a6f7aa64692bbf18a6aea500, type: 3}
+  m_PrefabInstance: {fileID: 5548188430250599387}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17604269ab94311994578224ab6bb31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8159402527936525037
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7710,28 +7748,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.00012207031, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8782036467187957626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5382844189261689680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f0760ecdaf847e9aaf41d7defc0399e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellInterval: 0.18994413
-  scrollOffset: 0.18994413
-  loop: 0
-  cellContainer: {fileID: 8159402527936525037}
-  reuseCellMarginCount: 0
-  paddingHead: 20
-  paddingTail: 20
-  spacing: 20
-  cellPrefab: {fileID: 4392712947416310759, guid: 6fe90bad80fe6b5438df2d0b8c809d04, type: 3}
-  cellSize: 150
 --- !u!114 &8782036467187957627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7744,14 +7760,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd65c99037442bab0784f48a0dcdc92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellInterval: 0.20765027
-  scrollOffset: 0.20765027
+  cellInterval: 0.22459893
+  scrollOffset: 0.22459893
   loop: 0
   cellContainer: {fileID: 8159402527936525037}
   reuseCellMarginCount: 0
-  paddingHead: 0
-  paddingTail: 0
-  spacing: 0
+  paddingHead: 25
+  paddingTail: 25
+  spacing: 20
   cellPrefab: {fileID: 4392712947416310759, guid: 5679410db6b62aa47b799f214cc0f7d2, type: 3}
   cellSize: 190
 --- !u!1660057539 &9223372036854775807

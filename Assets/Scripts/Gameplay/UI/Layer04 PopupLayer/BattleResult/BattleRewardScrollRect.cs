@@ -2,12 +2,17 @@ using System.Collections.Generic;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public class BattleRewardScrollRect
-        : SimpleScrollRect<Reward, SimpleScrollRectContext>
+    public class RewardOrExp
     {
-        public override void UpdateContents(IList<Reward> itemData)
+        public Reward reward;
+        public long exp;
+    }
+    
+    public class BattleRewardScrollRect
+        : SimpleScrollRect<RewardOrExp, SimpleScrollRectContext>
+    {
+        public override void UpdateContents(IList<RewardOrExp> itemData)
         {
-            itemData.Insert(0, null);
             base.UpdateContents(itemData);
         }
     }

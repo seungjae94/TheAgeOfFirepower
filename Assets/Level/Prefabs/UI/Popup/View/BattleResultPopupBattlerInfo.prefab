@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 8845284693707980072}
   - component: {fileID: 3713435863925510704}
   - component: {fileID: 2403029170153041906}
+  - component: {fileID: 1123985066033437544}
   m_Layer: 5
   m_Name: BattleResultPopupBattlerInfo
   m_TagString: Untagged
@@ -361,6 +362,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1123985066033437544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2815771292034403682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17604269ab94311994578224ab6bb31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 1308583604620030338}
+  portraitImage: {fileID: 696672792166532348}
+  levelText: {fileID: 4307777288685763177}
+  expSlider: {fileID: 2794425662947957933}
 --- !u!1 &2947761911597580918
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,7 +691,7 @@ GameObject:
   - component: {fileID: 4395798079403822626}
   - component: {fileID: 696672792166532348}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Portrait Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

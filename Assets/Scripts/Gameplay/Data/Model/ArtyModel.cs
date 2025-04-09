@@ -133,6 +133,16 @@ namespace Mathlife.ProjectL.Gameplay
             mechPartSlotsRx[slotType].Owner.Value = null;
             mechPartSlotsRx[slotType] = null;
         }
+
+        public void GainExp(long expGain)
+        {
+            totalExpRx.Value += expGain;
+
+            while (CurrentLevelExp >= NeedExp)
+            {
+                levelRx.Value++;
+            }
+        }
     }
 
 }
