@@ -118,6 +118,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
             closeTween.Restart();
             await closeTween.AwaitForComplete();
 
+            statView.Clear();
+            itemControlViews.ForEach(view => view.Clear());
+            
             // 블러 제거
             await Find<BlurPopup>().CloseWithAnimation();
 
@@ -151,6 +154,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private void OnClickClearItemsButton(Unit _)
         {
             ExpGainRx.Value = 0L;
+            
+            statView.Clear();
+            statView.Draw();
             
             foreach (var view in itemControlViews)
             {

@@ -58,17 +58,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // Field
         private readonly CompositeDisposable disposables = new();
 
-        private long prevExpGain = 0L;
-        private long currentExpGain = 0L;
-        private float targetSliderValue = 0f;
-        private bool dirty = false;
+        private float currentTargetValue = 0f; // Level[정수] + SliderValue[소수]
+        private float prevTargetValue = 0f; // Level[정수] + SliderValue[소수]
+        private float nextTargetValue = 0f; // Level[정수] + SliderValue[소수]
         
         public override void Draw()
         {
             base.Draw();
-
-            prevExpGain = 0L;
-            dirty = false;
             
             popup.ExpGainRx
                 .Subscribe(OnExpGainChange)
@@ -88,9 +84,14 @@ namespace Mathlife.ProjectL.Gameplay.UI
             atkChangeText.text = "";
             defChangeText.text = "";
             
-            expSlider.value = 0f;
-            expGainText.text = 0.ToString();
+            expGainText.text = Arty.CurrentLevelExp.ToString();
             needExpText.text = Arty.NeedExp.ToString();
+            expSlider.value = (float)Arty.CurrentLevelExp / Arty.NeedExp;
+            
+            // 변수 초기화
+            currentTargetValue = Arty.levelRx.Value + expSlider.value;
+            prevTargetValue = Arty.levelRx.Value + expSlider.value;
+            nextTargetValue = Arty.levelRx.Value + expSlider.value;
         }
         
         public override void Clear()
@@ -135,43 +136,24 @@ namespace Mathlife.ProjectL.Gameplay.UI
             mobChangeText.text = mobChange > 0 ?  $"+{mobChange}" : "";
             atkChangeText.text = atkChange > 0 ?  $"+{atkChange}" : "";
             defChangeText.text = defChange > 0 ?  $"+{defChange}" : "";
-            expGainText.text = expGain.ToString();
+            expGainText.text = (Arty.CurrentLevelExp + expGain).ToString();
             needExpText.text = needExp.ToString();
             
             // 슬라이더 트위닝 준비
-            prevExpGain = currentExpGain;
-            currentExpGain = expGain;
-            
-            targetSliderValue = (float) currentLevelExp / needExp;
-            dirty = true;
+            prevTargetValue = currentTargetValue;
+            nextTargetValue = afterLevel + (float)currentLevelExp / needExp;
         }
         
         private void Update()
         {
-            if (dirty == false)
+            if (Mathf.Approximately(currentTargetValue, nextTargetValue))
                 return;
 
-            if (prevExpGain == currentExpGain)
-            {
-                dirty = false;
-                return;
-            }
-
-            float currentSliderValue = expSlider.value;
-
-            if (Mathf.Approximately(currentSliderValue, targetSliderValue))
-            {
-                dirty = false;
-                return;
-            }
-            
-            // 증가
-            if (prevExpGain < currentExpGain)
+            if (currentTargetValue < nextTargetValue)
             {
                 IncreaseSlider();
             }
-            // 감소
-            else if (prevExpGain > currentExpGain)
+            else
             {
                 DecreaseSlider();
             }
@@ -179,75 +161,71 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void IncreaseSlider()
         {
-            float currentSliderValue = expSlider.value;
+            int currentLevel = Mathf.FloorToInt(currentTargetValue);
+            float currentSliderValue = currentTargetValue - currentLevel;
             
-            // 현재 값이 더 작다
-            if (currentSliderValue < targetSliderValue)
-            {
-                currentSliderValue += SLIDER_SPEED * Time.deltaTime;
+            int nextLevel = Mathf.FloorToInt(nextTargetValue);
+            float nextSliderValue = nextTargetValue - nextLevel;
 
-                if (currentSliderValue >= targetSliderValue)
-                {
-                    // 도달 완료
-                    dirty = false;
-                    currentSliderValue = targetSliderValue;
-                }
-            }
-            // 현재 값이 더 크다
-            else
+            currentSliderValue += SLIDER_SPEED * Time.deltaTime;
+            if (currentLevel == nextLevel)
             {
-                currentSliderValue += SLIDER_SPEED * Time.deltaTime;
-
-                if (currentSliderValue >= 1f)
+                if (currentSliderValue >= nextSliderValue)
                 {
-                    currentSliderValue -= 1f;
-                        
-                    if (currentSliderValue >= targetSliderValue)
-                    {
-                        // 도달 완료
-                        dirty = false;
-                        currentSliderValue = targetSliderValue;
-                    }
+                    currentTargetValue = nextTargetValue;
                 }
+                else
+                {
+                    currentTargetValue = currentLevel + currentSliderValue;
+                }
+
+                expSlider.value = currentTargetValue - currentLevel;
+                return;
             }
             
+            // currentLevel < nextLevel
+            if (currentSliderValue >= 1f)
+            {
+                currentLevel = nextLevel;
+                currentSliderValue -= 1f;
+            }
+            
+            currentTargetValue = currentLevel + currentSliderValue;
             expSlider.value = currentSliderValue;
         }
         
         private void DecreaseSlider()
         {
-            float currentSliderValue = expSlider.value;
+            int currentLevel = Mathf.FloorToInt(currentTargetValue);
+            float currentSliderValue = currentTargetValue - currentLevel;
             
-            // 현재 값이 더 크다
-            if (currentSliderValue > targetSliderValue)
-            {
-                currentSliderValue -= SLIDER_SPEED * Time.deltaTime;
+            int nextLevel = Mathf.FloorToInt(nextTargetValue);
+            float nextSliderValue = nextTargetValue - nextLevel;
 
-                if (currentSliderValue <= targetSliderValue)
-                {
-                    // 도달 완료
-                    dirty = false;
-                    currentSliderValue = targetSliderValue;
-                }
-            }
-            // 현재 값이 더 작다
-            else
+            currentSliderValue -= SLIDER_SPEED * Time.deltaTime;
+            if (currentLevel == nextLevel)
             {
-                currentSliderValue -= SLIDER_SPEED * Time.deltaTime;
-
-                if (currentSliderValue <= 0f)
+                if (currentSliderValue <= nextSliderValue)
                 {
-                    currentSliderValue += 1f;
-                        
-                    if (currentSliderValue <= targetSliderValue)
-                    {
-                        // 도달 완료
-                        dirty = false;
-                        currentSliderValue = targetSliderValue;
-                    }
+                    currentTargetValue = nextTargetValue;
                 }
+                else
+                {
+                    currentTargetValue = currentLevel + currentSliderValue;
+                }
+
+                expSlider.value = currentTargetValue - currentLevel;
+                return;
             }
             
+            // currentLevel > nextLevel
+            if (currentSliderValue <= 0f)
+            {
+                currentLevel = nextLevel;
+                currentSliderValue += 1f;
+            }
+            
+            currentTargetValue = currentLevel + currentSliderValue;
             expSlider.value = currentSliderValue;
         }
     }
