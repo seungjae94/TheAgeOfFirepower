@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class BattleRewardScrollRectCell
-    : SimpleScrollRectCell<RewardOrExp, SimpleScrollRectContext>
+    : SimpleScrollRectCell<Reward, SimpleScrollRectContext>
     {
         [SerializeField]
         private UIEffect uiEffect;
@@ -26,16 +26,14 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField]
         private Sprite diamondIcon;
         
-        public override void UpdateContent(RewardOrExp itemData)
+        public override void UpdateContent(Reward reward)
         {
-            if (itemData.reward == null)
-                DrawExp(itemData.exp);
-            else if (itemData.reward.gold > 0)
-                DrawGold(itemData.reward.gold);
-            else if (itemData.reward.diamond > 0)
-                DrawDiamond(itemData.reward.diamond);
+            if (reward.gold > 0)
+                DrawGold(reward.gold);
+            else if (reward.diamond > 0)
+                DrawDiamond(reward.diamond);
             else
-                DrawItem(itemData.reward);
+                DrawItem(reward);
         }
 
         private void DrawExp(long exp)

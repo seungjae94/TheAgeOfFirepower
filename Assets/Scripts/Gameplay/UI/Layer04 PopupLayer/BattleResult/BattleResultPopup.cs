@@ -80,27 +80,14 @@ namespace Mathlife.ProjectL.Gameplay.UI
             titleText.text = "WIN";
             winBoxObject.SetActive(true);
             loseBoxObject.SetActive(false);
-
-            var expData = GameState.Inst.gameDataLoader.GetExpData();
             
-            long expGain = 100;
-            
-            // TODO: calc expGain;
-            //expData.enemyBaseExpAtLevelList
-            //int exp = stageGameData.enemyList.
-
-            List<RewardOrExp> rewardData = stageGameData.rewardList
-                .Select(reward => new RewardOrExp() { exp = 0, reward = reward })
-                .ToList();
-            rewardData.Insert(0, new RewardOrExp() { exp = expGain, reward = null});
-            
-            rewardScrollRect.UpdateContents(rewardData);
+            rewardScrollRect.UpdateContents(stageGameData.rewardList);
 
             for (int i = 0; i < Constants.BatterySize; ++i)
             {
                 var battery = GameState.Inst.artyRosterState.Battery;
                 var arty = battery[i];
-                artyViews[i].Setup(arty, expGain);
+                artyViews[i].Setup(arty);
                 artyViews[i].Draw();
             }
         }
