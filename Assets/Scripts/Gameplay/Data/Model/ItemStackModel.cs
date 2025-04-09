@@ -17,16 +17,16 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void Add(int value)
         {
-            if (value <= 0)
-                throw new ArgumentException("[ItemStackModel] param value can't be non-positive.");
+            if (value < 0)
+                throw new ArgumentException("[ItemStackModel] param value can't be negative.");
 
             Amount = checked(Amount + value);
         }
         
         public void Remove(int value)
         {
-            if (value <= 0)
-                throw new ArgumentException("[ItemStackModel] param value can't be non-positive.");
+            if (value < 0)
+                throw new ArgumentException("[ItemStackModel] param value can't be negative.");
             
             if (value > Amount)
                 throw new ArgumentException("[ItemStackModel] param value can't be greater than the amount.");

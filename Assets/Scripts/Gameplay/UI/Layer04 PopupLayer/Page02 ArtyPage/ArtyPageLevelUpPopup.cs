@@ -79,6 +79,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             // 초기화
             ExpGainRx = new(0L);
+            applyButton.interactable = true;
             
             closeButton.OnClickAsObservable()
                 .Subscribe(_ => CloseWithAnimation().Forget())
@@ -125,10 +126,25 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClickApplyButton(Unit _)
         {
+            applyButton.interactable = false;
+            
+            // 경험치 획득
             long expGain = ExpGainRx.Value;
             ExpGainRx.Dispose();
             Arty.GainExp(expGain);
-            Presenter.Find<ArtyPage>().UpdateSelectedArtyView();
+            
+            // 아이템 소모
+            for (int i = 0; i < itemControlViews.Count; i++)
+            {
+                bool result = GameState.Inst.inventoryState.LoseCountableItems(itemControlViews[i].ItemGameData, itemControlViews[i].CurrentAmount);
+
+                if (result == false)
+                {
+                    Debug.LogError("Failed to lose material items.");
+                }
+            }
+            
+            Find<ArtyPage>().UpdateSelectedArtyView();
             CloseWithAnimation().Forget();
         }
         

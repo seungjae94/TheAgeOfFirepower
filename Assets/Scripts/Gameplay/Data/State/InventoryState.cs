@@ -295,6 +295,34 @@ namespace Mathlife.ProjectL.Gameplay
             return itemStack;
         }
 
+        public bool LoseCountableItems(CountableItemGameData itemGameData, int amount)
+        {
+            if (itemGameData == null)
+                return false;
+            
+            ItemStackModel itemStack = null;
+            
+            switch (itemGameData.ItemType)
+            {
+                case EItemType.MaterialItem when materialItemInventory.TryGetValue(itemGameData.id, out itemStack):
+                    itemStack.Remove(amount);
+                    if (itemStack.Amount == 0)
+                    {
+                        materialItemInventory.Remove(itemGameData.id);
+                    }
+                    return true;
+                case EItemType.BattleItem when battleItemInventory.TryGetValue(itemGameData.id, out itemStack):
+                    itemStack.Remove(amount);
+                    if (itemStack.Amount == 0)
+                    {
+                        battleItemInventory.Remove(itemGameData.id);
+                    }
+                    return true;
+            }
+
+            return false;
+        }
+
         private void SortMechPartList(EMechPartType type)
         {
             mechPartInventory[type] = mechPartInventory[type]

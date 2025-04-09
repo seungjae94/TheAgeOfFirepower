@@ -30,28 +30,26 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         // Field
         private readonly CompositeDisposable disposables = new();
-        private MaterialItemGameData itemGameData;
+        public MaterialItemGameData ItemGameData { get; private set; }
 
-        private int currentAmount;
+        public int CurrentAmount { get; private set; }
         private int totalAmount;
         
         public void Setup(MaterialItemGameData itemGameData, int amount)
         {
-            this.itemGameData = itemGameData;
+            ItemGameData = itemGameData;
             totalAmount = amount;
-            
         }
         
         public override void Draw()
         {
             base.Draw();
 
-            currentAmount = 0;
-            amountText.text = $"{currentAmount}/{totalAmount}";
-            uiEffect.LoadPreset(itemGameData.rarity.ToGradientPresetName());
-            itemIcon.sprite = itemGameData.icon;
-            addButton.interactable = true;
-            subtractButton.gameObject.SetActive(false);
+            CurrentAmount = 0;
+            amountText.text = $"{CurrentAmount}/{totalAmount}";
+            uiEffect.LoadPreset(ItemGameData.rarity.ToGradientPresetName());
+            itemIcon.sprite = ItemGameData.icon;
+            EnableOrDisableButtons();
             
             addButton.OnClickAsObservable()
                 .Subscribe(AddAmount)
@@ -76,43 +74,33 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void AddAmount(Unit _)
         {
-            if (currentAmount == totalAmount)
+            if (CurrentAmount == totalAmount)
                 return;
 
-            ++currentAmount;
-            amountText.text = $"{currentAmount}/{totalAmount}";
+            ++CurrentAmount;
+            amountText.text = $"{CurrentAmount}/{totalAmount}";
 
-            popup.ExpGainRx.Value += itemGameData.gainValue;
+            popup.ExpGainRx.Value += ItemGameData.gainValue;
 
-            if (currentAmount == totalAmount)
-            {
-                addButton.interactable = false;
-            }
-            
-            if (subtractButton.gameObject.activeSelf == false)
-            {
-                subtractButton.gameObject.SetActive(true);
-            }
+            EnableOrDisableButtons();
         }
         
         private void SubtractAmount(Unit _)
         {
-            if (currentAmount == 0)
+            if (CurrentAmount == 0)
                 return;
 
-            --currentAmount;
-            amountText.text = $"{currentAmount}/{totalAmount}";
-            popup.ExpGainRx.Value -= itemGameData.gainValue;
+            --CurrentAmount;
+            amountText.text = $"{CurrentAmount}/{totalAmount}";
+            popup.ExpGainRx.Value -= ItemGameData.gainValue;
 
-            if (currentAmount == 0)
-            {
-                subtractButton.gameObject.SetActive(false);
-            }
-            
-            if (addButton.interactable == false)
-            {
-                addButton.interactable = true;
-            }
+            EnableOrDisableButtons();
+        }
+
+        private void EnableOrDisableButtons()
+        {
+            addButton.interactable = CurrentAmount != totalAmount;
+            subtractButton.gameObject.SetActive(CurrentAmount != 0);
         }
     }
 }
