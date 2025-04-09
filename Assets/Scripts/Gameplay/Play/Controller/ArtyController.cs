@@ -404,7 +404,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
             // 절벽 못올라가게 막기
             if (normal.y <= 0f && endPosition.y > transform.position.y)
             {
-                Debug.Log("절벽 올라가려는 시도 차단");
                 return;
             }
             

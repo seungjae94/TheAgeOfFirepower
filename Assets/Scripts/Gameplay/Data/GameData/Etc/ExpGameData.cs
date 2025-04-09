@@ -28,17 +28,7 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("이 레벨까지 누적 경험치")]
         [ListDrawerSettings(DraggableItems = false, ShowFoldout = false, ShowIndexLabels = true)]
         public List<long> characterTotalExpAtLevelList = new();
-
-        [ShowInInspector]
-        [SpaceOnly(25)]
-        bool _dummySpacing;
         
-        [Delayed]
-        [Title("적 경험치", horizontalLine: false)]
-        [LabelText("레벨별 적 기초 경험치")]
-        [ListDrawerSettings(DraggableItems = false, ShowFoldout = false, ShowIndexLabels = true)]
-        public List<long> enemyBaseExpAtLevelList = new();
-
 #if UNITY_EDITOR
         void OnCharacterNeedExpListChanged()
         {

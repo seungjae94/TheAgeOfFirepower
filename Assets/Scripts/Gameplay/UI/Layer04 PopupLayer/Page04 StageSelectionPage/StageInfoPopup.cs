@@ -53,6 +53,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public override UniTask CloseWithAnimation()
         {
+            Find<StageSelectionPage>().onSelectStage.OnNext(null);
+            
             disposables.Clear();
             return base.CloseWithAnimation();
         }
@@ -65,7 +67,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // Callback
         private void OnClickEnterButton(Unit _)
         {
-            
+            GameState.Inst.battleState.stageGameData = stageGameData;
+            GameManager.Inst.ChangeScene(SceneNames.PlayScene).Forget();
         }
     }
 }

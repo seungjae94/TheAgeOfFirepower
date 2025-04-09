@@ -88,7 +88,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             blurPopup.transform.SetSiblingIndex(transform.GetSiblingIndex() - 1);
             await blurPopup.OpenWithAnimation();
             
-            base.OpenWithAnimation();
+            await base.OpenWithAnimation();
             
             // 뷰 초기화
             selectedIndexRx.Value = 0;
@@ -122,7 +122,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // 블러 제거
             await Find<BlurPopup>().CloseWithAnimation();
             
-            base.CloseWithAnimation();
+            await base.CloseWithAnimation();
         }
 
         // 이벤트 구독 콜백

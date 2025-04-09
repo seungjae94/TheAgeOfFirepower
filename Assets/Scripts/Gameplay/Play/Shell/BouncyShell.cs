@@ -13,7 +13,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         // Field
         private int touchCount = 0;
-        private Collider2D collider;
+        private new Collider2D collider;
         private Vector2 velocity;
 
         // Method

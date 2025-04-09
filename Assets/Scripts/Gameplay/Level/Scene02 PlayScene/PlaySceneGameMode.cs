@@ -54,9 +54,9 @@ namespace Mathlife.ProjectL.Gameplay
             progress.Report(0.05f);
 
             // 2. 모드 세팅
-            developMode = BattleState.StageGameData == false;
+            developMode = BattleState.stageGameData == false;
 
-            stageGameData = BattleState.StageGameData;
+            stageGameData = BattleState.stageGameData;
             if (developMode)
             {
                 stageGameData = await developStageGameDataRef.LoadAssetAsync();
@@ -123,7 +123,7 @@ namespace Mathlife.ProjectL.Gameplay
 
                 for (int i = 0; i < 3; ++i)
                 {
-                    Enemy enemy = BattleState.StageGameData.enemyList.ElementAtOrDefault(i);
+                    Enemy enemy = BattleState.stageGameData.enemyList.ElementAtOrDefault(i);
 
                     if (enemy == null)
                         continue;
@@ -224,7 +224,7 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 if (battler != null)
                 {
-                    Destroy(battler);
+                    Destroy(battler.gameObject);
                 }
             }
         }

@@ -50,6 +50,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // Callback
         private void OnSelectStage(StageInfoView stageInfoView)
         {
+            if (stageInfoView == null)
+            {
+                selectionParticleSystem.Clear();
+                return;
+            }
+            
             selectionParticleSystem.transform.position = stageInfoView.transform.position;
             selectionParticleSystem.Play();
         }
