@@ -62,7 +62,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             closeTween.Kill();
 
             disposables.Dispose();
-            ExpGainRx.Dispose();
+            ExpGainRx?.Dispose();
         }
 
         public override async UniTask OpenWithAnimation()
