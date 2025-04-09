@@ -26,5 +26,4 @@ MonoBehaviour:
   rarity: 1
   icon: {fileID: 21300000, guid: 60360e6d85579894d83b6ad34806f8f0, type: 3}
   description: "\uD654\uD3EC \uACBD\uD5D8\uCE58 + 10"
-  shopPrice: 10
-  maxStack: 100
+  gainValue: 10

@@ -69,7 +69,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public ArtyGameData GetArtyData(int id)
         {
-            if (id < 0)
+            if (id < 0 || artyDict.ContainsKey(id) == false)
                 return null;
 
             return artyDict[id];
@@ -77,7 +77,7 @@ namespace Mathlife.ProjectL.Gameplay
         
         public ShellGameData GetShellData(int id)
         {
-            if (id < 0)
+            if (id < 0 || shells.ContainsKey(id) == false)
                 return null;
 
             return shells[id];
@@ -85,7 +85,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public MechPartGameData GetMechPartData(int id)
         {
-            if (id < 0)
+            if (id < 0 || mechParts.ContainsKey(id) == false)
                 return null;
 
             return mechParts[id];
@@ -93,7 +93,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public CountableItemGameData GetCountableItemData(EItemType itemType, int id)
         {
-            if (id < 0)
+            if (id < 0 || countableItems[itemType].ContainsKey(id) == false)
                 return null;
 
             return countableItems[itemType][id];
@@ -116,6 +116,9 @@ namespace Mathlife.ProjectL.Gameplay
 
         public Dictionary<int, StageGameData> GetWorldMapData(int worldNo)
         {
+            if (worldNo < 0 || stages.ContainsKey(worldNo) == false)
+                return null;
+            
             return stages[worldNo];
         }
 

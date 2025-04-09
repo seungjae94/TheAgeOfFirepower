@@ -72,4 +72,10 @@ MonoBehaviour:
     engine: {fileID: 0}
   editorStarterBench: []
   editorStarterBackupMechParts: []
-  editorStarterItemStacks: []
+  editorStarterItemStacks:
+  - item: {fileID: 11400000, guid: d2401f60129bc484cabe759c5d234fb0, type: 2}
+    count: 10
+  - item: {fileID: 11400000, guid: 0a6bb2d97cca16c45a8dedfbf9a5affd, type: 2}
+    count: 10
+  - item: {fileID: 11400000, guid: 246524f5968dcd9428f7568515044cc9, type: 2}
+    count: 10

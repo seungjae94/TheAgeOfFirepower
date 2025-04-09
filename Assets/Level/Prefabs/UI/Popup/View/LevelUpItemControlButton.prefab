@@ -446,7 +446,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 9049599269587941688}
   m_OnClick:
     m_PersistentCalls:
@@ -599,6 +599,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7296793927615388309}
+  - component: {fileID: 7309746472165937622}
   m_Layer: 5
   m_Name: LevelUpItemControlButton
   m_TagString: Untagged
@@ -628,6 +629,23 @@ RectTransform:
   m_AnchoredPosition: {x: -105.9, y: -0.0015029907}
   m_SizeDelta: {x: 150, y: 195}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7309746472165937622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8968229846836407697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f32969f36b0453496e526a708acdd96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addButton: {fileID: 3395818766818759268}
+  subtractButton: {fileID: 1989032386188311450}
+  uiEffect: {fileID: 6356535474388826602}
+  itemIcon: {fileID: 650931708059908325}
+  amountText: {fileID: 3784323799277712169}
 --- !u!1 &9048334213811716215
 GameObject:
   m_ObjectHideFlags: 0

@@ -304,7 +304,13 @@ namespace Mathlife.ProjectL.Gameplay
                 .ToList();
         }
         
-        // 배틀 아이템 관리
+        // 아이템 관리
+        public ItemStackModel GetMaterialItemStack(int materialItemId)
+        {
+            bool result = materialItemInventory.TryGetValue(materialItemId, out ItemStackModel itemStack);
+            return result ? itemStack : null;
+        }
+        
         public ItemStackModel GetBattleItemStack(int battleItemId)
         {
             bool result = battleItemInventory.TryGetValue(battleItemId, out ItemStackModel itemStack);

@@ -9,5 +9,9 @@ namespace Mathlife.ProjectL.Gameplay
         [ShowInInspector]
         [ReadOnly]
         public override EItemType ItemType => EItemType.MaterialItem;
+
+        [LabelText("획득량")]
+        [LabelWidth(100)]
+        public long gainValue;
     }
 }
