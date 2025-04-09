@@ -8767,6 +8767,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   windowTransform: {fileID: 7829193763842290046}
   closeButton: {fileID: 1542441034}
+  applyButton: {fileID: 5654100227114721411}
+  clearButton: {fileID: 71512300982579949}
   statView: {fileID: 5013717408447770295}
   itemControlViews:
   - {fileID: 1328433916}

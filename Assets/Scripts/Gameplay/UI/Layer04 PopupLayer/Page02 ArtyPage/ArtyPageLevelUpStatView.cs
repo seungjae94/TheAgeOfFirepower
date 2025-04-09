@@ -60,7 +60,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             base.Draw();
             
-            popup.expGainRx
+            popup.ExpGainRx
                 .Subscribe(OnExpGainChange)
                 .AddTo(disposables);
             

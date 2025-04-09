@@ -39,16 +39,18 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             this.itemGameData = itemGameData;
             totalAmount = amount;
-            currentAmount = 0;
+            
         }
         
         public override void Draw()
         {
             base.Draw();
 
+            currentAmount = 0;
             amountText.text = $"{currentAmount}/{totalAmount}";
             uiEffect.LoadPreset(itemGameData.rarity.ToGradientPresetName());
             itemIcon.sprite = itemGameData.icon;
+            addButton.interactable = true;
             subtractButton.gameObject.SetActive(false);
             
             addButton.OnClickAsObservable()
@@ -80,7 +82,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             ++currentAmount;
             amountText.text = $"{currentAmount}/{totalAmount}";
 
-            popup.expGainRx.Value += itemGameData.gainValue;
+            popup.ExpGainRx.Value += itemGameData.gainValue;
 
             if (currentAmount == totalAmount)
             {
@@ -100,7 +102,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             --currentAmount;
             amountText.text = $"{currentAmount}/{totalAmount}";
-            popup.expGainRx.Value -= itemGameData.gainValue;
+            popup.ExpGainRx.Value -= itemGameData.gainValue;
 
             if (currentAmount == 0)
             {

@@ -65,5 +65,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // 뷰 정리
             artyPageSelectedArtyView.Clear();
         }
+
+        public void UpdateSelectedArtyView()
+        {
+            artyPageSelectedArtyView.UpdateView();
+        }
     }
 }

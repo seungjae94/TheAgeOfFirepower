@@ -1,7 +1,5 @@
-using System;
 using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.UI;
-using Mathlife.ProjectL.Utils;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -84,7 +82,7 @@ namespace Mathlife.ProjectL.Gameplay
             disposables.Dispose();
         }
 
-        private void UpdateView()
+        public void UpdateView()
         {
             ArtyModel arty = ArtyPage.SelectedArty;
 

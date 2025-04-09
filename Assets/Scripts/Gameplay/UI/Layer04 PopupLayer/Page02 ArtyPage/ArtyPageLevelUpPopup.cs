@@ -12,6 +12,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
     {
         private const float OPEN_DURATION = 0.25f;
 
+        // Alias
+        private static ArtyModel Arty => Presenter.Find<ArtyPage>().SelectedArty;
+        
         // Component
         [SerializeField]
         private RectTransform windowTransform;
@@ -19,6 +22,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField]
         private Button closeButton;
 
+        [SerializeField]
+        private Button applyButton;
+        
+        [SerializeField]
+        private Button clearButton;
+        
         [SerializeField]
         private ArtyPageLevelUpStatView statView;
 
@@ -30,7 +39,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private Tween closeTween;
         private readonly CompositeDisposable disposables = new();
 
-        public readonly ReactiveProperty<long> expGainRx = new(0L);
+        public ReactiveProperty<long> ExpGainRx { get; private set; }
 
         public override void Initialize()
         {
@@ -53,6 +62,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             closeTween.Kill();
 
             disposables.Dispose();
+            ExpGainRx.Dispose();
         }
 
         public override async UniTask OpenWithAnimation()
@@ -66,10 +76,20 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             // 애니메이션
             openTween.Restart();
-            //await openTween.AwaitForComplete();
-
+            
+            // 초기화
+            ExpGainRx = new(0L);
+            
             closeButton.OnClickAsObservable()
                 .Subscribe(_ => CloseWithAnimation().Forget())
+                .AddTo(disposables);
+            
+            applyButton.OnClickAsObservable()
+                .Subscribe(OnClickApplyButton)
+                .AddTo(disposables);
+            
+            clearButton.OnClickAsObservable()
+                .Subscribe(OnClickClearItemsButton)
                 .AddTo(disposables);
 
             statView.Draw();
@@ -101,6 +121,26 @@ namespace Mathlife.ProjectL.Gameplay.UI
             await Find<BlurPopup>().CloseWithAnimation();
 
             await base.CloseWithAnimation();
+        }
+
+        private void OnClickApplyButton(Unit _)
+        {
+            long expGain = ExpGainRx.Value;
+            ExpGainRx.Dispose();
+            Arty.GainExp(expGain);
+            Presenter.Find<ArtyPage>().UpdateSelectedArtyView();
+            CloseWithAnimation().Forget();
+        }
+        
+        private void OnClickClearItemsButton(Unit _)
+        {
+            ExpGainRx.Value = 0L;
+            
+            foreach (var view in itemControlViews)
+            {
+                view.Clear();
+                view.Draw();
+            }
         }
     }
 }
