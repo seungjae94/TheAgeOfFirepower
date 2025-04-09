@@ -11,6 +11,7 @@ namespace Mathlife.ProjectL.Gameplay
         private readonly Dictionary<FieldInfo, string> saveFileFullPaths = new();
         public readonly ArtyRosterSaveFile artyRoster = new();
         public readonly InventorySaveFile inventory = new();
+        public readonly GameProgressSaveFile gameProgress = new();
         
         public SaveDataManager()
         {

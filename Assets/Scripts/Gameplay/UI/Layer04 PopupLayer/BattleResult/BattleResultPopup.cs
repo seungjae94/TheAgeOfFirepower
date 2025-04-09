@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Mathlife.ProjectL.Gameplay.Gameplay.Data.Model;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -82,10 +83,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void InitializeWinView()
         {
-            titleText.text = "WIN";
-            winBoxObject.SetActive(true);
-            loseBoxObject.SetActive(false);
-
+            // 실제 승리 처리
             InventoryState inventoryState = GameState.Inst.inventoryState;
             var rewardList = stageGameData.rewardList;
 
@@ -93,6 +91,33 @@ namespace Mathlife.ProjectL.Gameplay.UI
             {
                 inventoryState.GainReward(reward);
             }
+
+            int stageCount = GameState.Inst.gameDataLoader.GetStageCount(stageGameData.worldNo);
+            
+            GameProgressState gameProgressState = GameState.Inst.gameProgressState;
+            
+            // 처음 플레이할 경우 다음 스테이지 언락
+            if (gameProgressState.unlockWorldRx.Value == stageGameData.worldNo
+                && gameProgressState.unlockStageRx.Value == stageGameData.stageNo)
+            {
+                int nextWorldNo = stageGameData.worldNo; 
+                int nextStageNo = stageGameData.stageNo + 1;
+                if (nextStageNo > stageCount)
+                {
+                    ++nextWorldNo;
+                    nextStageNo = 1;
+                }
+
+                gameProgressState.unlockWorldRx.Value = nextWorldNo; 
+                gameProgressState.unlockStageRx.Value = nextStageNo;
+
+                Debug.Log($"Unlock {nextWorldNo}-{nextStageNo}");
+            }
+            
+            // UI 업데이트
+            titleText.text = "WIN";
+            winBoxObject.SetActive(true);
+            loseBoxObject.SetActive(false);
             
             rewardScrollRect.UpdateContents(rewardList);
 

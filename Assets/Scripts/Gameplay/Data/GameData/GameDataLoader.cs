@@ -17,6 +17,11 @@ namespace Mathlife.ProjectL.Gameplay
         private readonly Dictionary<EItemType, Dictionary<int, CountableItemGameData>> countableItems = new();
         private readonly Dictionary<int, Dictionary<int, StageGameData>> stages = new();
 
+        public int GetStageCount(int worldNo)
+        {
+            return stages.TryGetValue(worldNo, out var stage) ? stage.Count : 0;
+        }
+        
         public async UniTask Load()
         {
             var dataAssets = await Addressables.LoadAssetsAsync<ScriptableObject>("Data Asset");
