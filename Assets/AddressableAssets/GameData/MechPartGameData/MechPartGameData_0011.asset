@@ -26,10 +26,9 @@ MonoBehaviour:
   rarity: 3
   icon: {fileID: 21300000, guid: 14d007bb235598e4580954d760c9feaf, type: 3}
   description: 
-  shopPrice: 1000
   type: 2
   stat:
     maxHp: 0
     atk: 0
     def: 0
-    mob: 50
+    mob: 220

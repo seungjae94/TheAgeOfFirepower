@@ -23,12 +23,12 @@ MonoBehaviour:
     SerializationNodes: []
   displayName: "\uAD6C\uD615 \uD3EC\uC2E0"
   id: 0
+  rarity: 0
   icon: {fileID: 21300000, guid: 07aaf517d09f11646b37667d5be14b26, type: 3}
   description: 
-  shopPrice: 100
   type: 0
   stat:
     maxHp: 0
-    atk: 10
+    atk: 20
     def: 0
-    spd: 0
+    mob: 0

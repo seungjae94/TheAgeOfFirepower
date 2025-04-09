@@ -31,13 +31,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
             
             if (currentBattler == null)
             {
-                Debug.LogWarning("currentBattler == null");
                 return Status.Failure;
             }
 
             if (currentBattler.gameObject == false)
             {
-                Debug.LogWarning("currentBattler.gameObject == null");
                 return Status.Failure;
             }
 

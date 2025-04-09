@@ -29,8 +29,8 @@ MonoBehaviour:
   shell: {fileID: 11400000, guid: 38aa331051829944ebb184dc641fa34c, type: 2}
   maxHp: 425
   maxHpGrowth: 21
-  atk: 45
-  atkGrowth: 9
+  atk: 70
+  atkGrowth: 18
   def: 13
   defGrowth: 2.6
   mob: 100

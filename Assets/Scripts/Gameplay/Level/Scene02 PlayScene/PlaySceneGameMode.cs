@@ -34,14 +34,15 @@ namespace Mathlife.ProjectL.Gameplay
         // Field
         public ArtyController turnOwner { get; private set; }
         private bool developMode = false;
+        private StageGameData stageGameData;
         private readonly List<ArtyController> battlers = new();
 
         private readonly List<ArtyController> aliveBattlers = new();
-        
+
         public ImmutableList<ArtyController> AlivePlayers => aliveBattlers
             .Where(battler => battler.IsPlayer)
             .ToImmutableList();
-        
+
         public override async UniTask InitializeScene(IProgress<float> progress)
         {
             // 0. 게임 모드 공통 초기화 로직 수행
@@ -55,7 +56,7 @@ namespace Mathlife.ProjectL.Gameplay
             // 2. 모드 세팅
             developMode = BattleState.StageGameData == false;
 
-            StageGameData stageGameData = BattleState.StageGameData;
+            stageGameData = BattleState.StageGameData;
             if (developMode)
             {
                 stageGameData = await developStageGameDataRef.LoadAssetAsync();
@@ -66,15 +67,16 @@ namespace Mathlife.ProjectL.Gameplay
 
             float start = 0.05f;
             float end = 0.95f;
-            IProgress<float> mapLoadingProgress = Progress.Create<float>(value => progress.Report(Mathf.Lerp(start, end, value)));
-            
+            IProgress<float> mapLoadingProgress =
+                Progress.Create<float>(value => progress.Report(Mathf.Lerp(start, end, value)));
+
             Sprite mapSprite = stageGameData.mapSprite;
             await DestructibleTerrain.Inst.GenerateTerrain(mapSprite, mapLoadingProgress);
             progress.Report(0.95f);
 
             // 3. 플레이어 및 적 준비
             LoadingScreenManager.Inst.SetMessage("화포를 생성하는 중...");
-            
+
             battlers.Clear();
 
             void InstantiateBattler(int spawnIndex, ArtyModel arty, Enemy enemy)
@@ -131,6 +133,7 @@ namespace Mathlife.ProjectL.Gameplay
                     InstantiateBattler(i + 3, arty, enemy);
                 }
             }
+
             progress.Report(0.98f);
 
             // 4. HUD 준비
@@ -156,9 +159,9 @@ namespace Mathlife.ProjectL.Gameplay
             int turn = 0;
             int index = 0;
 
-            int playerCount = 0; 
+            int playerCount = 0;
             int enemyCount = 0;
-            
+
             const int turnDelayMilliSeconds = 1000;
             while (true)
             {
@@ -166,20 +169,20 @@ namespace Mathlife.ProjectL.Gameplay
                 turnOwner.StartTurn(turn);
                 await UniTask.WaitWhile(turnOwner, battler => battler.HasTurn);
                 turnOwner.EndTurn();
-                
+
                 await UniTask.Delay(turnDelayMilliSeconds);
-                
+
                 aliveBattlers.ForEach(DestroyOuter);
-                await UniTask.NextFrame();  // 삭제 처리 대기
-                
+                await UniTask.NextFrame(); // 삭제 처리 대기
+
                 aliveBattlers.RemoveAll(IsDead);
 
                 playerCount = aliveBattlers.Count(battler => battler.IsPlayer);
                 enemyCount = aliveBattlers.Count - playerCount;
-                
+
                 if (playerCount == 0 || enemyCount == 0)
                     break;
-                    
+
                 index = (index + 1) % aliveBattlers.Count;
                 ++turn;
             }
@@ -195,10 +198,10 @@ namespace Mathlife.ProjectL.Gameplay
                     Destroy(battler);
                 }
             }
-            
+
             bool IsDead(ArtyController battler)
             {
-                if (battler == null) 
+                if (battler == null)
                 {
                     Debug.Log($"Dead Check Type 1: Component has been destroyed.");
                 }
@@ -217,8 +220,9 @@ namespace Mathlife.ProjectL.Gameplay
 
         private async UniTaskVoid FinishBattle(int playerCount, int enemyCount)
         {
-            // TODO: UI 띄우기
-            Debug.Log(playerCount == 0 ? "LOSE" : "WIN");
+            var popup = Presenter.Find<BattleResultPopup>();
+            popup.Setup(enemyCount == 0, stageGameData);
+            popup.OpenWithAnimation().Forget();
         }
     }
 }
