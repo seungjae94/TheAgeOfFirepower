@@ -8,6 +8,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
     public class ArtyPageLevelUpStatView : AbstractView
     {
         // Alias
+        private static ExpGameData ExpGameData => GameState.Inst.gameDataLoader.GetExpData();
         private static ArtyModel Arty => Presenter.Find<ArtyPage>().SelectedArty;
         private static ArtyPageLevelUpPopup popup => Presenter.Find<ArtyPageLevelUpPopup>();
         
@@ -44,13 +45,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private TextMeshProUGUI defChangeText;
         
         [SerializeField]
-        private Slider expSlider;
-
-        [SerializeField]
         private TextMeshProUGUI expGainText;
         
         [SerializeField]
         private TextMeshProUGUI needExpText;
+        
+        [SerializeField]
+        private Slider expSlider;
         
         // Field
         private readonly CompositeDisposable disposables = new();
@@ -96,9 +97,39 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnExpGainChange(long expGain)
         {
-            // after level 계산
+            int beforeLevel = Arty.levelRx.Value;
+            int afterLevel = beforeLevel;
             
-            // tween
+            long afterTotalExp = Arty.totalExpRx.Value + expGain;
+            
+            for (int i = beforeLevel + 1; i <= 100; ++i)
+            {
+                long totalExpAtLevel = ExpGameData.totalExpAtLevelList[i];
+
+                if (afterTotalExp < totalExpAtLevel)
+                {
+                    afterLevel = i - 1;
+                    break;
+                }
+            }
+            
+            long currentLevelExp = afterTotalExp - ExpGameData.totalExpAtLevelList[afterLevel]; 
+            long needExp = ExpGameData.needExpAtLevelList[afterLevel];
+            int maxHpChange = Arty.GetMaxHp(afterLevel) - Arty.GetMaxHp();
+            int mobChange = Arty.GetMobility(afterLevel) - Arty.GetMobility();
+            int atkChange = Arty.GetAtk(afterLevel) - Arty.GetAtk();
+            int defChange = Arty.GetDef(afterLevel) - Arty.GetDef();
+            
+            afterLevelText.text = afterLevel.ToString();
+            maxHpChangeText.text = maxHpChange > 0 ?  $"+{maxHpChange}" : "";
+            mobChangeText.text = mobChange > 0 ?  $"+{mobChange}" : "";
+            atkChangeText.text = atkChange > 0 ?  $"+{atkChange}" : "";
+            defChangeText.text = defChange > 0 ?  $"+{defChange}" : "";
+            expGainText.text = expGain.ToString();
+            needExpText.text = needExp.ToString();
+            
+            // TODO: 경험치 슬라이더 트위닝
+            expSlider.value = (float)currentLevelExp / needExp;
         }
     }
 }

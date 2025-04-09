@@ -109,7 +109,7 @@ namespace Mathlife.ProjectL.Gameplay
                     continue;
 
                 int level = artyPreset.level;
-                long totalExp = expData.characterTotalExpAtLevelList[level] + artyPreset.currentLevelExp;
+                long totalExp = expData.totalExpAtLevelList[level] + artyPreset.currentLevelExp;
                 ArtyModel arty = new(artyPreset.arty, level, totalExp);
 
                 arty.Equip(EMechPartType.Barrel, (artyPreset.barrel != null) ? artyPreset.barrel.id : -1);

@@ -35,12 +35,11 @@ namespace Mathlife.ProjectL.Gameplay
         public string DisplayName => gameData.displayName;
         public Sprite Sprite => gameData.sprite;
         public Sprite EnemySprite => gameData.enemySprite;
-        
         public GameObject BattlerPrefab => gameData.battlerPrefab;
         public ShellGameData Shell => gameData.shell;
         
-        public long NeedExp => ExpGameData.characterNeedExpAtLevelList[levelRx.Value];
-        public long CurrentLevelExp => totalExpRx.Value - ExpGameData.characterTotalExpAtLevelList[levelRx.Value]; 
+        public long NeedExp => ExpGameData.needExpAtLevelList[levelRx.Value];
+        public long CurrentLevelExp => totalExpRx.Value - ExpGameData.totalExpAtLevelList[levelRx.Value]; 
 
         // Field - Mech Parts
         public readonly ReactiveDictionary<EMechPartType, MechPartModel> mechPartSlotsRx = new();
@@ -54,32 +53,52 @@ namespace Mathlife.ProjectL.Gameplay
         public MechPartModel GetMechPartAtSlot(EMechPartType type) => mechPartSlotsRx[type];
         
         // Method
-        public int GetMaxHp()
+        public int GetMaxHp(int level)
         {
-            int value = gameData.maxHp + (int)(gameData.maxHpGrowth * (levelRx.Value - 1));
+            int value = gameData.maxHp + (int)(gameData.maxHpGrowth * (level - 1));
             value += (Barrel?.Stat.maxHp ?? 0) + (Armor?.Stat.maxHp ?? 0) + (Engine?.Stat.maxHp ?? 0);
             return value;
         }
-
-        public int GetAtk()
+        
+        public int GetMaxHp()
         {
-            int value = gameData.atk + (int)(gameData.atkGrowth * (levelRx.Value - 1));
+            return GetMaxHp(levelRx.Value);
+        }
+
+        public int GetAtk(int level)
+        {
+            int value = gameData.atk + (int)(gameData.atkGrowth * (level - 1));
             value += (Barrel?.Stat.atk ?? 0) + (Armor?.Stat.atk ?? 0) + (Engine?.Stat.atk ?? 0);
             return value;
         }
-
-        public int GetDef()
+        
+        public int GetAtk()
         {
-            int value = gameData.def + (int)(gameData.defGrowth * (levelRx.Value - 1));
+            return GetAtk(levelRx.Value);
+        }
+
+        public int GetDef(int level)
+        {
+            int value = gameData.def + (int)(gameData.defGrowth * (level - 1));
             value += (Barrel?.Stat.def ?? 0) + (Armor?.Stat.def ?? 0) + (Engine?.Stat.def ?? 0);
             return value;
         }
-
-        public int GetMobility()
+        
+        public int GetDef()
         {
-            int value = gameData.mob + (int)(gameData.mobGrowth * (levelRx.Value - 1));
+            return GetDef(levelRx.Value);
+        }
+
+        public int GetMobility(int level)
+        {
+            int value = gameData.mob + (int)(gameData.mobGrowth * (level - 1));
             value += (Barrel?.Stat.mob ?? 0) + (Armor?.Stat.mob ?? 0) + (Engine?.Stat.mob ?? 0);
             return value;
+        }
+        
+        public int GetMobility()
+        {
+            return GetMobility(levelRx.Value);
         }
 
         public int GetThreatLevel()

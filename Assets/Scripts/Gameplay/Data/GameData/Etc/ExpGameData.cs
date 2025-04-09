@@ -25,13 +25,13 @@ namespace Mathlife.ProjectL.Gameplay
         
         private void OnCurveChanged()
         {
-            characterNeedExpAtLevelList.Clear();
+            needExpAtLevelList.Clear();
             for (int i = 0; i <= 99; ++i)
             {
-                characterNeedExpAtLevelList.Add(Mathf.FloorToInt(curve.Evaluate(i)));
+                needExpAtLevelList.Add(Mathf.FloorToInt(curve.Evaluate(i)));
             }
             
-            characterTotalExpAtLevelList = characterNeedExpAtLevelList
+            totalExpAtLevelList = needExpAtLevelList
                 .Aggregate(new List<long>() { 0L }, (acc, next) =>
                 {
                     acc.Add(acc.IsNullOrEmpty() ? 0L : acc.Last() + next);
@@ -44,16 +44,18 @@ namespace Mathlife.ProjectL.Gameplay
         private bool _dummy;
 #endif
         
+        [FormerlySerializedAs("characterNeedExpAtLevelList")]
         [ReadOnly]
         [HorizontalGroup("Exp", Title = "경험치 테이블")]
         [LabelText("다음 레벨까지 필요 경험치")]
         [ListDrawerSettings(DraggableItems = false, ShowFoldout = false, ShowIndexLabels = true)]
-        public List<long> characterNeedExpAtLevelList = new();
+        public List<long> needExpAtLevelList = new();
 
+        [FormerlySerializedAs("characterTotalExpAtLevelList")]
         [ReadOnly]
         [HorizontalGroup("Exp")]
         [LabelText("이 레벨까지 누적 경험치")]
         [ListDrawerSettings(DraggableItems = false, ShowFoldout = false, ShowIndexLabels = true)]
-        public List<long> characterTotalExpAtLevelList = new();
+        public List<long> totalExpAtLevelList = new();
     }
 }

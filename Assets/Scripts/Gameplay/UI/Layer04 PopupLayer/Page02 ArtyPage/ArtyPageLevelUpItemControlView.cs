@@ -39,7 +39,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             this.itemGameData = itemGameData;
             totalAmount = amount;
-            currentAmount = amount;
+            currentAmount = 0;
         }
         
         public override void Draw()
@@ -49,6 +49,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             amountText.text = $"{currentAmount}/{totalAmount}";
             uiEffect.LoadPreset(itemGameData.rarity.ToGradientPresetName());
             itemIcon.sprite = itemGameData.icon;
+            subtractButton.gameObject.SetActive(false);
             
             addButton.OnClickAsObservable()
                 .Subscribe(AddAmount)
@@ -80,8 +81,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
             amountText.text = $"{currentAmount}/{totalAmount}";
 
             popup.expGainRx.Value += itemGameData.gainValue;
+
+            if (currentAmount == totalAmount)
+            {
+                addButton.interactable = false;
+            }
             
-            // TODO: 최대 개수일 때 비활성화
+            if (subtractButton.gameObject.activeSelf == false)
+            {
+                subtractButton.gameObject.SetActive(true);
+            }
         }
         
         private void SubtractAmount(Unit _)
@@ -92,8 +101,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
             --currentAmount;
             amountText.text = $"{currentAmount}/{totalAmount}";
             popup.expGainRx.Value -= itemGameData.gainValue;
+
+            if (currentAmount == 0)
+            {
+                subtractButton.gameObject.SetActive(false);
+            }
             
-            // TODO: 0개일 때 비활성화
+            if (addButton.interactable == false)
+            {
+                addButton.interactable = true;
+            }
         }
     }
 }
