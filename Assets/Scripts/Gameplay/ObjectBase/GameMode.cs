@@ -48,6 +48,8 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
 
         public virtual UniTask InitializeScene(IProgress<float> progress)
         {
+            Presenter.Clear();
+            
             IEnumerable<IInitializable> initializables = GameObject
                 .FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID)
                 .OfType<IInitializable>();

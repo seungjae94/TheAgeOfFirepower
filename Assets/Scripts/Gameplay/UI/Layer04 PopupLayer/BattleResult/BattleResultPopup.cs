@@ -58,6 +58,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 InitializeLoseView();
             }
             
+            backToLobbyButton.
+                OnClickAsObservable()
+                .Subscribe(_ => OnClickButton().Forget())
+                .AddTo(disposables);
+            
             await base.OpenWithAnimation();
         }
 
@@ -80,8 +85,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
             titleText.text = "WIN";
             winBoxObject.SetActive(true);
             loseBoxObject.SetActive(false);
+
+            InventoryState inventoryState = GameState.Inst.inventoryState;
+            var rewardList = stageGameData.rewardList;
+
+            foreach (var reward in rewardList)
+            {
+                inventoryState.GainReward(reward);
+            }
             
-            rewardScrollRect.UpdateContents(stageGameData.rewardList);
+            rewardScrollRect.UpdateContents(rewardList);
 
             for (int i = 0; i < Constants.BatterySize; ++i)
             {
@@ -97,6 +110,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
             titleText.text = "LOSE";
             winBoxObject.SetActive(false);
             loseBoxObject.SetActive(true);
+        }
+
+        private async UniTaskVoid OnClickButton()
+        {
+            PlaySceneGameMode.Inst.Clear();
+            await UniTask.NextFrame();
+            GameManager.Inst.ChangeScene(SceneNames.LobbyScene).Forget();
         }
     }
 }

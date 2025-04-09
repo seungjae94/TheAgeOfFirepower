@@ -98,6 +98,24 @@ namespace Mathlife.ProjectL.Gameplay
         public readonly ReactiveProperty<long> goldRx = new(0L);
         public readonly ReactiveProperty<long> diamondRx = new(0L);
 
+        public void GainReward(Reward reward)
+        {
+            GainGold(reward.gold);
+            GainDiamond(reward.diamond);
+
+            if (reward.itemGameData != null)
+            {
+                if (reward.itemGameData is MechPartGameData mechPartGameData)
+                {
+                    AddMechPart(mechPartGameData.id);
+                }
+                else if (reward.itemGameData is CountableItemGameData countableItemGameData)
+                {
+                    AddCountableItemStack(countableItemGameData, reward.itemAmount);
+                }
+            }
+        }
+        
         public void GainGold(long gain)
         {
             if (gain <= 0L)
@@ -112,6 +130,14 @@ namespace Mathlife.ProjectL.Gameplay
                 return;
 
             goldRx.Value -= lose;
+        }
+        
+        public void GainDiamond(long gain)
+        {
+            if (gain <= 0L)
+                return;
+
+            diamondRx.Value += gain;
         }
 
         private void LoseDiamond(long lose)

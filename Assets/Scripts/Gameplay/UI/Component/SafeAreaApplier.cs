@@ -77,8 +77,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 top = (Screen.height - canvasRectTransform.rect.height) / 2 + minimalOffset.top,
                 bottom = (Screen.height - canvasRectTransform.rect.height) / 2 + minimalOffset.bottom
             };
-            
-            Debug.Log("left, right, top, bottom");
 
             // 스크린 경계와 안전 영역의 사이의 마진을 계산한다.
             Margin screenToSafeAreaMargin = new()

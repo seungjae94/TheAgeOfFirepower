@@ -27,6 +27,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         // Alias
         protected RectTransform rectTransform => (transform as RectTransform);
+
+        public static void Clear()
+        {
+            s_widgets.Clear();
+        }
         
         public static bool Has<TWidget>() where TWidget : Presenter
         {

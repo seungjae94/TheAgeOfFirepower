@@ -187,7 +187,7 @@ namespace Mathlife.ProjectL.Gameplay
                 ++turn;
             }
 
-            FinishBattle(playerCount, enemyCount).Forget();
+            FinishBattle(playerCount, enemyCount);
             return;
 
             void DestroyOuter(ArtyController battler)
@@ -218,7 +218,18 @@ namespace Mathlife.ProjectL.Gameplay
             }
         }
 
-        private async UniTaskVoid FinishBattle(int playerCount, int enemyCount)
+        public void Clear()
+        {
+            foreach (var battler in battlers)
+            {
+                if (battler != null)
+                {
+                    Destroy(battler);
+                }
+            }
+        }
+
+        private void FinishBattle(int playerCount, int enemyCount)
         {
             var popup = Presenter.Find<BattleResultPopup>();
             popup.Setup(enemyCount == 0, stageGameData);
