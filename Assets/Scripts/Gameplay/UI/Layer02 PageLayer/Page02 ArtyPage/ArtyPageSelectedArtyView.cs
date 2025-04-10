@@ -44,6 +44,15 @@ namespace Mathlife.ProjectL.Gameplay
         private TextMeshProUGUI defText;
 
         [SerializeField]
+        private Image shellIcon;
+        
+        [SerializeField]
+        private TextMeshProUGUI shellNameText;
+        
+        [SerializeField]
+        private TextMeshProUGUI shellDescriptionText;
+        
+        [SerializeField]
         private ArtyPageMechPartSlot[] mechPartSlots;
 
         [SerializeField]
@@ -104,6 +113,10 @@ namespace Mathlife.ProjectL.Gameplay
             mobilityText.text = arty.GetMobility().ToString();
             atkText.text = arty.GetAtk().ToString();
             defText.text = arty.GetDef().ToString();
+
+            shellIcon.sprite = arty.Shell.icon;
+            shellNameText.text = $"포탄 - {arty.Shell.displayName}";
+            shellDescriptionText.text = arty.Shell.description;
 
             RedrawSlots();
         }

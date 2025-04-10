@@ -36,11 +36,19 @@ MonoBehaviour:
   enemyList:
   - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
     level: 2
+    moveStrategy: 0
+    targetingStrategy: 0
   - artyGameData: {fileID: 11400000, guid: e858c33d5a0d4e64d9432444f4ef4ba9, type: 2}
     level: 1
+    moveStrategy: 0
+    targetingStrategy: 0
   rewardList:
   - gold: 200
     diamond: 0
+    itemGameData: {fileID: 0}
+    itemAmount: 0
+  - gold: 0
+    diamond: 150
     itemGameData: {fileID: 0}
     itemAmount: 0
   - gold: 0

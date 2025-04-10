@@ -139,12 +139,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // 아이템 소모
             for (int i = 0; i < itemControlViews.Count; i++)
             {
-                bool result = GameState.Inst.inventoryState.LoseCountableItems(itemControlViews[i].ItemGameData, itemControlViews[i].CurrentAmount);
-
-                if (result == false)
-                {
-                    Debug.LogError("Failed to lose material items.");
-                }
+                GameState.Inst.inventoryState.LoseCountableItems(itemControlViews[i].ItemGameData, itemControlViews[i].CurrentAmount);
             }
 
             GameState.Inst.Save().Forget();
