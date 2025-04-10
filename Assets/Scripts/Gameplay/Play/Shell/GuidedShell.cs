@@ -19,6 +19,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         // Field
         private Vector2 onDetectDirection;
         
+        private bool targetFound = false;
         private Transform target = null;
         private GameObject marker = null;
         private bool firstTouch = false;
@@ -41,7 +42,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return;
             }
 
-            if (target)
+            if (targetFound)
             {
                 accTimer += Time.deltaTime;
                 float speed = Mathf.Lerp(INITIAL_GUIDED_SPEED, MAX_GUIDED_SPEED, accTimer / ACC_DURATION);
@@ -63,7 +64,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             {
                 return;
             }
-            
+
+            targetFound = true;
             target = battlerCollider.transform;
             rgbShellBody.gravityScale = 0f;
             onDetectDirection = rgbShellBody.linearVelocity.normalized;
@@ -93,6 +95,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
             WaitForExplosionParticleSystem()
                 .ContinueWith(() => ShouldBeDestroyed = true)
                 .Forget();
+        }
+
+        private void OnDestroy()
+        {
+            if (marker)
+                Destroy(marker);
         }
     }
 }
