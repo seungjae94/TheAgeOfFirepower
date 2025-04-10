@@ -35,6 +35,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // 뷰 초기화
             mechParts = InventoryState.GetSortedMechPartList();
             gridView.UpdateContents(mechParts);
+            gridView.ResetPosition();
             gridView.SelectCell(-1);
         }
         

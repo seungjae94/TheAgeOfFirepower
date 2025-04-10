@@ -76,7 +76,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 mechPartTabView.Clear();
             if (false == countableItemTabView.IsClear)
                 countableItemTabView.Clear();
-
+            
             if (index == 0)
                 mechPartTabView.Draw();
             else

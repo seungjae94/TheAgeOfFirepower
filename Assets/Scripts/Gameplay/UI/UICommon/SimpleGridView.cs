@@ -54,6 +54,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
             Refresh();
         }
 
+        public void ResetPosition()
+        {
+            JumpTo(0, 0.5f);
+            Refresh();
+        }
+
         protected abstract void OnSelectCell(SimpleGridViewSelectionData<TItemData> selectionData);
     }
 }

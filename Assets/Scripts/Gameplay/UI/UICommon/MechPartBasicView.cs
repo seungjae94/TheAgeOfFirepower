@@ -17,6 +17,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         [SerializeField]
         private TextMeshProUGUI nameText;
+
+        [SerializeField]
+        private ScrollRect descriptionScrollRect;
         
         [SerializeField]
         private TextMeshProUGUI descriptionText;
@@ -47,7 +50,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public override void Draw()
         {
             base.Draw();
-            
+
+            descriptionScrollRect.verticalNormalizedPosition = 0f;
             if (mechPart == null)
                 DrawEmpty();
             else
