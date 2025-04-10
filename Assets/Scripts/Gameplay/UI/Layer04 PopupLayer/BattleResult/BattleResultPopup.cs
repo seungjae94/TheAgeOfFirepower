@@ -128,6 +128,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 artyViews[i].Setup(arty);
                 artyViews[i].Draw();
             }
+            
+            // 변경사항 저장
+            GameState.Inst.Save().Forget();
         }
         
         private void InitializeLoseView()
