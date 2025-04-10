@@ -83,6 +83,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 #endif
 
         // Field
+        public Vector3 FirePoint => fireGuideArrow.transform.position;
+        
         private GameObject doubleFireParticleInstance;
         private int fireChance = 1;
         

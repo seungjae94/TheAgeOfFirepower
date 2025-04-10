@@ -53,19 +53,17 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 .OrderBy(keySelector)
                 .FirstOrDefault();
 
-            Debug.Log($"Target is {target.Description}");
-
-            if (target.transform.position.x < controller.transform.position.x)
+            if (target == null)
             {
-                controller.SetDirection(false);
+                Debug.Log($"[Enemy AI] There is no appropriate target. Skip turn.");
+                controller.Skip();
+                return Status.Success;
             }
-            else
-            {
-                controller.SetDirection(true);
-            }
-
+            
+            Debug.Log($"[Enemy AI] Target is {target.Description}.");
+            
             // 방향 설정
-            controller.SetDirection(controller.transform.position.x < target.transform.position.x);
+            controller.SetDirection(controller.FirePoint.x < target.transform.position.x);
 
             // 1. 파워 100을 기준으로 물리적 theta 계산 (높, 낮)
             // 2. 바라보는 방향에 대한 상대적 theta 계산 (높, 낮)
@@ -76,8 +74,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             int power = 70;
             float s = (0.1f + 0.9f * power / 100f) * controller.shellMaxSpeed;
             float g = Mathf.Abs(Physics2D.gravity.y);
-            float d = Mathf.Abs(controller.transform.position.x - target.transform.position.x);
-            float y = target.transform.position.y - controller.transform.position.y;
+            float d = Mathf.Abs(controller.FirePoint.x - target.transform.position.x);
+            float y = target.transform.position.y - controller.FirePoint.y;
             
             float angleOfTangent = controller.GetDirection() ? Vector2.SignedAngle(Vector2.right, controller.Tangent) : -Vector2.SignedAngle(Vector2.left, controller.Tangent);
             

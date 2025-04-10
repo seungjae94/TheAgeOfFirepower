@@ -3437,11 +3437,15 @@ MonoBehaviour:
     engine: {fileID: 0}
   developEnemys:
   - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 10
+    level: 5
     moveStrategy: 0
     targetingStrategy: 0
-  - artyGameData: {fileID: 11400000, guid: 005beb9b0a9636a42ad2bac0b592b346, type: 2}
-    level: 10
+  - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
+    level: 5
+    moveStrategy: 0
+    targetingStrategy: 0
+  - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
+    level: 5
     moveStrategy: 0
     targetingStrategy: 0
   developStageGameDataRef:
