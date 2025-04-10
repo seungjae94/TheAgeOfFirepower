@@ -1,6 +1,7 @@
 ﻿using Coffee.UIExtensions;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
@@ -9,6 +10,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public override string PageName => "스테이지 선택";
 
         // View
+        [SerializeField]
+        private ScrollRect scrollRect; 
+        
         [SerializeField]
         private WorldMapView worldMapView;
 
@@ -25,6 +29,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
             Find<NavigateBackOverlay>().Activate();
 
             // 뷰 초기화
+            scrollRect.horizontalNormalizedPosition = 0f;
+            
             worldMapView.Setup(1);
             worldMapView.Draw();
             
