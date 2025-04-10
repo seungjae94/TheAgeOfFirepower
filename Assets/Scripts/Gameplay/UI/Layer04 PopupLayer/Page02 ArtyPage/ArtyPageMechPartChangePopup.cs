@@ -130,6 +130,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             MechPartModel mechPart = mechPartList[selectedIndexRx.Value];
             ArtyPage.SelectedArty.Equip(slotType, mechPart);
+            GameState.Inst.Save().Forget();
             
             CloseWithAnimation().Forget();
         }

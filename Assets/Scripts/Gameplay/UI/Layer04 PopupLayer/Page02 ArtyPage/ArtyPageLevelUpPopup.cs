@@ -146,6 +146,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
                     Debug.LogError("Failed to lose material items.");
                 }
             }
+
+            GameState.Inst.Save().Forget();
             
             Find<ArtyPage>().UpdateSelectedArtyView();
             CloseWithAnimation().Forget();

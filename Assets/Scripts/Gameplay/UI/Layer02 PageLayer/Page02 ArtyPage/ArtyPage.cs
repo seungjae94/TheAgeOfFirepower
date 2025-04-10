@@ -48,16 +48,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             scrollView.SelectCell(selectedArtyIndexRx.Value);
 
             artyPageSelectedArtyView.Draw();
-
-            // 화포
-            // TODO: 화포 기본 정보 (이름, 레벨, 경험치)
-            // artyBasicInfoView.Draw();
-            // TODO: 화포 스탯
-            // artyBasicInfoView.Draw();
-            // TODO: 화포 초상화
-            // artyPortraitImage.sprite = ...;
-            // TODO: 화포 부품
-            // artyMechPartSlots.Foreach(...);
         }
         
         protected override void OnClose()
