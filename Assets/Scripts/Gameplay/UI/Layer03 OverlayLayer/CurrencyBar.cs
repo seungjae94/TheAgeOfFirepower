@@ -31,8 +31,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
             SubscribeGoldChange();
             SubscribeDiamondChange();
             
-            goldText.text = InventoryState.goldRx.Value.ToString();
-            diamondText.text = InventoryState.diamondRx.Value.ToString();
+            goldText.text = InventoryState.Gold.ToString();
+            diamondText.text = InventoryState.Diamond.ToString();
         }
 
         public override void Deactivate()
@@ -52,7 +52,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             goldSubscription.Clear();
             
             InventoryState
-                .goldRx
+                .GoldObservable
                 .Subscribe(gold => goldText.text = gold.ToString())
                 .AddTo(goldSubscription);
         }
@@ -62,7 +62,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             diamondSubscription.Clear();
             
             InventoryState
-                .diamondRx
+                .DiamondObservable
                 .Subscribe(diamond => diamondText.text = diamond.ToString())
                 .AddTo(diamondSubscription);
         }
@@ -73,7 +73,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             goldSubscription.Clear();
             
-            long curValue = InventoryState.goldRx.Value;
+            long curValue = InventoryState.Gold;
             Tween tween = DOTween.To(
                     () => curValue,
                     x =>
@@ -95,7 +95,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             diamondSubscription.Clear();
             
-            long curValue = InventoryState.diamondRx.Value;
+            long curValue = InventoryState.Diamond;
             Tween tween = DOTween.To(
                     () => curValue,
                     x =>

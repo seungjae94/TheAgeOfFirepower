@@ -4,7 +4,7 @@ using Mathlife.ProjectL.Gameplay.ObjectBase;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class GameState : MonoSingleton<GameState>, IPersistable
+    public class GameState : MonoSingleton<GameState>
     {
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.App;
         
@@ -18,7 +18,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         // Non-persistable
         public readonly BattleState battleState = new();
-        
+        private SaveFile snapShot;
+
         public async UniTask Load()
         {
             await gameDataLoader.Load();
@@ -33,6 +34,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             await inventoryState.Save();
             await artyRosterState.Save();
+            await gameProgressState.Save();
         }
     }
 }

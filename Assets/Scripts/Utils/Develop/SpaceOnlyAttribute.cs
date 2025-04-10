@@ -1,6 +1,4 @@
-﻿using Sirenix.OdinInspector;
-using System;
-using System.Diagnostics;
+﻿using System;
 using UnityEngine;
 
 namespace Mathlife.ProjectL.Utils

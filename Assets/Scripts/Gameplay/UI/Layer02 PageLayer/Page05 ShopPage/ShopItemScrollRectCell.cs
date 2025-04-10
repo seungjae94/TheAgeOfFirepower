@@ -92,7 +92,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             if (canBuy)
             {
 
-                long doTarget = InventoryState.goldRx.Value - saleInfo.price;
+                long doTarget = InventoryState.Gold - saleInfo.price;
                 await currencyBar.DOGold(doTarget);
 
                 InventoryState.BuyItem(saleInfo);

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Serialization;
+using System.Linq;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -10,11 +9,23 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public int artyId = -1;
         public int level = 1;
-        public int totalExp = 0;
-        
+        public long totalExp = 0;
+
         public int barrelId;
         public int armorId;
         public int engineId;
+
+        public override bool Equals(object obj)
+        {
+            if (obj is not ArtySaveData other) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return artyId == other.artyId && level == other.level && totalExp == other.totalExp && barrelId == other.barrelId && armorId == other.armorId && engineId == other.engineId;
+        }
+        
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(artyId, level, totalExp, barrelId, armorId, engineId);
+        }
     }
 
     [Serializable]
@@ -37,6 +48,23 @@ namespace Mathlife.ProjectL.Gameplay
 
             return true;
         }
+        
+        public override bool Equals(object obj)
+        {
+            if (obj is not BatterySaveData other) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return memberIndexes.SequenceEqual(other.memberIndexes);
+        }
+        
+        public override int GetHashCode()
+        {
+            var hash = new HashCode();
+            foreach (int index in memberIndexes)
+            {
+                hash.Add(index);
+            }
+            return hash.ToHashCode();
+        }
     }
 
     [Serializable]
@@ -44,5 +72,17 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public BatterySaveData battery = new();
         public List<ArtySaveData> artyRoster = new();
+        
+        public override bool Equals(object obj)
+        {
+            if (obj is not ArtyRosterSaveFile other) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return battery.Equals(other.battery) && artyRoster.SequenceEqual(other.artyRoster);
+        }
+        
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(battery, artyRoster);
+        }
     }
 }

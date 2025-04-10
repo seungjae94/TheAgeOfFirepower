@@ -14,29 +14,44 @@ namespace Mathlife.ProjectL.Gameplay
     {
         [SerializeField]
         [TitleGroup("릴리즈 모드 스타터", GroupID = "Starter", Indent = true, HorizontalLine = true)]
-        [HorizontalGroup(GroupID = "Starter/Currency", Width = 200, LabelWidth = 50)]
+        [HorizontalGroup(GroupID = "Starter/Currency", Width = 150, LabelWidth = 60)]
+        [MinValue(0)]
         [LabelText("골드")]
-        long starterGold = 0L;
+        private long starterGold = 0L;
 
-#if UNITY_EDITOR
-        [SerializeField]
-        [HorizontalGroup(GroupID = "Starter/Currency", Width = 100)]
-        [SpaceOnly(0)]
-        private bool _dummy00;
-#endif
 
         [SerializeField]
         [LabelText("다이아")]
-        [HorizontalGroup(GroupID = "Starter/Currency", Width = 200, LabelWidth = 50)]
-        long starterDiamond = 0L;
+        [HorizontalGroup(GroupID = "Starter/Currency", Gap = 50, Width = 150, LabelWidth = 60)]
+        [MinValue(0)]
+        private long starterDiamond = 0L;
 
 #if UNITY_EDITOR
-        [SerializeField]
-        [HorizontalGroup(GroupID = "Starter/Dummy", Width = 100)]
+        [ShowInInspector]
+        [HorizontalGroup(GroupID = "Starter/Dummy00")]
         [SpaceOnly(15)]
-        private bool _dummy01;
+        private bool dummy00;
 #endif
-        
+
+        [SerializeField]
+        [LabelText("월드")]
+        [HorizontalGroup(GroupID = "Starter/Stage", Width = 150, LabelWidth = 60)]
+        [MinValue(1)]
+        private int starterUnlockWorldNo = 1;
+
+        [SerializeField]
+        [LabelText("스테이지")]
+        [HorizontalGroup(GroupID = "Starter/Stage", Gap = 50, Width = 150, LabelWidth = 60)]
+        [MinValue(1)]
+        private int starterUnlockStageNo = 1;
+
+#if UNITY_EDITOR
+        [ShowInInspector]
+        [HorizontalGroup(GroupID = "Starter/Dummy01")]
+        [SpaceOnly(15)]
+        private bool dummy01;
+#endif
+
         [SerializeField]
         [TabGroup("Starter/Tab", "포대")]
         [HideReferenceObjectPicker]
@@ -72,53 +87,65 @@ namespace Mathlife.ProjectL.Gameplay
 
 #if UNITY_EDITOR
         [SerializeField]
-        [TitleGroup("디버그 모드 스타터", GroupID = "Editor Starter", Indent = true, HorizontalLine = true)]
-        [HorizontalGroup(GroupID = "Editor Starter/Currency", Width = 200, LabelWidth = 50)]
+        [TitleGroup("디버그 모드 스타터", GroupID = "EditorStarter", Indent = true, HorizontalLine = true)]
+        [HorizontalGroup(GroupID = "EditorStarter/Currency", Width = 150, LabelWidth = 60)]
         [LabelText("골드")]
-        long editorStarterGold = 0L;
+        private long editorStarterGold = 0L;
 
-        [SerializeField]
-        [HorizontalGroup(GroupID = "Editor Starter/Currency", Width = 100)]
-        [SpaceOnly(0)]
-        private bool _dummy10;
-        
         [SerializeField]
         [LabelText("다이아")]
-        [HorizontalGroup(GroupID = "Editor Starter/Currency", Width = 200, LabelWidth = 50)]
-        long editorStarterDiamond = 0L;
+        [HorizontalGroup(GroupID = "EditorStarter/Currency", Gap = 50, Width = 150, LabelWidth = 60)]
+        private long editorStarterDiamond = 0L;
+        
+        [ShowInInspector]
+        [HorizontalGroup(GroupID = "EditorStarter/Dummy10")]
+        [SpaceOnly(15)]
+        private bool dummy10;
 
         [SerializeField]
-        [HorizontalGroup(GroupID = "Editor Starter/Dummy", Width = 100)]
-        [SpaceOnly(15)]
-        private bool _dummy11;
-        
+        [LabelText("월드")]
+        [HorizontalGroup(GroupID = "EditorStarter/Stage", Width = 150, LabelWidth = 60)]
+        [MinValue(1)]
+        private int editorStarterUnlockWorldNo = 1;
+
         [SerializeField]
-        [TabGroup("Editor Starter/Tab", "포대")]
+        [LabelText("스테이지")]
+        [HorizontalGroup(GroupID = "EditorStarter/Stage", Gap = 50, Width = 150, LabelWidth = 60)]
+        [MinValue(1)]
+        private int editorStarterUnlockStageNo = 1;
+        
+        [ShowInInspector]
+        [HorizontalGroup(GroupID = "EditorStarter/Dummy11")]
+        [SpaceOnly(15)]
+        private bool dummy11;
+
+        [SerializeField]
+        [TabGroup("EditorStarter/Tab", "포대")]
         [HideReferenceObjectPicker]
         [LabelText("포대")]
         [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true, ShowFoldout = false)]
-        List<ArtyPreset> editorStarterBattery = new();
+        private List<ArtyPreset> editorStarterBattery = new();
 
         [SerializeField]
-        [TabGroup("Editor Starter/Tab", "대기 멤버")]
+        [TabGroup("EditorStarter/Tab", "대기 멤버")]
         [HideReferenceObjectPicker]
         [LabelText("대기 멤버")]
         [ListDrawerSettings(ShowFoldout = false)]
-        List<ArtyPreset> editorStarterBench = new();
+        private List<ArtyPreset> editorStarterBench = new();
 
         [SerializeField]
-        [TabGroup("Editor Starter/Tab", "인벤토리(백업 부품)")]
+        [TabGroup("EditorStarter/Tab", "인벤토리(백업 부품)")]
         [HideReferenceObjectPicker]
         [LabelText("백업 부품")]
         [ListDrawerSettings(ShowFoldout = false)]
-        List<MechPartStack> editorStarterBackupMechParts = new();
+        private List<MechPartStack> editorStarterBackupMechParts = new();
 
         [SerializeField]
-        [TabGroup("Editor Starter/Tab", "인벤토리(재료, 전투)")]
+        [TabGroup("EditorStarter/Tab", "인벤토리(재료, 전투)")]
         [HideReferenceObjectPicker]
         [LabelText("재료/전투 아이템")]
         [ListDrawerSettings(ShowFoldout = false)]
-        List<CountableItemStack> editorStarterItemStacks = new();
+        private List<CountableItemStack> editorStarterItemStacks = new();
 
         [OnInspectorInit]
         void OnInspectorInit()
@@ -139,7 +166,7 @@ namespace Mathlife.ProjectL.Gameplay
             }
         }
 
-        [TabGroup("Editor Starter/Tab", "포대")]
+        [TabGroup("EditorStarter/Tab", "포대")]
         [Button("포대 초기화", Stretch = false, ButtonHeight = 30)]
         void ResetEditorMembers()
         {
@@ -163,6 +190,24 @@ namespace Mathlife.ProjectL.Gameplay
             return editorStarterDiamond;
 #else
             return starterDiamond;
+#endif
+        }
+        
+        public int GetStarterUnlockWorldNo()
+        {
+#if UNITY_EDITOR
+            return editorStarterUnlockWorldNo;
+#else
+            return starterUnlockWorldNo;
+#endif
+        }
+        
+        public int GetStarterUnlockStageNo()
+        {
+#if UNITY_EDITOR
+            return editorStarterUnlockStageNo;
+#else
+            return starterUnlockStageNo;
 #endif
         }
 

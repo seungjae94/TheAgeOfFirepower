@@ -8,20 +8,17 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class InventoryState : IPersistable
+    public class InventoryState : PersistableStateBase
     {
-        // Alias
-        private SaveDataManager SaveDataManager => GameState.Inst.saveDataManager;
-        private GameDataLoader GameDataLoader => GameState.Inst.gameDataLoader;
-
-        public UniTask Load()
+        // Method
+        public override UniTask Load()
         {
             foreach (var type in Enum.GetValues(typeof(EMechPartType)))
             {
                 mechPartInventory.Add((EMechPartType)type, new());
             }
 
-            if (GameState.Inst.saveDataManager.DoesSaveFileExist())
+            if (GameState.Inst.saveDataManager.DoesSaveFileExist() && GameSettings.Inst.UseSaveFileIfAvailable)
             {
                 LoadFromSaveFile();
             }
@@ -33,9 +30,27 @@ namespace Mathlife.ProjectL.Gameplay
             return UniTask.CompletedTask;
         }
 
-        public UniTask Save()
+        protected override SaveFile SavedFile => SaveDataManager.inventory;
+
+        protected override SaveFile TakeSnapShot()
         {
-            throw new NotImplementedException();
+            return new InventorySaveFile()
+            {
+                gold = Gold,
+                diamond = Diamond,
+                mechParts = mechPartInventory
+                    .SelectMany(kv => kv.Value)
+                    .Select(model => model.Id)
+                    .ToList(),
+                materialItems = materialItemInventory
+                    .Select(kv => kv.Value)
+                    .Select(stack => new ItemStackSaveData() {amount = stack.Amount, id =  stack.Id})
+                    .ToList(),
+                battleItems = battleItemInventory
+                    .Select(kv => kv.Value)
+                    .Select(stack => new ItemStackSaveData() {amount = stack.Amount, id =  stack.Id})
+                    .ToList()
+            };
         }
 
         private void LoadFromSaveFile()
@@ -95,27 +110,15 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // 골드 (거래)
-        public readonly ReactiveProperty<long> goldRx = new(0L);
-        public readonly ReactiveProperty<long> diamondRx = new(0L);
+        private readonly ReactiveProperty<long> goldRx = new(0L);
+        private readonly ReactiveProperty<long> diamondRx = new(0L);
 
-        public void GainReward(Reward reward)
-        {
-            GainGold(reward.gold);
-            GainDiamond(reward.diamond);
+        public IObservable<long> GoldObservable => goldRx;
+        public IObservable<long> DiamondObservable => diamondRx;
 
-            if (reward.itemGameData != null)
-            {
-                if (reward.itemGameData is MechPartGameData mechPartGameData)
-                {
-                    AddMechPart(mechPartGameData.id);
-                }
-                else if (reward.itemGameData is CountableItemGameData countableItemGameData)
-                {
-                    AddCountableItemStack(countableItemGameData, reward.itemAmount);
-                }
-            }
-        }
-        
+        public long Gold => goldRx.Value;
+        public long Diamond => diamondRx.Value;
+
         public void GainGold(long gain)
         {
             if (gain <= 0L)
@@ -131,7 +134,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             goldRx.Value -= lose;
         }
-        
+
         public void GainDiamond(long gain)
         {
             if (gain <= 0L)
@@ -152,12 +155,12 @@ namespace Mathlife.ProjectL.Gameplay
         {
             return goldRx.Value >= price * amount;
         }
-        
+
         public bool CanBuyByDiamond(int price, int amount)
         {
             return diamondRx.Value >= price * amount;
         }
-        
+
         public bool BuyArty(ShopArtySaleInfo saleInfo)
         {
             if (CanBuyByDiamond(saleInfo.price, saleInfo.amount) == false)
@@ -171,7 +174,7 @@ namespace Mathlife.ProjectL.Gameplay
             LoseDiamond(saleInfo.price * saleInfo.amount);
             return true;
         }
-        
+
         public bool BuyItem(ShopItemSaleInfo saleInfo)
         {
             if (CanBuyByGold(saleInfo.price, saleInfo.amount) == false)
@@ -273,19 +276,19 @@ namespace Mathlife.ProjectL.Gameplay
                 return null;
 
             ItemStackModel itemStack = null;
-            
+
             switch (itemGameData.ItemType)
             {
                 case EItemType.MaterialItem when materialItemInventory.TryGetValue(itemGameData.id, out itemStack):
                     itemStack.Add(amount);
-                    return itemStack;
+                    break;
                 case EItemType.MaterialItem:
                     itemStack = new(itemGameData, amount);
                     materialItemInventory.Add(itemGameData.id, itemStack);
                     break;
                 case EItemType.BattleItem when battleItemInventory.TryGetValue(itemGameData.id, out itemStack):
                     itemStack.Add(amount);
-                    return itemStack;
+                    break;
                 case EItemType.BattleItem:
                     itemStack = new(itemGameData, amount);
                     battleItemInventory.Add(itemGameData.id, itemStack);
@@ -299,9 +302,10 @@ namespace Mathlife.ProjectL.Gameplay
         {
             if (itemGameData == null)
                 return false;
-            
+
             ItemStackModel itemStack = null;
-            
+            bool result = false;
+
             switch (itemGameData.ItemType)
             {
                 case EItemType.MaterialItem when materialItemInventory.TryGetValue(itemGameData.id, out itemStack):
@@ -310,17 +314,23 @@ namespace Mathlife.ProjectL.Gameplay
                     {
                         materialItemInventory.Remove(itemGameData.id);
                     }
-                    return true;
+
+                    result = true;
+                    break;
                 case EItemType.BattleItem when battleItemInventory.TryGetValue(itemGameData.id, out itemStack):
                     itemStack.Remove(amount);
                     if (itemStack.Amount == 0)
                     {
                         battleItemInventory.Remove(itemGameData.id);
                     }
-                    return true;
+
+                    result = true;
+                    break;
+                default:
+                    break;
             }
 
-            return false;
+            return result;
         }
 
         private void SortMechPartList(EMechPartType type)
@@ -331,14 +341,13 @@ namespace Mathlife.ProjectL.Gameplay
                 .ThenBy(mechPart => mechPart.Id)
                 .ToList();
         }
-        
-        // 아이템 관리
+
         public ItemStackModel GetMaterialItemStack(int materialItemId)
         {
             bool result = materialItemInventory.TryGetValue(materialItemId, out ItemStackModel itemStack);
             return result ? itemStack : null;
         }
-        
+
         public ItemStackModel GetBattleItemStack(int battleItemId)
         {
             bool result = battleItemInventory.TryGetValue(battleItemId, out ItemStackModel itemStack);
@@ -361,13 +370,31 @@ namespace Mathlife.ProjectL.Gameplay
                 Debug.LogError("배틀 아이템 사용 실패...");
                 return;
             }
-            
+
             itemData.effect.Apply(artyController);
             itemStack.Remove(1);
 
             if (itemStack.Amount == 0)
             {
                 battleItemInventory.Remove(battleItemId);
+            }
+        }
+
+        public void GainReward(Reward reward)
+        {
+            GainGold(reward.gold);
+            GainDiamond(reward.diamond);
+
+            if (reward.itemGameData != null)
+            {
+                if (reward.itemGameData is MechPartGameData mechPartGameData)
+                {
+                    AddMechPart(mechPartGameData.id);
+                }
+                else if (reward.itemGameData is CountableItemGameData countableItemGameData)
+                {
+                    AddCountableItemStack(countableItemGameData, reward.itemAmount);
+                }
             }
         }
     }

@@ -18,10 +18,9 @@ namespace Mathlife.ProjectL.Gameplay
         [ShowInInspector]
         [HorizontalGroup("Curve", Title = "경험치 커브")]
         [LabelWidth(100)]
-        [InlineProperty]
         [HideReferenceObjectPicker]
         [OnValueChanged(nameof(OnCurveChanged))]
-        private AnimationCurve curve;
+        private AnimationCurve curve = new();
         
         private void OnCurveChanged()
         {

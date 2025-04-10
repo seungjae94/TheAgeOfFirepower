@@ -82,7 +82,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             bool canBuy = InventoryState.CanBuyByDiamond(saleInfo.price, saleInfo.amount);
             if (canBuy)
             {
-                long doTarget = InventoryState.diamondRx.Value - saleInfo.price;
+                long doTarget = InventoryState.Diamond - saleInfo.price;
                 await currencyBar.DODiamond(doTarget);
 
                 InventoryState.BuyArty(saleInfo);

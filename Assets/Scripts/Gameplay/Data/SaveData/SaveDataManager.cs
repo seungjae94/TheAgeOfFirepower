@@ -12,6 +12,8 @@ namespace Mathlife.ProjectL.Gameplay
         public readonly ArtyRosterSaveFile artyRoster = new();
         public readonly InventorySaveFile inventory = new();
         public readonly GameProgressSaveFile gameProgress = new();
+
+        private object lockObject = new();
         
         public SaveDataManager()
         {
@@ -49,12 +51,15 @@ namespace Mathlife.ProjectL.Gameplay
             }
         }
 
-        public async UniTask Save()
+        public async UniTask Save(SaveFile saveFile)
         {
             // POD -> File
             foreach (var (field, path) in saveFileFullPaths)
             {
-                string json = JsonUtility.ToJson(field.GetValue(this));
+                if (saveFile != field.GetValue(this))
+                    continue;
+                
+                string json = JsonUtility.ToJson(saveFile);
                 await File.WriteAllTextAsync(path, json);
             }
         }

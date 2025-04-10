@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using Mathlife.ProjectL.Utils;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class BatteryModel
+    public class BatteryModel : IEnumerable<ArtyModel>
     {
         private readonly ReactiveCollection<ArtyModel> membersRx;
         public BatteryModel(List<ArtyModel> members)
@@ -93,6 +94,16 @@ namespace Mathlife.ProjectL.Gameplay
         public bool Validate()
         {
             return membersRx.Count(arty => arty != null) > 0;
+        }
+
+        public IEnumerator<ArtyModel> GetEnumerator()
+        {
+            return membersRx.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

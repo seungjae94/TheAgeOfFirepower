@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
-    public class ArtyRosterState : IPersistable
+    public class ArtyRosterState : PersistableStateBase
     {
         // Alias
         private SaveDataManager SaveDataManager => GameState.Inst.saveDataManager;
@@ -21,7 +21,7 @@ namespace Mathlife.ProjectL.Gameplay
         public BatteryModel Battery { get; private set; }
 
 
-        public UniTask Load()
+        public override UniTask Load()
         {
             // Validate that InventoryState was created before creating CharacterState.
             if (GameState.Inst.inventoryState == null)
@@ -30,7 +30,7 @@ namespace Mathlife.ProjectL.Gameplay
                 throw new Exception($"[{nameof(ArtyRosterState)}] InventoryState is null.");
             }
 
-            if (GameState.Inst.saveDataManager.DoesSaveFileExist())
+            if (GameState.Inst.saveDataManager.DoesSaveFileExist() && GameSettings.Inst.UseSaveFileIfAvailable)
             {
                 LoadFromSaveFile();
             }
@@ -42,9 +42,42 @@ namespace Mathlife.ProjectL.Gameplay
             return UniTask.CompletedTask;
         }
 
-        public UniTask Save()
+        protected override SaveFile SavedFile => SaveDataManager.artyRoster;
+
+        protected override SaveFile TakeSnapShot()
         {
-            throw new NotImplementedException();
+            return new ArtyRosterSaveFile()
+            {
+                artyRoster = artyList
+                    .Where(model => model != null)
+                    .Select(ModelToSaveData)
+                    .ToList(),
+                battery = new()
+                {
+                    memberIndexes = Battery
+                        .Select(BatteryMemberToIndex)
+                        .ToList()
+                }
+            };
+        }
+
+        private ArtySaveData ModelToSaveData(ArtyModel model)
+        {
+            ArtySaveData saveData = new()
+            {
+                artyId = model.Id,
+                level = model.levelRx.Value,
+                totalExp = model.totalExpRx.Value,
+                barrelId = model.Barrel?.Id ?? -1,
+                armorId = model.Armor?.Id ?? -1,
+                engineId = model.Engine?.Id ?? -1
+            };
+            return saveData;
+        }
+
+        private int BatteryMemberToIndex(ArtyModel model)
+        {
+            return artyList.IndexOf(model);
         }
 
         // From Save File

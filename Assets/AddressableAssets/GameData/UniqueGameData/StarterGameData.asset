@@ -22,9 +22,9 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   starterGold: 0
-  _dummy00: 0
   starterDiamond: 0
-  _dummy01: 0
+  starterUnlockWorldNo: 1
+  starterUnlockStageNo: 1
   starterBattery:
   - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
     level: 1
@@ -48,9 +48,9 @@ MonoBehaviour:
   starterBackupMechParts: []
   starterItemStacks: []
   editorStarterGold: 0
-  _dummy10: 0
   editorStarterDiamond: 0
-  _dummy11: 0
+  editorStarterUnlockWorldNo: 1
+  editorStarterUnlockStageNo: 1444
   editorStarterBattery:
   - arty: {fileID: 11400000, guid: 005beb9b0a9636a42ad2bac0b592b346, type: 2}
     level: 10
