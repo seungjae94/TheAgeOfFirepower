@@ -1,1 +1,1 @@
-{"version":{"x":0,"y":0,"z":0},"gold":0,"diamond":0,"mechParts":[3,3],"materialItems":[{"id":0,"amount":6},{"id":1,"amount":8},{"id":2,"amount":9}],"battleItems":[]}
+{"version":{"x":0,"y":0,"z":0},"gold":300,"diamond":700,"mechParts":[3,3,4,8],"materialItems":[{"id":0,"amount":6},{"id":1,"amount":8},{"id":2,"amount":9}],"battleItems":[{"id":0,"amount":1},{"id":2,"amount":1},{"id":1,"amount":1}]}

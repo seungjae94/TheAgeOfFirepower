@@ -86,6 +86,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 await currencyBar.DODiamond(doTarget);
 
                 InventoryState.BuyArty(saleInfo);
+                
+                // 변경사항 저장
+                GameState.Inst.Save().Forget();
+                
                 currencyBar.SubscribeDiamondChange();
             }
             else

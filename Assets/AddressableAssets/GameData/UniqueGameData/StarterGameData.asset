@@ -50,7 +50,7 @@ MonoBehaviour:
   editorStarterGold: 0
   editorStarterDiamond: 0
   editorStarterUnlockWorldNo: 1
-  editorStarterUnlockStageNo: 1444
+  editorStarterUnlockStageNo: 1
   editorStarterBattery:
   - arty: {fileID: 11400000, guid: 005beb9b0a9636a42ad2bac0b592b346, type: 2}
     level: 10

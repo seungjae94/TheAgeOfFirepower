@@ -96,6 +96,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 await currencyBar.DOGold(doTarget);
 
                 InventoryState.BuyItem(saleInfo);
+                
+                // 변경사항 저장
+                GameState.Inst.Save().Forget();
+                
                 currencyBar.SubscribeGoldChange();
             }
             else
