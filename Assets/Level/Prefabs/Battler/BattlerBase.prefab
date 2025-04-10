@@ -676,6 +676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3359308444079164497}
+  collider: {fileID: 1538935604951619500}
   behaviorGraphAgent: {fileID: 2834954738379499864}
   fireGuideArrow: {fileID: 5683205590603593613}
   battlerCanvasGameObject: {fileID: 8991271276433058806}

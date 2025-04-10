@@ -22,6 +22,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private SpriteRenderer spriteRenderer;
 
         [SerializeField]
+        private new Collider2D collider;
+        
+        [SerializeField]
         private BehaviorGraphAgent behaviorGraphAgent;
         
         [SerializeField]
@@ -557,6 +560,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (CurrentHp == 0)
             {
+                collider.enabled = false;
                 PlayDestroyEffects().Forget();
             }
         }
