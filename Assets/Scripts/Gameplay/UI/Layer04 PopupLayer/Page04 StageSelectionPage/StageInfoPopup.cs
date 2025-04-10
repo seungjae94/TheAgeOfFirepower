@@ -47,6 +47,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             enemyScrollRect.UpdateContents(stageGameData.enemyList);
             rewardScrollRect.UpdateContents(stageGameData.rewardList);
+            enemyScrollRect.ResetPosition();
+            rewardScrollRect.ResetPosition();
             
             return base.OpenWithAnimation();
         }
