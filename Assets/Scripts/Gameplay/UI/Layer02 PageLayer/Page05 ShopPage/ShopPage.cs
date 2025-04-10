@@ -108,6 +108,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
                     itemTabView.UpdateContents(shopGameData.shopBattleItems);
                     break;
             }
+            
+            itemTabView.ResetPosition();
+            artyTabView.ResetPosition();
         }
     }
 }

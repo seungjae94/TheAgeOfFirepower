@@ -195,7 +195,7 @@ RectTransform:
   m_Father: {fileID: 7639400686221218095}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 5743515159217639856}
   - component: {fileID: 4431395177015897719}
   m_Layer: 5
-  m_Name: Viewport
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,7 +471,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2413040937671501787
 RectTransform:
   m_ObjectHideFlags: 0
@@ -622,7 +622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7543487423810841721
 RectTransform:
   m_ObjectHideFlags: 0
@@ -818,7 +818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f0e995f494626a4f878eedbded37c8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewport: {fileID: 2467646506717754131}
+  viewport: {fileID: 1023438864802508444}
   scrollDirection: 1
   movementType: 1
   elasticity: 0.1
@@ -844,13 +844,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cc4f35b1bdf4bdb8e269f6358076e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellInterval: 0.21925132
-  scrollOffset: 0.21925132
+  cellInterval: 0.22651932
+  scrollOffset: 0.22651932
   loop: 0
   cellContainer: {fileID: 1023438864802508444}
   reuseCellMarginCount: 0
-  paddingHead: 90
-  paddingTail: 90
+  paddingHead: 45
+  paddingTail: 45
   spacing: 90
   cellPrefab: {fileID: 4185519688629269451, guid: ed8a32f95bf4dfe4a808e24d60211a67, type: 3}
   cellSize: 320
@@ -923,7 +923,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -60, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5372367150592492205
 GameObject:
@@ -946,7 +946,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8342400537364394827
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1173,8 +1173,8 @@ MonoBehaviour:
   loop: 0
   cellContainer: {fileID: 5428532058813022446}
   reuseCellMarginCount: 0
-  paddingHead: 90
-  paddingTail: 90
+  paddingHead: 45
+  paddingTail: 45
   spacing: 90
   cellPrefab: {fileID: 2912741842125669197, guid: 9fedc4bde83621749a42f9067e220289, type: 3}
   cellSize: 440
@@ -1211,7 +1211,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -60, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6960816373469049144
 GameObject:
@@ -1261,7 +1261,7 @@ GameObject:
   - component: {fileID: 8622563497844500380}
   - component: {fileID: 440179423099557533}
   m_Layer: 5
-  m_Name: Viewport
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
