@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.Gameplay.Data.Model;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
+using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -32,6 +33,8 @@ namespace Mathlife.ProjectL.Gameplay
 
         public async UniTask Save()
         {
+            Debug.Log("세이브 함수 호출");
+            
             await inventoryState.Save();
             await artyRosterState.Save();
             await gameProgressState.Save();

@@ -126,6 +126,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 ArtyRosterState.Battery.Swap(slotIndex, draggedSlotIndex);
             }
 
+            // 변경사항 저장
+            GameState.Inst.Save().Forget();
+
             // 선택된 슬롯 초기화
             BatteryPage.selectedSlotIndexRx.Value = -1;
         }

@@ -59,7 +59,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(disposables);
 
             navBackOverlay.Activate();
-            // TODO: navBackOverlay 콜백에 OnNavBack 등록
 
             // 상태 초기화
             selectedSlotIndexRx.Value = -1;

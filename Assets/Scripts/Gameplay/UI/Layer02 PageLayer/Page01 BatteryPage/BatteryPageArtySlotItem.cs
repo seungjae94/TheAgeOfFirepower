@@ -120,8 +120,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             ItemDragView.Draw();
 
             itemCanvasGroup.HideWithAlpha(0.25f);
-
-            //BatteryPage.isDraggingSlotItemRx.Value = true;
         }
 
         private void OnDrag(PointerEventData eventData)
@@ -138,8 +136,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnEndDrag(PointerEventData eventData)
         {
-            //BatteryPage.isDraggingSlotItemRx.Value = false;
-
             ItemDragView.gameObject.SetActive(false);
             itemCanvasGroup.Show();
         }

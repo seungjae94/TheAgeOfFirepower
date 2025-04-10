@@ -1,11 +1,8 @@
-using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Mathlife.ProjectL.Gameplay.UI;
-using Mathlife.ProjectL.Utils;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay
@@ -92,10 +89,12 @@ namespace Mathlife.ProjectL.Gameplay
         {
             ArtyRosterState.BuildBestTeam();
 
+            // 변경사항 저장
+            GameState.Inst.Save().Forget();
+            
             CloseWithAnimation()
                 .ContinueWith(() => Presenter.Find<BatteryPage>().Close())
                 .Forget();
-            
         }
 
         private void OnClickCancelButton(Unit _)

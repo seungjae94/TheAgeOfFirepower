@@ -56,15 +56,24 @@ namespace Mathlife.ProjectL.Gameplay
             // POD -> File
             foreach (var (field, path) in saveFileFullPaths)
             {
-                if (saveFile != field.GetValue(this))
+                // 타입이 다른 세이브 파일은 무시
+                if (saveFile.GetType() != field.FieldType)
                     continue;
                 
+                field.SetValue(this, saveFile);
+                
                 string json = JsonUtility.ToJson(saveFile);
+                
+                if (File.Exists(path) == false)
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(path) ?? "");
+                }
+                
                 await File.WriteAllTextAsync(path, json);
             }
         }
 
-        string ConvertToSaveFileFullPath(string saveFileName)
+        private string ConvertToSaveFileFullPath(string saveFileName)
         {
 #if UNITY_EDITOR
             return Application.dataPath + "/EditorAseets/" + saveFileName + ".json";
