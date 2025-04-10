@@ -33,8 +33,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             worldMapView.Setup(1);
             worldMapView.Draw();
-            
-            selectionParticleSystem.Stop();
+
+            selectionParticleSystem.enabled = false;
             
             // 이벤트 구독
             onSelectStage
@@ -63,6 +63,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
             
             selectionParticleSystem.transform.position = stageInfoView.transform.position;
+            selectionParticleSystem.enabled = true;
             selectionParticleSystem.Play();
         }
     }
