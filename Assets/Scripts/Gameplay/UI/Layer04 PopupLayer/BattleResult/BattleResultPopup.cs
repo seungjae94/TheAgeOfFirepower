@@ -130,7 +130,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             }
             
             // 변경사항 저장
-            GameState.Inst.Save().Forget();
+            GameState.Inst.Save();
         }
         
         private void InitializeLoseView()

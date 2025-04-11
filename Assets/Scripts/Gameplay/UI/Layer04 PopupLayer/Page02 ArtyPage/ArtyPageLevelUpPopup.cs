@@ -142,7 +142,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 GameState.Inst.inventoryState.LoseCountableItems(itemControlViews[i].ItemGameData, itemControlViews[i].CurrentAmount);
             }
 
-            GameState.Inst.Save().Forget();
+            GameState.Inst.Save();
             
             Find<ArtyPage>().UpdateSelectedArtyView();
             CloseWithAnimation().Forget();

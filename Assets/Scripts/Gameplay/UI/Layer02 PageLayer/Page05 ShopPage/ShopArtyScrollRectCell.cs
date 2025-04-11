@@ -88,7 +88,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 InventoryState.BuyArty(saleInfo);
                 
                 // 변경사항 저장
-                GameState.Inst.Save().Forget();
+                GameState.Inst.Save();
                 
                 currencyBar.SubscribeDiamondChange();
             }

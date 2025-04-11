@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.Gameplay.Data.Model;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
 using UnityEngine;
@@ -31,13 +32,16 @@ namespace Mathlife.ProjectL.Gameplay
             await artyRosterState.Load();
         }
 
-        public async UniTask Save()
+        public void Save()
         {
-            Debug.Log("세이브 함수 호출");
+            inventoryState.Save();
+            artyRosterState.Save();
+            gameProgressState.Save();
+        }
+
+        private void OnApplicationQuit()
+        {
             
-            await inventoryState.Save();
-            await artyRosterState.Save();
-            await gameProgressState.Save();
         }
     }
 }

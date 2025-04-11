@@ -1,36 +1,33 @@
+using System;
+using System.Collections.Concurrent;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading;
+using UniRx;
 using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay
 {
     public class SaveDataManager
     {
-        private readonly Dictionary<FieldInfo, string> saveFileFullPaths = new();
-        public readonly ArtyRosterSaveFile artyRoster = new();
-        public readonly InventorySaveFile inventory = new();
-        public readonly GameProgressSaveFile gameProgress = new();
+        private readonly ConcurrentDictionary<Type, SaveFile> saveFiles = new();
+        private readonly Dictionary<Type, string> savePaths = new();
 
-        private object lockObject = new();
-        
-        public SaveDataManager()
+        public ArtyRosterSaveFile ArtyRoster => saveFiles[typeof(ArtyRosterSaveFile)] as ArtyRosterSaveFile;
+        public InventorySaveFile Inventory => saveFiles[typeof(InventorySaveFile)] as InventorySaveFile;
+        public GameProgressSaveFile GameProgress => saveFiles[typeof(GameProgressSaveFile)] as GameProgressSaveFile;
+
+#if UNITY_EDITOR
+        private static readonly Subject<string> DebugLogger = new();
+#endif
+
+        public bool CanLoad()
         {
-            foreach (FieldInfo field in typeof(SaveDataManager).GetFields())
+            foreach (var savePath in savePaths.Values)
             {
-                if (false == field.FieldType.IsSubclassOf(typeof(SaveFile)))
-                    continue;
-
-                saveFileFullPaths.Add(field, ConvertToSaveFileFullPath(field.FieldType.Name));
-            }
-        }
-
-        public bool DoesSaveFileExist()
-        {
-            foreach (string path in saveFileFullPaths.Values)
-            {
-                if (File.Exists(path) == false)
+                if (File.Exists(savePath) == false)
                     return false;
             }
 
@@ -39,41 +36,102 @@ namespace Mathlife.ProjectL.Gameplay
 
         public async UniTask Load()
         {
-            if (false == DoesSaveFileExist())
-                return;
-            
-            // File -> POD
-            foreach (var (field, path) in saveFileFullPaths)
-            {
-                string json = await File.ReadAllTextAsync(path);
-                object saveFile = field.GetValue(this);
-                JsonUtility.FromJsonOverwrite(json, saveFile);
-            }
-        }
+#if UNITY_EDITOR
+            DebugLogger.Subscribe(Debug.Log)
+                .AddTo(GameState.Inst.gameObject);
+#endif
 
-        public async UniTask Save(SaveFile saveFile)
-        {
-            // POD -> File
-            foreach (var (field, path) in saveFileFullPaths)
+            foreach (PropertyInfo prop in typeof(SaveDataManager).GetProperties())
             {
-                // 타입이 다른 세이브 파일은 무시
-                if (saveFile.GetType() != field.FieldType)
+                if (false == prop.PropertyType.IsSubclassOf(typeof(SaveFile)))
                     continue;
-                
-                field.SetValue(this, saveFile);
-                
-                string json = JsonUtility.ToJson(saveFile);
-                
-                if (File.Exists(path) == false)
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(path) ?? "");
-                }
-                
-                await File.WriteAllTextAsync(path, json);
+
+                saveFiles.TryAdd(prop.PropertyType, null);
+
+                string savePath = TypeNameToSavePath(prop.PropertyType.Name);
+                savePaths.Add(prop.PropertyType, savePath);
+
+                UniTask.RunOnThreadPool(() => SaveTask(prop.PropertyType)).Forget();
+            }
+
+            if (false == CanLoad())
+                return;
+
+            // File -> POD
+            foreach (var (type, savePath) in savePaths)
+            {
+                string json = await File.ReadAllTextAsync(savePath);
+                SaveFile saveFile = JsonUtility.FromJson(json, type) as SaveFile;
+
+                // Update Save File
+                UpdateSaveFile(type, saveFile);
             }
         }
 
-        private string ConvertToSaveFileFullPath(string saveFileName)
+        // Producer
+        public async UniTaskVoid Save(SaveFile saveFile)
+        {
+            await UniTask.SwitchToThreadPool();
+
+            Type type = saveFile.GetType();
+
+            // Update Save File
+            UpdateSaveFile(type, saveFile);
+        }
+
+        private void UpdateSaveFile(Type type, SaveFile saveFile)
+        {
+            bool updated = false;
+            while (!updated)
+            {
+                if (!saveFiles.TryGetValue(type, out SaveFile prevSaveFile))
+                {
+                    updated = saveFiles.TryAdd(type, saveFile);
+                    continue;
+                }
+
+                updated = saveFiles.TryUpdate(type, saveFile, prevSaveFile);
+            }
+        }
+
+        // Consumer
+        private void SaveTask(Type saveFileType)
+        {
+            string savePath = savePaths[saveFileType];
+
+            saveFiles.TryGetValue(saveFileType, out SaveFile prevFile);
+
+            //systemAlive
+            while (!Application.exitCancellationToken.IsCancellationRequested)
+            {
+                if (false == saveFiles.TryGetValue(saveFileType, out SaveFile newFile))
+                {
+                    throw new KeyNotFoundException($"{saveFileType.Name} 인스턴스가 생성되지 않았습니다.");
+                }
+
+                if (prevFile == newFile)
+                {
+                    continue;
+                }
+
+                string json = JsonUtility.ToJson(newFile);
+
+                if (File.Exists(savePath) == false)
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(savePath) ?? "");
+                }
+
+                File.WriteAllText(savePath, json);
+
+                prevFile = newFile;
+
+#if UNITY_EDITOR
+                DebugLogger.OnNext($"{saveFileType.Name} 세이브 완료!");
+#endif
+            }
+        }
+
+        private string TypeNameToSavePath(string saveFileName)
         {
 #if UNITY_EDITOR
             return Application.dataPath + "/EditorAseets/" + saveFileName + ".json";

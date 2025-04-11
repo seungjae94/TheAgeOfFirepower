@@ -98,7 +98,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 InventoryState.BuyItem(saleInfo);
                 
                 // 변경사항 저장
-                GameState.Inst.Save().Forget();
+                GameState.Inst.Save();
                 
                 currencyBar.SubscribeGoldChange();
             }

@@ -30,7 +30,7 @@ namespace Mathlife.ProjectL.Gameplay
                 throw new Exception($"[{nameof(ArtyRosterState)}] InventoryState is null.");
             }
 
-            if (GameState.Inst.saveDataManager.DoesSaveFileExist() && GameSettings.Inst.UseSaveFileIfAvailable)
+            if (GameState.Inst.saveDataManager.CanLoad() && GameSettings.Inst.UseSaveFileIfAvailable)
             {
                 LoadFromSaveFile();
             }
@@ -42,7 +42,7 @@ namespace Mathlife.ProjectL.Gameplay
             return UniTask.CompletedTask;
         }
 
-        protected override SaveFile SavedFile => SaveDataManager.artyRoster;
+        protected override SaveFile SavedFile => SaveDataManager.ArtyRoster;
 
         protected override SaveFile TakeSnapShot()
         {
@@ -83,7 +83,7 @@ namespace Mathlife.ProjectL.Gameplay
         // From Save File
         private void LoadFromSaveFile()
         {
-            ArtyRosterSaveFile artyRosterSaveFile = SaveDataManager.artyRoster;
+            ArtyRosterSaveFile artyRosterSaveFile = SaveDataManager.ArtyRoster;
 
             foreach (var artySaveData in artyRosterSaveFile.artyRoster)
             {

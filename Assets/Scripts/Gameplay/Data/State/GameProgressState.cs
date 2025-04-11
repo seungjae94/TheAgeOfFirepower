@@ -12,9 +12,9 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
         
         public override UniTask Load()
         {
-            if (GameState.Inst.saveDataManager.DoesSaveFileExist() && GameSettings.Inst.UseSaveFileIfAvailable)
+            if (GameState.Inst.saveDataManager.CanLoad() && GameSettings.Inst.UseSaveFileIfAvailable)
             {
-                var saveFile = SaveDataManager.gameProgress;
+                var saveFile = SaveDataManager.GameProgress;
                 unlockWorldRx.Value = saveFile.unlockWorld;
                 unlockStageRx.Value = saveFile.unlockStage;
                 return UniTask.CompletedTask;
@@ -26,7 +26,7 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
             return UniTask.CompletedTask;
         }
 
-        protected override SaveFile SavedFile => SaveDataManager.gameProgress;
+        protected override SaveFile SavedFile => SaveDataManager.GameProgress;
         protected override SaveFile TakeSnapShot()
         {
             return new GameProgressSaveFile

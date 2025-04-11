@@ -18,7 +18,7 @@ namespace Mathlife.ProjectL.Gameplay
                 mechPartInventory.Add((EMechPartType)type, new());
             }
 
-            if (GameState.Inst.saveDataManager.DoesSaveFileExist() && GameSettings.Inst.UseSaveFileIfAvailable)
+            if (GameState.Inst.saveDataManager.CanLoad() && GameSettings.Inst.UseSaveFileIfAvailable)
             {
                 LoadFromSaveFile();
             }
@@ -30,7 +30,7 @@ namespace Mathlife.ProjectL.Gameplay
             return UniTask.CompletedTask;
         }
 
-        protected override SaveFile SavedFile => SaveDataManager.inventory;
+        protected override SaveFile SavedFile => SaveDataManager.Inventory;
 
         protected override SaveFile TakeSnapShot()
         {
@@ -55,20 +55,20 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void LoadFromSaveFile()
         {
-            goldRx.Value = SaveDataManager.inventory.gold;
-            diamondRx.Value = SaveDataManager.inventory.diamond;
+            goldRx.Value = SaveDataManager.Inventory.gold;
+            diamondRx.Value = SaveDataManager.Inventory.diamond;
 
-            foreach (int equipmentId in SaveDataManager.inventory.mechParts)
+            foreach (int equipmentId in SaveDataManager.Inventory.mechParts)
             {
                 AddMechPart(equipmentId);
             }
 
-            foreach (var itemStack in SaveDataManager.inventory.materialItems)
+            foreach (var itemStack in SaveDataManager.Inventory.materialItems)
             {
                 AddCountableItemStack(EItemType.MaterialItem, itemStack.id, itemStack.amount);
             }
 
-            foreach (var itemStack in SaveDataManager.inventory.battleItems)
+            foreach (var itemStack in SaveDataManager.Inventory.battleItems)
             {
                 AddCountableItemStack(EItemType.BattleItem, itemStack.id, itemStack.amount);
             }

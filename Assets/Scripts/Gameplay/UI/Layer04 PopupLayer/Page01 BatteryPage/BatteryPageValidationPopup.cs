@@ -90,7 +90,7 @@ namespace Mathlife.ProjectL.Gameplay
             ArtyRosterState.BuildBestTeam();
 
             // 변경사항 저장
-            GameState.Inst.Save().Forget();
+            GameState.Inst.Save();
             
             CloseWithAnimation()
                 .ContinueWith(() => Presenter.Find<BatteryPage>().Close())

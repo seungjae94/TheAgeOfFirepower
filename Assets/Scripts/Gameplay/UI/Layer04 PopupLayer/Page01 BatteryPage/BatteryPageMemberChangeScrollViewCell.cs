@@ -71,7 +71,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
             ArtyRosterState.Battery.Add(BatteryPage.selectedSlotIndexRx.Value, arty);
             
             // 변경사항 저장
-            GameState.Inst.Save().Forget();
+            GameState.Inst.Save();
             
             Presenter.Find<BatteryPageMemberChangePopup>().CloseWithAnimation().Forget();
         }

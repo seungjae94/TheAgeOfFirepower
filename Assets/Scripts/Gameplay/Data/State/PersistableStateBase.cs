@@ -11,14 +11,14 @@ namespace Mathlife.ProjectL.Gameplay
         // Methods
         public abstract UniTask Load();
 
-        public async UniTask Save()
+        public void Save()
         {
             SaveFile snapShot = TakeSnapShot();
-            
-            if (SavedFile.Equals(snapShot))
+
+            if (SavedFile?.Equals(snapShot) ?? false)
                 return;
 
-            await SaveDataManager.Save(snapShot);
+            SaveDataManager.Save(snapShot).Forget();
         }
 
         protected abstract SaveFile SavedFile { get; }
