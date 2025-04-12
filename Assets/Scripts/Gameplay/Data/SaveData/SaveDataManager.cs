@@ -135,7 +135,7 @@ namespace Mathlife.ProjectL.Gameplay
         private string TypeNameToSavePath(string saveFileName)
         {
 #if UNITY_EDITOR
-            return Application.dataPath + "/EditorAseets/" + saveFileName + ".json";
+            return Application.dataPath + "/EditorAssets/" + saveFileName + ".json";
 #else
         return Application.persistentDataPath + saveFileName + ".json";
 #endif
