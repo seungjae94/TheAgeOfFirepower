@@ -1,9 +1,6 @@
-﻿using System;
-using Mathlife.ProjectL.Utils;
-using UniRx;
+﻿using Mathlife.ProjectL.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
@@ -11,7 +8,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
     {
         public override string PageName => "홈";
         
-        HomePageMenuBar menuBar;
+        // TODO: private UserProfile profile;
+        private HomePageMenuBar menuBar;
 
         public override void Initialize()
         {
@@ -23,7 +21,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         protected override void OnOpen()
         {
             // Overlay
-            // TODO: UserInfo 구현 및 Open
             Find<CurrencyBar>().Activate();
             
             // 뷰 초기화

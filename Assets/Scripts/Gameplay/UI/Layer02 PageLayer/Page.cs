@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
@@ -15,7 +16,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private static readonly Stack<PageHistory> s_historyStack = new();
         public static Page CurrentPage { get; private set; }
         private static IMainCanvas CurrentCanvas => GameManager.Inst.CurrentCanvas; 
- 
+        
+        // Field
+        [SerializeField]
+        protected AudioClip bgm;
+        
         public void Open()
         {
             // 히스토리 백업
@@ -44,6 +49,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             // 페이지 콜백
             OnOpen();
+            
+            // BGM 재생
+            AudioManager.Inst.PlayBGM(bgm);
         }
         
         public void Close()
@@ -68,6 +76,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             // 페이지 콜백
             CurrentPage.OnOpen();
+            
+            // BGM 재생
+            AudioManager.Inst.PlayBGM(CurrentPage.bgm);
         }
 
         protected abstract void OnOpen();

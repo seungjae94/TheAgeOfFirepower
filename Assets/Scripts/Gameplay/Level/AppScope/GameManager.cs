@@ -82,7 +82,7 @@ namespace Mathlife.ProjectL.Gameplay
             LoadingScreenManager.Inst.Hide();
         }
 
-        public async UniTaskVoid ChangeScene(string sceneName)
+        public async UniTask ChangeScene(string sceneName)
         {
             LoadingScreenManager.Inst.Show();
             PrevSceneName = currentScene.name;

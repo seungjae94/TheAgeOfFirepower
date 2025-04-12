@@ -21,7 +21,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         // Field
         private readonly CompositeDisposable disposables = new();
-
+        
         // State - Selected Slot Index
         public readonly ReactiveProperty<int> selectedSlotIndexRx = new(-1);
 

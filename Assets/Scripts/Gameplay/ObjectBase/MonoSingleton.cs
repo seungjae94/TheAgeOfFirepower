@@ -6,6 +6,7 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
     {
         App,
         Scene,
+        Inherit = Scene
     }
     
     /// <summary>

@@ -4,8 +4,6 @@ using Mathlife.ProjectL.Gameplay.ObjectBase;
 using Mathlife.ProjectL.Utils;
 using UniRx;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay
@@ -46,7 +44,12 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void OnClickGameStartButton()
         {
-            GameManager.Inst.ChangeScene(SceneNames.LobbyScene).Forget();
+            float currentBGMVolume = AudioManager.Inst.BGMVolume;
+            AudioManager.Inst.SetBGMVolume(currentBGMVolume / 2f);
+            
+            GameManager.Inst.ChangeScene(SceneNames.LobbyScene)
+                .ContinueWith(() => AudioManager.Inst.SetBGMVolume(currentBGMVolume))
+                .Forget();
         }
     }
 }
