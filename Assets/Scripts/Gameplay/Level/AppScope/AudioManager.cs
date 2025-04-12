@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -36,21 +37,33 @@ namespace Mathlife.ProjectL.Gameplay
             bgmSource.Play();
         }
 
-        public void PlaySE(AudioClip clip)
+        public void PlaySE(AudioClip clip, bool muteBGM = false)
         {
-            bgmSource.PlayOneShot(clip, SEVolume);
+            if (muteBGM)
+            {
+                MuteBGM();
+            }
+            
+            seSource.PlayOneShot(clip, SEVolume);
+
+            if (muteBGM)
+            {
+                UniTask.Delay(Mathf.CeilToInt(clip.length * 1000))
+                    .ContinueWith(UnmuteBGM)
+                    .Forget();
+            }
         }
 
         public void SetBGMVolume(float volume)
         {
             float clamped = Mathf.Clamp(volume, 0.001f, 1f);
-            audioMixer.SetFloat("BGM", Mathf.Log10(clamped) * MAX_DECIBEL);
+            audioMixer.SetFloat("BGM.Volume", Mathf.Log10(clamped) * MAX_DECIBEL);
         }
         
         public void SetSEVolume(float volume)
         {
             float clamped = Mathf.Clamp(volume, 0.001f, 1f);
-            audioMixer.SetFloat("SE", Mathf.Log10(clamped) * MAX_DECIBEL);
+            audioMixer.SetFloat("SE.Volume", Mathf.Log10(clamped) * MAX_DECIBEL);
         }
 
         public void MuteBGM()

@@ -30,11 +30,20 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField]
         private Button backToLobbyButton; 
         
+        // Audio
+        [SerializeField]
+        private AudioClip winSE;
+        
+        [SerializeField]
+        private AudioClip loseSE;
+        
         // Field
         private readonly CompositeDisposable disposables = new();
         
         private bool didWin = true;
         private StageGameData stageGameData;
+        
+        private float bgmVolume = 1f;
         
         public void Setup(bool didWin, StageGameData stageGameData)
         {
@@ -48,6 +57,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
             BlurPopup blurPopup = Find<BlurPopup>();
             blurPopup.transform.SetSiblingIndex(transform.GetSiblingIndex() - 1);
             await blurPopup.OpenWithAnimation();
+            
+            // 볼륨 조절
+            bgmVolume = AudioManager.Inst.BGMVolume;
+            AudioManager.Inst.SetBGMVolume(Mathf.Min(bgmVolume, 0.25f));
             
             // 뷰 초기화
             if (didWin)
@@ -83,6 +96,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void InitializeWinView()
         {
+            // SE 재생
+            AudioManager.Inst.PlaySE(winSE);
+            
             // 실제 승리 처리
             InventoryState inventoryState = GameState.Inst.inventoryState;
             var rewardList = stageGameData.rewardList;
@@ -135,6 +151,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         private void InitializeLoseView()
         {
+            // SE 재생
+            AudioManager.Inst.PlaySE(loseSE);
+            
             titleText.text = "LOSE";
             winBoxObject.SetActive(false);
             loseBoxObject.SetActive(true);
@@ -144,7 +163,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             PlaySceneGameMode.Inst.Clear();
             await UniTask.NextFrame();
-            GameManager.Inst.ChangeScene(SceneNames.LobbyScene).Forget();
+            GameManager.Inst.ChangeScene(SceneNames.LobbyScene)
+                .ContinueWith(() => AudioManager.Inst.SetBGMVolume(bgmVolume))
+                .Forget();
         }
     }
 }
