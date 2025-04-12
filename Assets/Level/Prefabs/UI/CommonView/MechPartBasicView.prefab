@@ -354,6 +354,7 @@ MonoBehaviour:
   uiEffect: {fileID: 4845781171874480356}
   iconImage: {fileID: 7460670899712009776}
   nameText: {fileID: 2667547182029168977}
+  descriptionScrollRect: {fileID: 2510332450648708715}
   descriptionText: {fileID: 4359735562568954784}
   ownerViewGameObject: {fileID: 3698167828658209615}
   ownerPortraitImage: {fileID: 4480813606029358645}
