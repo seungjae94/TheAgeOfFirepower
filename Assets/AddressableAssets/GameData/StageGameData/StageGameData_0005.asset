@@ -25,14 +25,15 @@ MonoBehaviour:
   id: 5
   worldNo: 1
   stageNo: 6
+  bgm: {fileID: 8300000, guid: 715b39583603edd43b1f5e84536b0b57, type: 3}
   mapSprite: {fileID: 21300000, guid: 85eeb9789afa00e44bd24929208f6965, type: 3}
-  spawnXs:
-  - 2.5
-  - 4.5
-  - 6.5
-  - 13.5
-  - 15.5
-  - 17.5
+  spawnPositions:
+  - {x: 3, y: 4.5}
+  - {x: 5.7, y: 8.7}
+  - {x: 9.1, y: 6.7}
+  - {x: 11.3, y: 8.4}
+  - {x: 14.55, y: 9}
+  - {x: 18, y: 4.4}
   enemyList:
   - artyGameData: {fileID: 11400000, guid: 48c279c9dce38bc43b64dd31913d0294, type: 2}
     level: 10

@@ -4,6 +4,7 @@ using Mathlife.ProjectL.Gameplay.Play;
 using Mathlife.ProjectL.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
 using Sirenix.OdinInspector.Editor;
@@ -86,14 +87,19 @@ namespace Mathlife.ProjectL.Gameplay
         [HorizontalGroup("Stage/No", Width = 100, Gap = 25)]
         public int stageNo;
 
+                [LabelWidth(100)]
+                [LabelText("BGM")]
+                public AudioClip bgm;
+        
         [LabelWidth(100)]
         [PreviewField(ObjectFieldAlignment.Left, Height = 400)]
         public Sprite mapSprite;
-
+        
+        [FormerlySerializedAs("spawnXs")]
         [LabelWidth(100)]
         [LabelText("스폰 위치")]
         [ListDrawerSettings(ShowFoldout = false)]
-        public List<float> spawnXs = new(); 
+        public List<Vector2> spawnPositions = new(); 
         
 #if UNITY_EDITOR
         [SpaceOnly(25)]

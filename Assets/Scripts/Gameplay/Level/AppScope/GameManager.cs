@@ -85,6 +85,7 @@ namespace Mathlife.ProjectL.Gameplay
         public async UniTask ChangeScene(string sceneName)
         {
             LoadingScreenManager.Inst.Show();
+            AudioManager.Inst.MuteBGM();
             PrevSceneName = currentScene.name;
 
             // 기존 씬 언로드 & 새로운 씬 로드
@@ -103,6 +104,7 @@ namespace Mathlife.ProjectL.Gameplay
             await CurrentGameMode.InitializeScene(sceneInitProgress);
 
             LoadingScreenManager.Inst.Hide();
+            AudioManager.Inst.UnmuteBGM();
         }
 
         private IProgress<float> CreateProgress(float start, float end)

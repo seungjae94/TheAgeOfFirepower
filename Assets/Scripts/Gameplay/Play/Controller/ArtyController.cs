@@ -147,8 +147,18 @@ namespace Mathlife.ProjectL.Gameplay.Play
             clockWise = IsPlayer;
 
             // 물리 세팅
-            prevTangent = IsPlayer ? Vector2.right : Vector2.left;
-            prevNormal = Vector2.up;
+            DestructibleTerrain.Inst.VerticalSnapToSurface(transform.position, out Vector2 surfacePosition);
+            transform.position = surfacePosition;
+            
+            bool extractResult = DestructibleTerrain.Inst.ExtractNormalTangent(surfacePosition,  out Vector2 extNormal, out Vector2 extTangent);
+
+            if (extractResult)
+            {
+                prevNormal = extNormal;
+                prevTangent = clockWise ? extTangent : -extTangent;
+            }
+            
+            UpdateRotation();
 
             // 상태 초기화
             maxHp = artyModel.GetMaxHp();
@@ -174,9 +184,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
             fireGuideArrow.Off();
             SetFireAngle(0);
             SetFirePower(50);
-
-            DestructibleTerrain.Inst.VerticalSnapToSurface(transform.position, out Vector2 surfacePosition);
-            transform.position = surfacePosition;
             
             // 준비 완료
             Ready = true;

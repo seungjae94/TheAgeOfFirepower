@@ -20,7 +20,7 @@ namespace Mathlife.ProjectL.Gameplay
         private AudioSource seSource;
         
         public float BGMVolume => bgmSource.volume;
-        public float SEVolume { get; private set; } = 1f;
+        public float SEVolume => seSource.volume;
 
         protected override void OnRegistered()
         {
@@ -43,14 +43,24 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void SetBGMVolume(float volume)
         {
-            float clamped = Mathf.Clamp(volume, 0f, 1f);
+            float clamped = Mathf.Clamp(volume, 0.001f, 1f);
             audioMixer.SetFloat("BGM", Mathf.Log10(clamped) * MAX_DECIBEL);
         }
         
         public void SetSEVolume(float volume)
         {
-            float clamped = Mathf.Clamp(volume, 0f, 1f);
+            float clamped = Mathf.Clamp(volume, 0.001f, 1f);
             audioMixer.SetFloat("SE", Mathf.Log10(clamped) * MAX_DECIBEL);
+        }
+
+        public void MuteBGM()
+        {
+            bgmSource.mute = true;
+        }
+
+        public void UnmuteBGM()
+        {
+            bgmSource.mute = false;
         }
     }
 }

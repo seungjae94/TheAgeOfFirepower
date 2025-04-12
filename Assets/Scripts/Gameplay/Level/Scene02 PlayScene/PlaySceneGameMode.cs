@@ -82,7 +82,7 @@ namespace Mathlife.ProjectL.Gameplay
             void InstantiateBattler(int spawnIndex, ArtyModel arty, Enemy enemy)
             {
                 GameObject inst = Instantiate(arty.BattlerPrefab);
-                inst.transform.position = new Vector3(stageGameData.spawnXs[spawnIndex], 15f, 0f);
+                inst.transform.position = stageGameData.spawnPositions[spawnIndex];
                 var battler = inst.GetComponent<ArtyController>();
                 battler.Setup(arty, enemy);
                 battlers.Add(battler);
@@ -142,12 +142,15 @@ namespace Mathlife.ProjectL.Gameplay
             Presenter.Find<MoveHUD>().Activate();
             Presenter.Find<ItemHUD>().Activate();
             progress.Report(0.99f);
-
+            
             // 5. 딜레이
             await UniTask.Delay(100);
             progress.Report(1.0f);
 
-            // 6. 배틀 루프 시작
+            // 6. BGM 재생
+            AudioManager.Inst.PlayBGM(stageGameData.bgm);
+            
+            // 7. 배틀 루프 시작
             BattleLoop().Forget();
         }
 

@@ -44,11 +44,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void OnClickGameStartButton()
         {
-            float currentBGMVolume = AudioManager.Inst.BGMVolume;
-            AudioManager.Inst.SetBGMVolume(currentBGMVolume / 2f);
-            
             GameManager.Inst.ChangeScene(SceneNames.LobbyScene)
-                .ContinueWith(() => AudioManager.Inst.SetBGMVolume(currentBGMVolume))
                 .Forget();
         }
     }
