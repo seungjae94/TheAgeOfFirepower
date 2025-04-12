@@ -97,7 +97,14 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private void InitializeWinView()
         {
             // SE 재생
+            AudioManager.Inst.PauseBGM();
             AudioManager.Inst.PlaySE(winSE);
+            UniTask.Delay((int)(winSE.length * 1000))
+                .ContinueWith(() =>
+                {
+                    AudioManager.Inst.ResumeBGM();
+                })
+                .Forget();
             
             // 실제 승리 처리
             InventoryState inventoryState = GameState.Inst.inventoryState;
@@ -152,7 +159,14 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private void InitializeLoseView()
         {
             // SE 재생
+            AudioManager.Inst.PauseBGM();
             AudioManager.Inst.PlaySE(loseSE);
+            UniTask.Delay((int)(winSE.length * 1000))
+                .ContinueWith(() =>
+                {
+                    AudioManager.Inst.ResumeBGM();
+                })
+                .Forget();
             
             titleText.text = "LOSE";
             winBoxObject.SetActive(false);
@@ -161,6 +175,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private async UniTaskVoid OnClickButton()
         {
+            AudioManager.Inst.StopSE();
+            AudioManager.Inst.ResumeBGM();
             PlaySceneGameMode.Inst.Clear();
             await UniTask.NextFrame();
             GameManager.Inst.ChangeScene(SceneNames.LobbyScene)

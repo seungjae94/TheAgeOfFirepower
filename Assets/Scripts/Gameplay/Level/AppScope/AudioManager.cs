@@ -37,21 +37,24 @@ namespace Mathlife.ProjectL.Gameplay
             bgmSource.Play();
         }
 
-        public void PlaySE(AudioClip clip, bool muteBGM = false)
+        public void PlaySE(AudioClip clip)
         {
-            if (muteBGM)
-            {
-                MuteBGM();
-            }
-            
             seSource.PlayOneShot(clip, SEVolume);
+        }
+        
+        public void StopSE()
+        {
+            seSource.Stop();
+        }
 
-            if (muteBGM)
-            {
-                UniTask.Delay(Mathf.CeilToInt(clip.length * 1000))
-                    .ContinueWith(UnmuteBGM)
-                    .Forget();
-            }
+        public void PauseBGM()
+        {
+            bgmSource.Pause();
+        }
+        
+        public void ResumeBGM()
+        {
+            bgmSource.UnPause();
         }
 
         public void SetBGMVolume(float volume)
