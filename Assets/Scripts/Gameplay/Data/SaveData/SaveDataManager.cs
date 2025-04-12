@@ -95,7 +95,7 @@ namespace Mathlife.ProjectL.Gameplay
         }
 
         // Consumer
-        private void SaveTask(Type saveFileType)
+        private async UniTaskVoid SaveTask(Type saveFileType)
         {
             string savePath = savePaths[saveFileType];
 
@@ -111,6 +111,7 @@ namespace Mathlife.ProjectL.Gameplay
 
                 if (prevFile == newFile)
                 {
+                    await UniTask.Yield();
                     continue;
                 }
 
