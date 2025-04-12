@@ -86,6 +86,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             LoadingScreenManager.Inst.Show();
             AudioManager.Inst.MuteBGM();
+            AudioManager.Inst.PauseBGM();
             PrevSceneName = currentScene.name;
 
             // 기존 씬 언로드 & 새로운 씬 로드
@@ -105,6 +106,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             LoadingScreenManager.Inst.Hide();
             AudioManager.Inst.UnmuteBGM();
+            AudioManager.Inst.ReplayBGM();
         }
 
         private IProgress<float> CreateProgress(float start, float end)

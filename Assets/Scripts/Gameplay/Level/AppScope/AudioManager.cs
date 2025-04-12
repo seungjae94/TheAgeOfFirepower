@@ -37,6 +37,11 @@ namespace Mathlife.ProjectL.Gameplay
             bgmSource.Play();
         }
 
+        public void ReplayBGM()
+        {
+            bgmSource.Play();
+        }
+
         public void PlaySE(AudioClip clip)
         {
             seSource.PlayOneShot(clip, SEVolume);
