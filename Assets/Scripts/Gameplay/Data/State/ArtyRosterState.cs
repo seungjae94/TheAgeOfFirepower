@@ -10,10 +10,6 @@ namespace Mathlife.ProjectL.Gameplay
 {
     public class ArtyRosterState : PersistableStateBase
     {
-        // Alias
-        private SaveDataManager SaveDataManager => GameState.Inst.saveDataManager;
-        private GameDataLoader GameDataLoader => GameState.Inst.gameDataLoader;
-
         // Field
         private readonly ReactiveCollection<ArtyModel> artyList = new();
         public ArtyModel this[int index] => artyList[index];
