@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a21c8042fb744d0843da48588ba1beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <UseSaveFileIfAvailable>k__BackingField: 1
+  useSaveFileIfAvailable: 1
 --- !u!1 &1213419288
 GameObject:
   m_ObjectHideFlags: 0

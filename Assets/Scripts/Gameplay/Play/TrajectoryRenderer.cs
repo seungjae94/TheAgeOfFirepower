@@ -18,6 +18,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             base.OnRegistered();
 
             lineRenderer = gameObject.GetComponent<LineRenderer>();
+            Off();
         }
 
         public void Draw(List<Vector3> positions)
@@ -26,12 +27,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
             lineRenderer.SetPositions(positions.ToArray());
         }
 
-        public void Show()
+        public void On()
         {
             lineRenderer.enabled = true;
         }
 
-        public void Hide()
+        public void Off()
         {
             lineRenderer.enabled = false;
         }

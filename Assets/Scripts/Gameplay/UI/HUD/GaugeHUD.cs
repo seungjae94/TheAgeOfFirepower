@@ -107,8 +107,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnPowerSliderValueChanged(float power)
         {
-            // 1 ~ 100
-            int iPower = Mathf.RoundToInt(1 + power * 99);
+            // 10 ~ 100
+            int iPower = Mathf.RoundToInt(10 + power * 90);
             powerText.text = iPower.ToString();
 
             TurnOwner?.SetFirePower(iPower);

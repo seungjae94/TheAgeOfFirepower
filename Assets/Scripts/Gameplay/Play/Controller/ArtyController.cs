@@ -28,8 +28,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private BehaviorGraphAgent behaviorGraphAgent;
         
+        [FormerlySerializedAs("fireGuideArrow")]
         [SerializeField]
-        private FireGuideArrowRenderer fireGuideArrow;
+        private FireVelocityRenderer fireVelocityRenderer;
 
         [SerializeField]
         private GameObject battlerCanvasGameObject;
@@ -84,7 +85,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 #endif
 
         // Field
-        public Vector3 FirePoint => fireGuideArrow.transform.position;
+        public Vector3 FirePoint => fireVelocityRenderer.transform.position;
         
         private GameObject doubleFireParticleInstance;
         private int fireChance = 1;
@@ -181,8 +182,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 behaviorGraphAgent.SetVariableValue("Enemy Attack Targeting Strategy", enemy!.targetingStrategy);
             }
             
-            fireGuideArrow.Setup();
-            fireGuideArrow.Off();
+            fireVelocityRenderer.Setup();
+            fireVelocityRenderer.Off();
             SetFireAngle(0);
             SetFirePower(50);
             
@@ -201,12 +202,19 @@ namespace Mathlife.ProjectL.Gameplay.Play
             fireChance = 1;
 
             // Enable UI
-            fireGuideArrow.On();
             turnMarker.sprite = IsPlayer ? playerTurnSprite : enemyTurnSprite;
             turnMarker.enabled = true;
 
             if (IsPlayer)
             {
+                if (GameState.Inst.gameSettingState.drawTrajectory.Value)
+                {
+                    TrajectoryRenderer.Inst.On();   
+                }
+                else
+                {
+                    fireVelocityRenderer.On();
+                }
                 Presenter.Find<GaugeHUD>().Enable();
                 Presenter.Find<MoveHUD>().Enable();
                 Presenter.Find<ItemHUD>().Enable();
@@ -376,11 +384,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 ? Vector3.SignedAngle(Vector3.right, prevTangent, Vector3.forward)
                 : Vector3.SignedAngle(Vector3.left, prevTangent, Vector3.forward);
             spriteRenderer.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-
-            SetFireAngle(FireAngle);
-            DrawTrajectory();
-
-            DrawTangentNormal();
+            
+            DrawFire();
         }
 
         private void Slide(float axis)
@@ -478,20 +483,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public void SetFireAngle(int angle)
         {
             FireAngle = angle;
-
-            DrawTrajectory();
-            // if (clockWise)
-            //     fireGuideArrow.SetAngle(angle);
-            // else
-            //     fireGuideArrow.SetAngle(180f - angle);
+            DrawFire();
         }
 
         public void SetFirePower(int power)
         {
             FirePower = power;
-
-            DrawTrajectory();
-            //fireGuideArrow.SetPower(power);
+            DrawFire();
         }
 
         private Vector3 GetFireVelocity()
@@ -500,24 +498,41 @@ namespace Mathlife.ProjectL.Gameplay.Play
             return shellMaxSpeed * (0.1f + 0.9f * FirePower / 100f) * direction.normalized;
         }
 
+        private void DrawFire()
+        {
+            if (GameState.Inst.gameSettingState.drawTrajectory.Value)
+            {
+                DrawTrajectory();
+            }
+            else
+            {
+                fireVelocityRenderer.Draw(clockWise, FireAngle, FirePower);   
+            }
+        }
+        
         private void DrawTrajectory()
         {
+            if (GameState.Inst.gameSettingState.drawTrajectory.Value == false)
+                return;
+            
             Vector3 velocity = GetFireVelocity();
 
+            const int SAMPLING_INTERVAL = 3;
             List<Vector3> positions = new();
             positions.Add(FirePoint);
             while (positions.Count < 1000)
             {
                 var position = positions[^1];
-                position += velocity * Time.deltaTime;
-                velocity += Physics.gravity * Time.deltaTime;
-                positions.Add(position);
+                position += velocity * (Time.deltaTime * SAMPLING_INTERVAL);
+                velocity += Physics.gravity * (Time.deltaTime * SAMPLING_INTERVAL);
 
                 if (DestructibleTerrain.Inst.InFairArea(position) == false 
                     || DestructibleTerrain.Inst.InGround(position))
                 {
                     break;
                 }
+                
+                positions.Add(position);
             }
             TrajectoryRenderer.Inst.Draw(positions);
         }
@@ -560,7 +575,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private void DisableUIAndHUD()
         {
             // Disable UI and HUD
-            fireGuideArrow.Off();
+            fireVelocityRenderer.Off();
+            TrajectoryRenderer.Inst.Off();
             Presenter.Find<GaugeHUD>().Disable();
             Presenter.Find<MoveHUD>().Disable();
             Presenter.Find<ItemHUD>().Disable();
@@ -617,7 +633,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             
             await DisposeVFX(destroyParticleInstance.GetComponent<ParticleSystem>());
             
-            fireGuideArrow.Off();
+            fireVelocityRenderer.Off();
             battlerCanvasGameObject.SetActive(false);
             
             GameObject smokeParticleInstance = Instantiate(smokeVFXPrefab, spriteRenderer.transform);
@@ -628,18 +644,5 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (HasTurn)
                 HasTurn = false;
         }
-        
-#if UNITY_EDITOR
-        private void DrawTangentNormal()
-        {
-            if (drawTangentNormal == false)
-                return;
-
-            DebugLineRenderer.Inst.DrawLine((Vector2)transform.position, (Vector2)transform.position + prevTangent,
-                Color.red, 0.01f);
-            DebugLineRenderer.Inst.DrawLine((Vector2)transform.position, (Vector2)transform.position + prevNormal,
-                Color.green, 0.01f);
-        }
-#endif
     }
 }
