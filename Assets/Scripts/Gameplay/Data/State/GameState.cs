@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.Gameplay.Data.Model;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
@@ -14,10 +17,13 @@ namespace Mathlife.ProjectL.Gameplay
         public readonly SaveDataManager saveDataManager = new();
 
         // Persistable
-        public readonly ArtyRosterState artyRosterState = new();
+        private List<PersistableStateBase> persistableStates = new();
         public readonly InventoryState inventoryState = new();
+        public readonly ArtyRosterState artyRosterState = new();
         public readonly GameProgressState gameProgressState = new();
-
+        public readonly GameSettingState gameSettingState = new();
+        
+        
         // Non-persistable
         public readonly BattleState battleState = new();
         private SaveFile snapShot;
@@ -29,23 +35,26 @@ namespace Mathlife.ProjectL.Gameplay
             
             await saveDataManager.Load();
             progress.Report(0.8f);
+            
+            foreach (FieldInfo field in typeof(GameState).GetFields().OrderBy(field => field.MetadataToken))
+            {
+                if (false == field.FieldType.IsSubclassOf(typeof(PersistableStateBase)))
+                    continue;
 
-            await gameProgressState.Load();
-            await inventoryState.Load();
-            await artyRosterState.Load();
+                var state = (PersistableStateBase) field.GetValue(this);
+                await state.Load();
+                persistableStates.Add(state);
+            }
+            
             progress.Report(1f);
         }
 
         public void Save()
         {
-            inventoryState.Save();
-            artyRosterState.Save();
-            gameProgressState.Save();
-        }
-
-        private void OnApplicationQuit()
-        {
-            
+            foreach (var state in persistableStates)
+            {
+                state.Save();
+            }
         }
     }
 }

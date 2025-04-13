@@ -18,7 +18,8 @@ namespace Mathlife.ProjectL.Gameplay
         public ArtyRosterSaveFile ArtyRoster => saveFiles[typeof(ArtyRosterSaveFile)] as ArtyRosterSaveFile;
         public InventorySaveFile Inventory => saveFiles[typeof(InventorySaveFile)] as InventorySaveFile;
         public GameProgressSaveFile GameProgress => saveFiles[typeof(GameProgressSaveFile)] as GameProgressSaveFile;
-
+        public GameSettingSaveFile GameSetting => saveFiles[typeof(GameSettingSaveFile)] as GameSettingSaveFile;
+        
 #if UNITY_EDITOR
         private static readonly Subject<string> DebugLogger = new();
 #endif

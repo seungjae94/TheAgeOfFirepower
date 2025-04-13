@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Mathlife.ProjectL.Gameplay.UI;
@@ -377,6 +378,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             spriteRenderer.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
             SetFireAngle(FireAngle);
+            DrawTrajectory();
 
             DrawTangentNormal();
         }
@@ -477,16 +479,47 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             FireAngle = angle;
 
-            if (clockWise)
-                fireGuideArrow.SetAngle(angle);
-            else
-                fireGuideArrow.SetAngle(180f - angle);
+            DrawTrajectory();
+            // if (clockWise)
+            //     fireGuideArrow.SetAngle(angle);
+            // else
+            //     fireGuideArrow.SetAngle(180f - angle);
         }
 
         public void SetFirePower(int power)
         {
             FirePower = power;
-            fireGuideArrow.SetPower(power);
+
+            DrawTrajectory();
+            //fireGuideArrow.SetPower(power);
+        }
+
+        private Vector3 GetFireVelocity()
+        {
+            Vector2 direction = Quaternion.Euler(0, 0, clockWise ? FireAngle : -FireAngle) * prevTangent;
+            return shellMaxSpeed * (0.1f + 0.9f * FirePower / 100f) * direction.normalized;
+        }
+
+        private void DrawTrajectory()
+        {
+            Vector3 velocity = GetFireVelocity();
+
+            List<Vector3> positions = new();
+            positions.Add(FirePoint);
+            while (positions.Count < 1000)
+            {
+                var position = positions[^1];
+                position += velocity * Time.deltaTime;
+                velocity += Physics.gravity * Time.deltaTime;
+                positions.Add(position);
+
+                if (DestructibleTerrain.Inst.InFairArea(position) == false 
+                    || DestructibleTerrain.Inst.InGround(position))
+                {
+                    break;
+                }
+            }
+            TrajectoryRenderer.Inst.Draw(positions);
         }
 
         public void Fire()
@@ -499,12 +532,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
             --fireChance;
             
             GameObject shellGameObject = Instantiate(Model.Shell.prefab);
-            shellGameObject.transform.position = fireGuideArrow.transform.position;
+            shellGameObject.transform.position = FirePoint;
 
             IShell shell = shellGameObject.GetComponent<IShell>();
             shell.Init(this);
 
-            Vector2 shellVelocity = fireGuideArrow.GetVelocity() * shellMaxSpeed;
+            Vector2 shellVelocity = GetFireVelocity();
             shell.Fire(shellVelocity);
             
             // 카메라가 포탄을 추적하도록 변경

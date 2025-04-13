@@ -26,7 +26,7 @@ namespace Mathlife.ProjectL.Gameplay
                 throw new Exception($"[{nameof(ArtyRosterState)}] InventoryState is null.");
             }
 
-            if (GameState.Inst.saveDataManager.CanLoad() && GameSettings.Inst.UseSaveFileIfAvailable)
+            if (GameState.Inst.saveDataManager.CanLoad() && DebugSettings.Inst.UseSaveFileIfAvailable)
             {
                 LoadFromSaveFile();
             }

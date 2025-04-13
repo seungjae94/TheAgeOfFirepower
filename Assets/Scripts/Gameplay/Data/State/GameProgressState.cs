@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using UniRx;
-using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
 {
@@ -12,7 +11,7 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
         
         public override UniTask Load()
         {
-            if (GameState.Inst.saveDataManager.CanLoad() && GameSettings.Inst.UseSaveFileIfAvailable)
+            if (GameState.Inst.saveDataManager.CanLoad() && DebugSettings.Inst.UseSaveFileIfAvailable)
             {
                 var saveFile = SaveDataManager.GameProgress;
                 unlockWorldRx.Value = saveFile.unlockWorld;

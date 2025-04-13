@@ -18,7 +18,7 @@ namespace Mathlife.ProjectL.Gameplay
                 mechPartInventory.Add((EMechPartType)type, new());
             }
 
-            if (GameState.Inst.saveDataManager.CanLoad() && GameSettings.Inst.UseSaveFileIfAvailable)
+            if (GameState.Inst.saveDataManager.CanLoad() && DebugSettings.Inst.UseSaveFileIfAvailable)
             {
                 LoadFromSaveFile();
             }

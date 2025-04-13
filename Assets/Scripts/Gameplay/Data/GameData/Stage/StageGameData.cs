@@ -30,12 +30,12 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("이동 전략")]
         [LabelWidth(75)]
         public MoveStrategy moveStrategy;
-        
+
         [HorizontalGroup("Strategy", Gap = 25, Width = 225)]
         [LabelText("타겟팅 전략")]
         [LabelWidth(75)]
         public AttackTargetingStrategy targetingStrategy;
-        
+
 #if UNITY_EDITOR
         private Sprite GetPreview()
         {
@@ -87,20 +87,20 @@ namespace Mathlife.ProjectL.Gameplay
         [HorizontalGroup("Stage/No", Width = 100, Gap = 25)]
         public int stageNo;
 
-                [LabelWidth(100)]
-                [LabelText("BGM")]
-                public AudioClip bgm;
-        
+        [LabelWidth(100)]
+        [LabelText("BGM")]
+        public AudioClip bgm;
+
         [LabelWidth(100)]
         [PreviewField(ObjectFieldAlignment.Left, Height = 400)]
         public Sprite mapSprite;
-        
+
         [FormerlySerializedAs("spawnXs")]
         [LabelWidth(100)]
         [LabelText("스폰 위치")]
         [ListDrawerSettings(ShowFoldout = false)]
-        public List<Vector2> spawnPositions = new(); 
-        
+        public List<Vector2> spawnPositions = new();
+
 #if UNITY_EDITOR
         [SpaceOnly(25)]
         private bool _dummy0;
@@ -111,7 +111,7 @@ namespace Mathlife.ProjectL.Gameplay
         [ListDrawerSettings(ShowFoldout = false)]
         [PropertySpace(SpaceBefore = 25)]
         public List<Enemy> enemyList = new();
-        
+
 #if UNITY_EDITOR
         [SpaceOnly(25)]
         private bool _dummy1;
