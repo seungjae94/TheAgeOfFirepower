@@ -75,22 +75,22 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private async UniTaskVoid BuyItemAsync()
         {
-            CurrencyBar currencyBar = Presenter.Find<CurrencyBar>();
+            TopBar topBar = Presenter.Find<TopBar>();
 
-            await UniTask.WaitWhile(currencyBar, pCurrencyBar => pCurrencyBar.IsDiamondTweening == true);
+            await UniTask.WaitWhile(topBar, pCurrencyBar => pCurrencyBar.IsDiamondTweening == true);
 
             bool canBuy = InventoryState.CanBuyByDiamond(saleInfo.price, saleInfo.amount);
             if (canBuy)
             {
                 long doTarget = InventoryState.Diamond - saleInfo.price;
-                await currencyBar.DODiamond(doTarget);
+                await topBar.DODiamond(doTarget);
 
                 InventoryState.BuyArty(saleInfo);
                 
                 // 변경사항 저장
                 GameState.Inst.Save();
                 
-                currencyBar.SubscribeDiamondChange();
+                topBar.SubscribeDiamondChange();
             }
             else
             {

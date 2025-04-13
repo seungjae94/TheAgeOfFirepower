@@ -84,23 +84,23 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private async UniTaskVoid BuyItemAsync()
         {
-            CurrencyBar currencyBar = Presenter.Find<CurrencyBar>();
+            TopBar topBar = Presenter.Find<TopBar>();
             
-            await UniTask.WaitWhile(currencyBar, pCurrencyBar => pCurrencyBar.IsGoldTweening == true);
+            await UniTask.WaitWhile(topBar, pCurrencyBar => pCurrencyBar.IsGoldTweening == true);
             
             bool canBuy = InventoryState.CanBuyByGold(saleInfo.price, saleInfo.amount);
             if (canBuy)
             {
 
                 long doTarget = InventoryState.Gold - saleInfo.price;
-                await currencyBar.DOGold(doTarget);
+                await topBar.DOGold(doTarget);
 
                 InventoryState.BuyItem(saleInfo);
                 
                 // 변경사항 저장
                 GameState.Inst.Save();
                 
-                currencyBar.SubscribeGoldChange();
+                topBar.SubscribeGoldChange();
             }
             else
             {

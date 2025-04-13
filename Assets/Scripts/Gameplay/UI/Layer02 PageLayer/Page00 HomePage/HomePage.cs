@@ -18,7 +18,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         protected override void OnOpen()
         {
             // Overlay
-            Find<CurrencyBar>().Activate();
+            Find<TopBar>().Activate();
             
             // 뷰 초기화
             profile.Draw();

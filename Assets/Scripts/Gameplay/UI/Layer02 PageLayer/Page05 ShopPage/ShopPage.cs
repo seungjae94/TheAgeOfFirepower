@@ -36,7 +36,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             // Overlay
             Find<NavigateBackOverlay>().Activate();
-            Find<CurrencyBar>().Activate();
+            Find<TopBar>().Activate();
             
             // 뷰 초기화
             artyTabView.gameObject.SetActive(false);
