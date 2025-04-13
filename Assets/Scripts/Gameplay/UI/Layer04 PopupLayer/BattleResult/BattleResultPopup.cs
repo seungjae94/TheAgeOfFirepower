@@ -175,9 +175,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private async UniTaskVoid OnClickButton()
         {
-            AudioManager.Inst.StopSE();
-            AudioManager.Inst.ResumeBGM();
-            PlaySceneGameMode.Inst.Clear();
             await UniTask.NextFrame();
             GameManager.Inst.ChangeScene(SceneNames.LobbyScene)
                 .ContinueWith(() => AudioManager.Inst.SetBGMVolume(bgmVolume))

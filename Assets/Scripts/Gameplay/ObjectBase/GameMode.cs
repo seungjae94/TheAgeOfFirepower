@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay.UI;
 using Sirenix.Utilities;
@@ -11,11 +10,9 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
 {
     public interface IGameMode
     {
-        public UniTask PreInitializeGame();
-
-        public UniTask PostInitializeGame();
-
         public UniTask InitializeScene(IProgress<float> progress);
+
+        public UniTask ClearScene(IProgress<float> progress);
     }
 
     /// <typeparam name="TGameMode">게임 모드 타입 (ex: TitleSceneGameMode)</typeparam>
@@ -36,26 +33,20 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
     public abstract class GameMode<TGameMode> : MonoSingleton<TGameMode>, IGameMode
         where TGameMode : GameMode<TGameMode>
     {
-        public virtual UniTask PreInitializeGame()
-        {
-            return UniTask.CompletedTask;
-        }
-
-        public virtual UniTask PostInitializeGame()
-        {
-            return UniTask.CompletedTask;
-        }
-
         public virtual UniTask InitializeScene(IProgress<float> progress)
         {
-            Presenter.Clear();
-            
             IEnumerable<IInitializable> initializables = GameObject
                 .FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID)
                 .OfType<IInitializable>();
 
             initializables.ForEach(initializable => initializable.Initialize());
             
+            return UniTask.CompletedTask;
+        }
+
+        public virtual UniTask ClearScene(IProgress<float> progress)
+        {
+            Presenter.Clear();
             return UniTask.CompletedTask;
         }
     }

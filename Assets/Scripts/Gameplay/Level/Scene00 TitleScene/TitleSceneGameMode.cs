@@ -22,28 +22,26 @@ namespace Mathlife.ProjectL.Gameplay
             gameStartButtonCanvasGroup = gameStartButton.GetComponent<CanvasGroup>();
         }
 
-        public override UniTask PreInitializeGame()
+        void Start()
         {
             gameStartButtonCanvasGroup.Hide();
-            return UniTask.CompletedTask;
         }
-
-        public override UniTask PostInitializeGame()
-        {
-            gameStartButtonCanvasGroup.Show();
-            return UniTask.CompletedTask;
-        }
-
+        
         public override UniTask InitializeScene(IProgress<float> progress)
         {
             gameStartButton.OnClickAsObservable()
-                .Subscribe(_ => OnClickGameStartButton())
+                .Subscribe(OnClickGameStartButton)
                 .AddTo(gameObject);
+            gameStartButtonCanvasGroup.Show();
+            
+            progress.Report(1f);
             return UniTask.CompletedTask;
         }
 
-        private void OnClickGameStartButton()
+        private void OnClickGameStartButton(Unit _)
         {
+            Debug.Log("클릭");
+            
             GameManager.Inst.ChangeScene(SceneNames.LobbyScene)
                 .Forget();
         }

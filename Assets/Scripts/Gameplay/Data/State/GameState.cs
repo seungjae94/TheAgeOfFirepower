@@ -22,14 +22,18 @@ namespace Mathlife.ProjectL.Gameplay
         public readonly BattleState battleState = new();
         private SaveFile snapShot;
 
-        public async UniTask Load()
+        public async UniTask Load(IProgress<float> progress)
         {
             await gameDataLoader.Load();
+            progress.Report(0.4f);
+            
             await saveDataManager.Load();
+            progress.Report(0.8f);
 
             await gameProgressState.Load();
             await inventoryState.Load();
             await artyRosterState.Load();
+            progress.Report(1f);
         }
 
         public void Save()

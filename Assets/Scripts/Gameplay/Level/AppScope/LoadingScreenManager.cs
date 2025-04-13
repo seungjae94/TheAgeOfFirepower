@@ -23,6 +23,13 @@ namespace Mathlife.ProjectL.Gameplay
             messageText = transform.FindRecursive<TextMeshProUGUI>();
         }
 
+        private void Start()
+        {
+            progressBar.value = 0f;
+            loadingScreenCamera.enabled = false;
+            loadingScreenCanvasGroup.Hide();
+        }
+
         public void Show()
         {
             loadingScreenCamera.enabled = true;
@@ -34,7 +41,7 @@ namespace Mathlife.ProjectL.Gameplay
             loadingScreenCamera.enabled = false;
             loadingScreenCanvasGroup.Hide();
         }
-
+        
         public void SetProgress(float value)
         {
             progressBar.value = value;

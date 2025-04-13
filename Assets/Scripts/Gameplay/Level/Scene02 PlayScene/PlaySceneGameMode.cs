@@ -221,8 +221,10 @@ namespace Mathlife.ProjectL.Gameplay
             }
         }
 
-        public void Clear()
+        public override UniTask ClearScene(IProgress<float> progress)
         {
+            base.ClearScene(progress);
+            
             foreach (var battler in battlers)
             {
                 if (battler != null)
@@ -230,6 +232,9 @@ namespace Mathlife.ProjectL.Gameplay
                     Destroy(battler.gameObject);
                 }
             }
+            
+            progress.Report(1f);
+            return UniTask.CompletedTask;
         }
 
         private void FinishBattle(int playerCount, int enemyCount)
