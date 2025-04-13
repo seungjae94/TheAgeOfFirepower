@@ -13,7 +13,9 @@ namespace Mathlife.ProjectL.Gameplay
         {
             if (obj is not GameProgressSaveFile other) return false;
             if (ReferenceEquals(this, other)) return true;
-            return unlockWorld == other.unlockWorld && unlockStage == other.unlockStage;
+            return unlockWorld == other.unlockWorld 
+                   && unlockStage == other.unlockStage
+                   && userName == other.userName;
         }
 
         public override int GetHashCode()

@@ -1,4 +1,5 @@
-﻿using Mathlife.ProjectL.Utils;
+﻿using Cysharp.Threading.Tasks;
+using Mathlife.ProjectL.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -22,8 +23,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // 뷰 초기화
             profile.Draw();
             menuBar.Draw();
-            
-            // TODO: 닉네임 검사
+
+            if (GameState.Inst.gameProgressState.IsCurrentUserNameValid() == false)
+            {
+                Find<UserNameSettingPopup>()
+                    .OpenWithAnimation()
+                    .Forget();
+            }
         }
         
         protected override void OnClose()
