@@ -17,6 +17,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             lineRenderer = GetComponent<LineRenderer>();
             lineRenderer.positionCount = 2;
+            Off();
         }
 
         public void On()
