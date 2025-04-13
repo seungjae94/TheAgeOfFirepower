@@ -8,6 +8,7 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
         // Props
         public ReactiveProperty<int> unlockWorldRx = new(1);
         public ReactiveProperty<int> unlockStageRx = new(1);
+        public ReactiveProperty<string> userNameRx = new("");
         
         public override UniTask Load()
         {
@@ -16,12 +17,14 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
                 var saveFile = SaveDataManager.GameProgress;
                 unlockWorldRx.Value = saveFile.unlockWorld;
                 unlockStageRx.Value = saveFile.unlockStage;
+                userNameRx.Value = saveFile.userName;
                 return UniTask.CompletedTask;
             }
 
             var starterData = GameDataLoader.GetStarterData();
             unlockWorldRx.Value = starterData.GetStarterUnlockWorldNo();
             unlockStageRx.Value = starterData.GetStarterUnlockStageNo();
+            userNameRx.Value = "테스트계정";
             return UniTask.CompletedTask;
         }
 
@@ -31,7 +34,8 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
             return new GameProgressSaveFile
             {
                 unlockWorld = unlockWorldRx.Value,
-                unlockStage = unlockStageRx.Value
+                unlockStage = unlockStageRx.Value,
+                userName = userNameRx.Value
             };
         }
     }

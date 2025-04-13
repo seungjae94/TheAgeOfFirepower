@@ -8,15 +8,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
     {
         public override string PageName => "홈";
         
-        // TODO: private UserProfile profile;
+        [SerializeField]
+        private HomePageUserProfile profile;
+        
+        [SerializeField]
         private HomePageMenuBar menuBar;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            
-            menuBar = transform.FindRecursive<HomePageMenuBar>();
-        }
         
         protected override void OnOpen()
         {
@@ -24,12 +20,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
             Find<CurrencyBar>().Activate();
             
             // 뷰 초기화
+            profile.Draw();
             menuBar.Draw();
+            
+            // TODO: 닉네임 검사
         }
         
         protected override void OnClose()
         {
             // 뷰 정리
+            profile.Clear();
             menuBar.Clear();
         }
     }

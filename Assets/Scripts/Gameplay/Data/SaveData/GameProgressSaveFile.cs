@@ -7,6 +7,7 @@ namespace Mathlife.ProjectL.Gameplay
     {
         public int unlockWorld = 1;
         public int unlockStage = 1;
+        public string userName = "";
         
         public override bool Equals(object obj)
         {
@@ -17,7 +18,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(unlockWorld, unlockStage);
+            return HashCode.Combine(unlockWorld, unlockStage, userName);
         }
     }
 }

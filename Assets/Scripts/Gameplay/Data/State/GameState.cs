@@ -51,6 +51,9 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void Save()
         {
+            if (DebugSettings.Inst.UseSaveFileIfAvailable == false)
+                return;
+            
             foreach (var state in persistableStates)
             {
                 state.Save();
