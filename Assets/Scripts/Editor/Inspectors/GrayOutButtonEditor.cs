@@ -2,14 +2,14 @@ using Mathlife.ProjectL.Gameplay.UI;
 using UnityEditor;
 using UnityEditor.UI;
 
-namespace Mathlife.ProjectL.Editor.Editor.Inspectors
+namespace Mathlife.ProjectL.Editor
 {
     [CustomEditor(typeof(GrayOutButton), true)]
     [CanEditMultipleObjects]
     public class GrayOutButtonEditor : ButtonEditor
     {
-        SerializedProperty targetGraphics;
-        SerializedProperty saturation;
+        private SerializedProperty targetGraphics;
+        private SerializedProperty saturation;
 
         protected override void OnEnable()
         {

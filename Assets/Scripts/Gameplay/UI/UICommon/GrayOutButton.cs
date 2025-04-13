@@ -22,11 +22,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             base.Awake();
 
             transition = Selectable.Transition.None;
-            
-            foreach (var graphic in targetGraphics)
-            {
-                originalColors.Add(graphic.color);
-            }
         }
         
         protected override void DoStateTransition(SelectionState state, bool instant)
@@ -37,17 +32,20 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         private void ApplyGrayOut(SelectionState state)
         {
+            if (originalColors.Count < targetGraphics.Count)
+            {
+                originalColors.Clear();
+                foreach (var graphic in targetGraphics)
+                {
+                    originalColors.Add(graphic.color);
+                }
+            }
+            
             for (int i = 0; i < targetGraphics.Count; i++)
             {
                 if (targetGraphics[i] == null)
                 {
                     Debug.LogError("Some of targetGraphic is null.");
-                    return;
-                }
-
-                if (i >= originalColors.Count)
-                {
-                    Debug.LogError("Some of original color does not saved.");
                     return;
                 }
 
