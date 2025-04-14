@@ -38,15 +38,15 @@ MonoBehaviour:
   - artyGameData: {fileID: 11400000, guid: 77a25fad67345454d9b586e22ce70dcf, type: 2}
     level: 8
     moveStrategy: 0
-    targetingStrategy: 0
+    targetingStrategy: 2
   - artyGameData: {fileID: 11400000, guid: 005beb9b0a9636a42ad2bac0b592b346, type: 2}
     level: 7
     moveStrategy: 0
-    targetingStrategy: 0
+    targetingStrategy: 2
   - artyGameData: {fileID: 11400000, guid: 73a35772b44a16841b49ccd5fc7788b7, type: 2}
     level: 6
     moveStrategy: 0
-    targetingStrategy: 0
+    targetingStrategy: 2
   rewardList:
   - gold: 1000
     diamond: 0

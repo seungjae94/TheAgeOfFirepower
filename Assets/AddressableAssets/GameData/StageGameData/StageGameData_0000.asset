@@ -38,7 +38,7 @@ MonoBehaviour:
   - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
     level: 1
     moveStrategy: 0
-    targetingStrategy: 0
+    targetingStrategy: 2
   rewardList:
   - gold: 100
     diamond: 0
