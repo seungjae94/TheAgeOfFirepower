@@ -47,6 +47,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void OnClickGameStartButton(Unit _)
         {
+            Debug.Log("클릭");
             GameManager.Inst.ChangeScene(SceneNames.LobbyScene)
                 .Forget();
         }

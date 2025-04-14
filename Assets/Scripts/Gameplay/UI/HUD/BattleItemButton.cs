@@ -1,7 +1,4 @@
-using System;
 using Coffee.UIEffects;
-using Cysharp.Threading.Tasks;
-using DG.DemiEditor;
 using Mathlife.ProjectL.Gameplay.Play;
 using TMPro;
 using UniRx;
@@ -143,8 +140,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             for (int i = 0; i < graphics.Length; i++)
             {
-                graphics[i].color = colors[i] * t;
-                graphics[i].color.SetAlpha(1f);
+                Color newColor = colors[i] * t;
+                newColor.a = 1f;
+                graphics[i].color = newColor;
             }
         }
 

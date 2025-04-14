@@ -73,7 +73,7 @@ namespace Mathlife.ProjectL.Gameplay
         
         private void Update()
         {
-#if UNITY_ANDROID || UNITY_IOS
+#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS) 
             bool mouseButtonUp = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended;
 #else
             bool mouseButtonUp = Input.GetMouseButtonUp(0);
@@ -93,7 +93,7 @@ namespace Mathlife.ProjectL.Gameplay
                 return;
             }
 
-#if UNITY_ANDROID || UNITY_IOS
+#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS) 
             bool mouseButtonDown = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
 #else
             bool mouseButtonDown = Input.GetMouseButtonDown(0);

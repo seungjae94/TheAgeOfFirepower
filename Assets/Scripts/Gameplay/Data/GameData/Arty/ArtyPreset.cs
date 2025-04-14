@@ -1,14 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections.Generic;
-using Sirenix.OdinInspector.Editor;
-using UnityEditor.Experimental;
-using UnityEngine.Serialization;
-
+using Sirenix.OdinInspector;
 
 #if UNITY_EDITOR
-using Sirenix.Utilities.Editor;
-using Sirenix.OdinInspector;
 using ObjectFieldAlignment = Sirenix.OdinInspector.ObjectFieldAlignment;
 #endif
 
@@ -17,9 +11,9 @@ namespace Mathlife.ProjectL.Gameplay
     [Serializable]
     public class ArtyPreset
     {
+#if UNITY_EDITOR
         [LabelText("화포")]
         [HorizontalGroup(group: "Basic", LabelWidth = 50, Width = 125)]
-#if UNITY_EDITOR
         [PreviewField(Alignment = ObjectFieldAlignment.Left, PreviewGetter = nameof(GetArtyPreview))]
 #endif
         public ArtyGameData arty;
@@ -61,16 +55,6 @@ namespace Mathlife.ProjectL.Gameplay
         public MechPartGameData engine;
 
 #if UNITY_EDITOR
-        // MechPartGameData[] cachedMechParts = new MechPartGameData[4]; 
-        // Texture2D[] cachedTextures = new Texture2D[4];
-        //
-        // [OnInspectorInit]
-        // public void OnInspectorInit()
-        // {
-        //     cachedMechParts = new MechPartGameData[4];
-        //     cachedTextures = new Texture2D[4];
-        // }
-
         public Texture2D GetArtyPreview()
         {
             return arty?.sprite?.texture;
@@ -90,42 +74,6 @@ namespace Mathlife.ProjectL.Gameplay
         {
             return engine?.icon?.texture;
         }
-        //
-        // public Texture2D GetMechPartPreview(MechPartGameData mechPart, int index)
-        // {
-        //     if (cachedMechParts[index] == mechPart)
-        //     {
-        //         return cachedTextures[index];
-        //     }
-        //
-        //     cachedMechParts[index] = mechPart;
-        //
-        //     if (mechPart == null)
-        //     {
-        //         cachedTextures[index] = null;
-        //     }
-        //     else
-        //     {
-        //         Rect texRect = mechPart.icon.textureRect;
-        //         cachedTextures[index] = mechPart.icon.texture.CropTexture(texRect);
-        //     }
-        //     return cachedTextures[index];
-        // }
-        //
-        // public bool IsBarrel(MechPartGameData mechPart)
-        // {
-        //     return mechPart == null || mechPart.type == EEquipmentType.Barrel;
-        // }
-        //
-        // public bool IsArmor(MechPartGameData mechPart)
-        // {
-        //     return mechPart == null || mechPart.type == EEquipmentType.Armor;
-        // }
-        //
-        // public bool IsEngine(MechPartGameData mechPart)
-        // {
-        //     return mechPart == null || mechPart.type == EEquipmentType.Engine;
-        // }
 #endif
     }
 }

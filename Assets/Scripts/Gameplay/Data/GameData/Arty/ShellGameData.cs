@@ -1,7 +1,10 @@
 using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor;
 using UnityEngine;
 using UnityEngine.Serialization;
+
+#if UNITY_EDITOR
+using Sirenix.OdinInspector.Editor;
+#endif
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -11,12 +14,12 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("아이콘")]
         [PreviewField(50, ObjectFieldAlignment.Left)]
         public Sprite icon;
-        
+
         [LabelWidth(100)]
         [LabelText("설명")]
         [Multiline(5)]
         public string description;
-        
+
         [LabelWidth(100)]
         [LabelText("데미지")]
         public int damage;
@@ -30,16 +33,16 @@ namespace Mathlife.ProjectL.Gameplay
         [LabelText("폭발 반경")]
         [Range(0f, 200f)]
         public float explosionRadius = 0f;
-        
+
         [LabelWidth(100)]
         [LabelText("프리팹")]
         public GameObject prefab;
-        
+
 #if UNITY_EDITOR
         public override void SetMenuItem(ref OdinMenuItem menuItem)
         {
             menuItem.Name = displayName;
-            
+
             if (icon != null)
                 menuItem.Icon = icon.texture;
         }

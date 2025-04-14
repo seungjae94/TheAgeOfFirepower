@@ -54,13 +54,19 @@ namespace Mathlife.ProjectL.Gameplay
             progress.Report(0.05f);
 
             // 2. 모드 세팅
+#if UNITY_EDITOR
             developMode = BattleState.stageGameData == false;
+#else
+            developMode = false;
+#endif
 
             stageGameData = BattleState.stageGameData;
+#if UNITY_EDITOR
             if (developMode)
             {
                 stageGameData = await developStageGameDataRef.LoadAssetAsync();
             }
+#endif
 
             // 3. 맵 생성
             LoadingScreenManager.Inst.SetMessage("맵을 생성하는 중...");
@@ -90,6 +96,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             if (developMode)
             {
+#if UNITY_EDITOR
                 for (int i = 0; i < Mathf.Min(developPlayers.Count, 3); ++i)
                 {
                     var player = developPlayers[i];
@@ -108,6 +115,7 @@ namespace Mathlife.ProjectL.Gameplay
 
                     InstantiateBattler(i + 3, arty, enemy);
                 }
+#endif
             }
             else
             {
@@ -142,14 +150,14 @@ namespace Mathlife.ProjectL.Gameplay
             Presenter.Find<MoveHUD>().Activate();
             Presenter.Find<ItemHUD>().Activate();
             progress.Report(0.99f);
-            
+
             // 5. 딜레이
             await UniTask.Delay(100);
             progress.Report(1.0f);
 
             // 6. BGM 재생
             AudioManager.Inst.PlayBGM(stageGameData.bgm);
-            
+
             // 7. 배틀 루프 시작
             BattleLoop().Forget();
         }
@@ -224,7 +232,7 @@ namespace Mathlife.ProjectL.Gameplay
         public override UniTask ClearScene(IProgress<float> progress)
         {
             base.ClearScene(progress);
-            
+
             foreach (var battler in battlers)
             {
                 if (battler != null)
@@ -232,7 +240,7 @@ namespace Mathlife.ProjectL.Gameplay
                     Destroy(battler.gameObject);
                 }
             }
-            
+
             progress.Report(1f);
             return UniTask.CompletedTask;
         }
