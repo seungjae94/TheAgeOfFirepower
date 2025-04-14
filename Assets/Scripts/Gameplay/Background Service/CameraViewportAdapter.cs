@@ -91,18 +91,14 @@ namespace Mathlife.ProjectL.Gameplay
 
             foreach (var safeMargin in safeMargins)
             {
-#if UNITY_EDITOR
                 safeMargin.Setup();
-#endif
                 safeMargin.Apply();
             }
         }
-
-#if UNITY_EDITOR
+        
         public void Setup()
         {
             targetCamera = GetComponent<Camera>();
         }
-#endif
     }
 }

@@ -158,8 +158,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             contentsMargin[varIndex] = offset;
         }
-
-#if UNITY_EDITOR
+        
         public void Setup()
         {
             if (rectTransform == null)
@@ -168,6 +167,5 @@ namespace Mathlife.ProjectL.Gameplay.UI
             if (canvasRectTransform == null)
                 canvasRectTransform = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
         }
-#endif
     }
 }
