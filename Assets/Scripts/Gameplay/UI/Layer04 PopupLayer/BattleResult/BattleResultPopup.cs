@@ -162,7 +162,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // SE 재생
             AudioManager.Inst.PauseBGM();
             AudioManager.Inst.PlaySE(loseSE);
-            UniTask.Delay((int)(winSE.length * 1000))
+            UniTask.Delay((int)(loseSE.length * 1000))
                 .ContinueWith(() =>
                 {
                     AudioManager.Inst.ResumeBGM();

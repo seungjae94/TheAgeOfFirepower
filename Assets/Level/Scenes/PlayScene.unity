@@ -3192,32 +3192,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   developPlayers:
   - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 1
-    currentLevelExp: 0
-    barrel: {fileID: 0}
-    armor: {fileID: 0}
-    engine: {fileID: 0}
-  - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 1
-    currentLevelExp: 0
-    barrel: {fileID: 0}
-    armor: {fileID: 0}
-    engine: {fileID: 0}
-  - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 1
+    level: 99
     currentLevelExp: 0
     barrel: {fileID: 0}
     armor: {fileID: 0}
     engine: {fileID: 0}
   developEnemys:
-  - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 1
-    moveStrategy: 0
-    targetingStrategy: 2
-  - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 1
-    moveStrategy: 0
-    targetingStrategy: 2
   - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
     level: 1
     moveStrategy: 0
@@ -4178,8 +4158,8 @@ MonoBehaviour:
   - {fileID: 299840373}
   rewardScrollRect: {fileID: 8782036467187957627}
   backToLobbyButton: {fileID: 16334315}
-  winSE: {fileID: 8300000, guid: aede794891ee05647ad7fe756540dec6, type: 3}
-  loseSE: {fileID: 8300000, guid: 4b656f33f65557448ab8e321d9a725b1, type: 3}
+  winSE: {fileID: 8300000, guid: f66e3a2977277bb4bb1b3f86ac0dfd79, type: 3}
+  loseSE: {fileID: 8300000, guid: 8a893c36be119b542b0ad3544a07d7b0, type: 3}
 --- !u!1001 &1378949596
 PrefabInstance:
   m_ObjectHideFlags: 0
