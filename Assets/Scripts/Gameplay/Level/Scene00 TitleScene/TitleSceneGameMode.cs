@@ -13,6 +13,9 @@ namespace Mathlife.ProjectL.Gameplay
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.Scene;
 
         [SerializeField]
+        private AudioClip titleBGM;
+        
+        [SerializeField]
         Button gameStartButton;
 
         CanvasGroup gameStartButtonCanvasGroup;
@@ -29,6 +32,10 @@ namespace Mathlife.ProjectL.Gameplay
         
         public override UniTask InitializeScene(IProgress<float> progress)
         {
+            // 이 시점에선 게임이 초기화 되어 있다고 보장할 수 있음
+            // 이미 볼륨이 설정된 상태임
+            AudioManager.Inst.PlayBGM(titleBGM);
+            
             gameStartButton.OnClickAsObservable()
                 .Subscribe(OnClickGameStartButton)
                 .AddTo(gameObject);

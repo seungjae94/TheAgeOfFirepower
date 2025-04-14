@@ -1,10 +1,8 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
@@ -138,7 +136,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         
         private void OnClickSettingButton(Unit _)
         {
-            //Presenter.Find<SettingsPopup>().Open();
+            Presenter.Find<GameSettingsPopup>()
+                .OpenWithAnimation().Forget();
         }
     }
 }

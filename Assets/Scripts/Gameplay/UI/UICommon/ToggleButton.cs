@@ -27,7 +27,17 @@ namespace Mathlife.ProjectL.Gameplay.UI
         [SerializeField]
         private ToggleButtonPreset offPreset = new();
 
-        public bool IsOn { get; private set; } = true;
+        private bool isOn = true;
+
+        public bool IsOn
+        {
+            get => isOn;
+            set
+            {
+                isOn = value;
+                ApplyTogglePreset(isOn ? onPreset : offPreset);
+            }
+        }
         
         protected override void Awake()
         {
@@ -50,7 +60,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private void DoToggle()
         {
             IsOn = !IsOn;
-            ApplyTogglePreset(IsOn ? onPreset : offPreset);
         }
 
         private void ApplyTogglePreset(ToggleButtonPreset preset)

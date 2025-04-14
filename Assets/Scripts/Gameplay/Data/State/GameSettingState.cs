@@ -8,8 +8,8 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
         // Props
         public ReactiveProperty<bool> drawTrajectory = new(true);
         public ReactiveProperty<int> masterVolume = new(100);
-        public ReactiveProperty<int> bgmVolume = new(50);
-        public ReactiveProperty<int> seVolume = new(50);
+        public ReactiveProperty<float> bgmVolume = new(0.5f);
+        public ReactiveProperty<float> seVolume = new(0.5f);
         
         public override UniTask Load()
         {
@@ -20,6 +20,9 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
                 masterVolume.Value = saveFile.masterVolume;
                 bgmVolume.Value = saveFile.bgmVolume;
                 seVolume.Value = saveFile.seVolume;
+                
+                AudioManager.Inst.SetBGMVolume(bgmVolume.Value);
+                AudioManager.Inst.SetSEVolume(seVolume.Value);
             }
             
             return UniTask.CompletedTask;
