@@ -7,7 +7,6 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
     {
         // Props
         public ReactiveProperty<bool> drawTrajectory = new(true);
-        public ReactiveProperty<int> masterVolume = new(100);
         public ReactiveProperty<float> bgmVolume = new(0.5f);
         public ReactiveProperty<float> seVolume = new(0.5f);
         
@@ -15,17 +14,32 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
         {
             if (GameState.Inst.saveDataManager.CanLoad() && DebugSettings.Inst.UseSaveFileIfAvailable)
             {
-                var saveFile = SaveDataManager.GameSetting;
-                drawTrajectory.Value = saveFile.drawTrajectory;
-                masterVolume.Value = saveFile.masterVolume;
-                bgmVolume.Value = saveFile.bgmVolume;
-                seVolume.Value = saveFile.seVolume;
-                
-                AudioManager.Inst.SetBGMVolume(bgmVolume.Value);
-                AudioManager.Inst.SetSEVolume(seVolume.Value);
+                LoadFromSaveFile();
+            }
+            else
+            {
+                LoadFromStarter();
             }
             
+            AudioManager.Inst.SetBGMVolume(bgmVolume.Value);
+            AudioManager.Inst.SetSEVolume(seVolume.Value);
+            
             return UniTask.CompletedTask;
+        }
+
+        private void LoadFromSaveFile()
+        {
+            var saveFile = SaveDataManager.GameSetting;
+            drawTrajectory.Value = saveFile.drawTrajectory;
+            bgmVolume.Value = saveFile.bgmVolume;
+            seVolume.Value = saveFile.seVolume;
+        }
+
+        private void LoadFromStarter()
+        {
+            drawTrajectory.Value = true;
+            bgmVolume.Value = 0.5f;
+            seVolume.Value = 0.5f;
         }
 
         protected override SaveFile SavedFile => SaveDataManager.GameSetting;
@@ -35,7 +49,6 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
             return new GameSettingSaveFile
             {
                 drawTrajectory = drawTrajectory.Value,
-                masterVolume = masterVolume.Value,
                 bgmVolume = bgmVolume.Value,
                 seVolume = seVolume.Value
             };

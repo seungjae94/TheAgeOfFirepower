@@ -24,14 +24,16 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
             if (GameState.Inst.saveDataManager.CanLoad() && DebugSettings.Inst.UseSaveFileIfAvailable)
             {
                 LoadFromSaveFile();
-                return UniTask.CompletedTask;
             }
-
-            var starterData = GameDataLoader.GetStarterData();
-            unlockWorldRx.Value = starterData.GetStarterUnlockWorldNo();
-            unlockStageRx.Value = starterData.GetStarterUnlockStageNo();
-            userNameRx.Value = "";
-            mailsRx.AddRange(starterData.GetStarterMails());
+            else
+            {
+                var starterData = GameDataLoader.GetStarterData();
+                unlockWorldRx.Value = starterData.GetStarterUnlockWorldNo();
+                unlockStageRx.Value = starterData.GetStarterUnlockStageNo();
+                userNameRx.Value = "";
+                mailsRx.AddRange(starterData.GetStarterMails());
+            }
+            
             return UniTask.CompletedTask;
         }
 
