@@ -21,9 +21,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private Sprite goldIcon;
         
         [SerializeField]
-        private Sprite expIcon;
-        
-        [SerializeField]
         private Sprite diamondIcon;
         
         public override void UpdateContent(Reward reward)
@@ -34,13 +31,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 DrawDiamond(reward.diamond);
             else
                 DrawItem(reward);
-        }
-
-        private void DrawExp(long exp)
-        {
-            uiEffect.LoadPreset("GradientN");
-            iconImage.sprite = expIcon;
-            amountText.text = exp.ToString();
         }
 
         private void DrawGold(int gold)

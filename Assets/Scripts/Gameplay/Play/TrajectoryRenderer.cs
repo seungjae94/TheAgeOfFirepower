@@ -23,7 +23,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Draw(List<Vector3> positions)
         {
-            Debug.Log(positions.Count);
             lineRenderer.positionCount = positions.Count;
             lineRenderer.SetPositions(positions.ToArray());
         }

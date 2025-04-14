@@ -6,7 +6,6 @@ using UnityEngine.UI.Extensions;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    [RequireComponent(typeof(Button))]
     public abstract class SimpleScrollRectCell<TItemData, TContext> : FancyScrollRectCell<TItemData, TContext>
         where TContext : SimpleScrollRectContext, new()
     {

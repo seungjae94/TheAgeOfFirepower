@@ -82,8 +82,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             windowSlideAnimation.DOPlayBackwards();
             await windowSlideAnimation.tween.AwaitForRewind();
-
-            Debug.Log("대기 성공!");
             
             // 블러 제거
             Find<BlurPopup>().CloseWithAnimation().Forget();

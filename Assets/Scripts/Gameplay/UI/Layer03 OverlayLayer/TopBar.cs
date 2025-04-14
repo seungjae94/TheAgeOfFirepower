@@ -131,7 +131,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClickMailButton(Unit _)
         {
-            //Presenter.Find<MailPopup>().Open();
+            Presenter.Find<MailPopup>()
+                .OpenWithAnimation().Forget();
         }
         
         private void OnClickSettingButton(Unit _)
