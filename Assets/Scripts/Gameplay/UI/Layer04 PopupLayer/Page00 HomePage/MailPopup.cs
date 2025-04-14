@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Mathlife.ProjectL.Gameplay.Gameplay.Data.Model;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class MailPopup : PopupPresenter
     {
+        // Alias
+        private static GameProgressState GameProgressState => GameState.Inst.gameProgressState;
+        
         // Component
         [SerializeField]
         private DOTweenAnimation windowSlideAnimation;
@@ -42,10 +46,18 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .Subscribe(OnClickCloseButton)
                 .AddTo(disposables);
             
-            // TODO: recvAllButton 구독
-            // TODO: mailCountText 구독
+            recvAllButton.OnClickAsObservable()
+                .Subscribe(OnClickRecvAllButton)
+                .AddTo(disposables);
             
+            GameProgressState.mailsRx
+                .ObserveCountChanged()
+                .DistinctUntilChanged()
+                .Subscribe(UpdateBottomView);
+            
+            // 뷰 초기화
             scrollRect.UpdateContentsAuto();
+            UpdateBottomView(GameProgressState.mailsRx.Count);
             
             windowSlideAnimation.DOPlay();
         }
@@ -68,10 +80,24 @@ namespace Mathlife.ProjectL.Gameplay.UI
             disposables.Dispose();
             windowSlideAnimation.tween.Kill();
         }
+
+        private void UpdateBottomView(int mailCount)
+        {
+            mailCapacityText.text = $"우편 보유 수량 ({mailCount}/200)";
+            recvAllButton.interactable = mailCount > 0;
+        }
         
         private void OnClickCloseButton(Unit _)
         {
             CloseWithAnimation().Forget();
+        }
+
+        private void OnClickRecvAllButton(Unit _)
+        {
+            GameProgressState.ReceiveAllMailRewards();
+            scrollRect.UpdateContentsAuto();
+            recvAllButton.interactable = false;
+            GameState.Inst.Save();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Cysharp.Threading.Tasks;
+using Sirenix.Utilities;
 using UniRx;
 
 namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
@@ -16,23 +17,31 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
         public readonly ReactiveProperty<int> unlockWorldRx = new(1);
         public readonly ReactiveProperty<int> unlockStageRx = new(1);
         public readonly ReactiveProperty<string> userNameRx = new("");
+        public readonly ReactiveCollection<Mail> mailsRx = new();
         
         public override UniTask Load()
         {
             if (GameState.Inst.saveDataManager.CanLoad() && DebugSettings.Inst.UseSaveFileIfAvailable)
             {
-                var saveFile = SaveDataManager.GameProgress;
-                unlockWorldRx.Value = saveFile.unlockWorld;
-                unlockStageRx.Value = saveFile.unlockStage;
-                userNameRx.Value = saveFile.userName;
+                LoadFromSaveFile();
                 return UniTask.CompletedTask;
             }
 
             var starterData = GameDataLoader.GetStarterData();
             unlockWorldRx.Value = starterData.GetStarterUnlockWorldNo();
             unlockStageRx.Value = starterData.GetStarterUnlockStageNo();
-            userNameRx.Value = "테스트계정";
+            userNameRx.Value = "";
+            mailsRx.AddRange(starterData.GetStarterMails());
             return UniTask.CompletedTask;
+        }
+
+        private void LoadFromSaveFile()
+        {
+            var saveFile = SaveDataManager.GameProgress;
+            unlockWorldRx.Value = saveFile.unlockWorld;
+            unlockStageRx.Value = saveFile.unlockStage;
+            userNameRx.Value = saveFile.userName;
+            mailsRx.AddRange(saveFile.mails.Select(saveData => saveData.ToMail()));
         }
 
         protected override SaveFile SavedFile => SaveDataManager.GameProgress;
@@ -42,10 +51,10 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
             {
                 unlockWorld = unlockWorldRx.Value,
                 unlockStage = unlockStageRx.Value,
-                userName = userNameRx.Value
+                userName = userNameRx.Value,
+                mails = mailsRx.Select(mail => mail.ToMailSaveData()).ToList()
             };
         }
-
         
         public bool IsCurrentUserNameValid()
         {
@@ -95,6 +104,26 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
         private static int GetCallCharSize(char c)
         {
             return c is >= '가' and <= '힣' ? 2 : 1;
+        }
+
+        public void ReceiveMailReward(int index)
+        {
+            if (index >= mailsRx.Count)
+                return;
+
+            Mail mail = mailsRx[index];
+            GameState.Inst.inventoryState.GainReward(mail.reward);
+            mailsRx.RemoveAt(index);
+        }
+        
+        public void ReceiveAllMailRewards()
+        {
+            foreach (var mail in mailsRx)
+            {
+                GameState.Inst.inventoryState.GainReward(mail.reward);
+            }
+
+            mailsRx.Clear();
         }
     }
 }

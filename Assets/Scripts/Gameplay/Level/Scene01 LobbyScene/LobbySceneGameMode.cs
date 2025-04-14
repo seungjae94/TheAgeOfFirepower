@@ -31,5 +31,17 @@ namespace Mathlife.ProjectL.Gameplay
             await UniTask.Delay(100);
             progress.Report(1.0f);
         }
+
+        public override UniTask StartScene()
+        {
+            if (GameState.Inst.gameProgressState.IsCurrentUserNameValid() == false)
+            {
+                Presenter.Find<UserNameSettingPopup>()
+                    .OpenWithAnimation()
+                    .Forget();
+            }
+            
+            return UniTask.CompletedTask;
+        }
     }
 }

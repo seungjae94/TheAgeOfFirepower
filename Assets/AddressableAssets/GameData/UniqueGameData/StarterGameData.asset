@@ -25,6 +25,23 @@ MonoBehaviour:
   starterDiamond: 0
   starterUnlockWorldNo: 1
   starterUnlockStageNo: 1
+  starterMails:
+  - title: "\uC0AC\uC804 \uC608\uC57D \uBCF4\uC0C1"
+    content: "\uC0AC\uC804 \uC608\uC57D \uBCF4\uC0C1\uC744 \uC9C0\uAE09\uD574 \uB4DC\uB9BD\uB2C8\uB2E4.
+      \uBC1B\uAE30 \uBC84\uD2BC\uC744 \uB20C\uB7EC \uC218\uB839\uD574\uC8FC\uC138\uC694."
+    reward:
+      gold: 100000
+      diamond: 0
+      itemGameData: {fileID: 0}
+      itemAmount: 0
+  - title: "\uC0AC\uC804 \uC608\uC57D \uBCF4\uC0C1"
+    content: "\uC0AC\uC804 \uC608\uC57D \uBCF4\uC0C1\uC744 \uC9C0\uAE09\uD574 \uB4DC\uB9BD\uB2C8\uB2E4.
+      \uBC1B\uAE30 \uBC84\uD2BC\uC744 \uB20C\uB7EC \uC218\uB839\uD574\uC8FC\uC138\uC694."
+    reward:
+      gold: 0
+      diamond: 3000
+      itemGameData: {fileID: 0}
+      itemAmount: 0
   starterBattery:
   - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
     level: 1
@@ -51,6 +68,23 @@ MonoBehaviour:
   editorStarterDiamond: 0
   editorStarterUnlockWorldNo: 1
   editorStarterUnlockStageNo: 1
+  editorStarterMails:
+  - title: "\uC0AC\uC804 \uC608\uC57D \uBCF4\uC0C1"
+    content: "\uC0AC\uC804 \uC608\uC57D \uBCF4\uC0C1\uC744 \uC9C0\uAE09\uD574 \uB4DC\uB9BD\uB2C8\uB2E4.
+      \uBC1B\uAE30 \uBC84\uD2BC\uC744 \uB20C\uB7EC \uC218\uB839\uD574\uC8FC\uC138\uC694."
+    reward:
+      gold: 100000
+      diamond: 0
+      itemGameData: {fileID: 0}
+      itemAmount: 0
+  - title: "\uC0AC\uC804 \uC608\uC57D \uBCF4\uC0C1"
+    content: "\uC0AC\uC804 \uC608\uC57D \uBCF4\uC0C1\uC744 \uC9C0\uAE09\uD574 \uB4DC\uB9BD\uB2C8\uB2E4.
+      \uBC1B\uAE30 \uBC84\uD2BC\uC744 \uB20C\uB7EC \uC218\uB839\uD574\uC8FC\uC138\uC694."
+    reward:
+      gold: 0
+      diamond: 3000
+      itemGameData: {fileID: 0}
+      itemAmount: 0
   editorStarterBattery:
   - arty: {fileID: 11400000, guid: 005beb9b0a9636a42ad2bac0b592b346, type: 2}
     level: 10

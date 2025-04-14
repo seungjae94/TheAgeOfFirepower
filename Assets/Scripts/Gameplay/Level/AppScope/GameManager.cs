@@ -129,6 +129,8 @@ namespace Mathlife.ProjectL.Gameplay
             LoadingScreenManager.Inst.SetProgress(1f);
             
             LoadingScreenOff();
+
+            CurrentGameMode.StartScene().Forget();
         }
 
         private IProgress<float> CreateProgress(float start, float end)

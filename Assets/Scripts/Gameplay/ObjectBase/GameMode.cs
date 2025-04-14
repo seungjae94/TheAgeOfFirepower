@@ -13,6 +13,8 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
         public UniTask InitializeScene(IProgress<float> progress);
 
         public UniTask ClearScene(IProgress<float> progress);
+
+        public UniTask StartScene();
     }
 
     /// <typeparam name="TGameMode">게임 모드 타입 (ex: TitleSceneGameMode)</typeparam>
@@ -41,6 +43,13 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
 
             initializables.ForEach(initializable => initializable.Initialize());
             
+            return UniTask.CompletedTask;
+        }
+
+        // Initialize Scene은 LoadingScreen이 떠있는 동안 뒤에서 몰래 씬을 초기화
+        // Start Scene은 LoadingScreen이 사라지고 나서 씬을 초기화
+        public virtual UniTask StartScene()
+        {
             return UniTask.CompletedTask;
         }
 

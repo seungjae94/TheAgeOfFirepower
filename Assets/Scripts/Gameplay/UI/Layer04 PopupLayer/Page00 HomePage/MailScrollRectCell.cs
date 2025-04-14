@@ -40,8 +40,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClickRecvButton()
         {
-            // TODO: 셀 제거 및 수령
-            Context.removeTestMail?.Invoke(Index);
+            GameState.Inst.gameProgressState.ReceiveMailReward(Index);
+            GameState.Inst.gameProgressState.Save();
             Context.updateContents?.Invoke();
         }
 

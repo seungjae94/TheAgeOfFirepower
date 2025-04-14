@@ -1,6 +1,7 @@
 using Mathlife.ProjectL.Utils;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using Mathlife.ProjectL.Gameplay.UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -52,6 +53,18 @@ namespace Mathlife.ProjectL.Gameplay
         private bool dummy01;
 #endif
 
+        [SerializeField]
+        [LabelText("메일함")]
+        [HorizontalGroup(GroupID = "Starter/Mail")]
+        private List<Mail> starterMails = new(); 
+        
+#if UNITY_EDITOR
+        [ShowInInspector]
+        [HorizontalGroup(GroupID = "Starter/Dummy02")]
+        [SpaceOnly(15)]
+        private bool dummy02;
+#endif
+        
         [SerializeField]
         [TabGroup("Starter/Tab", "포대")]
         [HideReferenceObjectPicker]
@@ -119,6 +132,16 @@ namespace Mathlife.ProjectL.Gameplay
         [SpaceOnly(15)]
         private bool dummy11;
 
+        [SerializeField]
+        [LabelText("메일함")]
+        [HorizontalGroup(GroupID = "EditorStarter/Mail")]
+        private List<Mail> editorStarterMails = new(); 
+        
+        [ShowInInspector]
+        [HorizontalGroup(GroupID = "EditorStarter/Dummy12")]
+        [SpaceOnly(15)]
+        private bool dummy12;
+        
         [SerializeField]
         [TabGroup("EditorStarter/Tab", "포대")]
         [HideReferenceObjectPicker]
@@ -190,6 +213,15 @@ namespace Mathlife.ProjectL.Gameplay
             return editorStarterDiamond;
 #else
             return starterDiamond;
+#endif
+        }
+        
+        public List<Mail> GetStarterMails()
+        {
+#if UNITY_EDITOR
+            return editorStarterMails;
+#else
+            return starterMails;
 #endif
         }
         

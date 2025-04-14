@@ -50,18 +50,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(gold, diamond, mechParts, 
-                ListToHashCode(materialItems), ListToHashCode(battleItems));
-        }
-
-        private int ListToHashCode(List<ItemStackSaveData> list)
-        {
-            HashCode hash = new HashCode();
-            foreach (var item in list)
-            {
-                hash.Add(item.GetHashCode());
-            }
-            return hash.GetHashCode();
+            return HashCode.Combine(gold, diamond, mechParts, ListToHashCode(materialItems), ListToHashCode(battleItems));
         }
     }
 }

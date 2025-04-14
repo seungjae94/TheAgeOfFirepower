@@ -23,13 +23,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             // 뷰 초기화
             profile.Draw();
             menuBar.Draw();
-
-            if (GameState.Inst.gameProgressState.IsCurrentUserNameValid() == false)
-            {
-                Find<UserNameSettingPopup>()
-                    .OpenWithAnimation()
-                    .Forget();
-            }
         }
         
         protected override void OnClose()
