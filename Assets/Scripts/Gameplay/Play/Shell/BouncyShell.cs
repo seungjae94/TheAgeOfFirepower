@@ -14,7 +14,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
         // Field
         private int touchCount = 0;
         private new Collider2D collider;
-        private Vector2 velocity;
 
         // Method
         public override void Init(ArtyController firer)
@@ -24,12 +23,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
         }
 
         // Event Func
-        private void FixedUpdate()
-        {
-            // Capture velocity
-            velocity = rgbShellBody.linearVelocity;
-        }
-
         private void Update()
         {
             if (ShouldBeDestroyed || touchCount == BOUNCE_COUNT + 1)
@@ -63,7 +56,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             // 바운스
             Vector2 contactPoint = GetContantPoint(other);
-            DestructibleTerrain.Inst.SnapToSurface(contactPoint, velocity.normalized, out contactPoint);
+            DestructibleTerrain.Inst.SnapToSurface(contactPoint, capturedVelocity.normalized, out contactPoint);
             bool extract =
                 DestructibleTerrain.Inst.ExtractNormalTangent(contactPoint, out Vector2 normal, out Vector2 tangent);
 
@@ -72,7 +65,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 Debug.LogError($"contact at {contactPoint * 100f}, Failed to extract normal.");
             }
 
-            Vector2 afterVelocity = Vector2.Reflect(velocity, normal);
+            Vector2 afterVelocity = Vector2.Reflect(capturedVelocity, normal);
             rgbShellBody.linearVelocity = BOUNCINESS * afterVelocity;
 
             DebugDrawCollision(contactPoint, normal, afterVelocity);
@@ -113,7 +106,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Debug.DrawLine(contactPoint, contactPoint + Vector2.down * radius, Color.white, 1000f);
 
             Debug.DrawLine(contactPoint, contactPoint + normal, Color.green, 1000f);
-            Debug.DrawLine(contactPoint, contactPoint + velocity, Color.magenta, 1000f);
+            Debug.DrawLine(contactPoint, contactPoint + capturedVelocity, Color.magenta, 1000f);
             Debug.DrawLine(contactPoint, contactPoint + afterVelocity, Color.blue, 1000f);
 #endif
         }

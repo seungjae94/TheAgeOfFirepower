@@ -166,12 +166,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
         }
 
         // 스냅
-        public bool VerticalSnapToSurface(Vector2 position, out Vector2 surfacePosition)
+        public bool VerticalSnapToSurface(Vector2 position, out Vector2 surfacePosition, bool restricted = false)
         {
-            return SnapToSurface(position, Vector2.up, out surfacePosition);
+            return SnapToSurface(position, Vector2.up, out surfacePosition, restricted);
         }
 
-        public bool SnapToSurface(Vector2 position, Vector2 snapDirection, out Vector2 surfacePosition)
+        public bool SnapToSurface(Vector2 position, Vector2 snapDirection, out Vector2 surfacePosition, bool restricted = false)
         {
             if (OnSurface(position))
             {
@@ -186,7 +186,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             displacement /= PixelsPerUnit;
 
             int k = 1;
-            while (true)
+            while (restricted == false || k < 100)
             {
                 Vector2 testPosition0 = position + k * displacement;
                 Vector2 testPosition1 = position - k * displacement;

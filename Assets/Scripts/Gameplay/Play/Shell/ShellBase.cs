@@ -19,6 +19,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         protected ParticleSystem partSysExplosion;
         
         // Field
+        protected Vector2 capturedVelocity;
         protected ArtyController firer;
         protected ShellGameData shellGameData;
         
@@ -40,6 +41,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 battlerLayer = LayerMask.GetMask("Battler");
             }
         }
+        
+        // Event
+        private void FixedUpdate()
+        {
+            // Capture velocity
+            capturedVelocity = rgbShellBody.linearVelocity;
+        }
 
         public virtual void Fire(Vector2 velocity)
         {
@@ -55,7 +63,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
         protected void DestructTerrain(Collision2D collision)
         {
             Vector2 contactPoint = GetContantPoint(collision);
-            DestructibleTerrain.Inst.Paint(contactPoint, Shape.Circle((int)shellGameData.explosionRadius), Color.clear);
+            Vector2 direction = capturedVelocity.normalized;
+            DestructibleTerrain.Inst.SnapToSurface(contactPoint, direction, out Vector2 surfacePosition);
+            
+            // 땅을 너무 깊게 파면 화포가 빠져나오지 못하는 문제가 발생한다.
+            Vector2 circleCenter = surfacePosition - shellGameData.explosionRadius * 0.25f * direction / DestructibleTerrain.Inst.PixelsPerUnit;
+            DestructibleTerrain.Inst.Paint(circleCenter, Shape.Circle((int)shellGameData.explosionRadius), Color.clear);
         }
 
         protected bool IsCollisionWithTerrain(Collision2D collision)
