@@ -12,7 +12,7 @@ namespace Mathlife.ProjectL.Gameplay
         private GameSettingState GameSettingState => GameState.Inst.gameSettingState;
         
         // 상수
-        private const float MAX_DECIBEL = 20f;
+        private const float CONVERT_COEFF = 20f; // log(0.0001) * 20 = -80dB, log(1) * 20 = 0dB
         
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.Inherit;
         
@@ -27,8 +27,23 @@ namespace Mathlife.ProjectL.Gameplay
         private AudioSource seSource;
         
         // 필드
-        public float BGMVolume => bgmSource.volume;
-        public float SEVolume => seSource.volume;
+        public float BGMVolume
+        {
+            get
+            {
+                audioMixer.GetFloat("BGM.Volume", out float volume);
+                return Mathf.Pow(10,  volume / CONVERT_COEFF);
+            }
+        }
+        
+        public float SEVolume
+        {
+            get
+            {
+                audioMixer.GetFloat("SE.Volume", out float volume);
+                return Mathf.Pow(10,  volume / CONVERT_COEFF);
+            }
+        }
 
         protected override void OnRegistered()
         {
@@ -72,14 +87,14 @@ namespace Mathlife.ProjectL.Gameplay
         public void SetBGMVolume(float volume)
         {
             float clamped = Mathf.Clamp(volume, 0.001f, 1f);
-            audioMixer.SetFloat("BGM.Volume", Mathf.Log10(clamped) * MAX_DECIBEL);
+            audioMixer.SetFloat("BGM.Volume", Mathf.Log10(clamped) * CONVERT_COEFF);
             GameSettingState.bgmVolume.Value = volume;
         }
         
         public void SetSEVolume(float volume)
         {
             float clamped = Mathf.Clamp(volume, 0.001f, 1f);
-            audioMixer.SetFloat("SE.Volume", Mathf.Log10(clamped) * MAX_DECIBEL);
+            audioMixer.SetFloat("SE.Volume", Mathf.Log10(clamped) * CONVERT_COEFF);
             GameSettingState.seVolume.Value = volume;
         }
 
