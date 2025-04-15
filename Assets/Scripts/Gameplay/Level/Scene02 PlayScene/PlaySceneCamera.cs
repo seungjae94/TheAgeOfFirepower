@@ -101,7 +101,7 @@ namespace Mathlife.ProjectL.Gameplay
 #endif
 
 #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
-            bool isPointerOverGameObject = EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
+            bool isPointerOverGameObject = Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
 #else
             bool isPointerOverGameObject = EventSystem.current.IsPointerOverGameObject();
 #endif
