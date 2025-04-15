@@ -407,9 +407,9 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontSize: 34.75
-  m_fontSizeBase: 56
+  m_fontSizeBase: 34.75
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 30
   m_fontSizeMax: 36
   m_fontStyle: 0
@@ -543,9 +543,9 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontSize: 34.75
-  m_fontSizeBase: 56
+  m_fontSizeBase: 34.75
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 30
   m_fontSizeMax: 36
   m_fontStyle: 0
@@ -1114,9 +1114,9 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontSize: 34.75
-  m_fontSizeBase: 56
+  m_fontSizeBase: 34.75
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 30
   m_fontSizeMax: 36
   m_fontStyle: 0

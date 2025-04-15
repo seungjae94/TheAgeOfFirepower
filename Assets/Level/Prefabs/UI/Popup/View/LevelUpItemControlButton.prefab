@@ -285,10 +285,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.85
-  m_fontSizeBase: 36
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 22
   m_fontSizeMax: 50
   m_fontStyle: 1
@@ -468,7 +468,6 @@ MonoBehaviour:
   iconImage: {fileID: 650931708059908325}
   amountText: {fileID: 3784323799277712169}
   goldIcon: {fileID: 6219498843468935044, guid: 885269cdf2aa378498f41adc4f9ed288, type: 3}
-  expIcon: {fileID: 21300000, guid: c00ac1b8a278cc743a3b42028805c07d, type: 3}
   diamondIcon: {fileID: 8020413491212878948, guid: 885269cdf2aa378498f41adc4f9ed288, type: 3}
 --- !u!1 &3267902175318988061
 GameObject:

@@ -408,7 +408,6 @@ MonoBehaviour:
   iconImage: {fileID: 3323820396662774216}
   amountText: {fileID: 2271903593923013338}
   goldIcon: {fileID: 6219498843468935044, guid: 885269cdf2aa378498f41adc4f9ed288, type: 3}
-  expIcon: {fileID: 21300000, guid: c00ac1b8a278cc743a3b42028805c07d, type: 3}
   diamondIcon: {fileID: 8020413491212878948, guid: 885269cdf2aa378498f41adc4f9ed288, type: 3}
 --- !u!1 &8018465151162354564
 GameObject:
@@ -445,7 +444,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -5, y: 5}
-  m_SizeDelta: {x: 110.0125, y: 55}
+  m_SizeDelta: {x: 121.2074, y: 55}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &2824239484089054225
 CanvasRenderer:
@@ -475,7 +474,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 9999
+  m_text: 999999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6e1c5d7b4ffbbb04498dc760a2ce8cdb, type: 2}
   m_sharedMaterial: {fileID: 778646550978650798, guid: 6e1c5d7b4ffbbb04498dc760a2ce8cdb, type: 2}
@@ -502,10 +501,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46.1
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 22
   m_fontSizeMax: 50
   m_fontStyle: 1

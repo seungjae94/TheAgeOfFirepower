@@ -3766,14 +3766,15 @@ MonoBehaviour:
   m_ShouldReimportFontFeatures: 0
   m_FallbackFontAssetTable:
   - {fileID: 11400000, guid: 6b7674ee2ef540841a924e9899e9dbf9, type: 2}
+  - {fileID: 11400000, guid: eda8fdd54287f9b4bbf5169dcc631c92, type: 2}
   m_FontWeightTable:
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 11400000, guid: 7421cfb407bc92e40b04de3d2e944b9c, type: 2}
+  - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 11400000, guid: 7421cfb407bc92e40b04de3d2e944b9c, type: 2}
+  - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 11400000, guid: 7421cfb407bc92e40b04de3d2e944b9c, type: 2}
+  - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}

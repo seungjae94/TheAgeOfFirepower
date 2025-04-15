@@ -35,7 +35,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void Start()
         {
-            Application.targetFrameRate = 60;
+            Application.targetFrameRate = 30;
             GameStart().Forget();
         }
 
