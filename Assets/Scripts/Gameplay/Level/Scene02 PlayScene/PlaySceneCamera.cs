@@ -28,18 +28,18 @@ namespace Mathlife.ProjectL.Gameplay
 
         [SerializeField]
         private RectTransform hudTrans;
-        
+
         // Field
         private new Camera camera;
         private Transform trackingTarget;
-        
+
         private bool isDragging;
         private Vector3 mousePositionOnDragStart;
         private Vector3 cameraPositionOnDragStart;
         private Vector3 dragOffset;
 
         private float canvasHeight = 0f;
-            
+
         protected override void OnRegistered()
         {
             camera = GetComponent<Camera>();
@@ -70,15 +70,15 @@ namespace Mathlife.ProjectL.Gameplay
             cameraPositionOnDragStart = transform.position;
             trackingTarget = null;
         }
-        
+
         private void Update()
         {
-#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS) 
+#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
             bool mouseButtonUp = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended;
 #else
             bool mouseButtonUp = Input.GetMouseButtonUp(0);
 #endif
-            
+
             if (isDragging)
             {
                 if (mouseButtonUp)
@@ -86,20 +86,27 @@ namespace Mathlife.ProjectL.Gameplay
                     isDragging = false;
                     return;
                 }
-                
+
                 //Vector3 dragOffsetRaw = camera.ScreenToViewportPoint(mousePositionOnDragStart - Input.mousePosition);
-                Vector3 dragOffsetRaw = camera.ScreenToWorldPoint(mousePositionOnDragStart) - camera.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 dragOffsetRaw = camera.ScreenToWorldPoint(mousePositionOnDragStart) -
+                                        camera.ScreenToWorldPoint(Input.mousePosition);
                 dragOffset = new Vector3(dragOffsetRaw.x * DRAG_SPEED, dragOffsetRaw.y * DRAG_SPEED);
                 return;
             }
 
-#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS) 
+#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
             bool mouseButtonDown = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
 #else
             bool mouseButtonDown = Input.GetMouseButtonDown(0);
 #endif
 
-            if (mouseButtonDown && EventSystem.current.IsPointerOverGameObject(0) == false)
+#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
+            bool isPointerOverGameObject = EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
+#else
+            bool isPointerOverGameObject = EventSystem.current.IsPointerOverGameObject();
+#endif
+            
+            if (mouseButtonDown && isPointerOverGameObject == false)
             {
                 DragStart();
             }
@@ -124,10 +131,11 @@ namespace Mathlife.ProjectL.Gameplay
         {
             float hudPixelHeight = hudTrans.sizeDelta.y;
             float hudHeight = hudPixelHeight / canvasHeight * 2f * HalfHeight;
-            
+
             // Clamp
             float targetX = Mathf.Clamp(position.x, HalfWidth, DestructibleTerrain.Inst.MapWidth - HalfWidth);
-            float targetY = Mathf.Clamp(position.y, HalfHeight - hudHeight, DestructibleTerrain.Inst.MapHeight + 10f - HalfWidth);
+            float targetY = Mathf.Clamp(position.y, HalfHeight - hudHeight,
+                DestructibleTerrain.Inst.MapHeight + 10f - HalfWidth);
             Vector3 targetPosition = new Vector3(targetX, targetY, transform.position.z);
 
             // Move towards
