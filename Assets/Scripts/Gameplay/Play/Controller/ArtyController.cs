@@ -580,21 +580,30 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Vector3 velocity = GetFireVelocity();
 
             const int SAMPLING_INTERVAL = 3;
+            int index = 1;
+            
             List<Vector3> positions = new();
             positions.Add(FirePoint);
-            while (positions.Count < 1000)
+
+            Vector3 prevPosition = FirePoint;
+            while (positions.Count < 300)
             {
-                var position = positions[^1];
-                position += velocity * (Time.deltaTime * SAMPLING_INTERVAL);
-                velocity += Physics.gravity * (Time.deltaTime * SAMPLING_INTERVAL);
+                var position = prevPosition;
+                position += velocity * Time.deltaTime;
+                velocity += Physics.gravity * Time.deltaTime;
 
                 if (DestructibleTerrain.Inst.InFairArea(position) == false
                     || DestructibleTerrain.Inst.InGround(position))
                 {
+                    positions.Add(position);
                     break;
                 }
+                
+                if (index % SAMPLING_INTERVAL == 0)
+                    positions.Add(position);
 
-                positions.Add(position);
+                prevPosition = position;
+                ++index;
             }
 
             TrajectoryRenderer.Inst.Draw(positions);
