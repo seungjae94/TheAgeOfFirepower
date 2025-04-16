@@ -564,6 +564,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 9547d1ecb0ad283478d5252cf8ce6db3, type: 3}
   - id: 4
     clip: {fileID: 8300000, guid: 5d0d5e28a35f1704a87a44ac588dfa72, type: 3}
+  - id: 5
+    clip: {fileID: 8300000, guid: db6de3d061e3f1843b4db22c5fbf77c8, type: 3}
   audioMixer: {fileID: 24100000, guid: 9523bba155bbae841add32ae42cb14e5, type: 2}
   bgmSource: {fileID: 1355170924}
   seSource: {fileID: 1355170927}

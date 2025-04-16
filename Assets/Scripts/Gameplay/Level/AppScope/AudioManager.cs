@@ -15,7 +15,8 @@ namespace Mathlife.ProjectL.Gameplay
         Cancel,
         PopupOpen,
         PopupClose,
-        BeginDrag
+        BeginDrag,
+        Buy
     }
 
     [Serializable]

@@ -27,14 +27,18 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // Field
         private StageGameData stageGameData;
         private readonly CompositeDisposable disposables = new();
+        private bool isOpen;
         
         public void Setup(StageGameData pStageGameData)
         {
             stageGameData = pStageGameData;
+            isOpen = false;
         }
 
         public override UniTask OpenWithAnimation()
         {
+            disposables.Clear();
+            
             AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
             
             titleText.text = $"스테이지 {stageGameData.displayName}";

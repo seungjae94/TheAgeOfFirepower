@@ -79,6 +79,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClickBuyButton(Unit _)
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.Buy);
             BuyItemAsync().Forget();
         }
 

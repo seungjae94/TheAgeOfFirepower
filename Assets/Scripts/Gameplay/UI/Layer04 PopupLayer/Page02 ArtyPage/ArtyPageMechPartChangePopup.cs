@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Mathlife.ProjectL.Utils;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -8,7 +7,6 @@ using UnityEngine.UI;
 using System.Linq;
 using DG.Tweening;
 using Mathlife.ProjectL.Gameplay.UI.ArtyPagePopup;
-using UnityEngine.Serialization;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {

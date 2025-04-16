@@ -1,10 +1,6 @@
 using Coffee.UIEffects;
-using Cysharp.Threading.Tasks;
-using Mathlife.ProjectL.Utils;
-using TMPro;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
@@ -73,6 +69,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPagePopup
         // 상호작용 콜백
         private void OnClick(Unit _)
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
             Context.onCellClickRx.OnNext(Index);
         }
     }

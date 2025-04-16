@@ -77,6 +77,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
             if (CurrentAmount == totalAmount)
                 return;
 
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            
             ++CurrentAmount;
             amountText.text = $"{CurrentAmount}/{totalAmount}";
 
@@ -90,6 +92,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
             if (CurrentAmount == 0)
                 return;
 
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            
             --CurrentAmount;
             amountText.text = $"{CurrentAmount}/{totalAmount}";
             popup.ExpGainRx.Value -= ItemGameData.gainValue;
