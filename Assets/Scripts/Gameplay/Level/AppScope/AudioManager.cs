@@ -16,7 +16,11 @@ namespace Mathlife.ProjectL.Gameplay
         PopupOpen,
         PopupClose,
         BeginDrag,
-        Buy
+        Buy,
+        Engine,
+        Aim,
+        Fire,
+        Explosion,
     }
 
     [Serializable]

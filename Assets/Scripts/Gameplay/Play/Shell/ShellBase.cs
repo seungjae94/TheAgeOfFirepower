@@ -62,6 +62,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         protected void DestructTerrain(Collision2D collision)
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.Explosion);
+            
             Vector2 contactPoint = GetContantPoint(collision);
             Vector2 direction = capturedVelocity.normalized;
             DestructibleTerrain.Inst.SnapToSurface(contactPoint, direction, out Vector2 surfacePosition);

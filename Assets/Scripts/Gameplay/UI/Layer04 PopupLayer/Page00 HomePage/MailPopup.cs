@@ -11,13 +11,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class MailPopup : PopupPresenter
     {
+        private const float OPEN_DURATION = 0.35f;
+        private const float CLOSE_DURATION = 0.25f;
+        
         // Alias
         private static GameProgressState GameProgressState => GameState.Inst.gameProgressState;
         
         // Component
         [SerializeField]
-        private DOTweenAnimation windowSlideAnimation;
-
+        private RectTransform panelTrans;
+        
         [SerializeField]
         private MailScrollRect scrollRect;
         
@@ -31,8 +34,24 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private Button recvAllButton;
         
         // Field
+        private Tween openTween;
+        private Tween closeTween;
         private readonly CompositeDisposable disposables = new();
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            openTween = panelTrans.DOAnchorPosY(0f, OPEN_DURATION)
+                .SetAutoKill(false)
+                .Pause();
+
+            closeTween = panelTrans.DOAnchorPosY(1000f, CLOSE_DURATION)
+                .SetAutoKill(false)
+                .Pause();
+        }
+
+        
         public override async UniTask OpenWithAnimation()
         {
             AudioManager.Inst.PlaySE(ESoundEffectId.PopupOpen);
@@ -60,16 +79,19 @@ namespace Mathlife.ProjectL.Gameplay.UI
             scrollRect.UpdateContentsAuto();
             UpdateBottomView(GameProgressState.mailsRx.Count);
             
-            windowSlideAnimation.DORestart(true);
+            openTween.Restart();
+            await openTween.AwaitForComplete();
         }
 
         public override async UniTask CloseWithAnimation()
         {
             AudioManager.Inst.PlaySE(ESoundEffectId.PopupClose);
             disposables.Clear();
-
-            windowSlideAnimation.DOPlayBackwards();
-            await windowSlideAnimation.tween.AwaitForRewind();
+            
+            closeTween.Restart();
+            await closeTween.AwaitForComplete();
+            
+            Debug.Log("트윈 종료!");
             
             // 블러 제거
             Find<BlurPopup>().CloseWithAnimation().Forget();
@@ -79,8 +101,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnDestroy()
         {
+            openTween.Kill();
+            closeTween.Kill();
             disposables.Dispose();
-            windowSlideAnimation.tween.Kill();
         }
 
         private void UpdateBottomView(int mailCount)

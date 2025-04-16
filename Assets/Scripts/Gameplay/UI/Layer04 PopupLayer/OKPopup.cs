@@ -9,7 +9,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class OKPopup : PopupPresenter
     {
-        private const float k_openDuration = 0.25f;
+        private const float OPEN_DURATION = 0.35f;
+        private const float CLOSE_DURATION = 0.35f;
         
         // View
         [SerializeField]
@@ -36,12 +37,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             base.Initialize();
 
-            openTween = windowTransform.DOScale(new Vector3(1f, 1f, 1f), k_openDuration)
+            openTween = windowTransform.DOScale(new Vector3(1f, 1f, 1f), OPEN_DURATION)
                 .From(new Vector3(0f, 0f, 1f))
                 .SetAutoKill(false)
                 .Pause();
 
-            closeTween = windowTransform.DOScale(new Vector3(0f, 0f, 1f), k_openDuration)
+            closeTween = windowTransform.DOScale(new Vector3(0f, 0f, 1f), CLOSE_DURATION)
                 .From(new Vector3(1f, 1f, 1f))
                 .SetAutoKill(false)
                 .Pause();

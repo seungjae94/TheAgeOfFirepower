@@ -13,12 +13,15 @@ namespace Mathlife.ProjectL.Gameplay.UI
 {
     public class GameSettingsPopup : PopupPresenter
     {
+        private const float OPEN_DURATION = 0.35f;
+        private const float CLOSE_DURATION = 0.25f;
+        
         // Alias
         private GameSettingState GameSettingState => GameState.Inst.gameSettingState;
 
         // Component
         [SerializeField]
-        private DOTweenAnimation windowSlideAnimation;
+        private RectTransform panelTrans;
 
         [SerializeField]
         private ToggleButton drawTrajectoryToggleButton;
@@ -42,8 +45,23 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private Button gameQuitButton;
 
         // Field
+        private Tween openTween;
+        private Tween closeTween;
         private readonly CompositeDisposable disposables = new();
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            openTween = panelTrans.DOAnchorPosY(0f, OPEN_DURATION)
+                .SetAutoKill(false)
+                .Pause();
+
+            closeTween = panelTrans.DOAnchorPosY(1000f, CLOSE_DURATION)
+                .SetAutoKill(false)
+                .Pause();
+        }
+        
         public override async UniTask OpenWithAnimation()
         {
             AudioManager.Inst.PlaySE(ESoundEffectId.PopupOpen);
@@ -81,7 +99,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .Subscribe(OnClickQuitButton)
                 .AddTo(disposables);
 
-            windowSlideAnimation.DORestart();
+            openTween.Restart();
+            await openTween.AwaitForComplete();
         }
 
         public override async UniTask CloseWithAnimation()
@@ -89,8 +108,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
             AudioManager.Inst.PlaySE(ESoundEffectId.PopupClose);
             disposables.Clear();
 
-            windowSlideAnimation.DOPlayBackwards();
-            await windowSlideAnimation.tween.AwaitForRewind();
+            closeTween.Restart();
+            await closeTween.AwaitForComplete();
 
             // 블러 제거
             Find<BlurPopup>().CloseWithAnimation().Forget();
@@ -100,8 +119,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnDestroy()
         {
+            openTween.Kill();
+            closeTween.Kill();
             disposables.Dispose();
-            windowSlideAnimation.tween.Kill();
         }
 
         private void OnToggleButtonClick(Unit _)
