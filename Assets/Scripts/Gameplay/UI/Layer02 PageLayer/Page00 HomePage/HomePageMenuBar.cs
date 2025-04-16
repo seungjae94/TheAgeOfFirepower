@@ -1,3 +1,4 @@
+using System;
 using Mathlife.ProjectL.Utils;
 using UniRx;
 using UnityEngine;
@@ -34,23 +35,23 @@ namespace Mathlife.ProjectL.Gameplay.UI
         public override void Draw()
         {
             batteryMenuButton.OnClickAsObservable()
-                .Subscribe(_ => Presenter.Find<BatteryPage>().Open())
+                .Subscribe(_ => OpenPage(typeof(BatteryPage)))
                 .AddTo(disposables);
 
             artilleryMenuButton.OnClickAsObservable()
-                .Subscribe(_ => OpenArtyPage())
+                .Subscribe(_ => OpenPage(typeof(ArtyPage)))
                 .AddTo(disposables);
 
             inventoryMenuButton.OnClickAsObservable()
-                .Subscribe(_ => Presenter.Find<InventoryPage>().Open())
+                .Subscribe(_ => OpenPage(typeof(InventoryPage)))
                 .AddTo(disposables);
 
             shopMenuButton.OnClickAsObservable()
-                .Subscribe(_ => Presenter.Find<ShopPage>().Open())
+                .Subscribe(_ => OpenPage(typeof(ShopPage)))
                 .AddTo(disposables);
 
             battleMenuButton.OnClickAsObservable()
-                .Subscribe(_ => Presenter.Find<StageSelectionPage>().Open())
+                .Subscribe(_ => OpenPage(typeof(StageSelectionPage)))
                 .AddTo(disposables);
         }
 
@@ -64,11 +65,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
             disposables.Dispose();
         }
 
-        private void OpenArtyPage()
+        private void OpenPage(Type type)
         {
-            var artyPage = Presenter.Find<ArtyPage>();
-            // TODO: Setup ArtyPage. e.g. save and load arty index.
-            artyPage.Open();
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            (Presenter.Find(type) as Page)?.Open();
         }
     }
 }

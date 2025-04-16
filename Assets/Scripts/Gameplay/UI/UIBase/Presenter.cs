@@ -49,6 +49,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
     
             throw new PresenterNotRegisteredException(widgetType);
         }
+
+        public static Presenter Find(Type widgetType)
+        {
+            if (s_widgets.TryGetValue(widgetType, out Presenter widget))
+            {
+                return widget;
+            }
+            
+            throw new PresenterNotRegisteredException(widgetType);
+        }
         
         public virtual void Initialize()
         {
