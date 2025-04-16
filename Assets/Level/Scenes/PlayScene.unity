@@ -2794,8 +2794,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: FIRE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b1c5337c79bc9de4c83b985903d5022e, type: 2}
-  m_sharedMaterial: {fileID: -1238195806554277211, guid: b1c5337c79bc9de4c83b985903d5022e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6e1c5d7b4ffbbb04498dc760a2ce8cdb, type: 2}
+  m_sharedMaterial: {fileID: 778646550978650798, guid: 6e1c5d7b4ffbbb04498dc760a2ce8cdb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3192,7 +3192,7 @@ MonoBehaviour:
     moveStrategy: 0
     targetingStrategy: 2
   developStageGameDataRef:
-    m_AssetGUID: 5f3e1fa1dfdc7d647b5fa6d72c8f0cd4
+    m_AssetGUID: acb591c854c157c439319cd82789d3df
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
@@ -3601,8 +3601,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SKIP
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b1c5337c79bc9de4c83b985903d5022e, type: 2}
-  m_sharedMaterial: {fileID: -1238195806554277211, guid: b1c5337c79bc9de4c83b985903d5022e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6e1c5d7b4ffbbb04498dc760a2ce8cdb, type: 2}
+  m_sharedMaterial: {fileID: 778646550978650798, guid: 6e1c5d7b4ffbbb04498dc760a2ce8cdb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5701,8 +5701,16 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
