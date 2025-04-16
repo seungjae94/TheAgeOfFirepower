@@ -8794,6 +8794,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3659668361803017658, guid: ef8ed3d863d257a4baa9789d37d48ece, type: 3}
+      propertyPath: scrollSensitivity
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3719357400987652918, guid: ef8ed3d863d257a4baa9789d37d48ece, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -11686,7 +11690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5453795105101304166, guid: 832abbbe05b8e9b48a49d25ae37dd8f3, type: 3}
       propertyPath: saveRenderTextureAsFile
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7392604942266595460, guid: 832abbbe05b8e9b48a49d25ae37dd8f3, type: 3}
       propertyPath: m_Name
@@ -11958,23 +11962,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 74572154590789324, guid: 3b42c1ef1a7a75346be86b50280e8920, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 74572154590789324, guid: 3b42c1ef1a7a75346be86b50280e8920, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 74572154590789324, guid: 3b42c1ef1a7a75346be86b50280e8920, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 74572154590789324, guid: 3b42c1ef1a7a75346be86b50280e8920, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 74572154590789324, guid: 3b42c1ef1a7a75346be86b50280e8920, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -37.5
       objectReference: {fileID: 0}
     - target: {fileID: 161040376990198930, guid: 3b42c1ef1a7a75346be86b50280e8920, type: 3}
       propertyPath: m_fontSize
@@ -11990,7 +11994,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 382800814882695021, guid: 3b42c1ef1a7a75346be86b50280e8920, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3531710768056623910, guid: 3b42c1ef1a7a75346be86b50280e8920, type: 3}
       propertyPath: m_Pivot.x

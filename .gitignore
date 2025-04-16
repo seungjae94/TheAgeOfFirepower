@@ -77,3 +77,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /Assets/Debug
 Assets/Debug/BlurredScreen.png
+/Assets/Debug
