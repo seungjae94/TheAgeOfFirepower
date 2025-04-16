@@ -115,6 +115,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             var currentArty = ArtyRosterState.Battery[slotIndex];
 
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            
             // 같은 슬롯으로 드래그한 경우 무시
             if (currentArty == draggedArty)
                 return;

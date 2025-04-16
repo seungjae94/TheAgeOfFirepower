@@ -89,6 +89,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // 이벤트 구독 콜백
         private void OnClickNavToArtyPageButton(Unit _)
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            
             ArtyPage artyPage = Presenter.Find<ArtyPage>();
             artyPage.selectedArtyIndexRx.Value = ArtyRosterState.IndexOf(BatteryPage.SelectedArty);
             artyPage.Open();

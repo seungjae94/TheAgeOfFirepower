@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UniRx;
-using UnityEngine;
-using UnityEngine.UI.Extensions;
+﻿using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {

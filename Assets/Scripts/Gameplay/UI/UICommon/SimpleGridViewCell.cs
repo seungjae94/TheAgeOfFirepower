@@ -17,11 +17,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
             base.Initialize();
 
             cellButton.OnClickAsObservable()
-                .Subscribe(OnClickCell)
+                .Subscribe(OnClick)
                 .AddTo(gameObject);
         }
 
-        private void OnClickCell(Unit _)
+        protected virtual void OnClick(Unit _)
         {
             Context.onCellClickRx.OnNext(Index);
         }

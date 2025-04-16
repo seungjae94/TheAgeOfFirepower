@@ -1,6 +1,7 @@
 using System;
 using Coffee.UIEffects;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +39,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
             iconImage.sprite = itemStack.Icon;
             selectionGameObject.SetActive(Context.selectedIndex == Index);
             amountText.text = itemStack.Amount.ToString();
+        }
+        
+        protected override void OnClick(Unit _)
+        {
+            base.OnClick(_);
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
         }
     }
 }

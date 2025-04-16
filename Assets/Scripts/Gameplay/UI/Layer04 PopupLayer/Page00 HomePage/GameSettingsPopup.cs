@@ -46,6 +46,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public override async UniTask OpenWithAnimation()
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.PopupOpen);
             base.OpenWithAnimation();
 
             // 블러 적용
@@ -85,6 +86,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public override async UniTask CloseWithAnimation()
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.PopupClose);
             disposables.Clear();
 
             windowSlideAnimation.DOPlayBackwards();

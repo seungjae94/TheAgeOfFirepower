@@ -47,6 +47,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClick(Unit _)
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            
             shouldNavigate = true;
             onNavigateBack.OnNext(this);
             

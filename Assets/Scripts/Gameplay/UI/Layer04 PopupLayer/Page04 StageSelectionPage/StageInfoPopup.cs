@@ -35,6 +35,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public override UniTask OpenWithAnimation()
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            
             titleText.text = $"스테이지 {stageGameData.displayName}";
             
             enterButton.OnClickAsObservable()
@@ -55,6 +57,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public override UniTask CloseWithAnimation()
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            
             Find<StageSelectionPage>().onSelectStage.OnNext(null);
             
             disposables.Clear();

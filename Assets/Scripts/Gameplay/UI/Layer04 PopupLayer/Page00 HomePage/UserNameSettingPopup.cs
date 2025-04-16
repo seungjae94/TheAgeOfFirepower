@@ -49,6 +49,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public override async UniTask OpenWithAnimation()
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.PopupOpen);
+            
             // 블러 적용
             BlurPopup blurPopup = Find<BlurPopup>();
             blurPopup.transform.SetSiblingIndex(transform.GetSiblingIndex() - 1);
@@ -101,6 +103,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClickOKButton(Unit _)
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.PopupClose);
             inputField.interactable = false;
             string userName = inputField.text;
 

@@ -1,5 +1,6 @@
 using System;
 using Coffee.UIEffects;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
@@ -39,6 +40,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             equippedMarkGameObject.SetActive(mechPart.Owner.Value != null);
             selectionGameObject.SetActive(Context.selectedIndex == Index);
+        }
+        
+        protected override void OnClick(Unit _)
+        {
+            base.OnClick(_);
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
         }
     }
 }

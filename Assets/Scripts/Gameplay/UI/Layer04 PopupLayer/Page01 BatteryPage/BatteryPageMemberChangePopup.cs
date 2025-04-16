@@ -75,6 +75,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
 
         public override async UniTask OpenWithAnimation()
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.PopupOpen);
             await base.OpenWithAnimation();
 
             // 이벤트 구독
@@ -97,6 +98,7 @@ namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
 
         public override async UniTask CloseWithAnimation()
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.PopupClose);
             disposables.Clear();
 
             BatteryPage.selectedSlotIndexRx.Value = -1;

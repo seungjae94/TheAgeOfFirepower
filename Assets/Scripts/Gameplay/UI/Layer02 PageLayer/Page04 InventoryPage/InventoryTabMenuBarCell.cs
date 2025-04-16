@@ -1,5 +1,6 @@
 ﻿using System;
 using TMPro;
+using UniRx;
 using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.UI
@@ -15,6 +16,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
             tabMenuNameText.characterSpacing = itemData.GetCharacterSpacing();
 
             tabMenuNameText.color = (Index == Context.selectedIndex) ? Color.cyan : Color.white;
+        }
+
+        protected override void OnClick(Unit _)
+        {
+            base.OnClick(_);
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
         }
     }
 }

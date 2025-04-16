@@ -14,7 +14,8 @@ namespace Mathlife.ProjectL.Gameplay
         Ok = 0,
         Cancel,
         PopupOpen,
-        PopupClose
+        PopupClose,
+        BeginDrag
     }
 
     [Serializable]

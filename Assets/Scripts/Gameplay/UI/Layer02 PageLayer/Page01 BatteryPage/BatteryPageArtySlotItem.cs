@@ -115,6 +115,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // 이벤트 구독 콜백
         private void OnBeginDrag(PointerEventData eventData)
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.BeginDrag);
+            
             ItemDragView.gameObject.SetActive(true);
             ItemDragView.Setup(Arty);
             ItemDragView.Draw();
@@ -142,6 +144,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnPointerClick(PointerEventData eventData)
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
             BatteryPage.selectedSlotIndexRx.Value = slotIndex;
         }
 

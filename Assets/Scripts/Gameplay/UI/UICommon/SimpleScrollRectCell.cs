@@ -25,7 +25,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .AddTo(gameObject);
         }
 
-        private void OnClick(Unit _)
+        protected virtual void OnClick(Unit _)
         {
             Context.onCellClickRx.OnNext(Index);
         }
