@@ -28,7 +28,7 @@ MonoBehaviour:
   bgm: {fileID: 8300000, guid: 08972e2876ecd8d49b376779a1a4e877, type: 3}
   mapSprite: {fileID: 21300000, guid: d3bb3be79512a4046b532828345402e7, type: 3}
   spawnPositions:
-  - {x: 4.5, y: 7.9}
+  - {x: 4.5, y: 11}
   - {x: 4, y: 3}
   - {x: 6.5, y: 2.5}
   - {x: 12, y: 2.5}

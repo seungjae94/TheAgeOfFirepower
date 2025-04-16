@@ -204,7 +204,6 @@ namespace Mathlife.ProjectL.Gameplay.Play
             MoveAxis = 0f;
             CurrentFuel = Model.GetMobility();
             fireChance = 1;
-            UpdateRotation();
 
             // Enable UI
             interactable = true;
@@ -213,10 +212,14 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (IsPlayer)
             {
-                TurnOnFireResultDrawing(true);
                 Presenter.Find<GaugeHUD>().Enable();
                 Presenter.Find<MoveHUD>().Enable();
                 Presenter.Find<ItemHUD>().Enable();
+                
+                UniTask.DelayFrame(3)
+                    .ContinueWith(UpdateRotation)
+                    .ContinueWith(() => TurnOnFireResultDrawing(true))
+                    .Forget();
             }
             else
             {
