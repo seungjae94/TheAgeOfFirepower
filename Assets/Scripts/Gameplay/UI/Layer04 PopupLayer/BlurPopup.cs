@@ -118,7 +118,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             RenderTexture.active = activeRenderTexture;
 
             coroutineState = ECoroutineState.Finished;
-            Debug.Log($"블러 팝업 상태 변경: {coroutineState}");
         }
 
 #if UNITY_EDITOR

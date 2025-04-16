@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 using UnityEngine.UI.Extensions.EasingCore;
@@ -35,17 +36,19 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
         [SerializeField]
         ArtyPageScrollViewCell cellPrefab;
 
+        private int prevSnapIndex = 0;
+        
         protected override void Initialize()
         {
             base.Initialize();
 
             Context.onCellClickRx
-                .Subscribe(SelectCell)
+                .Subscribe(i => SelectCell(i))
                 .AddTo(gameObject);
             
             scroller = GetComponent<Scroller>();
-            scroller.OnValueChanged(UpdatePosition);
-            scroller.OnSelectionChanged(UpdateSelection);
+            scroller.OnValueChanged(OnScrollValueChanged);
+            scroller.OnSelectionChanged(i => UpdateSelection(i));
         }
 
         public void Setup(List<ArtyModel> items)
@@ -56,23 +59,46 @@ namespace Mathlife.ProjectL.Gameplay.UI.ArtyPageView
             Context.scrollOffset = scrollOffset;
         }
 
-        public void SelectCell(int index)
+        public void SelectCell(int index, bool internalCall = true)
         {
             if (index == Context.selectedIndex)
                 return;
 
-            UpdateSelection(index);
+            UpdateSelection(index, internalCall);
             scroller.ScrollTo(index, 0.35f, Ease.OutCubic);
         }
 
-        private void UpdateSelection(int index)
+        private void UpdateSelection(int index, bool internalCall = true)
         {
             if (Context.selectedIndex == index)
                 return;
 
+            if (internalCall)
+            {
+                AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            }
             Context.selectedIndex = index;
             ArtyPage.selectedArtyIndexRx.Value = index;
             Refresh();
+        }
+
+        private void OnScrollValueChanged(float value)
+        {
+            UpdatePosition(value);
+
+            float frac = value - Mathf.Floor(value);
+            
+            if (frac is < 0.1f or > 0.9f)
+            {
+                int currentSnapIndex = Mathf.RoundToInt(value);
+
+                if (prevSnapIndex != currentSnapIndex)
+                {
+                    AudioManager.Inst.PlaySE(ESoundEffectId.BeginDrag);
+                }
+
+                prevSnapIndex = currentSnapIndex;
+            }
         }
     }
 }

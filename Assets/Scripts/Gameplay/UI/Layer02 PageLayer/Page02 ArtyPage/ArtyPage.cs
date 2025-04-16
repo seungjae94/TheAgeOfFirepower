@@ -45,7 +45,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             // 뷰 초기화
             scrollView.Setup(sortedList);
-            scrollView.SelectCell(selectedArtyIndexRx.Value);
+            scrollView.SelectCell(selectedArtyIndexRx.Value, false);
 
             artyPageSelectedArtyView.Draw();
         }
