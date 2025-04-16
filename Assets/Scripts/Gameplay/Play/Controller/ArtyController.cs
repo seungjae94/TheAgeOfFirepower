@@ -190,7 +190,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             TurnOffFireResultDrawing(false);
             SetFireAngle(0);
             SetFirePower(50);
-
+            
             // 준비 완료
             Ready = true;
         }
@@ -204,6 +204,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             MoveAxis = 0f;
             CurrentFuel = Model.GetMobility();
             fireChance = 1;
+            UpdateRotation();
 
             // Enable UI
             interactable = true;

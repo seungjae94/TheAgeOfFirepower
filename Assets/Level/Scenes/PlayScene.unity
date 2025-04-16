@@ -3192,7 +3192,7 @@ MonoBehaviour:
     moveStrategy: 0
     targetingStrategy: 2
   developStageGameDataRef:
-    m_AssetGUID: acb591c854c157c439319cd82789d3df
+    m_AssetGUID: 5f3e1fa1dfdc7d647b5fa6d72c8f0cd4
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
