@@ -60,6 +60,7 @@ namespace Mathlife.ProjectL.Gameplay
         
         // Field
         private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable characterDisposables = new();
 
         // Lifetime
 
@@ -69,14 +70,14 @@ namespace Mathlife.ProjectL.Gameplay
 
             ArtyPage.selectedArtyIndexRx
                 .DistinctUntilChanged()
-                .Subscribe(index => UpdateView())
+                .Subscribe(index => SubscribeArty())
                 .AddTo(disposables);
 
             levelUpButton.OnClickAsObservable()
                 .Subscribe(_ => Presenter.Find<ArtyPageLevelUpPopup>().OpenWithAnimation().Forget())
                 .AddTo(disposables);
 
-            UpdateView();
+            SubscribeArty();
         }
 
         public override void Clear()
@@ -89,10 +90,13 @@ namespace Mathlife.ProjectL.Gameplay
         void OnDestroy()
         {
             disposables.Dispose();
+            characterDisposables.Dispose();
         }
 
-        public void UpdateView()
+        public void SubscribeArty()
         {
+            characterDisposables.Clear();
+            
             ArtyModel arty = ArtyPage.SelectedArty;
 
             if (arty == null)
@@ -101,6 +105,38 @@ namespace Mathlife.ProjectL.Gameplay
                 throw new ArtyPageNoArtySelectedException("[ArtyPageSelectedArtyView] 선택된 화포가 없습니다.");
             }
 
+            arty.ObserveEveryValueChanged(arty => arty.GetMaxHp())
+                .DistinctUntilChanged()
+                .Subscribe(value => UpdateView(arty))
+                .AddTo(characterDisposables);
+            
+            arty.ObserveEveryValueChanged(arty => arty.GetAtk())
+                .DistinctUntilChanged()
+                .Subscribe(value => UpdateView(arty))
+                .AddTo(characterDisposables);
+            
+            arty.ObserveEveryValueChanged(arty => arty.GetDef())
+                .DistinctUntilChanged()
+                .Subscribe(value => UpdateView(arty))
+                .AddTo(characterDisposables);
+            
+            arty.ObserveEveryValueChanged(arty => arty.GetMobility())
+                .DistinctUntilChanged()
+                .Subscribe(value => UpdateView(arty))
+                .AddTo(characterDisposables);
+            
+            arty.ObserveEveryValueChanged(arty => arty.totalExpRx.Value)
+                .DistinctUntilChanged()
+                .Subscribe(value => UpdateView(arty))
+                .AddTo(characterDisposables);
+            
+            UpdateView(arty);
+            
+            RedrawSlots();
+        }
+
+        private void UpdateView(ArtyModel arty)
+        {
             portrait.sprite = arty.Sprite;
             nameText.text = arty.DisplayName;
             levelText.text = arty.levelRx.Value.ToString();
@@ -117,9 +153,8 @@ namespace Mathlife.ProjectL.Gameplay
             shellIcon.sprite = arty.Shell.icon;
             shellNameText.text = $"포탄 - {arty.Shell.displayName}";
             shellDescriptionText.text = arty.Shell.description;
-
-            RedrawSlots();
         }
+        
 
         private void RedrawSlots()
         {

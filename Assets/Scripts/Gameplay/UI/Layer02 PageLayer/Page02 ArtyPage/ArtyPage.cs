@@ -58,7 +58,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public void UpdateSelectedArtyView()
         {
-            artyPageSelectedArtyView.UpdateView();
+            artyPageSelectedArtyView.SubscribeArty();
         }
     }
 }

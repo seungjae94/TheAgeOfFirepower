@@ -152,9 +152,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             ExpGainRx.Value = 0L;
             
-            statView.Clear();
-            statView.Draw();
-            
             foreach (var view in itemControlViews)
             {
                 view.Clear();
