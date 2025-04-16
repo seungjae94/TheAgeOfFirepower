@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Mathlife.ProjectL.Gameplay.ObjectBase;
 using Mathlife.ProjectL.Gameplay.UI;
 using UnityEngine;
@@ -81,6 +82,7 @@ namespace Mathlife.ProjectL.Gameplay
             RefreshCurrentSceneAndGameMode();
 
             // 게임 초기화
+            DOTween.Init();
             await GameState.Inst.Load(CreateProgress(currentProgress, currentProgress + INIT_GAME_TIME / GAME_START_TIME));
             currentProgress += INIT_GAME_TIME / GAME_START_TIME;
             

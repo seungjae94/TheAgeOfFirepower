@@ -66,7 +66,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             coroutineState = ECoroutineState.Working;
             StartCoroutine(GetBlurredScreenTexture());
-            await UniTask.WaitUntil(coroutineState, (pCoroutineState) => pCoroutineState != ECoroutineState.Finished);
+            await UniTask.WaitUntil(this, This => This.coroutineState == ECoroutineState.Finished);
+            StopCoroutine(GetBlurredScreenTexture());
         }
 
         public override async UniTask CloseWithAnimation()
@@ -117,6 +118,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             RenderTexture.active = activeRenderTexture;
 
             coroutineState = ECoroutineState.Finished;
+            Debug.Log($"블러 팝업 상태 변경: {coroutineState}");
         }
 
 #if UNITY_EDITOR

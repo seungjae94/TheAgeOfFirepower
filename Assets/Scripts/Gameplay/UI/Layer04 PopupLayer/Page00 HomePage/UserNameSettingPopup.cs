@@ -3,7 +3,6 @@ using DG.Tweening;
 using Mathlife.ProjectL.Gameplay.Gameplay.Data.Model;
 using TMPro;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,9 +62,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             okButton.interactable = false;
 
-            inputField.onValueChanged
+            inputField.onEndEdit
                 .AsObservable()
-                .Subscribe(OnInputFieldValueChanged)
+                .Subscribe(OnInputFieldEndEdit)
                 .AddTo(disposables);
 
             openTween.Restart();
@@ -93,10 +92,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
         }
 
         // 구독
-        private void OnInputFieldValueChanged(string userName)
+        private void OnInputFieldEndEdit(string userName)
         {
             bool isValid = GameProgressState.TryMakeValidUserName(userName, out string newUserName);
-            inputField.text = newUserName;
+            inputField.SetTextWithoutNotify(newUserName);
             okButton.interactable = isValid;
         }
 
@@ -104,9 +103,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             inputField.interactable = false;
             string userName = inputField.text;
-            
-            
-            // TODO: inputField.value를 이름으로 설정
 
             if (GameProgressState.IsUserNameValid(userName))
             {

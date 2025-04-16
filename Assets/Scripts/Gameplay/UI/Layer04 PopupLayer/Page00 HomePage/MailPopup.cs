@@ -59,7 +59,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             scrollRect.UpdateContentsAuto();
             UpdateBottomView(GameProgressState.mailsRx.Count);
             
-            windowSlideAnimation.DOPlay();
+            windowSlideAnimation.DORestart(true);
         }
 
         public override async UniTask CloseWithAnimation()

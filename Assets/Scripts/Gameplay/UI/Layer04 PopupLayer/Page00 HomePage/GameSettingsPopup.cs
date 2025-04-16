@@ -73,7 +73,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .Subscribe(OnClickOKButton)
                 .AddTo(disposables);
             
-            windowSlideAnimation.DOPlay();
+            windowSlideAnimation.DORestart();
         }
 
         public override async UniTask CloseWithAnimation()
