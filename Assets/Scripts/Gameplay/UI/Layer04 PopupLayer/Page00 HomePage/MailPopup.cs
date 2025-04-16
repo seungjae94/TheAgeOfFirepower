@@ -91,8 +91,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
             closeTween.Restart();
             await closeTween.AwaitForComplete();
             
-            Debug.Log("트윈 종료!");
-            
             // 블러 제거
             Find<BlurPopup>().CloseWithAnimation().Forget();
             

@@ -620,6 +620,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return;
             }
 
+            AudioManager.Inst.PlaySE(ESoundEffectId.Fire);
             --fireChance;
 
             GameObject shellGameObject = Instantiate(Model.Shell.prefab);

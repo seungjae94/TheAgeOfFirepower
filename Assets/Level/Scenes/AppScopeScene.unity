@@ -566,6 +566,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 5d0d5e28a35f1704a87a44ac588dfa72, type: 3}
   - id: 5
     clip: {fileID: 8300000, guid: db6de3d061e3f1843b4db22c5fbf77c8, type: 3}
+  - id: 6
+    clip: {fileID: 8300000, guid: 3ad09c1a225058c469537551fb506659, type: 3}
+  - id: 7
+    clip: {fileID: 8300000, guid: c61542fc4bc4420408202c372a198295, type: 3}
+  - id: 8
+    clip: {fileID: 8300000, guid: a92f7e5b6ad3887459d973e71ac470f9, type: 3}
+  - id: 9
+    clip: {fileID: 8300000, guid: 95e707e7625844e4f9bb60e0156e735f, type: 3}
   audioMixer: {fileID: 24100000, guid: 9523bba155bbae841add32ae42cb14e5, type: 2}
   bgmSource: {fileID: 1355170924}
   seSource: {fileID: 1355170927}
