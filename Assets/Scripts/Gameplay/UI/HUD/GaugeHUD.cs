@@ -59,7 +59,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             int iFirePower = TurnOwner.FirePower;
 
             angleSlider.value = (iFireAngle + 30f) / 105f;
-            powerSlider.value = (iFirePower - 1) / 99f;
+            powerSlider.value = (iFirePower - 10) / 90f;
             
             angleSlider.OnValueChangedAsObservable()
                 .Subscribe(OnAngleSliderValueChanged)

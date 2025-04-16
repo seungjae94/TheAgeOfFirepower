@@ -111,7 +111,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public int FirePower
         {
             get => firePower;
-            set => firePower = Mathf.Clamp(value, 1, 100);
+            private set => firePower = Mathf.Clamp(value, 10, 100);
         }
 
         public float CurrentFuel { get; private set; }
