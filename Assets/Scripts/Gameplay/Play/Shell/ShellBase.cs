@@ -63,7 +63,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         protected void DestructTerrain(Collision2D collision)
         {
-            AudioManager.Inst.PlayOneShotOnAudioPool(ESoundEffectId.Explosion).Forget();
+            AudioManager.Inst.PlaySE(ESoundEffectId.Explosion, 1);
             
             Vector2 contactPoint = GetContantPoint(collision);
             Vector2 direction = capturedVelocity.normalized;

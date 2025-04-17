@@ -52,8 +52,11 @@ namespace Mathlife.ProjectL.Gameplay
         private AudioSource bgmSource;
 
         [SerializeField]
-        private AudioSource seSource;
-
+        private List<AudioSource> seSources = new();
+        
+        [SerializeField]
+        private AudioSource audioSourcePrefab;
+        
         private readonly Queue<AudioSource> pool = new();
         
         // 필드
@@ -90,12 +93,9 @@ namespace Mathlife.ProjectL.Gameplay
 
         private AudioSource CreateAudioSource()
         {
-            GameObject inst = new GameObject();
-            inst.name = "PooledAudioSource";
-            inst.AddComponent<AudioSource>();
-            inst.transform.SetParent(transform);
-            inst.SetActive(false);
-            return inst.GetComponent<AudioSource>();
+            AudioSource source = Instantiate<AudioSource>(audioSourcePrefab, transform);
+            source.gameObject.SetActive(false);
+            return source;
         }
 
         public AudioSource BorrowAudioSource()
@@ -122,7 +122,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             var source = BorrowAudioSource();
             source.PlayOneShot(clip);
-            await UniTask.WaitWhile(source, s => s?.isPlaying ?? false);
+            await UniTask.WaitWhile(source, s => s != null && s.isPlaying);
             ReturnAudioSource(source);
         }
         
@@ -140,24 +140,19 @@ namespace Mathlife.ProjectL.Gameplay
             bgmSource.Play();
         }
 
-        public void PlaySE(ESoundEffectId clipId)
+        public void PlaySE(ESoundEffectId clipId, int channel = 0)
         {
-            PlaySE(soundEffects[(int)clipId].clip);
+            PlaySE(soundEffects[(int)clipId].clip, channel);
         }
 
-        public void PlaySE(AudioClip clip)
+        public void PlaySE(AudioClip clip, int channel = 0)
         {
-            seSource.PlayOneShot(clip);
+            seSources[channel].PlayOneShot(clip);
         }
 
         public void StopSE()
         {
-            seSource.Stop();
-        }
-
-        public void StopSE(ESoundEffectId clipId)
-        {
-            seSource.Stop();
+            seSources.ForEach(source => source.Stop());
         }
 
         public void PauseBGM()
