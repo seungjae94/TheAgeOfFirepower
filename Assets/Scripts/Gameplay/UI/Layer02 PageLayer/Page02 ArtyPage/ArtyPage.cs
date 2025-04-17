@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UniRx;
 using Mathlife.ProjectL.Gameplay.UI.ArtyPageView;
@@ -17,7 +18,10 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // Field
         public readonly ReactiveProperty<int> selectedArtyIndexRx = new(0);
 
-        public ArtyModel SelectedArty => ArtyRosterState[selectedArtyIndexRx.Value];
+        //public ArtyModel SelectedArty => ArtyRosterState[selectedArtyIndexRx.Value];
+        public ArtyModel SelectedArty { get; private set; }
+        
+        private CompositeDisposable disposables = new();
         
         // View
         [SerializeField]
@@ -37,15 +41,15 @@ namespace Mathlife.ProjectL.Gameplay.UI
             NavigateBackOverlay navBackOverlay = Find<NavigateBackOverlay>();
             navBackOverlay.Activate();
 
-            // 데이터 fetching
-            List<ArtyModel> sortedList = ArtyRosterState.GetSortedList();
+            disposables.Clear();
 
-            if (selectedArtyIndexRx.Value < 0 || selectedArtyIndexRx.Value >= sortedList.Count)
-                selectedArtyIndexRx.Value = 0;
+            selectedArtyIndexRx.Subscribe(idx => SelectedArty = ArtyRosterState[idx])
+                .AddTo(disposables);
             
-            // 뷰 초기화
-            scrollView.Setup(sortedList);
-            scrollView.SelectCell(selectedArtyIndexRx.Value, false);
+            UpdateScrollView();
+
+            ArtyRosterState.SubscribeAllArtyLevelChange(UpdateScrollView)
+                .AddTo(disposables);
 
             artyPageSelectedArtyView.Draw();
         }
@@ -54,11 +58,38 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             // 뷰 정리
             artyPageSelectedArtyView.Clear();
+            disposables.Clear();
         }
 
+        private void OnDestroy()
+        {
+            disposables.Dispose();
+        }
+        
         public void UpdateSelectedArtyView()
         {
             artyPageSelectedArtyView.SubscribeArty();
+        }
+
+        private void UpdateScrollView()
+        {
+            // 데이터 fetching
+            List<ArtyModel> sortedList = ArtyRosterState.GetSortedList();
+
+            if (selectedArtyIndexRx.Value < 0 || selectedArtyIndexRx.Value >= sortedList.Count)
+                selectedArtyIndexRx.Value = 0;
+
+            if (SelectedArty != sortedList[selectedArtyIndexRx.Value])
+            {
+                selectedArtyIndexRx.Value = sortedList.IndexOf(SelectedArty);
+                
+                if (selectedArtyIndexRx.Value < 0 || selectedArtyIndexRx.Value >= sortedList.Count)
+                    selectedArtyIndexRx.Value = 0;
+            }
+            
+            // 뷰 초기화
+            scrollView.Setup(sortedList);
+            scrollView.SelectCell(selectedArtyIndexRx.Value, false);
         }
     }
 }

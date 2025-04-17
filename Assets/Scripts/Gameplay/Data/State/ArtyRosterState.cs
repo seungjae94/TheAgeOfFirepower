@@ -221,6 +221,22 @@ namespace Mathlife.ProjectL.Gameplay
                 .ToList();
         }
 
+        public IDisposable SubscribeAllArtyLevelChange(Action onChange)
+        {
+            return artyList.ObserveEveryValueChanged(list => EnumerableToHashCode(list.Select(at => at.levelRx.Value)))
+                .Subscribe(_ => onChange?.Invoke());
+        }
+        
+        private static int EnumerableToHashCode<T>(IEnumerable<T> list)
+        {
+            HashCode hash = new HashCode();
+            foreach (var item in list)
+            {
+                hash.Add(item);
+            }
+            return hash.ToHashCode();
+        }
+
         private void Sort()
         {
             artyList.Sort(Compare);
