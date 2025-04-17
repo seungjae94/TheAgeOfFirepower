@@ -674,6 +674,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Skip()
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            
             HasTurn = false;
             DisableUIAndHUD();
         }
