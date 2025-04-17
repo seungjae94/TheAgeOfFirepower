@@ -47,30 +47,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnLBChanged(bool value)
         {
-            if (value)
-            {
-                AudioManager.Inst.PlaySE(ESoundEffectId.Engine, true);
-            }
-            else
-            {
-                AudioManager.Inst.StopSE(true);
-            }
-            
             LBPressed = value;
             UpdateAxis();
         }
         
         private void OnRBChanged(bool value)
         {
-            if (value)
-            {
-                AudioManager.Inst.PlaySE(ESoundEffectId.Engine, true);
-            }
-            else
-            {
-                AudioManager.Inst.StopSE(true);
-            }
-            
             RBPressed = value;
             UpdateAxis();
         }

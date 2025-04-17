@@ -75,6 +75,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private float moveSpeed = 5f;
 
+        private bool slidedOnPrevFrame = false;
+        private bool slidedOnCurFrame = false;
+        
         public readonly float shellMaxSpeed = 15f;
 
         private static float gravityScale = 0.05f;
@@ -226,7 +229,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 behaviorGraphAgent.Restart();
             }
 
-            Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
+            if (IsPlayer)
+                Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
 
             // Camera Tracking Start
             PlaySceneCamera.Inst.SetTracking(transform);
@@ -252,6 +256,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (Ready == false)
                 return;
 
+            slidedOnCurFrame = false;
+            
             TurnOffFireResultDrawing(true);
 
             // 0. 유효 범위 바깥으로 나간 경우 낙사
@@ -331,6 +337,16 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
         }
 
+        private void LateUpdate()
+        {
+            if (slidedOnPrevFrame && !slidedOnCurFrame)
+            {
+                AudioManager.Inst.StopSE(true);
+            }
+            
+            slidedOnPrevFrame = slidedOnCurFrame;
+        }
+
         private void FallFromAir()
         {
             verticalVelocity += gravityScale * Physics2D.gravity.y * Time.deltaTime;
@@ -404,6 +420,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             if (axis == 0f)
                 return;
+            
+            slidedOnCurFrame = true;
+
+            // 이번 프레임에 처음 슬라이딩
+            if (slidedOnPrevFrame == false)
+            {
+                AudioManager.Inst.PlaySE(ESoundEffectId.Engine, true);
+            }
+            
 
             float slideAmount = axis * moveSpeed * Time.deltaTime;
             SlideResult slideResult = DestructibleTerrain.Inst.Slide(transform.position, slideAmount,
@@ -454,7 +479,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             CurrentFuel -= Mathf.Abs(amount) * FUEL_CONSUME_SPEED;
             CurrentFuel = Mathf.Max(CurrentFuel, 0f);
-            Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
+            
+            if (IsPlayer)
+                Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
         }
 
         public void Refuel(float amount)
@@ -464,7 +491,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
             DisposeVFX(particleInstance.GetComponent<ParticleSystem>()).Forget();
 
             CurrentFuel += Mathf.Abs(amount);
-            Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
+            
+            if (IsPlayer)
+                Presenter.Find<GaugeHUD>().SetFuel(CurrentFuel, Model.GetMobility());
         }
 
         public void Repair(float ratio)

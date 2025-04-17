@@ -117,7 +117,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnSliderStartEdit(float value)
         {
-            Debug.Log(value);
             AudioManager.Inst.PlaySE(ESoundEffectId.Aim, true);
         }
 
