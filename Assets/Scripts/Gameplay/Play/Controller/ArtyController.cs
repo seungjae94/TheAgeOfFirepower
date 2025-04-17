@@ -71,6 +71,15 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private GameObject smokeVFXPrefab;
 
+        [SerializeField]
+        private AudioClip repairSound;
+        
+        [SerializeField]
+        private AudioClip refuelSound;
+        
+        [SerializeField]
+        private AudioClip doubleFireSound;
+
         // Settings
         [SerializeField]
         private float moveSpeed = 5f;
@@ -341,7 +350,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             if (slidedOnPrevFrame && !slidedOnCurFrame)
             {
-                AudioManager.Inst.StopSE(true);
+                AudioManager.Inst.StopSE(1); // 엔진 사운드
             }
             
             slidedOnPrevFrame = slidedOnCurFrame;
@@ -426,9 +435,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             // 이번 프레임에 처음 슬라이딩
             if (slidedOnPrevFrame == false)
             {
-                AudioManager.Inst.PlaySE(ESoundEffectId.Engine, true);
+                AudioManager.Inst.PlaySE(ESoundEffectId.Engine, 1); // 엔진 사운드
             }
-            
 
             float slideAmount = axis * moveSpeed * Time.deltaTime;
             SlideResult slideResult = DestructibleTerrain.Inst.Slide(transform.position, slideAmount,
@@ -486,6 +494,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Refuel(float amount)
         {
+            AudioManager.Inst.PlayOneShotOnAudioPool(refuelSound).Forget();
+            
             GameObject particleInstance = Instantiate(refuelVFXPrefab, spriteRenderer.transform);
             particleInstance.transform.localScale /= spriteRenderer.transform.localScale.x;
             DisposeVFX(particleInstance.GetComponent<ParticleSystem>()).Forget();
@@ -498,6 +508,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void Repair(float ratio)
         {
+            AudioManager.Inst.PlayOneShotOnAudioPool(repairSound).Forget();
+            
             GameObject particleInstance = Instantiate(repairVFXPrefab, spriteRenderer.transform);
             particleInstance.transform.localScale /= spriteRenderer.transform.localScale.x;
             DisposeVFX(particleInstance.GetComponent<ParticleSystem>()).Forget();
@@ -519,6 +531,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void DoubleFireBuff()
         {
+            AudioManager.Inst.PlaySE(doubleFireSound, 2);
+            
             doubleFireParticleInstance = Instantiate(doubleFireVFXPrefab, spriteRenderer.transform);
             doubleFireParticleInstance.transform.localScale /= spriteRenderer.transform.localScale.x;
             fireChance = 2;
@@ -695,6 +709,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             turnMarker.enabled = false;
 
+            AudioManager.Inst.StopSE(2);
             if (doubleFireParticleInstance)
                 Destroy(doubleFireParticleInstance);
         }

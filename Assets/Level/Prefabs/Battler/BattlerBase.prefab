@@ -678,7 +678,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3359308444079164497}
   collider: {fileID: 1538935604951619500}
   behaviorGraphAgent: {fileID: 2834954738379499864}
-  fireGuideArrow: {fileID: 5683205590603593613}
+  fireVelocityRenderer: {fileID: 5683205590603593613}
   battlerCanvasGameObject: {fileID: 8991271276433058806}
   hpBar: {fileID: 3154140218261910234}
   hpText: {fileID: 592470202906963191}
@@ -691,6 +691,9 @@ MonoBehaviour:
   doubleFireVFXPrefab: {fileID: 2323875071937375300, guid: e9be7c99e9f74384ba560a08ef34759a, type: 3}
   destroyVFXPrefab: {fileID: 7501596465251668488, guid: e807c3a75d481ea468552bea0783624a, type: 3}
   smokeVFXPrefab: {fileID: 4968052984899546312, guid: 6d31cbc86463cfa438f32718092e1ab3, type: 3}
+  repairSound: {fileID: 8300000, guid: 2d7c76d2fa0aaf04785e8f4f6cb1e446, type: 3}
+  refuelSound: {fileID: 8300000, guid: 27aa2032bd770a7498df5eef1c754f6c, type: 3}
+  doubleFireSound: {fileID: 8300000, guid: bf6464ea3e175ae478fbe48e8e7339a7, type: 3}
   moveSpeed: 4
   drawTangentNormal: 0
 --- !u!114 &2834954738379499864

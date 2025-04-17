@@ -117,12 +117,12 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnSliderStartEdit(float value)
         {
-            AudioManager.Inst.PlaySE(ESoundEffectId.Aim, true);
+            AudioManager.Inst.PlaySE(ESoundEffectId.Aim, 1);
         }
 
         private void OnSliderEndEdit(float angle)
         {
-            AudioManager.Inst.StopSE(true);
+            AudioManager.Inst.StopSE(1);
         }
 
         private void OnPowerSliderValueChanged(float power)

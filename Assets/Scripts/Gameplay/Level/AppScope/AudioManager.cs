@@ -6,6 +6,7 @@ using Mathlife.ProjectL.Gameplay.ObjectBase;
 using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -52,10 +53,7 @@ namespace Mathlife.ProjectL.Gameplay
         private AudioSource bgmSource;
 
         [SerializeField]
-        private AudioSource seSource;
-
-        [SerializeField]
-        private AudioSource seSourceLooped;
+        private List<AudioSource> seSources = new();
 
         [SerializeField]
         private AudioSource audioSourcePrefab;
@@ -141,44 +139,41 @@ namespace Mathlife.ProjectL.Gameplay
             bgmSource.Play();
         }
 
-        public void PlaySE(ESoundEffectId clipId, bool loop = false)
+        public void PlaySE(ESoundEffectId clipId, int channel = 0)
         {
-            PlaySE(soundEffects[(int)clipId].clip, loop);
+            PlaySE(soundEffects[(int)clipId].clip, channel);
         }
 
-        public void PlaySE(AudioClip clip, bool loop = false)
+        public void PlaySE(AudioClip clip, int channel = 0)
         {
-            if (loop)
+            AudioSource source = seSources[channel];
+            source.Stop();
+
+            if (source.loop)
             {
-                seSourceLooped.Stop();
-                
-                seSourceLooped.clip = clip;
-                seSourceLooped.Play();
+                source.clip = clip;
+                source.Play();
             }
             else
             {
-                seSource.Stop();
-                seSource.PlayOneShot(clip);
+                source.PlayOneShot(clip);                
             }
         }
 
-        public void StopSE(bool looped = false)
+        public void StopSE(int channel = 0)
         {
-            if (looped)
+            AudioSource source = seSources[channel];
+            source.Stop();
+            
+            if (source.loop)
             {
-                seSourceLooped.Stop();
-                seSourceLooped.clip = null;
-            }
-            else
-            {
-                seSource.Stop();
+                source.clip = null;
             }
         }
 
         public void StopAllSE()
         {
-            seSource.Stop();
-            seSourceLooped.Stop();
+            seSources.ForEach(s => s.Stop());
         }
 
         public void PauseBGM()
