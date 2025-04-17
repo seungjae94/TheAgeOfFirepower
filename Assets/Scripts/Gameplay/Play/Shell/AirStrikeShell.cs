@@ -9,7 +9,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
     public class AirStrikeShell : ShellBase
     {
         private const int CHILDREN_COUNT = 3;
-        private const float X_INTERVAL = 1f;
+        private const float X_INTERVAL = 1.5f;
         private const float CHILD_SPEED = 5f;
         
         [SerializeField]
@@ -17,6 +17,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         [SerializeField]
         private GameObject childShellPrefab;
+
+        [SerializeField]
+        private AudioClip flareSound;
+        
+        [SerializeField]
+        private AudioClip bomberSound;
         
         // Field
         private bool firstTouch = false;
@@ -62,8 +68,22 @@ namespace Mathlife.ProjectL.Gameplay.Play
             Vector2 contactPoint = GetContantPoint(other);
             marker.transform.position = new Vector3(contactPoint.x, contactPoint.y, -1f);
 
-            await UniTask.Delay(1000);
+            var flareSource = AudioManager.Inst.BorrowAudioSource();
+            flareSource.PlayOneShot(flareSound);
             
+            await UniTask.Delay(500);
+            
+            // 카메라를 먼저 올리고
+            PlaySceneCamera.Inst.SetTracking(new Vector3(transform.position.x, DestructibleTerrain.Inst.MapHeight + 10f));
+
+            await UniTask.Delay(250);
+            
+            // 폭격기 사운드를 재생한 뒤
+            AudioManager.Inst.PlayOneShotOnAudioPool(bomberSound).Forget();
+            
+            await UniTask.Delay(750);
+            
+            // 공습탄 스폰
             float baseX = transform.position.x - X_INTERVAL;
             for (int i = 0; i < CHILDREN_COUNT; i++)
             {
@@ -90,6 +110,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
             
             Destroy(marker);
+            AudioManager.Inst.ReturnAudioSource(flareSource);
+            
             ShouldBeDestroyed = true;
         }
     }

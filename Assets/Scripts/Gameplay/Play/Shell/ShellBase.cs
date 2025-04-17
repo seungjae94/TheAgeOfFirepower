@@ -52,6 +52,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public virtual void Fire(Vector2 velocity)
         {
             rgbShellBody.linearVelocity = velocity;
+            rgbShellBody.angularVelocity = 360;
         }
         
         // Util
@@ -62,7 +63,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         
         protected void DestructTerrain(Collision2D collision)
         {
-            AudioManager.Inst.PlaySE(ESoundEffectId.Explosion);
+            AudioManager.Inst.PlayOneShotOnAudioPool(ESoundEffectId.Explosion).Forget();
             
             Vector2 contactPoint = GetContantPoint(collision);
             Vector2 direction = capturedVelocity.normalized;

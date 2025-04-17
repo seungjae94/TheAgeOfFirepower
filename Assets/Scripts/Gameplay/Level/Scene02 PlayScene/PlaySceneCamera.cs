@@ -10,6 +10,13 @@ using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay
 {
+    public enum ECameraTrackingMode
+    {
+        None,
+        TrackingPosition,
+        TrackingTransform,
+    }
+    
     public class PlaySceneCamera : MonoSingleton<PlaySceneCamera>
     {
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.Scene;
@@ -31,7 +38,10 @@ namespace Mathlife.ProjectL.Gameplay
 
         // Field
         private new Camera camera;
-        private Transform trackingTarget;
+
+        private ECameraTrackingMode trackingMode = ECameraTrackingMode.None;
+        private Transform trackingTargetTransform;
+        private Vector3 trackingTargetPosition;
 
         private bool isDragging;
         private Vector3 mousePositionOnDragStart;
@@ -55,7 +65,14 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void SetTracking(Transform target)
         {
-            trackingTarget = target;
+            trackingMode = ECameraTrackingMode.TrackingTransform;
+            trackingTargetTransform = target;
+        }
+
+        public void SetTracking(Vector3 target)
+        {
+            trackingMode = ECameraTrackingMode.TrackingPosition;
+            trackingTargetPosition = target;
         }
 
         private void OnPointerDown(PointerEventData ev)
@@ -68,7 +85,8 @@ namespace Mathlife.ProjectL.Gameplay
             isDragging = true;
             mousePositionOnDragStart = Input.mousePosition;
             cameraPositionOnDragStart = transform.position;
-            trackingTarget = null;
+            
+            trackingMode =  ECameraTrackingMode.None;
         }
 
         private void Update()
@@ -120,11 +138,24 @@ namespace Mathlife.ProjectL.Gameplay
                 return;
             }
 
-            if (trackingTarget == null)
+            if (trackingMode == ECameraTrackingMode.None)
                 return;
 
-            Vector3 trackingPosition = trackingTarget.position + Vector3.up * VERTICAL_OFFSET;
-            MoveTowards(trackingPosition);
+            if (trackingMode == ECameraTrackingMode.TrackingTransform)
+            {
+                if (trackingTargetTransform == null)
+                {
+                    trackingMode = ECameraTrackingMode.None;
+                    return;
+                }
+
+                // 트랜스폼 트래킹
+                MoveTowards(trackingTargetTransform.position + Vector3.up * VERTICAL_OFFSET);
+                return;
+            }
+
+            // 위치 트래킹
+            MoveTowards(trackingTargetPosition + Vector3.up * VERTICAL_OFFSET);
         }
 
         private void MoveTowards(Vector3 position)

@@ -54,7 +54,7 @@ namespace Mathlife.ProjectL.Gameplay
         [SerializeField]
         private AudioSource seSource;
 
-        private Queue<AudioSource> pool = new();
+        private readonly Queue<AudioSource> pool = new();
         
         // 필드
         public float BGMVolume
@@ -90,20 +90,17 @@ namespace Mathlife.ProjectL.Gameplay
 
         private AudioSource CreateAudioSource()
         {
-            GameObject prefab = new GameObject();
-            prefab.AddComponent<AudioSource>();
-            
-            GameObject inst = Instantiate(prefab, transform);
+            GameObject inst = new GameObject();
+            inst.name = "PooledAudioSource";
+            inst.AddComponent<AudioSource>();
+            inst.transform.SetParent(transform);
             inst.SetActive(false);
             return inst.GetComponent<AudioSource>();
         }
 
         public AudioSource BorrowAudioSource()
         {
-            if (pool.Count == 0)
-                return CreateAudioSource();
-            
-            var source = pool.Dequeue();
+            var source = pool.Count == 0 ? CreateAudioSource() : pool.Dequeue();
             source.gameObject.SetActive(true);
             return source;
         }
@@ -115,11 +112,17 @@ namespace Mathlife.ProjectL.Gameplay
             pool.Enqueue(source);
         }
 
+        public UniTaskVoid PlayOneShotOnAudioPool(ESoundEffectId id)
+        {
+            var clip = soundEffects[(int)id].clip;
+            return PlayOneShotOnAudioPool(clip);
+        }
+        
         public async UniTaskVoid PlayOneShotOnAudioPool(AudioClip clip)
         {
             var source = BorrowAudioSource();
             source.PlayOneShot(clip);
-            await UniTask.WaitWhile(source, s => s.isPlaying);
+            await UniTask.WaitWhile(source, s => s?.isPlaying ?? false);
             ReturnAudioSource(source);
         }
         
@@ -144,7 +147,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void PlaySE(AudioClip clip)
         {
-            seSource.PlayOneShot(clip, SEVolume);
+            seSource.PlayOneShot(clip);
         }
 
         public void StopSE()
