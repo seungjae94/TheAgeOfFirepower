@@ -128,7 +128,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public float CurrentFuel { get; private set; }
 
-        private const float FUEL_CONSUME_SPEED = 25f; // 실제 서비스용
+        private const float FUEL_CONSUME_SPEED = 20f; // 실제 서비스용
         //private const float FUEL_CONSUME_SPEED = 1f; // 이동 테스트용
 
         public bool Ready { get; private set; }

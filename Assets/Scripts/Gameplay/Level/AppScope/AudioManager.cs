@@ -106,6 +106,9 @@ namespace Mathlife.ProjectL.Gameplay
 
         public void ReturnAudioSource(AudioSource source)
         {
+            if (source == null)
+                return;
+            
             source.Stop();
             source.gameObject.SetActive(false);
             pool.Enqueue(source);
