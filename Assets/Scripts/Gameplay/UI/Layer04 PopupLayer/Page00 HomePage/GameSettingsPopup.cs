@@ -66,7 +66,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             AudioManager.Inst.PlaySE(ESoundEffectId.PopupOpen);
             base.OpenWithAnimation();
-
+            
             // 블러 적용
             BlurPopup blurPopup = Find<BlurPopup>();
             blurPopup.transform.SetSiblingIndex(transform.GetSiblingIndex() - 1);

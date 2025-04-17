@@ -26,6 +26,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             base.Activate();
 
+            disposables.Clear();
+            
             navBackButton
                 .OnClickAsObservable()
                 .Subscribe(OnClick)

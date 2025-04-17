@@ -34,6 +34,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         public override void Draw()
         {
+            disposables.Clear();
+            
             batteryMenuButton.OnClickAsObservable()
                 .Subscribe(_ => OpenPage(typeof(BatteryPage)))
                 .AddTo(disposables);

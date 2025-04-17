@@ -16,6 +16,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         {
             base.Draw();
 
+            disposables.Clear();
+            
             GameState.Inst.gameProgressState
                 .userNameRx
                 .DistinctUntilChanged()

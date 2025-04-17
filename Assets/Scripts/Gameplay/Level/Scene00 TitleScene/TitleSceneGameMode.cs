@@ -47,7 +47,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         private void OnClickGameStartButton(Unit _)
         {
-            Debug.Log("클릭");
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
             GameManager.Inst.ChangeScene(SceneNames.LobbyScene)
                 .Forget();
         }

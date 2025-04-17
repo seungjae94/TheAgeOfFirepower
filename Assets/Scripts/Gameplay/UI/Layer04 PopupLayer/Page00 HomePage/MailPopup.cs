@@ -50,7 +50,6 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 .SetAutoKill(false)
                 .Pause();
         }
-
         
         public override async UniTask OpenWithAnimation()
         {

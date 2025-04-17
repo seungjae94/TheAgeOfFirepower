@@ -42,6 +42,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
             goldText.text = InventoryState.Gold.ToString();
             diamondText.text = InventoryState.Diamond.ToString();
 
+            buttonSubscriptions.Clear();
+            
             mailButton.OnClickAsObservable()
                 .Subscribe(OnClickMailButton)
                 .AddTo(buttonSubscriptions);
