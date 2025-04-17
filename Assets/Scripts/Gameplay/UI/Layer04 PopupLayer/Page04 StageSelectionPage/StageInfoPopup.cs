@@ -77,6 +77,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // Callback
         private void OnClickEnterButton(Unit _)
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            
             GameState.Inst.battleState.stageGameData = stageGameData;
             GameManager.Inst.ChangeScene(SceneNames.PlayScene).Forget();
         }

@@ -146,7 +146,6 @@ namespace Mathlife.ProjectL.Gameplay
         {
             LoadingScreenManager.Inst.Show();
             LoadingScreenManager.Inst.SetProgress(0f);
-            AudioManager.Inst.StopSE();
             AudioManager.Inst.MuteBGM();
             AudioManager.Inst.PauseBGM();
         }
@@ -154,6 +153,7 @@ namespace Mathlife.ProjectL.Gameplay
         private void LoadingScreenOff()
         {
             LoadingScreenManager.Inst.Hide();
+            AudioManager.Inst.StopSE();
             AudioManager.Inst.UnmuteBGM();
             AudioManager.Inst.ReplayBGM();
         }
