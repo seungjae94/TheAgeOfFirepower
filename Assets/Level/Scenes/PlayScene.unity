@@ -3180,21 +3180,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   developPlayers:
-  - arty: {fileID: 11400000, guid: e858c33d5a0d4e64d9432444f4ef4ba9, type: 2}
-    level: 30
-    currentLevelExp: 0
-    barrel: {fileID: 0}
-    armor: {fileID: 11400000, guid: 86b245a07b003d54d9b53a3dd4a9fca6, type: 2}
-    engine: {fileID: 0}
   - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 30
+    level: 99
     currentLevelExp: 0
     barrel: {fileID: 0}
     armor: {fileID: 11400000, guid: 86b245a07b003d54d9b53a3dd4a9fca6, type: 2}
     engine: {fileID: 0}
   developEnemys:
   - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 99
+    level: 1
     moveStrategy: 0
     targetingStrategy: 2
   developStageGameDataRef:

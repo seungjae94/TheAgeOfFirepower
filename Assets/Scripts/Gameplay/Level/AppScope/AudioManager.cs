@@ -38,7 +38,7 @@ namespace Mathlife.ProjectL.Gameplay
         // 상수
         private const float CONVERT_COEFF = 20f; // log(0.0001) * 20 = -80dB, log(1) * 20 = 0dB
         private const int POOL_SIZE = 10;
-        
+
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.Inherit;
 
         [SerializeField]
@@ -52,13 +52,16 @@ namespace Mathlife.ProjectL.Gameplay
         private AudioSource bgmSource;
 
         [SerializeField]
-        private List<AudioSource> seSources = new();
-        
+        private AudioSource seSource;
+
+        [SerializeField]
+        private AudioSource seSourceLooped;
+
         [SerializeField]
         private AudioSource audioSourcePrefab;
-        
+
         private readonly Queue<AudioSource> pool = new();
-        
+
         // 필드
         public float BGMVolume
         {
@@ -80,8 +83,6 @@ namespace Mathlife.ProjectL.Gameplay
 
         protected override void OnRegistered()
         {
-            bgmSource = GetComponent<AudioSource>();
-            
             soundEffects.Sort((s1, s2) => s1.id - s2.id);
 
             for (int i = 0; i < POOL_SIZE; ++i)
@@ -104,7 +105,7 @@ namespace Mathlife.ProjectL.Gameplay
             source.gameObject.SetActive(true);
             return source;
         }
-        
+
         public void ReturnAudioSource(AudioSource source)
         {
             source.Stop();
@@ -117,7 +118,7 @@ namespace Mathlife.ProjectL.Gameplay
             var clip = soundEffects[(int)id].clip;
             return PlayOneShotOnAudioPool(clip);
         }
-        
+
         public async UniTaskVoid PlayOneShotOnAudioPool(AudioClip clip)
         {
             var source = BorrowAudioSource();
@@ -125,7 +126,7 @@ namespace Mathlife.ProjectL.Gameplay
             await UniTask.WaitWhile(source, s => s != null && s.isPlaying);
             ReturnAudioSource(source);
         }
-        
+
         public void PlayBGM(AudioClip clip, bool forceReplay = false)
         {
             if (forceReplay == false && clip == bgmSource.clip)
@@ -140,19 +141,44 @@ namespace Mathlife.ProjectL.Gameplay
             bgmSource.Play();
         }
 
-        public void PlaySE(ESoundEffectId clipId, int channel = 0)
+        public void PlaySE(ESoundEffectId clipId, bool loop = false)
         {
-            PlaySE(soundEffects[(int)clipId].clip, channel);
+            PlaySE(soundEffects[(int)clipId].clip, loop);
         }
 
-        public void PlaySE(AudioClip clip, int channel = 0)
+        public void PlaySE(AudioClip clip, bool loop = false)
         {
-            seSources[channel].PlayOneShot(clip);
+            if (loop)
+            {
+                seSourceLooped.Stop();
+                
+                seSourceLooped.clip = clip;
+                seSourceLooped.Play();
+            }
+            else
+            {
+                seSource.Stop();
+                seSource.PlayOneShot(clip);
+            }
         }
 
-        public void StopSE()
+        public void StopSE(bool looped = false)
         {
-            seSources.ForEach(source => source.Stop());
+            if (looped)
+            {
+                seSourceLooped.Stop();
+                seSourceLooped.clip = null;
+            }
+            else
+            {
+                seSource.Stop();
+            }
+        }
+
+        public void StopAllSE()
+        {
+            seSource.Stop();
+            seSourceLooped.Stop();
         }
 
         public void PauseBGM()

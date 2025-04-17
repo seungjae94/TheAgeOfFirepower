@@ -3,7 +3,9 @@ using Mathlife.ProjectL.Gameplay.Play;
 using Mathlife.ProjectL.Utils;
 using TMPro;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
@@ -12,7 +14,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
     {
         // Alias
         private static ArtyController TurnOwner => PlaySceneGameMode.Inst.turnOwner;
-        
+
         // Component
         [SerializeField]
         private Slider angleSlider;
@@ -31,16 +33,18 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         [SerializeField]
         private Button skipButton;
-        
+
         [SerializeField]
         private SlicedFilledImage fuelSlider;
 
         [SerializeField]
         private TextMeshProUGUI fuelText;
-        
+
         // Field
+        private SliderObservable angleSliderObservable;
+        private SliderObservable powerSliderObservable;
         private readonly CompositeDisposable disposables = new();
-        
+
         public override void Deactivate()
         {
             base.Deactivate();
@@ -60,14 +64,20 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             angleSlider.value = (iFireAngle + 30f) / 105f;
             powerSlider.value = (iFirePower - 10) / 90f;
-            
-            angleSlider.OnValueChangedAsObservable()
-                .Subscribe(OnAngleSliderValueChanged)
-                .AddTo(disposables);
 
-            powerSlider.OnValueChangedAsObservable()
-                .Subscribe(OnPowerSliderValueChanged)
-                .AddTo(disposables);
+            disposables.Clear();
+            
+            angleSliderObservable = new(angleSlider, 
+                OnAngleSliderValueChanged, 
+                OnSliderStartEdit,
+                OnSliderEndEdit);
+            disposables.Add(angleSliderObservable.disposables);
+            
+            powerSliderObservable = new(powerSlider, 
+                OnPowerSliderValueChanged, 
+                OnSliderStartEdit,
+                OnSliderEndEdit);
+            disposables.Add(powerSliderObservable.disposables);
 
             fireButton.OnClickAsObservable()
                 .Subscribe(_ => TurnOwner?.Fire())
@@ -105,6 +115,17 @@ namespace Mathlife.ProjectL.Gameplay.UI
             TurnOwner?.SetFireAngle(iAngle);
         }
 
+        private void OnSliderStartEdit(float value)
+        {
+            Debug.Log(value);
+            AudioManager.Inst.PlaySE(ESoundEffectId.Aim, true);
+        }
+
+        private void OnSliderEndEdit(float angle)
+        {
+            AudioManager.Inst.StopSE(true);
+        }
+
         private void OnPowerSliderValueChanged(float power)
         {
             // 10 ~ 100
@@ -113,7 +134,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             TurnOwner?.SetFirePower(iPower);
         }
-        
+
         public void SetFuel(float currentFuel, int maxFuel)
         {
             fuelSlider.fillAmount = Mathf.Min(currentFuel, maxFuel) / maxFuel;
