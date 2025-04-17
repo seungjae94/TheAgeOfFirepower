@@ -60,8 +60,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             // 볼륨 조절
             bgmVolume = AudioManager.Inst.BGMVolume;
-            Debug.Log(bgmVolume);
-            AudioManager.Inst.SetBGMVolume(Mathf.Min(bgmVolume, 0.25f));
+            AudioManager.Inst.SetBGMVolume(bgmVolume / 2f);
             
             // 뷰 초기화
             if (didWin)

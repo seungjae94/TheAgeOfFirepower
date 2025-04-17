@@ -14,6 +14,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         // Field
         private int touchCount = 0;
         private new Collider2D collider;
+        
+        [SerializeField]
+        private AudioClip bounceSound;
 
         // Method
         public override void Init(ArtyController firer)
@@ -55,6 +58,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
 
             // 바운스
+            AudioManager.Inst.PlayOneShotOnAudioPool(bounceSound).Forget();
+            
             Vector2 contactPoint = GetContantPoint(other);
             DestructibleTerrain.Inst.SnapToSurface(contactPoint, capturedVelocity.normalized, out contactPoint);
             bool extract =

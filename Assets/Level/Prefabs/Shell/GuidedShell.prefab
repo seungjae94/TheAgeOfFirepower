@@ -170,6 +170,7 @@ MonoBehaviour:
   rgbShellBody: {fileID: 2688464801526138121}
   partSysExplosion: {fileID: 5515721216600749550}
   guideMarkerPrefab: {fileID: 5217783027954257343, guid: fff2f532fa1b4674f8534e045a6543e4, type: 3}
+  detectionSound: {fileID: 8300000, guid: 3369a8dfe4b79db41a3c153a193c5690, type: 3}
 --- !u!1001 &6914981804532309795
 PrefabInstance:
   m_ObjectHideFlags: 0

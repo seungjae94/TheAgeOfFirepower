@@ -16,6 +16,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         [SerializeField]
         private GameObject guideMarkerPrefab;
 
+        [SerializeField]
+        private AudioClip detectionSound;
+        
         // Field
         private Vector2 onDetectDirection;
         
@@ -25,7 +28,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         private bool firstTouch = false;
         private float accTimer = 0f;
 
-        // Method
+        private AudioSource borrowedAudioSource;
 
         // Event Func
         private void Update()
@@ -65,6 +68,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return;
             }
 
+            // 감지 성공
+            borrowedAudioSource = AudioManager.Inst.BorrowAudioSource();
+            borrowedAudioSource.PlayOneShot(detectionSound);
+            
             targetFound = true;
             target = battlerCollider.transform;
             rgbShellBody.gravityScale = 0f;
@@ -85,6 +92,8 @@ namespace Mathlife.ProjectL.Gameplay.Play
                 return;
             }
 
+            AudioManager.Inst.ReturnAudioSource(borrowedAudioSource);
+            
             firstTouch = true;
             HideBody();
             partSysExplosion.Play();
