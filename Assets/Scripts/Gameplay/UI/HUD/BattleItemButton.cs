@@ -148,6 +148,8 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private void OnClick(Unit _)
         {
+            AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
+            
             InventoryState.UseBattleItem(itemData.id, TurnOwner);
             
             ItemStackModel stack = InventoryState.GetBattleItemStack(itemData.id);

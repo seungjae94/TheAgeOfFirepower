@@ -179,7 +179,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             await UniTask.NextFrame();
             GameManager.Inst.ChangeScene(SceneNames.LobbyScene)
-                .ContinueWith(() => AudioManager.Inst.SetBGMVolume(bgmVolume))
+                .ContinueWith(() =>
+                {
+                    AudioManager.Inst.SetBGMVolume(bgmVolume);
+                    GameState.Inst.Save();
+                })
                 .Forget();
         }
     }
