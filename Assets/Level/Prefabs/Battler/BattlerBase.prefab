@@ -684,8 +684,8 @@ MonoBehaviour:
   hpText: {fileID: 592470202906963191}
   levelText: {fileID: 1778401384752374670}
   turnMarker: {fileID: 6653769988096191335}
-  playerTurnSprite: {fileID: 4066536912787830230, guid: 58fca586647c1834080ed0dcc9aa54a2, type: 3}
-  enemyTurnSprite: {fileID: 5098905307525849565, guid: 58fca586647c1834080ed0dcc9aa54a2, type: 3}
+  playerTurnSprite: {fileID: 7768577394743978937, guid: 58fca586647c1834080ed0dcc9aa54a2, type: 3}
+  enemyTurnSprite: {fileID: 1437287624736943302, guid: 58fca586647c1834080ed0dcc9aa54a2, type: 3}
   refuelVFXPrefab: {fileID: 2186480318128971840, guid: e4ed31d8047cecf468c740af70149867, type: 3}
   repairVFXPrefab: {fileID: 6074509111507687481, guid: 23e29bb3c2e45444eb9fe63c23c6e874, type: 3}
   doubleFireVFXPrefab: {fileID: 2323875071937375300, guid: e9be7c99e9f74384ba560a08ef34759a, type: 3}
@@ -789,7 +789,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4066536912787830230, guid: 58fca586647c1834080ed0dcc9aa54a2, type: 3}
+  m_Sprite: {fileID: 7768577394743978937, guid: 58fca586647c1834080ed0dcc9aa54a2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
