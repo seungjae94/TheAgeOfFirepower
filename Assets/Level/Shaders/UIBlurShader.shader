@@ -11,7 +11,7 @@ Shader "Hidden/Blur"
 
     SubShader
     {
-
+        
         Pass
         {
             // Pass 0 - Horizontal
