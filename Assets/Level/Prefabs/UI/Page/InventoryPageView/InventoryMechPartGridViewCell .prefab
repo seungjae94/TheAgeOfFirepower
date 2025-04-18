@@ -235,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -366,9 +366,9 @@ GameObject:
   - component: {fileID: 5072347191975070374}
   - component: {fileID: 4938749373159332862}
   - component: {fileID: 547543669283415231}
-  - component: {fileID: 8761522617274834177}
+  - component: {fileID: 1670146670815544074}
   m_Layer: 5
-  m_Name: Item View
+  m_Name: Item Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -506,7 +506,7 @@ MonoBehaviour:
   m_EdgeShinyWidth: 0.5
   m_EdgeShinyAutoPlaySpeed: 1
   m_PatternArea: 1
---- !u!114 &8761522617274834177
+--- !u!114 &1670146670815544074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -515,26 +515,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 3494763429973859801}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7948ca2f24604c4aa5340622512a976, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_improveResolution: 0
-  m_Resolution: 0
-  m_useNativeSize: 0
-  squircleType: 1
-  n: 2.5
-  delta: 0.1
-  quality: 0.2
-  radius: 20
+  m_Sprite: {fileID: 21300000, guid: 7b1e206b8caec1a48a8f8da59903193b, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &5535517665157389598
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +759,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3811853667913258799}
   - component: {fileID: 332272778379077248}
-  - component: {fileID: 6653341230773590547}
+  - component: {fileID: 7919274164165935733}
   m_Layer: 5
   m_Name: Equipped Mark
   m_TagString: Untagged
@@ -794,7 +795,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8515780252561478795}
   m_CullTransparentMesh: 1
---- !u!114 &6653341230773590547
+--- !u!114 &7919274164165935733
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -803,7 +804,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8515780252561478795}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7948ca2f24604c4aa5340622512a976, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -814,12 +815,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_improveResolution: 0
-  m_Resolution: 0
-  m_useNativeSize: 0
-  squircleType: 1
-  n: 2.5
-  delta: 0.1
-  quality: 0.2
-  radius: 20
+  m_Sprite: {fileID: 21300000, guid: 7b1e206b8caec1a48a8f8da59903193b, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1

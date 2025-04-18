@@ -52,6 +52,7 @@ SpriteAtlas:
     - 47050de8e8135cc41afed6edcdfe60e0: 21300000
     - 3addd07a37f945b47820de63a7123d46: 21300000
     - 1da37bfaa583cc54ca64c1fa7feb6f54: 7474992156132854705
+    - 7b1e206b8caec1a48a8f8da59903193b: 21300000
     - ad4d997c239240a48b8f40afd3266934: 21300000
     - cccc8acc42b508c4aa492b9d5f7b03c9: 21300000
     - b68a6cec0d0114f48ba0707daf3db505: 21300000
@@ -73,6 +74,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 47050de8e8135cc41afed6edcdfe60e0, type: 3}
   - {fileID: 21300000, guid: 3addd07a37f945b47820de63a7123d46, type: 3}
   - {fileID: 7474992156132854705, guid: 1da37bfaa583cc54ca64c1fa7feb6f54, type: 3}
+  - {fileID: 21300000, guid: 7b1e206b8caec1a48a8f8da59903193b, type: 3}
   - {fileID: 21300000, guid: ad4d997c239240a48b8f40afd3266934, type: 3}
   - {fileID: 21300000, guid: cccc8acc42b508c4aa492b9d5f7b03c9, type: 3}
   - {fileID: 21300000, guid: b68a6cec0d0114f48ba0707daf3db505, type: 3}
@@ -93,6 +95,7 @@ SpriteAtlas:
   - custom-white-bar
   - Panel - My Gray
   - Character Card 1_0
+  - Squircle20
   - custom-bar-background
   - custom-bar-blue-fill
   - Empty Mech Part Slot
