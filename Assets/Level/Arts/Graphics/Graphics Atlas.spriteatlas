@@ -26,19 +26,79 @@ SpriteAtlas:
       padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
-      enableTightPacking: 1
+      enableRotation: 0
+      enableTightPacking: 0
       enableAlphaDilation: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1
-    packables: []
+    packables:
+    - {fileID: 102900000, guid: 3dac7641488731043ae605c1eebb5f5e, type: 3}
+    - {fileID: 102900000, guid: e1644828775eb7e48a071a9625f5ed71, type: 3}
+    - {fileID: 102900000, guid: c8e07a0c7651cc644af7fd64a43c6a78, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
-    packedSpriteRenderDataKeys: []
+    packedSpriteRenderDataKeys:
+    - a5cd6980bb278c24187d1be7bf9ec407: 21300000
+    - 67c747d006689c448b056905f4e5ceee: 21300000
+    - 6120a181d63d7d44aacf009eeba7f6cc: 21300000
+    - 00cf5f8145efe964d9674e388f9c979a: 3987999003584520046
+    - 48284c925ffcb7646a7a8e5f004c5ae1: 21300000
+    - 40d9e3143bf721f42a5a0cbb352d87fb: 3340540183696573306
+    - 3807dd64631c94443a71b604df3d21f8: 21300000
+    - 7c983217663d4d646965e8bfd9662056: -6930386306172592379
+    - 831ac2b79cf18b64eba60798d76a9eec: 21300000
+    - ed465c188d31a354989d5f1e7a073578: 907509661245169828
+    - 47050de8e8135cc41afed6edcdfe60e0: 21300000
+    - 3addd07a37f945b47820de63a7123d46: 21300000
+    - 1da37bfaa583cc54ca64c1fa7feb6f54: 7474992156132854705
+    - ad4d997c239240a48b8f40afd3266934: 21300000
+    - cccc8acc42b508c4aa492b9d5f7b03c9: 21300000
+    - b68a6cec0d0114f48ba0707daf3db505: 21300000
+    - 5a16692d1b9e3d84aaf633dd246aafdd: 21300000
+    - 16e37a9ec9e772e4188fda5b32964683: 21300000
+    - e197c9df68e0efc43ae0ddf59c9c90d1: 21300000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: a5cd6980bb278c24187d1be7bf9ec407, type: 3}
+  - {fileID: 21300000, guid: 67c747d006689c448b056905f4e5ceee, type: 3}
+  - {fileID: 21300000, guid: 6120a181d63d7d44aacf009eeba7f6cc, type: 3}
+  - {fileID: 3987999003584520046, guid: 00cf5f8145efe964d9674e388f9c979a, type: 3}
+  - {fileID: 21300000, guid: 48284c925ffcb7646a7a8e5f004c5ae1, type: 3}
+  - {fileID: 3340540183696573306, guid: 40d9e3143bf721f42a5a0cbb352d87fb, type: 3}
+  - {fileID: 21300000, guid: 3807dd64631c94443a71b604df3d21f8, type: 3}
+  - {fileID: -6930386306172592379, guid: 7c983217663d4d646965e8bfd9662056, type: 3}
+  - {fileID: 21300000, guid: 831ac2b79cf18b64eba60798d76a9eec, type: 3}
+  - {fileID: 907509661245169828, guid: ed465c188d31a354989d5f1e7a073578, type: 3}
+  - {fileID: 21300000, guid: 47050de8e8135cc41afed6edcdfe60e0, type: 3}
+  - {fileID: 21300000, guid: 3addd07a37f945b47820de63a7123d46, type: 3}
+  - {fileID: 7474992156132854705, guid: 1da37bfaa583cc54ca64c1fa7feb6f54, type: 3}
+  - {fileID: 21300000, guid: ad4d997c239240a48b8f40afd3266934, type: 3}
+  - {fileID: 21300000, guid: cccc8acc42b508c4aa492b9d5f7b03c9, type: 3}
+  - {fileID: 21300000, guid: b68a6cec0d0114f48ba0707daf3db505, type: 3}
+  - {fileID: 21300000, guid: 5a16692d1b9e3d84aaf633dd246aafdd, type: 3}
+  - {fileID: 21300000, guid: 16e37a9ec9e772e4188fda5b32964683, type: 3}
+  - {fileID: 21300000, guid: e197c9df68e0efc43ae0ddf59c9c90d1, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - panel_brown_dark_corners_a
+  - Base Panel
+  - Rect
+  - inventory slot_0
+  - MinusMark
+  - User Portrait Frame 1_0
+  - black transparent gradient panel
+  - Character Card Description Field 1_0
+  - FrameOutline
+  - Character Frame_0
+  - custom-white-bar
+  - Panel - My Gray
+  - Character Card 1_0
+  - custom-bar-background
+  - custom-bar-blue-fill
+  - Empty Mech Part Slot
+  - red blue square frame
+  - RoundedTrapezoidVertical
+  - Border R18
   m_RenderDataMap: {}
   m_Tag: Graphics Atlas
   m_IsVariant: 0
