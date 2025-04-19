@@ -149,7 +149,7 @@ namespace Mathlife.ProjectL.Gameplay
             }
 
             List<ArtyModel> batteryMembers = new();
-            for (int i = 0; i < Constants.BatterySize; ++i)
+            for (int i = 0; i < Constants.BATTERY_SIZE; ++i)
             {
                 var artyPreset = starterBattery[i];
 
@@ -169,7 +169,7 @@ namespace Mathlife.ProjectL.Gameplay
         private void ConstructBestTeam()
         {
             List<ArtyModel> members = new();
-            for (int i = 0; i < Constants.BatterySize; ++i)
+            for (int i = 0; i < Constants.BATTERY_SIZE; ++i)
                 members.Add(null);
 
             Battery = new(members);
@@ -181,10 +181,10 @@ namespace Mathlife.ProjectL.Gameplay
         {
             Sort();
 
-            int memberCount = Mathf.Min(artyList.Count, Constants.BatterySize);
+            int memberCount = Mathf.Min(artyList.Count, Constants.BATTERY_SIZE);
 
             var members = artyList.Take(memberCount)
-                .Concat(Enumerable.Repeat<ArtyModel>(null, Constants.BatterySize - memberCount))
+                .Concat(Enumerable.Repeat<ArtyModel>(null, Constants.BATTERY_SIZE - memberCount))
                 .ToList();
 
             Battery.Rebuild(members);

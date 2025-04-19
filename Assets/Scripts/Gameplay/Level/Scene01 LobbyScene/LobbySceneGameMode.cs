@@ -22,7 +22,7 @@ namespace Mathlife.ProjectL.Gameplay
             
             // 2. 홈 페이지 열기
             Presenter.Find<HomePage>().Open();
-            if (GameManager.Inst.PrevSceneName == SceneNames.PlayScene)
+            if (GameManager.Inst.PrevSceneName == SceneNames.PLAY_SCENE)
             {
                 Presenter.Find<StageSelectionPage>().Open();
             }

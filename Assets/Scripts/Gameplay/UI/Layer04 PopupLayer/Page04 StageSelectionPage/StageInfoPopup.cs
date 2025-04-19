@@ -80,7 +80,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
             
             GameState.Inst.battleState.stageGameData = stageGameData;
-            GameManager.Inst.ChangeScene(SceneNames.PlayScene).Forget();
+            GameManager.Inst.ChangeScene(SceneNames.PLAY_SCENE).Forget();
         }
     }
 }

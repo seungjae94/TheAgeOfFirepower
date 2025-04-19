@@ -144,7 +144,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             
             rewardScrollRect.UpdateContents(rewardList);
 
-            for (int i = 0; i < Constants.BatterySize; ++i)
+            for (int i = 0; i < Constants.BATTERY_SIZE; ++i)
             {
                 var battery = GameState.Inst.artyRosterState.Battery;
                 var arty = battery[i];
@@ -178,7 +178,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             AudioManager.Inst.PlaySE(ESoundEffectId.Ok);
             
             await UniTask.NextFrame();
-            GameManager.Inst.ChangeScene(SceneNames.LobbyScene)
+            GameManager.Inst.ChangeScene(SceneNames.LOBBY_SCENE)
                 .ContinueWith(() =>
                 {
                     AudioManager.Inst.SetBGMVolume(bgmVolume);

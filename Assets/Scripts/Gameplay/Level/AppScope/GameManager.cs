@@ -37,6 +37,10 @@ namespace Mathlife.ProjectL.Gameplay
         private void Start()
         {
             Application.targetFrameRate = 30;
+            
+            float screenAspect = (float)Display.main.systemWidth / Display.main.systemHeight;
+            Screen.SetResolution(Mathf.RoundToInt(screenAspect * Constants.RESOLUTION_HEIGHT), Constants.RESOLUTION_HEIGHT, true);
+            
             GameStart().Forget();
         }
 
@@ -73,7 +77,7 @@ namespace Mathlife.ProjectL.Gameplay
             float currentProgress = 0f;
             if (SceneManager.loadedSceneCount == 1)
             {
-                await SceneManager.LoadSceneAsync(SceneNames.TitleScene, LoadSceneMode.Additive)
+                await SceneManager.LoadSceneAsync(SceneNames.TITLE_SCENE, LoadSceneMode.Additive)
                     .ToUniTask(CreateProgress(0f, SCENE_LOAD_TIME / GAME_START_TIME));
                 currentProgress += SCENE_LOAD_TIME / GAME_START_TIME;
             }
