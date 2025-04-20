@@ -3186,13 +3186,13 @@ MonoBehaviour:
     barrel: {fileID: 0}
     armor: {fileID: 11400000, guid: 86b245a07b003d54d9b53a3dd4a9fca6, type: 2}
     engine: {fileID: 0}
-  - arty: {fileID: 11400000, guid: 73a35772b44a16841b49ccd5fc7788b7, type: 2}
+  - arty: {fileID: 11400000, guid: 005beb9b0a9636a42ad2bac0b592b346, type: 2}
     level: 1
     currentLevelExp: 0
     barrel: {fileID: 0}
     armor: {fileID: 0}
     engine: {fileID: 0}
-  - arty: {fileID: 11400000, guid: 77a25fad67345454d9b586e22ce70dcf, type: 2}
+  - arty: {fileID: 11400000, guid: 005beb9b0a9636a42ad2bac0b592b346, type: 2}
     level: 1
     currentLevelExp: 0
     barrel: {fileID: 0}

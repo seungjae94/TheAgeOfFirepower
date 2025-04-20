@@ -93,6 +93,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
             }
 
             AudioManager.Inst.ReturnAudioSource(borrowedAudioSource);
+            borrowedAudioSource = null;
             
             firstTouch = true;
             HideBody();
@@ -110,6 +111,9 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             if (marker)
                 Destroy(marker);
+            
+            if (borrowedAudioSource)
+                AudioManager.Inst.ReturnAudioSource(borrowedAudioSource);
         }
     }
 }
