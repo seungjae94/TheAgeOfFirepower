@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1333696196627464651, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3648339651394080995, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
       propertyPath: m_Color.b
       value: 0.19708972
@@ -41,16 +45,20 @@ PrefabInstance:
       value: 0.70323884
       objectReference: {fileID: 0}
     - target: {fileID: 5826476837895128346, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.a
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 5826476837895128346, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.b
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5826476837895128346, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.g
-      value: 0.45444104
+      value: 0.6566039
       objectReference: {fileID: 0}
     - target: {fileID: 5826476837895128346, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.r
-      value: 0.49056602
+      value: 0.7075472
       objectReference: {fileID: 0}
     - target: {fileID: 6677171874560706200, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
       propertyPath: m_LocalScale.x

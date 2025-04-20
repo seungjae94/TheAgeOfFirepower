@@ -41,16 +41,20 @@ PrefabInstance:
       value: 0.0035154943
       objectReference: {fileID: 0}
     - target: {fileID: 5826476837895128346, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.a
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 5826476837895128346, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.b
-      value: 0.4433962
+      value: 0.735849
       objectReference: {fileID: 0}
     - target: {fileID: 5826476837895128346, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.g
-      value: 0.40300146
+      value: 0.671037
       objectReference: {fileID: 0}
     - target: {fileID: 5826476837895128346, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.r
-      value: 0
+      value: 0.0034709943
       objectReference: {fileID: 0}
     - target: {fileID: 6677171874560706200, guid: 140ed37ac02308c4ca2cff47291fbf4c, type: 3}
       propertyPath: m_LocalScale.x

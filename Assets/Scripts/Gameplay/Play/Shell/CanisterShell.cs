@@ -31,11 +31,11 @@ namespace Mathlife.ProjectL.Gameplay.Play
             for (int i = 0; i < CHILDREN_COUNT; i++)
             {
                 GameObject shellGameObject = Instantiate(gameObject);
-                shellGameObject.transform.position = transform.position; // TODO: 없애도 되나?
+                shellGameObject.transform.position = transform.position;
 
                 CanisterShell shell = shellGameObject.GetComponent<CanisterShell>();
                 shell.isChild = true;
-                shell.Init(firer); // TODO: 없애도 되나?
+                shell.Init(firer);
                 
                 children.Add(shell);
             }
