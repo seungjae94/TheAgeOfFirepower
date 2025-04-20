@@ -101,7 +101,7 @@ namespace Mathlife.ProjectL.Gameplay
 
             if (arty == null)
             {
-                Debug.LogError("[ArtyPageSelectedArtyView] 선택된 화포가 없습니다.");
+                MyDebug.LogError("[ArtyPageSelectedArtyView] 선택된 화포가 없습니다.");
                 throw new ArtyPageNoArtySelectedException("[ArtyPageSelectedArtyView] 선택된 화포가 없습니다.");
             }
 

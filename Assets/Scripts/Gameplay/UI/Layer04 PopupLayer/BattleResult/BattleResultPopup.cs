@@ -134,7 +134,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 gameProgressState.unlockWorldRx.Value = nextWorldNo; 
                 gameProgressState.unlockStageRx.Value = nextStageNo;
 
-                Debug.Log($"Unlock {nextWorldNo}-{nextStageNo}");
+                MyDebug.Log($"Unlock {nextWorldNo}-{nextStageNo}");
             }
             
             // UI 업데이트

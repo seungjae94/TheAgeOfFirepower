@@ -40,7 +40,7 @@ namespace Mathlife.ProjectL.Editor
             float screenAspect = Screen.currentResolution.width / (float)Screen.currentResolution.height;
             adapter.Adapt(screenAspect).Forget();
 
-            Debug.Log($"[ToobarMenu] Display Adapted to Screen {Screen.currentResolution.width} x {Screen.currentResolution.height}.");
+            MyDebug.Log($"[ToobarMenu] Display Adapted to Screen {Screen.currentResolution.width} x {Screen.currentResolution.height}.");
         }
 
         private static void PlayFromStartScene()

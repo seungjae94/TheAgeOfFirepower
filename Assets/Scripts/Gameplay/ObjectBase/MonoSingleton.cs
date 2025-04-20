@@ -47,7 +47,7 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
             }
             else
             {
-                Debug.Log($"[{s_typeName}] Singleton instance already exist. You have multiple instances of the type.");
+                MyDebug.Log($"[{s_typeName}] Singleton instance already exist. You have multiple instances of the type.");
                 Destroy(gameObject);
             }
         }

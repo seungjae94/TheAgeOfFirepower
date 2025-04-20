@@ -1,3 +1,4 @@
+using Mathlife.ProjectL.Gameplay;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.U2D.Sprites;
@@ -25,7 +26,7 @@ public class CharacterPivotSetter : MonoBehaviour
 
             var spriteRects = spriteEditorDataProvider.GetSpriteRects();
 
-            Debug.Log(spriteRects.Length);
+            MyDebug.Log(spriteRects.Length);
 
             for (int i = 0; i < spriteRects.Length; ++i)
             {
@@ -36,7 +37,7 @@ public class CharacterPivotSetter : MonoBehaviour
             spriteEditorDataProvider.Apply();
         }
 
-        Debug.Log("[Sprite Action] character sprite pivot setting done!");
+        MyDebug.Log("[Sprite Action] character sprite pivot setting done!");
     }
 }
 

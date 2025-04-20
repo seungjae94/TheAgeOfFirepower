@@ -205,7 +205,7 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 if (DestructibleTerrain.Inst.InFairArea(battler.transform.position) == false)
                 {
-                    Debug.Log($"배틀러 {battler.Model.DisplayName}(Lv. {battler.Model.levelRx.Value}) 낙사로 인한 삭제 처리");
+                    MyDebug.Log($"배틀러 {battler.Model.DisplayName}(Lv. {battler.Model.levelRx.Value}) 낙사로 인한 삭제 처리");
                     Destroy(battler);
                 }
             }
