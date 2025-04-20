@@ -5696,7 +5696,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: orthographic size
-      value: 5
+      value: 5.4
       objectReference: {fileID: 0}
     - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
@@ -5774,6 +5774,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4960052373646572192, guid: 8c493102392add8409eab89a5843f963, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1899075557}
+    - targetCorrespondingSourceObject: {fileID: 4960052373646572192, guid: 8c493102392add8409eab89a5843f963, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1899075558}
   m_SourcePrefab: {fileID: 100100000, guid: 8c493102392add8409eab89a5843f963, type: 3}
 --- !u!20 &1899075552 stripped
 Camera:
@@ -5794,6 +5797,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragInputCaptureGraphic: {fileID: 786586945}
   hudTrans: {fileID: 1973031757}
+--- !u!114 &1899075558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140943948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_AssetsPPU: 100
+  m_RefResolutionX: 1920
+  m_RefResolutionY: 1080
+  m_CropFrame: 3
+  m_GridSnapping: 0
+  m_FilterMode: 0
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0
 --- !u!114 &1916916652 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4904990112518956337, guid: e91d104dbfa81e845a22097d367d914f, type: 3}
