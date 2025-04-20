@@ -3,6 +3,7 @@ using Mathlife.ProjectL.Gameplay.ObjectBase;
 using Mathlife.ProjectL.Gameplay.UI;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay
@@ -42,21 +43,20 @@ namespace Mathlife.ProjectL.Gameplay
         // 필드
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.App;
         private Camera mainCamera;
-        
+
         [SerializeField]
         private Camera clearCamera;
-        
+
         [SerializeField]
         private Camera loadingScreenCamera;
 
         public static readonly Subject<int> displayChanged = new();
-        
+
         public async UniTask Adapt()
         {
             clearCamera.gameObject.SetActive(true);
-            
+
             mainCamera = Camera.main;
-            Debug.Log(mainCamera);
 
             // 모바일 vs PC
             int resolutionOptionIndex = GameState.Inst.gameSettingState.resolutionOptionIndex.Value;
@@ -73,16 +73,16 @@ namespace Mathlife.ProjectL.Gameplay
 
                 if (resolutionOption.fullScreen)
                 {
-                    Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, FullScreenMode.ExclusiveFullScreen);
+                    Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight,
+                        FullScreenMode.ExclusiveFullScreen);
                 }
                 else
                 {
                     Screen.SetResolution(resolutionOption.width, resolutionOption.height, FullScreenMode.Windowed);
                 }
-                
             }
-            
-            float screenAspect = (float)Screen.currentResolution.width / (float)Screen.currentResolution.height;
+
+            float screenAspect = (float)Screen.width / (float)Screen.height;
             switch (screenAspect)
             {
                 case < MIN_SCREEN_ASPECT:
@@ -95,15 +95,23 @@ namespace Mathlife.ProjectL.Gameplay
                     AdaptToFullScreen(screenAspect);
                     break;
             }
-            
+
+            await UniTask.NextFrame();
+
+            int viewportWidth = Mathf.RoundToInt(Screen.width * mainCamera.rect.width);
+            int viewportHeight = Mathf.RoundToInt(Screen.height * mainCamera.rect.height);
+
+            Debug.Log($"Viewport = {viewportWidth}x{viewportHeight}");
+
             var mainCanvas = (MonoBehaviour)GameManager.Inst.CurrentCanvas;
             CanvasScaler canvasScaler = mainCanvas.GetComponent<CanvasScaler>();
-            float heightRatio = Screen.currentResolution.height / canvasScaler.referenceResolution.y;
-            Canvas canvas = mainCanvas.GetComponent<Canvas>();
-            canvas.scaleFactor = heightRatio;
-            
+            canvasScaler.referenceResolution = new Vector2((float)Constants.VIEWPORT_HEIGHT * viewportWidth / viewportHeight,
+                Constants.VIEWPORT_HEIGHT);
+            canvasScaler.scaleFactor = 1f;
+            //mainCanvas.GetComponent<Canvas>().scaleFactor = 1f;
+
             await UniTask.NextFrame();
-            
+
             // Safe Area 적용
             ApplySafeArea();
 
@@ -121,6 +129,17 @@ namespace Mathlife.ProjectL.Gameplay
             float rectY = (1f - rectHeight) / 2f;
             mainCamera.rect = new Rect(0f, rectY, 1f, rectHeight);
             loadingScreenCamera.rect = new Rect(0f, rectY, 1f, rectHeight);
+
+            int viewportWidth = Screen.width;
+            int viewportHeight = Mathf.RoundToInt(Screen.height * rectHeight);
+
+            if (mainCamera.TryGetComponent<PixelPerfectCamera>(out var pixelPerfectCamera))
+            {
+                pixelPerfectCamera.cropFrame = PixelPerfectCamera.CropFrame.Letterbox;
+                pixelPerfectCamera.refResolutionX = viewportWidth;
+                pixelPerfectCamera.refResolutionY = viewportHeight;
+                pixelPerfectCamera.assetsPPU = viewportHeight / 10;
+            }
         }
 
         // 스크린 aspect가 16:9 이상 21:9 이하일 경우, 스크린 aspect를 카메라 aspect로 사용한다. 
@@ -130,6 +149,17 @@ namespace Mathlife.ProjectL.Gameplay
             loadingScreenCamera.aspect = screenAspect;
             mainCamera.rect = new Rect(0, 0, 1, 1);
             loadingScreenCamera.rect = new Rect(0, 0, 1, 1);
+
+            int viewportWidth = Screen.width;
+            int viewportHeight = Screen.height;
+
+            if (mainCamera.TryGetComponent<PixelPerfectCamera>(out var pixelPerfectCamera))
+            {
+                pixelPerfectCamera.cropFrame = PixelPerfectCamera.CropFrame.None;
+                pixelPerfectCamera.refResolutionX = viewportWidth;
+                pixelPerfectCamera.refResolutionY = viewportHeight;
+                pixelPerfectCamera.assetsPPU = viewportHeight / 10;
+            }
         }
 
         // 스크린 aspect가 21:9를 초과할 경우, 양 옆에 필러 박스를 그려서 카메라 aspect를 21:9로 고정한다.
@@ -142,6 +172,17 @@ namespace Mathlife.ProjectL.Gameplay
             float rectX = (1f - rectWidth) / 2f;
             mainCamera.rect = new Rect(rectX, 0f, rectWidth, 1f);
             loadingScreenCamera.rect = new Rect(rectX, 0f, rectWidth, 1f);
+
+            int viewportWidth = Mathf.RoundToInt(Screen.width * rectWidth);
+            int viewportHeight = Screen.height;
+
+            if (mainCamera.TryGetComponent<PixelPerfectCamera>(out var pixelPerfectCamera))
+            {
+                pixelPerfectCamera.cropFrame = PixelPerfectCamera.CropFrame.Pillarbox;
+                pixelPerfectCamera.refResolutionX = viewportWidth;
+                pixelPerfectCamera.refResolutionY = viewportHeight;
+                pixelPerfectCamera.assetsPPU = viewportHeight / 10;
+            }
         }
 
         private void ApplySafeArea()

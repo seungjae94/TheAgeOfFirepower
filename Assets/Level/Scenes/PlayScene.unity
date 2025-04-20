@@ -5696,7 +5696,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: orthographic size
-      value: 5.4
+      value: 3.6
       objectReference: {fileID: 0}
     - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
@@ -5811,9 +5811,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
   m_AssetsPPU: 100
-  m_RefResolutionX: 1920
-  m_RefResolutionY: 1080
-  m_CropFrame: 3
+  m_RefResolutionX: 1280
+  m_RefResolutionY: 720
+  m_CropFrame: 0
   m_GridSnapping: 0
   m_FilterMode: 0
   m_UpscaleRT: 0
