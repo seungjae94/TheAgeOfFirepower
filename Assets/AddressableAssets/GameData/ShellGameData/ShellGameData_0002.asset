@@ -28,4 +28,4 @@ MonoBehaviour:
   damage: 60
   shouldDestructTerrain: 1
   explosionRadius: 20
-  prefab: {fileID: 4984052143656669819, guid: 6e549c99697754e459bbf751e5709db2, type: 3}
+  prefab: {fileID: 7882102725077850209, guid: d6c64fbe324485848ab447f824db3e17, type: 3}
