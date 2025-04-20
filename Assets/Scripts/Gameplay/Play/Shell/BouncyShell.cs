@@ -67,7 +67,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (false == extract)
             {
-                Debug.LogError($"contact at {contactPoint * 100f}, Failed to extract normal.");
+                MyDebug.LogError($"contact at {contactPoint * 100f}, Failed to extract normal.");
             }
 
             Vector2 afterVelocity = Vector2.Reflect(capturedVelocity, normal);

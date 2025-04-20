@@ -19,10 +19,6 @@ namespace Mathlife.ProjectL.Gameplay
         public InventorySaveFile Inventory => saveFiles[typeof(InventorySaveFile)] as InventorySaveFile;
         public GameProgressSaveFile GameProgress => saveFiles[typeof(GameProgressSaveFile)] as GameProgressSaveFile;
         public GameSettingSaveFile GameSetting => saveFiles[typeof(GameSettingSaveFile)] as GameSettingSaveFile;
-        
-#if UNITY_EDITOR
-        private static readonly Subject<string> DebugLogger = new();
-#endif
 
         public bool CanLoad()
         {
@@ -37,11 +33,6 @@ namespace Mathlife.ProjectL.Gameplay
 
         public async UniTask Load()
         {
-#if UNITY_EDITOR
-            DebugLogger.Subscribe(Debug.Log)
-                .AddTo(GameState.Inst.gameObject);
-#endif
-
             foreach (PropertyInfo prop in typeof(SaveDataManager).GetProperties())
             {
                 if (false == prop.PropertyType.IsSubclassOf(typeof(SaveFile)))
@@ -126,10 +117,8 @@ namespace Mathlife.ProjectL.Gameplay
                 File.WriteAllText(savePath, json);
 
                 prevFile = newFile;
-
-#if UNITY_EDITOR
-                DebugLogger.OnNext($"{saveFileType.Name} 세이브 완료!");
-#endif
+                
+                MyDebug.Log($"{saveFileType.Name} 세이브 완료!");
             }
         }
 

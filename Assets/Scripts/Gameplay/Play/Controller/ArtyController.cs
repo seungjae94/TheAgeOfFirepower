@@ -209,7 +209,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
         public void StartTurn(int turn)
         {
-            Debug.Log($"Turn {turn} start.");
+            MyDebug.Log($"Turn {turn} start.");
             HasTurn = true;
 
             // 상태 초기화
@@ -401,7 +401,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                         --iter;
                         if (iter < 0)
                         {
-                            Debug.Log(prevNormal);
+                            MyDebug.Log(prevNormal);
                             throw new OverflowException("");
                         }
                     }
@@ -446,7 +446,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (slideResult is SlideResult.ShortSpline or SlideResult.WrongSpline)
             {
-                Debug.Log("슬라이드 실패");
+                MyDebug.Log("슬라이드 실패");
 
                 endPosition = (Vector2)transform.position + slideAmount * prevTangent;
                 DestructibleTerrain.Inst.SnapToSurface(endPosition, prevNormal, out endPosition);
@@ -460,13 +460,13 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (DestructibleTerrain.Inst.InTerrain(endPosition) == false ||
                 DestructibleTerrain.Inst.IsBoundary(endPosition))
             {
-                Debug.Log("유효 범위 바깥으로 슬라이드 시도 차단");
+                MyDebug.Log("유효 범위 바깥으로 슬라이드 시도 차단");
                 return;
             }
 
             if (float.IsNaN(endPosition.x) || float.IsNaN(endPosition.y) || float.IsNaN(normal.x) ||
                 float.IsNaN(normal.y))
-                Debug.Log("WR");
+                MyDebug.Log("WR");
 
             // 절벽 못올라가게 막기
             if (normal.y <= 0f && endPosition.y > transform.position.y)
@@ -733,7 +733,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
         public void Damage(float damage)
         {
             int finalDamage = Mathf.CeilToInt(100f * damage / (100f + Model.GetDef()));
-            Debug.Log($"final damage: {finalDamage}");
+            MyDebug.Log($"final damage: {finalDamage}");
 
             DamageTextGenerator.Inst.Generate(this, finalDamage, false);
             CurrentHp = Mathf.Max(0, CurrentHp - finalDamage);

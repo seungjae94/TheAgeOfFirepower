@@ -7,6 +7,7 @@ using DG.DemiEditor;
 using DG.DemiLib;
 using DG.Tweening;
 using DG.Tweening.Core;
+using Mathlife.ProjectL.Gameplay;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -188,7 +189,7 @@ namespace DG.DOTweenEditor
                 break;
             }
             if (tInfo == null) {
-                Debug.LogWarning("DOTween Preview ► Couldn't find tween to stop");
+                MyDebug.LogWarning("DOTween Preview ► Couldn't find tween to stop");
                 return;
             }
             if (tInfo.isFrom) {

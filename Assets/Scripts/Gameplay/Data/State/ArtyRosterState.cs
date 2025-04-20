@@ -22,7 +22,7 @@ namespace Mathlife.ProjectL.Gameplay
             // Validate that InventoryState was created before creating CharacterState.
             if (GameState.Inst.inventoryState == null)
             {
-                Debug.LogError($"[{nameof(ArtyRosterState)}] InventoryState is null.");
+                MyDebug.LogError($"[{nameof(ArtyRosterState)}] InventoryState is null.");
                 throw new Exception($"[{nameof(ArtyRosterState)}] InventoryState is null.");
             }
 

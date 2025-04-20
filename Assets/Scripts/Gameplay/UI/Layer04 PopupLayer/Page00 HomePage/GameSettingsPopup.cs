@@ -1,12 +1,11 @@
-using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using DhafinFawwaz.AnimationUILib;
 using Mathlife.ProjectL.Gameplay.Gameplay.Data.Model;
 using TMPro;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Mathlife.ProjectL.Gameplay.UI
@@ -15,13 +14,16 @@ namespace Mathlife.ProjectL.Gameplay.UI
     {
         private const float OPEN_DURATION = 0.35f;
         private const float CLOSE_DURATION = 0.25f;
-        
+
         // Alias
         private GameSettingState GameSettingState => GameState.Inst.gameSettingState;
 
         // Component
         [SerializeField]
         private RectTransform panelTrans;
+
+        [SerializeField]
+        private TMP_Dropdown resolutionDropdown;
 
         [SerializeField]
         private ToggleButton drawTrajectoryToggleButton;
@@ -60,21 +62,49 @@ namespace Mathlife.ProjectL.Gameplay.UI
             closeTween = panelTrans.DOAnchorPosY(1000f, CLOSE_DURATION)
                 .SetAutoKill(false)
                 .Pause();
+
+            List<TMP_Dropdown.OptionData> optionDatas = new();
+            foreach (var option in DisplayManager.resolutionOptions)
+            {
+                optionDatas.Add(option.fullScreen
+                    ? new TMP_Dropdown.OptionData($"전체 화면")
+                    : new TMP_Dropdown.OptionData($"창 모드 ({option.width} x {option.height})"));
+            }
+
+            resolutionDropdown.AddOptions(optionDatas);
         }
-        
+
         public override async UniTask OpenWithAnimation()
         {
             AudioManager.Inst.PlaySE(ESoundEffectId.PopupOpen);
             base.OpenWithAnimation();
-            
+
             // 블러 적용
             BlurPopup blurPopup = Find<BlurPopup>();
             blurPopup.transform.SetSiblingIndex(transform.GetSiblingIndex() - 1);
             await blurPopup.OpenWithAnimation();
 
+            if (Application.isMobilePlatform)
+            {
+                resolutionDropdown.enabled = false;
+                resolutionDropdown.value = 0;
+                resolutionDropdown.RefreshShownValue();
+            }
+            else
+            {
+                resolutionDropdown.enabled = true;
+                resolutionDropdown.value = GameSettingState.resolutionOptionIndex.Value;
+                resolutionDropdown.onValueChanged
+                    .AsObservable()
+                    .DistinctUntilChanged()
+                    .Subscribe(OnResolutionSelected)
+                    .AddTo(disposables);
+            }
+
             drawTrajectoryToggleButton.IsOn = GameSettingState.drawTrajectory.Value;
             bgmVolumeSlider.value = GameSettingState.bgmVolume.Value;
             seVolumeSlider.value = GameSettingState.seVolume.Value;
+
 
             drawTrajectoryToggleButton.OnClickAsObservable()
                 .DistinctUntilChanged()
@@ -122,6 +152,14 @@ namespace Mathlife.ProjectL.Gameplay.UI
             openTween.Kill();
             closeTween.Kill();
             disposables.Dispose();
+        }
+
+        public void OnResolutionSelected(int optionIdx)
+        {
+            GameSettingState.resolutionOptionIndex.Value = optionIdx;
+
+            DisplayManager.Inst.Adapt().Forget();
+            GameState.Inst.Save();
         }
 
         private void OnToggleButtonClick(Unit _)

@@ -360,14 +360,14 @@ namespace Mathlife.ProjectL.Gameplay
 
             if (result == false)
             {
-                Debug.LogError("배틀 아이템 사용 실패...");
+                MyDebug.LogError("배틀 아이템 사용 실패...");
                 return;
             }
 
             BattleItemGameData itemData = itemStack.BattleItemGameData;
             if (itemData == null)
             {
-                Debug.LogError("배틀 아이템 사용 실패...");
+                MyDebug.LogError("배틀 아이템 사용 실패...");
                 return;
             }
 

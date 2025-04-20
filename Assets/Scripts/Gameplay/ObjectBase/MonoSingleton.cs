@@ -30,7 +30,7 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
             get
             {
                 if (s_inst == null)
-                    Debug.LogWarning($"[{s_typeName}] Singleton instance doesn't exist in the current scene.");
+                    MyDebug.LogWarning($"[{s_typeName}] Singleton instance doesn't exist in the current scene.");
                 return s_inst;
             }
         }

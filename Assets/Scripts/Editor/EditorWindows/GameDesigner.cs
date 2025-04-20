@@ -62,7 +62,7 @@ namespace Mathlife.ProjectL.Editor
                 AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.Settings;
                 if (settings == null)
                 {
-                    Debug.LogError("Addressable Asset Settings not found. Please set up Addressables.");
+                    MyDebug.LogError("Addressable Asset Settings not found. Please set up Addressables.");
                     return;
                 }
 

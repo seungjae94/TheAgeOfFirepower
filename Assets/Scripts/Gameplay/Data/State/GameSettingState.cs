@@ -6,6 +6,7 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
     public class GameSettingState : PersistableStateBase
     {
         // Props
+        public ReactiveProperty<int> resolutionOptionIndex = new(0);
         public ReactiveProperty<bool> drawTrajectory = new(true);
         public ReactiveProperty<float> bgmVolume = new(0.5f);
         public ReactiveProperty<float> seVolume = new(0.5f);
@@ -30,6 +31,7 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
         private void LoadFromSaveFile()
         {
             var saveFile = SaveDataManager.GameSetting;
+            resolutionOptionIndex.Value = saveFile.resolutionOptionIndex;
             drawTrajectory.Value = saveFile.drawTrajectory;
             bgmVolume.Value = saveFile.bgmVolume;
             seVolume.Value = saveFile.seVolume;
@@ -37,6 +39,7 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
 
         private void LoadFromStarter()
         {
+            resolutionOptionIndex.Value = 0;
             drawTrajectory.Value = true;
             bgmVolume.Value = 0.5f;
             seVolume.Value = 0.5f;
@@ -48,6 +51,7 @@ namespace Mathlife.ProjectL.Gameplay.Gameplay.Data.Model
         {
             return new GameSettingSaveFile
             {
+                resolutionOptionIndex =  resolutionOptionIndex.Value,
                 drawTrajectory = drawTrajectory.Value,
                 bgmVolume = bgmVolume.Value,
                 seVolume = seVolume.Value

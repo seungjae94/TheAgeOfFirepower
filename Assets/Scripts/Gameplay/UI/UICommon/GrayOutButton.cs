@@ -45,7 +45,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             {
                 if (targetGraphics[i] == null)
                 {
-                    Debug.LogError("Some of targetGraphic is null.");
+                    MyDebug.LogError("Some of targetGraphic is null.");
                     return;
                 }
 

@@ -7,7 +7,6 @@ using Mathlife.ProjectL.Gameplay.ObjectBase;
 using Mathlife.ProjectL.Gameplay.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Debug = UnityEngine.Debug;
 
 namespace Mathlife.ProjectL.Gameplay
 {
@@ -37,10 +36,6 @@ namespace Mathlife.ProjectL.Gameplay
         private void Start()
         {
             Application.targetFrameRate = 30;
-            
-            float screenAspect = (float)Display.main.systemWidth / Display.main.systemHeight;
-            Screen.SetResolution(Mathf.RoundToInt(screenAspect * Constants.RESOLUTION_HEIGHT), Constants.RESOLUTION_HEIGHT, true);
-            
             GameStart().Forget();
         }
 
@@ -48,7 +43,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             if (SceneManager.loadedSceneCount == 1)
             {
-                Debug.LogError("[GameManager] Failed to refresh scene data. Current scene is null.");
+                MyDebug.LogError("[GameManager] Failed to refresh scene data. Current scene is null.");
                 return;
             }
             
@@ -64,9 +59,14 @@ namespace Mathlife.ProjectL.Gameplay
                 .FirstOrDefault(root => root.TryGetComponent(out Cameras _))
                 ?.GetComponent<Cameras>();
 
+            if (CurrentCanvas == null)
+            {
+                MyDebug.LogError("[GameManager] Failed to refresh scene data. Current Canvas is null.");
+            }
+            
             if (CurrentGameMode == null)
             {
-                Debug.LogError("[GameManager] Failed to refresh scene data. Current GameMode is null.");
+                MyDebug.LogError("[GameManager] Failed to refresh scene data. Current GameMode is null.");
             }
         }
 

@@ -35,15 +35,19 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
     public abstract class GameMode<TGameMode> : MonoSingleton<TGameMode>, IGameMode
         where TGameMode : GameMode<TGameMode>
     {
-        public virtual UniTask InitializeScene(IProgress<float> progress)
+        public virtual async UniTask InitializeScene(IProgress<float> progress)
         {
+            DisplayManager adapter = GameObject.FindAnyObjectByType<DisplayManager>();
+            if (adapter != null)
+            {
+                await adapter.Adapt();
+            }
+            
             IEnumerable<IInitializable> initializables = GameObject
                 .FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID)
                 .OfType<IInitializable>();
 
             initializables.ForEach(initializable => initializable.Initialize());
-            
-            return UniTask.CompletedTask;
         }
 
         // Initialize Scene은 LoadingScreen이 떠있는 동안 뒤에서 몰래 씬을 초기화

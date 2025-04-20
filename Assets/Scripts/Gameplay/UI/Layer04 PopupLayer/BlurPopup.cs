@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -53,8 +54,19 @@ namespace Mathlife.ProjectL.Gameplay.UI
             Shader shader = Shader.Find("Hidden/Blur");
             blurMaterial = new Material(shader);
             blurMaterial.SetFloat(s_blurSizeId, blurSize);
+            
+            int width = (int)(Screen.width * Cameras.Inst.MainCamera.rect.width);
+            int height = (int)(Screen.height * Cameras.Inst.MainCamera.rect.height);
+            resultRenderTexture = new RenderTexture(width, height, 0);
 
-            // MAYBE: 화면 일부만 블러 효과 적용
+            DisplayManager.displayChanged
+                .DistinctUntilChanged()
+                .Subscribe(OnDisplayChanged)
+                .AddTo(gameObject);
+        }
+
+        private void OnDisplayChanged(int optionIndex)
+        {
             int width = (int)(Screen.width * Cameras.Inst.MainCamera.rect.width);
             int height = (int)(Screen.height * Cameras.Inst.MainCamera.rect.height);
             resultRenderTexture = new RenderTexture(width, height, 0);
@@ -139,7 +151,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
             byte[] bytes = tex.EncodeToPNG();
             string path = $"{Application.dataPath}/Debug/{fileName}.png";
             System.IO.File.WriteAllBytes(path, bytes);
-            Debug.Log($"[Debug] Texture saved to {path}");
+            MyDebug.Log($"[Debug] Texture saved to {path}");
         }
 #endif
     }

@@ -117,7 +117,7 @@ namespace Mathlife.ProjectL.Gameplay
             // 검증
             if (slotType != mechPart.Type)
             {
-                Debug.LogError($"[ArtyRosterState] 슬롯 {slotType}에 {mechPart.Type} 타입의 부품을 장착하려고 합니다.");
+                MyDebug.LogError($"[ArtyRosterState] 슬롯 {slotType}에 {mechPart.Type} 타입의 부품을 장착하려고 합니다.");
                 return;
             }
             

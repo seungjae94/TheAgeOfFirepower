@@ -55,12 +55,12 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (target == null)
             {
-                Debug.Log($"[Enemy AI] There is no appropriate target. Skip turn.");
+                MyDebug.Log($"[Enemy AI] There is no appropriate target. Skip turn.");
                 controller.Skip();
                 return Status.Success;
             }
             
-            Debug.Log($"[Enemy AI] Target is {target.Description}.");
+            MyDebug.Log($"[Enemy AI] Target is {target.Description}.");
             
             // 방향 설정
             controller.SetDirection(controller.FirePoint.x < target.transform.position.x);

@@ -3,7 +3,8 @@
 	"references": [
 		"Unity.TextMeshPro",
 		"DOTween.Modules",
-		"DOTweenPro.Scripts"
+		"DOTweenPro.Scripts",
+		"ProjectL-Gameplay"
 	],
 	"includePlatforms": [
 		"Editor"

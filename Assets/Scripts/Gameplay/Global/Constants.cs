@@ -3,7 +3,7 @@ namespace Mathlife.ProjectL.Gameplay
     public static class Constants
     {
         public const int BATTERY_SIZE = 3;
-        public const int RESOLUTION_HEIGHT = 1080;
+        public const int VIEWPORT_HEIGHT = 1080;
     }
 
     public static class SceneNames

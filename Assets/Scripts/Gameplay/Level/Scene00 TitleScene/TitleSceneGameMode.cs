@@ -30,8 +30,10 @@ namespace Mathlife.ProjectL.Gameplay
             gameStartButtonCanvasGroup.Hide();
         }
         
-        public override UniTask InitializeScene(IProgress<float> progress)
+        public override async UniTask InitializeScene(IProgress<float> progress)
         {
+            await base.InitializeScene(progress);
+            
             // 이 시점에선 게임이 초기화 되어 있다고 보장할 수 있음
             // 이미 볼륨이 설정된 상태임
             AudioManager.Inst.PlayBGM(titleBGM);
@@ -42,7 +44,6 @@ namespace Mathlife.ProjectL.Gameplay
             gameStartButtonCanvasGroup.Show();
             
             progress.Report(1f);
-            return UniTask.CompletedTask;
         }
 
         private void OnClickGameStartButton(Unit _)

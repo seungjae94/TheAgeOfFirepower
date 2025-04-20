@@ -1,4 +1,4 @@
-using DG.DemiEditor;
+using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -34,11 +34,8 @@ namespace Mathlife.ProjectL.Editor
             if (!GUILayout.Button(new GUIContent("DIS", "Adapt Display"), ToolbarStyles.commandButtonStyle))
                 return;
             
-            var adapter = Object.FindFirstObjectByType<CameraViewportAdapter>();
-            adapter.Setup();
-            
-            float screenAspect = Screen.currentResolution.width / (float)Screen.currentResolution.height;
-            adapter.Adapt(screenAspect).Forget();
+            var adapter = Object.FindFirstObjectByType<DisplayManager>();
+            adapter.Adapt().Forget();
 
             MyDebug.Log($"[ToobarMenu] Display Adapted to Screen {Screen.currentResolution.width} x {Screen.currentResolution.height}.");
         }

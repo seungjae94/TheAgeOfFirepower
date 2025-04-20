@@ -271,7 +271,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
 
             if (Vector2.Distance(endPosition, startPosition) > 1f)
             {
-                Debug.Log("순간 이동 in Slide");
+                MyDebug.Log("순간 이동 in Slide");
             }
             
             return SlideResult.Success;

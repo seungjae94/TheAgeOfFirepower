@@ -214,15 +214,15 @@ namespace Mathlife.ProjectL.Gameplay
             {
                 if (battler == null)
                 {
-                    Debug.Log($"Dead Check Type 1: Component has been destroyed.");
+                    MyDebug.Log($"Dead Check Type 1: Component has been destroyed.");
                 }
                 else if (battler.gameObject == null)
                 {
-                    Debug.Log($"Dead Check Type 2: GameObject has been destroyed.");
+                    MyDebug.Log($"Dead Check Type 2: GameObject has been destroyed.");
                 }
                 else if (battler.CurrentHp <= 0)
                 {
-                    Debug.Log($"Dead Check Type 3: CurrentHp <= 0.");
+                    MyDebug.Log($"Dead Check Type 3: CurrentHp <= 0.");
                 }
 
                 return battler == null || battler.gameObject == null || battler.CurrentHp <= 0;

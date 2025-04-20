@@ -101,7 +101,7 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 var itemData = GameState.Inst.gameDataLoader.GetCountableItemData(EItemType.MaterialItem, i);
                 if (itemData == null)
                 {
-                    Debug.LogError($"뷰의 개수({itemControlViews.Count})에 비해 아이템 데이터 개수({i})가 부족합니다.");
+                    MyDebug.LogError($"뷰의 개수({itemControlViews.Count})에 비해 아이템 데이터 개수({i})가 부족합니다.");
                     break;
                 }
 
