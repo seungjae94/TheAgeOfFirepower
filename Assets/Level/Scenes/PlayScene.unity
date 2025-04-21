@@ -3180,35 +3180,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   developPlayers:
-  - arty: {fileID: 11400000, guid: 005beb9b0a9636a42ad2bac0b592b346, type: 2}
-    level: 1
+  - arty: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
+    level: 10
     currentLevelExp: 0
     barrel: {fileID: 0}
     armor: {fileID: 11400000, guid: 86b245a07b003d54d9b53a3dd4a9fca6, type: 2}
     engine: {fileID: 0}
-  - arty: {fileID: 11400000, guid: 005beb9b0a9636a42ad2bac0b592b346, type: 2}
-    level: 1
+  - arty: {fileID: 11400000, guid: e858c33d5a0d4e64d9432444f4ef4ba9, type: 2}
+    level: 8
     currentLevelExp: 0
     barrel: {fileID: 0}
     armor: {fileID: 0}
     engine: {fileID: 0}
-  - arty: {fileID: 11400000, guid: 005beb9b0a9636a42ad2bac0b592b346, type: 2}
-    level: 1
+  - arty: {fileID: 11400000, guid: 73a35772b44a16841b49ccd5fc7788b7, type: 2}
+    level: 5
     currentLevelExp: 0
     barrel: {fileID: 0}
     armor: {fileID: 0}
     engine: {fileID: 0}
   developEnemys:
-  - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 5
+  - artyGameData: {fileID: 11400000, guid: 005beb9b0a9636a42ad2bac0b592b346, type: 2}
+    level: 7
     moveStrategy: 0
     targetingStrategy: 2
-  - artyGameData: {fileID: 11400000, guid: cf29eec80d7132a45b4be7e067e2caed, type: 2}
-    level: 0
+  - artyGameData: {fileID: 11400000, guid: 48c279c9dce38bc43b64dd31913d0294, type: 2}
+    level: 6
+    moveStrategy: 0
+    targetingStrategy: 0
+  - artyGameData: {fileID: 11400000, guid: 77a25fad67345454d9b586e22ce70dcf, type: 2}
+    level: 5
     moveStrategy: 0
     targetingStrategy: 0
   developStageGameDataRef:
-    m_AssetGUID: 5f3e1fa1dfdc7d647b5fa6d72c8f0cd4
+    m_AssetGUID: db4fe1784b5cc8147ba96ac06bc185a6
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
@@ -5696,7 +5700,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: orthographic size
-      value: 3.6
+      value: 5.4
       objectReference: {fileID: 0}
     - target: {fileID: 2551688882299619635, guid: 8c493102392add8409eab89a5843f963, type: 3}
       propertyPath: m_NormalizedViewPortRect.x

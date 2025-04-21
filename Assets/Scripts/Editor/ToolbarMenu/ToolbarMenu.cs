@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using Cysharp.Threading.Tasks;
 using Mathlife.ProjectL.Gameplay;
 using UnityEditor;
@@ -5,6 +7,8 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityToolbarExtender;
+using Directory = System.IO.Directory;
+using Object = UnityEngine.Object;
 
 namespace Mathlife.ProjectL.Editor
 {
@@ -17,7 +21,6 @@ namespace Mathlife.ProjectL.Editor
         static ToolbarMenu()
         {
             ToolbarExtender.LeftToolbarGUI.Add(OnToolbarGUI);
-
             EditorApplication.playModeStateChanged += OnEnteredEditMode;
         }
 
@@ -25,19 +28,43 @@ namespace Mathlife.ProjectL.Editor
         {
             GUILayout.FlexibleSpace();
 
+            TakeScreenShot();
             AdaptDisplay();
             // PlayFromStartScene();
+        }
+
+        private static void TakeScreenShot()
+        {
+            if (!GUILayout.Button(new GUIContent("SS", "Take Screen Shot"), ToolbarStyles.commandButtonStyle))
+                return;
+
+            string screenShotDirectoryPath = Path.Combine(Application.dataPath, "../ScreenShots");
+            if (false == Directory.Exists(screenShotDirectoryPath))
+            {
+                Directory.CreateDirectory(screenShotDirectoryPath);
+            }
+
+            string year = DateTime.Now.Year.ToString().PadLeft(4, '0');
+            string month = DateTime.Now.Month.ToString().PadLeft(2, '0');
+            string day = DateTime.Now.Day.ToString().PadLeft(2, '0');
+            string hour = DateTime.Now.Hour.ToString().PadLeft(2, '0');
+            string minute = DateTime.Now.Minute.ToString().PadLeft(2, '0');
+            string second = DateTime.Now.Second.ToString().PadLeft(2, '0');
+            string milli = DateTime.Now.Millisecond.ToString().PadLeft(4, '0');
+            ScreenCapture.CaptureScreenshot(
+                $"ScreenShots/ScreenShot {year}-{month}-{day} {hour}-{minute}-{second}-{milli}.png");
         }
 
         private static void AdaptDisplay()
         {
             if (!GUILayout.Button(new GUIContent("DIS", "Adapt Display"), ToolbarStyles.commandButtonStyle))
                 return;
-            
+
             var adapter = Object.FindFirstObjectByType<DisplayManager>();
             adapter.Adapt().Forget();
 
-            MyDebug.Log($"[ToobarMenu] Display Adapted to Screen {Screen.currentResolution.width} x {Screen.currentResolution.height}.");
+            MyDebug.Log(
+                $"[ToobarMenu] Display Adapted to Screen {Screen.currentResolution.width} x {Screen.currentResolution.height}.");
         }
 
         private static void PlayFromStartScene()
