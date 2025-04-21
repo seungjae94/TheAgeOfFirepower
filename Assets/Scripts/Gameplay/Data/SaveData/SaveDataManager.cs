@@ -118,7 +118,7 @@ namespace Mathlife.ProjectL.Gameplay
 
                 prevFile = newFile;
                 
-                MyDebug.Log($"{saveFileType.Name} 세이브 완료!");
+                //MyDebug.Log($"{saveFileType.Name} 세이브 완료!");
             }
         }
 

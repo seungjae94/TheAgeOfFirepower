@@ -87,11 +87,11 @@ namespace Mathlife.ProjectL.Gameplay.UI
                 bottom = Mathf.Max(safeAreaMargin.bottom, scaledOffset.bottom)
             };
             
-            MyDebug.Log($"스케일링 팩터: {canvasScalingFactor}");
-            MyDebug.Log($"스크린 크기: {Screen.width} x {Screen.height}");
-            MyDebug.Log($"캔버스 크기: {canvasRectTransform.rect.width} x {canvasRectTransform.rect.height}");
-            MyDebug.Log($"MinimalOffset: {minimalOffset}");
-            MyDebug.Log($"실제 적용할 마진: {maxMargin}");
+            //MyDebug.Log($"스케일링 팩터: {canvasScalingFactor}");
+            //MyDebug.Log($"스크린 크기: {Screen.width} x {Screen.height}");
+            //MyDebug.Log($"캔버스 크기: {canvasRectTransform.rect.width} x {canvasRectTransform.rect.height}");
+            //MyDebug.Log($"MinimalOffset: {minimalOffset}");
+            //MyDebug.Log($"실제 적용할 마진: {maxMargin}");
             
             // 컨텐츠 마진 적용
             rectTransform.offsetMin = new Vector2(maxMargin.left, maxMargin.bottom);

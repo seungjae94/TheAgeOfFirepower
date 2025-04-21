@@ -101,7 +101,7 @@ namespace Mathlife.ProjectL.Gameplay
             int viewportWidth = Mathf.RoundToInt(Screen.width * mainCamera.rect.width);
             int viewportHeight = Mathf.RoundToInt(Screen.height * mainCamera.rect.height);
 
-            Debug.Log($"Viewport = {viewportWidth}x{viewportHeight}");
+            //Debug.Log($"Viewport = {viewportWidth}x{viewportHeight}");
 
             var mainCanvas = (MonoBehaviour)GameManager.Inst.CurrentCanvas;
             CanvasScaler canvasScaler = mainCanvas.GetComponent<CanvasScaler>();
