@@ -8,25 +8,22 @@ namespace Mathlife.ProjectL.Gameplay.UI
     public enum ECanvasLayer
     {
         HUD,
-        Background,
         Page,
         Overlay,
-        Popup,
-        Screen // Fade Screen
+        Popup
     }
 
     public interface IMainCanvas
     {
-        public CanvasLayer GetLayer(ECanvasLayer layer);
+        public CanvasLayer GetLayer(ECanvasLayer layerType);
 
-        public void DeactivateAllPresenters(bool ignoreBackground = true);
+        public void DeactivateAllPresenters();
     }
 
-    public class MainCanvas<TMainCanvas> : MonoSingleton<TMainCanvas>, IMainCanvas
-        where TMainCanvas : MainCanvas<TMainCanvas>
+    public class MainCanvas : MonoSingleton<MainCanvas>, IMainCanvas
     {
         protected override SingletonLifeTime LifeTime => SingletonLifeTime.Scene;
-        private readonly List<CanvasLayer> canvasLayers = new();
+        private readonly Dictionary<ECanvasLayer, CanvasLayer> canvasLayers = new();
 
         protected override void OnRegistered()
         {
@@ -34,23 +31,21 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
             foreach (var layer in gameObject.GetComponentsInChildren<CanvasLayer>())
             {
-                canvasLayers.Add(layer);
+                canvasLayers.Add(layer.LayerType, layer);
             }
         }
 
-        public CanvasLayer GetLayer(ECanvasLayer layer)
+        public CanvasLayer GetLayer(ECanvasLayer layerType)
         {
-            return canvasLayers[(int)layer];
+            canvasLayers.TryGetValue(layerType, out var canvasLayer);
+            return canvasLayer;
         }
 
-        public void DeactivateAllPresenters(bool ignoreBackground = true)
+        public void DeactivateAllPresenters()
         {
-            for (int i = 0; i < canvasLayers.Count; ++i)
+            foreach (var layer in canvasLayers.Values)
             {
-                if (ignoreBackground && i == (int)ECanvasLayer.Background)
-                    continue;
-                
-                canvasLayers[i].DeactivateAllPresenters();
+                layer.DeactivateAllPresenters();
             }
         }
     }

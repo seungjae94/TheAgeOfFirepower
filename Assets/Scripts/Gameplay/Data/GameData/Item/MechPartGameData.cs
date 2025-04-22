@@ -23,7 +23,7 @@ namespace Mathlife.ProjectL.Gameplay
         {
             return type switch
             {
-                EMechPartType.Barrel => "화포",
+                EMechPartType.Barrel => "포신",
                 EMechPartType.Armor => "장갑",
                 EMechPartType.Engine => "엔진",
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)

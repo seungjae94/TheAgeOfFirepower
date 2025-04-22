@@ -50,7 +50,7 @@ namespace Mathlife.ProjectL.Gameplay
             progress.Report(0.1f);
 
             // 1. 모든 UI 닫아놓기
-            PlayCanvas.Inst.DeactivateAllPresenters();
+            MainCanvas.Inst.DeactivateAllPresenters();
             progress.Report(0.05f);
 
             // 2. 모드 세팅

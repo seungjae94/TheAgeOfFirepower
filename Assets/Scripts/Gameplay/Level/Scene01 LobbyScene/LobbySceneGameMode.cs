@@ -17,7 +17,7 @@ namespace Mathlife.ProjectL.Gameplay
             progress.Report(0.1f);
             
             // 1. 모든 UI 닫아놓기
-            LobbyCanvas.Inst.DeactivateAllPresenters();
+            MainCanvas.Inst.DeactivateAllPresenters();
             progress.Report(0.3f);
             
             // 2. 홈 페이지 열기
