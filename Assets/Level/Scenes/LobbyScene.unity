@@ -714,7 +714,7 @@ GameObject:
   - component: {fileID: 845074841}
   - component: {fileID: 845074844}
   m_Layer: 0
-  m_Name: Main Scene Game Mode
+  m_Name: Lobby Scene Game Mode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
