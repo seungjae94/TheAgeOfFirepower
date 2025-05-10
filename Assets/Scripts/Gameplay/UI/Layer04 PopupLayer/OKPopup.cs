@@ -33,9 +33,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         // State
         public readonly Subject<Unit> okClickSubject = new();  
 
-        public override void Initialize()
+        public override void OnSceneInitialize()
         {
-            base.Initialize();
+            base.OnSceneInitialize();
 
             openTween = windowTransform.DOScale(new Vector3(1f, 1f, 1f), OPEN_DURATION)
                 .From(new Vector3(0f, 0f, 1f))

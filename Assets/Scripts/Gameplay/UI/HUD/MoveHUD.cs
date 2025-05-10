@@ -18,9 +18,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private bool RBPressed = false;
         private float horAxis = 0f;
         
-        public override void Initialize()
+        public override void OnSceneInitialize()
         {
-            base.Initialize();
+            base.OnSceneInitialize();
 
             leftButton.OnPointerDownAsObservable()
                 .Subscribe(_ => OnLBChanged(true))

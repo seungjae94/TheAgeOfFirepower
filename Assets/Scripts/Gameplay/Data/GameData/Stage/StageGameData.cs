@@ -4,6 +4,7 @@ using Mathlife.ProjectL.Gameplay.Play;
 using Mathlife.ProjectL.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
@@ -61,7 +62,7 @@ namespace Mathlife.ProjectL.Gameplay
 
         [LabelWidth(100)]
         [PreviewField(ObjectFieldAlignment.Left, Height = 400)]
-        public Sprite mapSprite;
+        public AssetReferenceSprite mapSprite;
 
         [FormerlySerializedAs("spawnXs")]
         [LabelWidth(100)]

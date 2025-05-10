@@ -44,9 +44,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private ECoroutineState coroutineState = ECoroutineState.Ready;
         private readonly WaitForEndOfFrame waitForEndOfFrame = new();
 
-        public override void Initialize()
+        public override void OnSceneInitialize()
         {
-            base.Initialize();
+            base.OnSceneInitialize();
 
             outputImage.material = new Material(Shader.Find("UI/Default"));
             outputImage.color = Color.clear;
@@ -154,5 +154,25 @@ namespace Mathlife.ProjectL.Gameplay.UI
             MyDebug.Log($"[Debug] Texture saved to {path}");
         }
 #endif
+
+        public override void OnSceneClear()
+        {
+            if (resultRenderTexture)
+            {
+                Destroy(resultRenderTexture);
+                resultRenderTexture = null;
+            }
+
+            if (blurMaterial)
+            {
+                Destroy(blurMaterial);
+                blurMaterial = null;
+            }
+
+            if (outputImage.material)
+            {
+                Destroy(outputImage.material);
+            }
+        }
     }
 }

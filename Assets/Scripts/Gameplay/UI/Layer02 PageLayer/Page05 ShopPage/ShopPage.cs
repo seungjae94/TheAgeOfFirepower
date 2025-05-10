@@ -25,9 +25,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private ShopGameData shopGameData;
         
-        public override void Initialize()
+        public override void OnSceneInitialize()
         {
-            base.Initialize();
+            base.OnSceneInitialize();
 
             shopGameData = GameState.Inst.gameDataLoader.GetShopData();
         }

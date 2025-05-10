@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StageGameData_0004
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -26,7 +26,12 @@ MonoBehaviour:
   worldNo: 1
   stageNo: 5
   bgm: {fileID: 8300000, guid: aaa8df290d993d74da9b45697673a9c1, type: 3}
-  mapSprite: {fileID: 21300000, guid: 3de77198b41929446aab516f1a85dcc3, type: 3}
+  mapSprite:
+    m_AssetGUID: 3de77198b41929446aab516f1a85dcc3
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1
   spawnPositions:
   - {x: 2.5, y: 6.3}
   - {x: 4.6, y: 2}

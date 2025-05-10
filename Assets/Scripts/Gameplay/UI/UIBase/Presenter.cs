@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Mathlife.ProjectL.Gameplay.UI
 {
-    public interface IPresenter : IInitializable
+    public interface IPresenter : ISceneBehaviour
     {
         public void Activate();
         public void Deactivate();
@@ -60,9 +60,13 @@ namespace Mathlife.ProjectL.Gameplay.UI
             throw new PresenterNotRegisteredException(widgetType);
         }
         
-        public virtual void Initialize()
+        public virtual void OnSceneInitialize()
         {
             s_widgets.Add(GetType(), this);
+        }
+
+        public virtual void OnSceneClear()
+        {
         }
 
         public virtual void Activate()

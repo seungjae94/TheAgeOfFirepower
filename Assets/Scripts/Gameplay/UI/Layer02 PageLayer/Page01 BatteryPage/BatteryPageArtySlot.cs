@@ -33,9 +33,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private readonly CompositeDisposable disposables = new();
 
         // 이벤트 함수
-        public override void Initialize()
+        public override void OnSceneInitialize()
         {
-            base.Initialize();
+            base.OnSceneInitialize();
             
             slotIndex = transform.GetSiblingIndex();
             dropTrigger = GetComponent<ObservableDropTrigger>();

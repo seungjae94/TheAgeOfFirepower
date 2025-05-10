@@ -16,9 +16,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
 
         private readonly CompositeDisposable disposables = new();
 
-        public override void Initialize()
+        public override void OnSceneInitialize()
         {
-            base.Initialize();
+            base.OnSceneInitialize();
             
             batteryMenuButton = transform.FindRecursiveByName<Transform>("Battery Menu")
                 .GetComponentInChildren<Button>();

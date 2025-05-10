@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Seperate Local
+  m_EditorClassIdentifier: 
+  m_GroupName: Seperate Local
+  m_GUID: c449b37bcf2633f478e8584dae2af743
+  m_SerializeEntries:
+  - m_GUID: 3de77198b41929446aab516f1a85dcc3
+    m_Address: Assets/Level/Arts/PlayMap/1-5.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Map
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85eeb9789afa00e44bd24929208f6965
+    m_Address: Assets/Level/Arts/PlayMap/1-6.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Map
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a392b5186252e3428eb943e03fa46f3
+    m_Address: Assets/Level/Arts/PlayMap/1-1.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Map
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3bb3be79512a4046b532828345402e7
+    m_Address: Assets/Level/Arts/PlayMap/1-2.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Map
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc91b3be34cb18848b5bf62bd8065e50
+    m_Address: Assets/Level/Arts/PlayMap/1-4.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Map
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eaba7d1e7c9e9754583bc2eef6ea096f
+    m_Address: Assets/Level/Arts/PlayMap/1-3.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Map
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2431dffd34de4654eba2067dcd945157, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 29016dc0c58a0fe49a9c528c20057188, type: 2}
+    - {fileID: 11400000, guid: e6736d95bc5cf46499393e1a36f02ed2, type: 2}

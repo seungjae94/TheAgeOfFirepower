@@ -42,9 +42,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         }
 
         // 이벤트 함수
-        public override void Initialize()
+        public override void OnSceneInitialize()
         {
-            base.Initialize();
+            base.OnSceneInitialize();
 
             artySlots = transform.FindAllRecursive<BatteryPageArtySlot>();
             selectedArtyView = transform.FindRecursive<BatteryPageSelectedArtyView>();

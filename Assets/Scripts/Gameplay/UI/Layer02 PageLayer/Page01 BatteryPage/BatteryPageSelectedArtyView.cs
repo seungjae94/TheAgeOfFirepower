@@ -39,9 +39,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private IDisposable selectedArtySub = null;
 
         // 이벤트 루프
-        public override void Initialize()
+        public override void OnSceneInitialize()
         {
-            base.Initialize();
+            base.OnSceneInitialize();
 
             viewCanvasGroup = GetComponent<CanvasGroup>();
         }

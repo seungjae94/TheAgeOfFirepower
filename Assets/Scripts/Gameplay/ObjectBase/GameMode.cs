@@ -43,11 +43,11 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
                 await adapter.Adapt();
             }
             
-            IEnumerable<IInitializable> initializables = GameObject
+            IEnumerable<ISceneBehaviour> initializables = GameObject
                 .FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID)
-                .OfType<IInitializable>();
+                .OfType<ISceneBehaviour>();
 
-            initializables.ForEach(initializable => initializable.Initialize());
+            initializables.ForEach(initializable => initializable.OnSceneInitialize());
         }
 
         // Initialize Scene은 LoadingScreen이 떠있는 동안 뒤에서 몰래 씬을 초기화
@@ -60,6 +60,13 @@ namespace Mathlife.ProjectL.Gameplay.ObjectBase
         public virtual UniTask ClearScene(IProgress<float> progress)
         {
             Presenter.Clear();
+            
+            IEnumerable<ISceneBehaviour> clearables = GameObject
+                .FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID)
+                .OfType<ISceneBehaviour>();
+
+            clearables.ForEach(clearable => clearable.OnSceneClear());
+            
             return UniTask.CompletedTask;
         }
     }

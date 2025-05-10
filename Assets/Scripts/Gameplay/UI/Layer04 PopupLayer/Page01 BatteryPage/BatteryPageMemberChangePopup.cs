@@ -59,9 +59,9 @@ namespace Mathlife.ProjectL.Gameplay.UI.BatteryPagePopup
 
 
         // 이벤트 함수
-        public override void Initialize()
+        public override void OnSceneInitialize()
         {
-            base.Initialize();
+            base.OnSceneInitialize();
 
             CreateTweens();
         }

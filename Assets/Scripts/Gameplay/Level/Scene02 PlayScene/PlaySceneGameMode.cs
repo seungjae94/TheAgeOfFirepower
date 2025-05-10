@@ -43,6 +43,9 @@ namespace Mathlife.ProjectL.Gameplay
             .Where(battler => battler.IsPlayer)
             .ToImmutableList();
 
+        // Asset
+        private Sprite mapSprite;
+        
         public override async UniTask InitializeScene(IProgress<float> progress)
         {
             // 0. 게임 모드 공통 초기화 로직 수행
@@ -76,7 +79,7 @@ namespace Mathlife.ProjectL.Gameplay
             IProgress<float> mapLoadingProgress =
                 Progress.Create<float>(value => progress.Report(Mathf.Lerp(start, end, value)));
 
-            Sprite mapSprite = stageGameData.mapSprite;
+            mapSprite = await stageGameData.mapSprite.LoadAssetAsync();
             await DestructibleTerrain.Inst.GenerateTerrain(mapSprite, mapLoadingProgress);
             progress.Report(0.95f);
 
@@ -233,6 +236,10 @@ namespace Mathlife.ProjectL.Gameplay
         {
             base.ClearScene(progress);
 
+            // Release
+            Addressables.Release(mapSprite);
+            
+            // Destroy Battlers
             foreach (var battler in battlers)
             {
                 if (battler != null)

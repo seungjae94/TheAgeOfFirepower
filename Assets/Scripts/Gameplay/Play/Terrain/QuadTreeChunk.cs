@@ -103,5 +103,18 @@ namespace Mathlife.ProjectL.Gameplay.Play
         {
             return spriteRenderer.sprite.texture.GetPixel(x, y).a > float.Epsilon;
         }
+
+        private void OnDestroy()
+        {
+            if (spriteRenderer?.sprite?.texture != null)
+            {
+                Destroy(spriteRenderer.sprite.texture);
+            }
+            
+            if (spriteRenderer?.sprite != null)
+            {
+                Destroy(spriteRenderer.sprite);
+            }
+        }
     }
 }

@@ -51,9 +51,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         private Tween closeTween;
         private readonly CompositeDisposable disposables = new();
 
-        public override void Initialize()
+        public override void OnSceneInitialize()
         {
-            base.Initialize();
+            base.OnSceneInitialize();
 
             openTween = panelTrans.DOAnchorPosY(0f, OPEN_DURATION)
                 .SetAutoKill(false)

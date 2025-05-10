@@ -83,7 +83,7 @@ namespace Mathlife.ProjectL.Gameplay.Play
                     int sy = (y < chunkCount.y - 1) ? chunkSize.y : lastChunkSize.y;
 
                     Color[] pixels = originalTexture.GetPixels(x * chunkSize.x, y * chunkSize.y, sx, sy);
-
+                    
                     Texture2D chunkTexture = new Texture2D(sx, sy);
                     chunkTexture.filterMode = originalTexture.filterMode;
                     chunkTexture.SetPixels(0, 0, sx, sy, pixels);

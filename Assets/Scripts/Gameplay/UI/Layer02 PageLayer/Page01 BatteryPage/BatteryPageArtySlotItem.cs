@@ -47,9 +47,9 @@ namespace Mathlife.ProjectL.Gameplay.UI
         }
 
         // 이벤트 함수
-        public override void Initialize()
+        public override void OnSceneInitialize()
         {
-            base.Initialize();
+            base.OnSceneInitialize();
             
             itemCanvasGroup = GetComponent<CanvasGroup>();
             beginDragTrigger = GetComponent<ObservableBeginDragTrigger>();
