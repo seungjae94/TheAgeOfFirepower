@@ -768,5 +768,10 @@ namespace Mathlife.ProjectL.Gameplay.Play
             if (HasTurn)
                 HasTurn = false;
         }
+
+        private void OnDestroy()
+        {
+            Destroy(behaviorGraphAgent.Graph);
+        }
     }
 }
