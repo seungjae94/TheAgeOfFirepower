@@ -12,5 +12,5 @@
 - 패키지: UniRx, UniTask, DOTWeen, Odin Inspector
 
 ### 플레이 영상
-[![Video Label](http://img.youtube.com/vi/jFBl8RhfXnk/0.jpg)](https://youtu.be/jFBl8RhfXnk)
+https://youtu.be/jFBl8RhfXnk
 
